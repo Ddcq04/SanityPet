@@ -1,0 +1,16 @@
+/target/
+/bin/
+*.class
+*.war
+*.jar
+.settings/
+.project
+.classpath
+.factorypath
+# Temporales y logs
+*.log
+.DS_Store
+Thumbs.db
+.mvn/
+mvnw
+mvnw.cmd
