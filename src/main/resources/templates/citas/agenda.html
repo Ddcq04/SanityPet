@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{common/fragments :: head}"></th:block>
+    <title>Panel Admin - SanityPet</title>
+</head>
+<body>
+    <header th:replace="~{common/fragments :: navbar}"></header>
+
+    <main class="container">
+        <div class="card">
+            <h1>📋 Gestión Global de Citas</h1>
+            <p>Panel de administración para la gestión de la agenda diaria de la clínica.</p>
+            
+            <div style="margin-bottom: 25px; margin-top: 15px;">
+                <a th:href="@{/citas/reservar}" class="btn-action">
+                    ➕ Registrar Nueva Cita
+                </a>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Fecha y Hora</th>
+                        <th>Mascota</th>
+                        <th>Propietario</th>
+                        <th>Motivo</th>
+                        <th style="text-align: center;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="c : ${citas}">
+                        <td th:text="${c.id}" style="color: #94a3b8; font-weight: bold; font-size: 0.85rem;"></td>
+                        
+                        <td th:text="${#temporals.format(c.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+                        
+                        <td><span class="badge-mascota" th:text="${c.mascota?.nombre}"></span></td>
+                        
+                        <td th:text="${c.mascota?.cliente?.usuario?.nombreCompleto}" style="font-weight: 500;"></td>
+                        
+                        <td th:text="${c.motivo}"></td>
+                        
+                        <td style="text-align: center;">
+                            <a class="btn-del" th:href="@{/citas/cancelar/{id}(id=${c.id})}" 
+                               onclick="return confirm('⚠️ ¿Estás seguro de que deseas eliminar esta cita de forma permanente?')">
+                               Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div style="margin-top: 20px; font-size: 0.85rem; color: #64748b; text-align: right;">
+                Mostrando <span th:text="${#lists.size(citas)}">0</span> citas programadas.
+            </div>
+        </div>
+    </main>
+</body>
+</html>

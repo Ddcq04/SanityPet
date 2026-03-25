@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{common/fragments :: head}"></th:block>
+    <title>Mis Citas - SanityPet</title>
+</head>
+<body>
+    <header th:replace="~{common/fragments :: navbar}"></header>
+
+    <main class="container">
+        <div class="card">
+            <h1>📅 Mis Próximas Citas</h1>
+            <p>Aquí puedes consultar y gestionar las citas de tus mascotas.</p>
+            
+            <div th:if="${#lists.isEmpty(citas)}" style="text-align: center; padding: 40px;">
+                <div style="font-size: 3rem; margin-bottom: 10px;">🗓️</div>
+                <p>Aún no tienes ninguna cita programada.</p>
+                <a th:href="@{/citas/reservar}" class="btn-action" style="margin-top: 15px;">
+                    Reservar mi primera cita
+                </a>
+            </div>
+
+            <table th:unless="${#lists.isEmpty(citas)}">
+                <thead>
+                    <tr>
+                        <th>Mascota</th>
+                        <th>Día y Hora</th>
+                        <th>Motivo</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="c : ${citas}">
+                        <td><span class="badge-mascota" th:text="${c.mascota.nombre}"></span></td>
+                        <td th:text="${#temporals.format(c.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+                        <td th:text="${c.motivo}"></td>
+                        <td><span style="color: var(--accent); font-weight: bold;">● Confirmada</span></td>
+                        <td>
+                            <a th:href="@{/citas/cancelar/{id}(id=${c.id})}" 
+                               class="btn-del" onclick="return confirm('¿Seguro que quieres cancelar esta cita?')">
+                               Cancelar
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div th:unless="${#lists.isEmpty(citas)}" style="margin-top: 25px;">
+                <a th:href="@{/citas/reservar}" class="btn-action">+ Pedir otra cita</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

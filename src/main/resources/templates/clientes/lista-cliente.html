@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{common/fragments :: head}"></th:block>
+    <title>Gestión de Clientes - SanityPet</title>
+</head>
+<body>
+    <header th:replace="~{common/fragments :: navbar}"></header>
+
+    <main class="container">
+        <div class="card">
+            <h1>👥 Gestión de Clientes</h1>
+            <p>Administra la base de datos de propietarios de la clínica.</p>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <form th:action="@{/clientes/buscar}" method="get" style="display: flex; gap: 10px;">
+                    <input type="text" name="dni" class="form-control" placeholder="Buscar por DNI..." style="width: 200px; padding: 8px;">
+                    <button type="submit" class="btn-action" style="padding: 8px 15px;">🔍</button>
+                </form>
+                
+                <a th:href="@{/clientes/nuevo}" class="btn-action">
+                    ➕ Registrar Nuevo Cliente
+                </a>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>DNI</th>
+                        <th>Nombre Completo</th>
+                        <th>Teléfono</th>
+                        <th>Email</th>
+                        <th>Mascotas</th>
+                        <th style="text-align: center;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cl : ${clientes}">
+                        <td th:text="${cl.dni}" style="font-weight: bold;"></td>
+                        <td th:text="${cl.usuario?.nombreCompleto} ?: 'Sin nombre'"></td>
+                        <td th:text="${cl.telefono}"></td>
+                        <td th:text="${cl.email}"></td>
+                        <td>
+                            <span class="badge-mascota" th:text="${#lists.size(cl.mascotas)} + ' masc.'"></span>
+                        </td>
+                        <td style="text-align: center;">
+                            <a th:href="@{/clientes/editar/{id}(id=${cl.id})}" style="margin-right: 15px; text-decoration: none; color: var(--brand);">✏️ Editar</a>
+                            <a th:href="@{/clientes/eliminar/{id}(id=${cl.id})}" class="btn-del" 
+                               onclick="return confirm('¿Seguro que quieres eliminar este cliente? Se borrarán sus mascotas asociadas.')">🗑️ Eliminar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>
