@@ -20,8 +20,8 @@ public class ClienteService {
         clienteRepository.save(cliente);
     }
 
-    public Cliente buscarPorDni(String dni) {
-        return clienteRepository.findByDni(dni).orElse(null);
+    public List<Cliente> buscarPorNombre(String nombre) {
+        return clienteRepository.findByUsuarioNombreCompletoContainingIgnoreCase(nombre);
     }
     
     public Cliente buscarPorId(Long id) {

@@ -24,10 +24,17 @@ public class Usuario {
     @NotBlank(message = "La contraseña es obligatoria")
     @Column(nullable = false)
     private String password;
+    
+    @Transient // No se guarda en la DB
+    private String passwordRepeat;
+
+    @Transient // Opcional: para manejar la password en texto plano antes de cifrar
+    private String passwordPlana;
 
     @NotBlank
     private String rol; // ROLE_ADMIN o ROLE_USER
-
+    
+    @NotBlank(message = "El nombre es obligatorio")
     @Column(name = "nombre_completo")
     private String nombreCompleto;
 }

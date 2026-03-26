@@ -14,7 +14,7 @@
 
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
                 <form th:action="@{/clientes/buscar}" method="get" style="display: flex; gap: 10px;">
-                    <input type="text" name="dni" class="form-control" placeholder="Buscar por DNI..." style="width: 200px; padding: 8px;">
+                    <input type="text" name="busqueda" class="form-control" placeholder="Buscar por nombre..." style="width: 200px; padding: 8px;">
                     <button type="submit" class="btn-action" style="padding: 8px 15px;">🔍</button>
                 </form>
                 
@@ -24,33 +24,52 @@
             </div>
 
             <table>
-                <thead>
-                    <tr>
-                        <th>DNI</th>
-                        <th>Nombre Completo</th>
-                        <th>Teléfono</th>
-                        <th>Email</th>
-                        <th>Mascotas</th>
-                        <th style="text-align: center;">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="cl : ${clientes}">
-                        <td th:text="${cl.dni}" style="font-weight: bold;"></td>
-                        <td th:text="${cl.usuario?.nombreCompleto} ?: 'Sin nombre'"></td>
-                        <td th:text="${cl.telefono}"></td>
-                        <td th:text="${cl.email}"></td>
-                        <td>
-                            <span class="badge-mascota" th:text="${#lists.size(cl.mascotas)} + ' masc.'"></span>
-                        </td>
-                        <td style="text-align: center;">
-                            <a th:href="@{/clientes/editar/{id}(id=${cl.id})}" style="margin-right: 15px; text-decoration: none; color: var(--brand);">✏️ Editar</a>
-                            <a th:href="@{/clientes/eliminar/{id}(id=${cl.id})}" class="btn-del" 
-                               onclick="return confirm('¿Seguro que quieres eliminar este cliente? Se borrarán sus mascotas asociadas.')">🗑️ Eliminar</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <thead>
+        <tr>
+            <th>DNI</th>
+            <th>Nombre Completo</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Mascotas</th>
+            <th style="text-align: center;">Acciones</th>
+            <th th:if="${#authorization.expression('hasRole(''admin'')')}" style="text-align: center;">Rango</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="cl : ${clientes}">
+            <td th:text="${cl.dni}" style="font-weight: bold;"></td>
+            <td th:text="${cl.usuario?.nombreCompleto} ?: 'Sin nombre'"></td>
+            <td th:text="${cl.telefono}"></td>
+            <td th:text="${cl.email} ?: 'Sin email'"></td>
+            <td>
+                <span class="badge-mascota" th:text="${cl.mascotas != null ? #lists.size(cl.mascotas) : 0} + ' masc.'"></span>
+            </td>
+            
+            <td style="text-align: center; white-space: nowrap;">
+                <a th:href="@{/clientes/editar/{id}(id=${cl.id})}" style="margin-right: 15px; text-decoration: none; color: #3b82f6;">✏️</a>
+                <a th:href="@{/clientes/eliminar/{id}(id=${cl.id})}" 
+                   onclick="return confirm('¿Eliminar cliente?')" style="text-decoration: none; color: #ef4444;">🗑️</a>
+            </td>
+
+            <td th:if="${#authorization.expression('hasRole(''admin'')')}" style="text-align: center;">
+                <div th:if="${cl.usuario?.rol != 'admin'}">
+                    <a th:href="@{/clientes/hacer-admin/{id}(id=${cl.id})}" 
+                       class="btn-action" 
+                       style="background-color: #f59e0b; padding: 4px 8px; font-size: 0.75rem; white-space: nowrap;"
+                       onclick="return confirm('¿Promover a Admin?')">
+                       ⭐ Promover
+                    </a>
+                </div>
+                
+                <div th:if="${cl.usuario?.rol == 'admin'}">
+                    <span class="badge-admin" style="background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; display: inline-block;">
+                        Es Admin
+                    </span>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
         </div>
     </main>
 </body>
