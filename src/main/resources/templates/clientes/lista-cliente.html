@@ -17,6 +17,19 @@
                     <input type="text" name="busqueda" class="form-control" placeholder="Buscar por nombre..." style="width: 200px; padding: 8px;">
                     <button type="submit" class="btn-action" style="padding: 8px 15px;">🔍</button>
                 </form>
+                <a th:href="@{/clientes}" 
+					   class="btn-secondary" 
+					   style="text-decoration: none; 
+					          padding: 8px 15px; 
+					          border-radius: 8px; 
+					          background-color: #e2e8f0; 
+					          color: #475569; 
+					          font-weight: 500;
+					          display: inline-flex;
+					          align-items: center;
+					          transition: background 0.3s;">
+					    🧹 Limpiar filtros
+					</a>
                 
                 <a th:href="@{/clientes/nuevo}" class="btn-action">
                     ➕ Registrar Nuevo Cliente
@@ -39,7 +52,7 @@
         <tr th:each="cl : ${clientes}">
             <td th:text="${cl.dni}" style="font-weight: bold;"></td>
             <td th:text="${cl.usuario?.nombreCompleto} ?: 'Sin nombre'"></td>
-            <td th:text="${cl.telefono}"></td>
+            <td th:text="${cl.telefono}?: 'Sin telefono'"></td>
             <td th:text="${cl.email} ?: 'Sin email'"></td>
             <td>
                 <span class="badge-mascota" th:text="${cl.mascotas != null ? #lists.size(cl.mascotas) : 0} + ' masc.'"></span>

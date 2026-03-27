@@ -24,6 +24,11 @@ public class ClienteService {
         return clienteRepository.findByUsuarioNombreCompletoContainingIgnoreCase(nombre);
     }
     
+    public Cliente buscarPorDni(String dni) {
+        // Usamos el repositorio para buscar por el DNI del Cliente
+        return clienteRepository.findByDni(dni).orElse(null);
+    }
+    
     public Cliente buscarPorId(Long id) {
         // findById devuelve un Optional, lo gestionamos con orElse(null)
         return clienteRepository.findById(id).orElse(null);

@@ -13,12 +13,23 @@
             <p>Aquí puedes consultar y gestionar las citas de tus mascotas.</p>
             
             <div th:if="${#lists.isEmpty(citas)}" style="text-align: center; padding: 40px;">
-                <div style="font-size: 3rem; margin-bottom: 10px;">🗓️</div>
-                <p>Aún no tienes ninguna cita programada.</p>
-                <a th:href="@{/citas/reservar}" class="btn-action" style="margin-top: 15px;">
-                    Reservar mi primera cita
-                </a>
-            </div>
+			    <div th:if="${#lists.isEmpty(mascotas)}">
+			        <div style="font-size: 4rem; margin-bottom: 10px;">🐾</div>
+			        <h3>¡Vaya! Parece que aún no tienes mascotas registradas.</h3>
+			        <p>Para poder pedir una cita, primero necesitamos dar de alta a tu compañero.</p>
+			        <a th:href="@{/mascotas/nueva}" class="btn-action" style="display: inline-block; margin-top: 15px;">
+			            ➕ Registrar mi primera mascota
+			        </a>
+			    </div>
+			
+			    <div th:unless="${#lists.isEmpty(mascotas)}">
+			        <div style="font-size: 3rem; margin-bottom: 10px;">🗓️</div>
+			        <p>Aún no tienes ninguna cita programada para tus mascotas.</p>
+			        <a th:href="@{/citas/reservar}" class="btn-action" style="margin-top: 15px;">
+			            📅 Reservar mi primera cita
+			        </a>
+			    </div>
+			</div>
 
             <table th:unless="${#lists.isEmpty(citas)}">
                 <thead>

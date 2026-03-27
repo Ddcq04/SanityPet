@@ -3,6 +3,8 @@ package com.veterinaria.gestion.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import java.time.LocalDate;
 
 @Entity
@@ -24,5 +26,6 @@ public class Mascota {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
+    @ToString.Exclude // <--- ESTO EVITA EL BUCLE INFINITO
     private Cliente cliente;
 }

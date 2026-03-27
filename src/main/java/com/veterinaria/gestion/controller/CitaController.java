@@ -43,8 +43,10 @@ public class CitaController {
             model.addAttribute("citas", citaService.obtenerAgendaCompleta());
             return "citas/agenda"; // Retorna el HTML de gestión
         } else {
-            // El USUARIO solo ve las SUYAS
+        	// 1. Enviamos las citas del usuario
             model.addAttribute("citas", citaService.obtenerMisCitas(username));
+            // El USUARIO solo ve las SUYAS
+            model.addAttribute("mascotas", mascotaService.buscarMisMascotas(username));
             return "citas/mis-citas"; // Retorna el HTML de cliente
         }
     }

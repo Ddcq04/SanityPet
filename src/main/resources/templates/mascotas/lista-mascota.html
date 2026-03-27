@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{common/fragments :: head}"></th:block>
+    <title>Gestión de Clientes - SanityPet</title>
+</head>
+<body>
+    <header th:replace="~{common/fragments :: navbar}"></header>
+
+    <main class="container">
+	    <div class="card">
+	        <h1>🐾 Listado de Mascotas</h1>
+	        <p>Consulta todos los pacientes registrados en la clínica.</p>
+	
+	        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+	            <form th:action="@{/mascotas/buscar}" method="get" style="display: flex; gap: 10px; background: #f1f5f9; padding: 15px; border-radius: 8px;">
+    
+				    <input type="text" name="nombre" th:value="${nombreSeleccionado}" class="form-control" placeholder="Nombre...">
+				    
+				    <select name="especie" class="form-control">
+				        <option value="">Todas las especies</option>
+				        <option value="Perro" th:selected="${especieSeleccionada == 'Perro'}">Perro</option>
+				        <option value="Gato" th:selected="${especieSeleccionada == 'Gato'}">Gato</option>
+				        <option value="Ave" th:selected="${especieSeleccionada == 'Ave'}">Ave</option>
+				    </select>
+				
+				    <input type="text" name="raza" th:value="${razaSeleccionada}" class="form-control" placeholder="Raza...">
+				
+				    <button type="submit" class="btn-action">Filtrar</button>
+				    <a th:href="@{/mascotas}" 
+					   class="btn-secondary" 
+					   style="text-decoration: none; 
+					          padding: 8px 15px; 
+					          border-radius: 8px; 
+					          background-color: #e2e8f0; 
+					          color: #475569; 
+					          font-weight: 500;
+					          display: inline-flex;
+					          align-items: center;
+					          transition: background 0.3s;">
+					    🧹 Limpiar filtros
+					</a>
+				</form>
+	            <a th:href="@{/mascotas/nueva}" class="btn-action">➕ Nueva Mascota</a>
+	        </div>
+	
+	        <table>
+	            <thead>
+	                <tr>
+	                    <th>Nombre</th>
+	                    <th>Especie/Raza</th>
+	                    <th>Fecha Nac.</th>
+	                    <th>Dueño (Cliente)</th>
+	                    <th style="text-align: center;">Acciones</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr th:each="m : ${mascotas}">
+	                    <td th:text="${m.nombre}" style="font-weight: bold; color: var(--brand);"></td>
+	                    <td>
+	                        <span th:text="${m.especie}"></span> 
+	                        <small th:text="'(' + ${m.raza} + ')'" style="color: gray;"></small>
+	                    </td>
+	                    <td th:text="${#temporals.format(m.fechaNacimiento, 'dd/MM/yyyy')} ?: 'No registrada'"></td>
+	                    <td th:text="${m.cliente?.usuario?.nombreCompleto} ?: 'Sin asignar'"></td>
+	                    
+	                    <td style="text-align: center; white-space: nowrap;">
+	                        <a th:href="@{/mascotas/editar/{id}(id=${m.id})}" style="margin-right: 15px; text-decoration: none; color: #3b82f6;">✏️</a>
+	                        <a th:href="@{/mascotas/eliminar/{id}(id=${m.id})}" 
+	                           onclick="return confirm('¿Eliminar esta mascota?')" style="text-decoration: none; color: #ef4444;">🗑️</a>
+	                    </td>
+	                </tr>
+	            </tbody>
+	        </table>
+	    </div>
+	    <p th:text="'Se han encontrado ' + ${mascotas.size()} + ' mascotas.'"></p>
+	</main>
+</body>
+</html>

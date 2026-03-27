@@ -20,9 +20,10 @@ public class SecurityConfig {
 	          // 2. GESTIÓN DE CLIENTES: Solo el administrador puede crear, buscar o listar dueños
 	             .requestMatchers("/clientes/**").hasRole("admin")
 	          // 3. MASCOTAS: 
-	                // El administrador puede ver todas, y el usuario puede ver "mis-mascotas"
-	                // Usamos hasAnyRole para permitir a ambos entrar en este bloque
-	                .requestMatchers("/mascotas/mis-mascotas").hasAnyRole("user", "admin")
+	                // El administrador puede ver todas, y el usuario puede ver "mis-mascotas"d)
+	             // 1. Permitir que TODOS los logueados vean y creen sus mascotas
+	                .requestMatchers("/mascotas/mis-mascotas", "/mascotas/nueva", "/mascotas/guardar").hasAnyRole("user", "admin")
+	                // 2. Solo el ADMIN puede ver el listado global o borrar
 	                .requestMatchers("/mascotas/**").hasRole("admin")
 	          // 4. Citas: 
 	                .requestMatchers("/citas/**").hasAnyRole("admin", "user")
@@ -39,7 +40,7 @@ public class SecurityConfig {
 	    }
 	    @Bean
 	    public PasswordEncoder passwordEncoder() {
-	    	//return NoOpPasswordEncoder.getInstance();
-	       return new BCryptPasswordEncoder(); // Para manejar contraseñas seguras
+	    	return NoOpPasswordEncoder.getInstance();
+	       //return new BCryptPasswordEncoder(); // Para manejar contraseñas seguras
 	    }
 	}

@@ -31,16 +31,27 @@ public class MascotaService {
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado con DNI: " + dni));
         return mascotaRepository.findByClienteId(cliente.getId());
     }
+ // Para cargar la mascota en el formulario de edición
+    public Mascota buscarPorId(Long id) {
+        return mascotaRepository.findById(id).orElse(null);
+    }
 
+    // Para insertar o actualizar la mascota
     public void guardar(Mascota mascota) {
         mascotaRepository.save(mascota);
     }
-
-    public List<Mascota> buscarPorEspecie(String especie) {
-        return mascotaRepository.findByEspecie(especie);
+    
+    public void eliminar(Long id) {
+        mascotaRepository.deleteById(id);
     }
     
-    public List<Mascota> buscarPorRaza(String especie) {
-        return mascotaRepository.findByRaza(especie);
+    public List<Mascota> buscarFiltrado(String nombre, String especie, String raza) {
+        // Limpiamos los nulos para evitar errores
+        String n = (nombre == null) ? "" : nombre;
+        String e = (especie == null) ? "" : especie;
+        String r = (raza == null) ? "" : raza;
+
+        // Ejecuta la búsqueda combinada
+        return mascotaRepository.findByNombreContainingIgnoreCaseAndEspecieContainingIgnoreCaseAndRazaContainingIgnoreCase(n, e, r);
     }
 }
