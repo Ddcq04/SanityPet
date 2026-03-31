@@ -1,65 +1,92 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <th:block th:replace="~{common/fragments :: head}"></th:block>
-    <title th:text="${mascota.id == null ? 'Nueva Mascota' : 'Editar Mascota'} + ' - SanityPet'"></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Mascota</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/navfooter.css}">
+    <link rel="stylesheet" th:href="@{/css/mascotas/formulariomascota.css}">
 </head>
 <body>
-    <header th:replace="~{common/fragments :: navbar}"></header>
 
-    <main class="container">
-        <div class="card" style="max-width: 600px; margin: auto;">
-            <h1 th:text="${mascota.id == null ? '🐾 Registrar Mascota' : '✏️ Editar Mascota'}"></h1>
-            <p>Completa la información del paciente.</p>
+<header th:replace="~{common/navfooter :: navbar}">
+    <!-- navbar -->
+</header>
 
-            <form th:action="@{/mascotas/guardar}" th:object="${mascota}" method="post">
-                
-                <input type="hidden" th:field="*{id}">
+<main class="contenido-principal">
 
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Nombre de la Mascota:</label>
-                    <input type="text" th:field="*{nombre}" class="form-control" placeholder="Ej: Toby" required>
+    <div class="cabecera-pagina">
+        <h1 class="titulo-pagina">Registrar Mascota</h1>
+        <p class="subtitulo-pagina">Completa la información del nuevo paciente</p>
+    </div>
+
+    <div class="tarjeta-formulario">
+
+        <form th:action="@{/mascotas/guardar}" th:object="${mascota}" method="post">
+
+            <!-- Datos básicos -->
+            <div class="seccion">
+                <p class="seccion-titulo">Datos básicos</p>
+
+                <div class="campo-grupo">
+                    <label class="campo-etiqueta" for="nombre">Nombre de la mascota</label>
+                    <input class="campo-input" type="text" id="nombre" th:field="*{nombre}" placeholder="Ej: Toby" required>
                 </div>
 
-                <div style="display: flex; gap: 15px; margin-bottom: 15px;">
-                    <div class="form-group" style="flex: 1;">
-                        <label>Especie:</label>
-                        <select th:field="*{especie}" class="form-control" required>
-                            <option value="Perro">Perro</option>
-                            <option value="Gato">Gato</option>
-                            <option value="Ave">Ave</option>
-                            <option value="Otro">Otro</option>
-                        </select>
-                    </div>
-                    <div class="form-group" style="flex: 1;">
-                        <label>Raza:</label>
-                        <input type="text" th:field="*{raza}" class="form-control" placeholder="Ej: Labrador">
-                    </div>
-                </div>
-
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Fecha de Nacimiento:</label>
-                    <input type="date" th:field="*{fechaNacimiento}" class="form-control">
-                </div>
-
-                <div class="form-group" sec:authorize="hasRole('admin')" style="margin-bottom: 25px; padding: 15px; background: #f8fafc; border-radius: 8px;">
-                    <label style="font-weight: bold; color: var(--brand);">Asignar a Propietario:</label>
-                    <select th:field="*{cliente}" class="form-control">
-                        <option value="">-- Seleccionar Cliente --</option>
-                        <option th:each="cl : ${todosClientes}" 
-						        th:value="${cl.id}" 
-						        th:text="${cl.dni + ' - ' + (cl.usuario != null ? cl.usuario.nombreCompleto : 'Sin nombre')}">
-						</option>
+                <!-- Especie -->
+                <div class="campo-grupo">
+                    <label class="campo-etiqueta" for="especie">Especie</label>
+                    <select class="campo-select" id="especie" th:field="*{especie}" required>
+                        <option value="Perro">Perro</option>
+                        <option value="Gato">Gato</option>
+                        <option value="Ave">Ave</option>
+                        <option value="Otro">Otro</option>
                     </select>
-                    <small style="color: #64748b;">Si se deja vacío y eres cliente, se te asignará automáticamente.</small>
                 </div>
 
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
-                    <button type="submit" class="btn-action" style="flex: 1;">💾 Guardar Mascota</button>
-                    <a th:href="@{/mascotas}" class="btn-del" style="flex: 1; text-align: center; text-decoration: none; line-height: 2.5;">Cancelar</a>
+                <div class="fila-dos">
+                    <div class="campo-grupo">
+                        <label class="campo-etiqueta" for="raza">Raza</label>
+                        <input class="campo-input" type="text" id="raza" th:field="*{raza}" placeholder="Ej: Labrador">
+                    </div>
+                    <div class="campo-grupo">
+                        <label class="campo-etiqueta" for="fechaNacimiento">Fecha de nacimiento</label>
+                        <input class="campo-input" type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}">
+                    </div>
                 </div>
-            </form>
-        </div>
-    </main>
+            </div>
+
+            <!-- Propietario (solo admin) -->
+            <div class="seccion seccion-propietario" sec:authorize="hasRole('admin')">
+                <p class="seccion-titulo">Propietario</p>
+                <p class="seccion-desc">Si se deja vacío y eres cliente, se te asignará automáticamente.</p>
+                <div class="campo-grupo">
+                    <label class="campo-etiqueta" for="cliente">Asignar a cliente</label>
+                    <select class="campo-select" id="cliente" th:field="*{cliente}">
+                        <option value="">-- Seleccionar cliente --</option>
+                        <option th:each="c : ${todosClientes}"
+                                th:value="${c.id}"
+                                th:text="${c.dni} + ' - ' + ${c.usuario.nombreCompleto}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="botones-fila">
+                <a th:href="@{/mascotas/mis-mascotas}" class="boton-cancelar">Cancelar</a>
+                <button type="submit" class="boton-guardar">Guardar Mascota</button>
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+  <!-- FOOTER -->
+    <footer th:replace="~{common/navfooter :: pie}"></footer>
+
 </body>
 </html>

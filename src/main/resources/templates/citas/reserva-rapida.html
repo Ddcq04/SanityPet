@@ -1,68 +1,91 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>SanityPet - Reserva cita</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 500px; margin: 40px auto; padding: 20px; background-color: #f4f7f6; }
-        .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; text-align: center; margin-top: 0; }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; font-weight: 600; margin-bottom: 8px; color: #34495e; }
-        select, input { width: 100%; padding: 10px; border: 1px solid #dce4ec; border-radius: 5px; box-sizing: border-box; font-size: 14px; }
-        button { background-color: #3498db; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; width: 100%; font-size: 16px; font-weight: bold; transition: background 0.3s; }
-        button:hover { background-color: #2980b9; }
-        .back-link { display: block; text-align: center; margin-top: 20px; color: #7f8c8d; text-decoration: none; font-size: 14px; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservar Cita</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{css/navfooter.css}">
+    <link rel="stylesheet" th:href="@{css/citas/reserva-rapida.css}">
 </head>
+
 <body>
-    <div class="card">
-        <h1>Nueva Cita</h1>
-        
-        <form id="citaForm" th:action="@{/citas/reservar/guardar}" th:object="${cita}" method="post">
-            
-            <div class="form-group">
-                <label for="mascota">Seleccionar Mascota:</label>
-					<select th:field="*{mascota}" id="mascota" class="form-control" th:classappend="${#fields.hasErrors('mascota')} ? 'is-invalid' : ''" required>
-					    <option value="">-- Seleccione una mascota --</option>
-					    
-					    <option th:each="m : ${listaMascotas}" 
-					            th:value="${m.id}" 
-					            th:text="${m.nombre} + ' (' + ${m.cliente?.usuario?.nombreCompleto} + ')'">
-					    </option>
-					</select>
-				<small class="text-danger" th:if="${#fields.hasErrors('mascota')}" th:errors="*{mascota}"></small>
+
+    <header th:replace="~{common/navfooter :: navbar}">
+    </header>
+
+    <main class="contenido-principal">
+
+        <div class="cabecera-pagina">
+            <div>
+                <h1 class="titulo-pagina">Nueva Cita</h1>
+                <p class="subtitulo-pagina">Rellena el formulario para reservar una cita con nuestros veterinarios</p>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label>1. Elige el Día:</label>
-                <input type="date" id="fechaInput" th:classappend="${#fields.hasErrors('fechaHora')} ? 'is-invalid' : ''" required 
-                       th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}">
-                <small class="text-danger" th:if="${#fields.hasErrors('fechaHora')}" th:errors="*{fechaHora}"></small>
-            </div>
+        <div class="tarjeta-formulario">
 
-            <div class="form-group">
-                <label>2. Elige la Hora:</label>
-                <select id="horaSelect" th:field="*{fechaHora}" required>
-                    <option value="">-- Seleccione un día primero --</option>
-                </select>
-            </div>
+            <form id="citaForm" th:action="@{/citas/reservar/guardar}" th:object="${cita}" method="post">
 
-            <div class="form-group">
-                <label>Motivo:</label>
-                <input type="text" th:field="*{motivo}" placeholder="Ej: Vacunación" th:classappend="${#fields.hasErrors('motivo')} ? 'is-invalid' : ''" required>
-            	<small class="text-danger" th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}"></small>
-            </div>
+                <!-- Mascota -->
+                <div class="campo-grupo">
+                    <label class="campo-etiqueta" for="mascota">Mascota</label>
+                    <select class="campo-select" id="mascota" th:field="*{mascota}"
+                        th:classappend="${#fields.hasErrors('mascota')} ? 'is-invalid' : ''" required>
+                        <option value="">-- Selecciona una mascota --</option>
+                        <option th:each="m : ${listaMascotas}" th:value="${m.id}"
+                            th:text="${m.nombre} + ' (' + ${m.cliente?.usuario?.nombreCompleto} + ')'">
+                        </option>
+                    </select>
+                    <small class="texto-error" th:if="${#fields.hasErrors('mascota')}" th:errors="*{mascota}"></small>
+                </div>
 
-            <button type="submit">Confirmar Reserva</button>
-        </form>
+                <!-- Día -->
+                <div class="campo-grupo">
+                    <label class="campo-etiqueta" for="fechaInput">Día</label>
+                    <input class="campo-input" type="date" id="fechaInput"
+                        th:classappend="${#fields.hasErrors('fechaHora')} ? 'is-invalid' : ''"
+                        th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}" required>
+                    <small class="texto-error" th:if="${#fields.hasErrors('fechaHora')}"
+                        th:errors="*{fechaHora}"></small>
+                </div>
 
-        <a th:href="@{/home}" class="back-link">← Volver al inicio</a>
-    </div>
+                <!-- Hora -->
+                <div class="campo-grupo">
+                    <label class="campo-etiqueta" for="horaSelect">Hora</label>
+                    <select class="campo-select" id="horaSelect" th:field="*{fechaHora}" required>
+                        <option value="">-- Selecciona un día primero --</option>
+                    </select>
+                </div>
 
+                <!-- Motivo -->
+                <div class="campo-grupo">
+                    <label class="campo-etiqueta" for="motivo">Motivo</label>
+                    <input class="campo-input" type="text" id="motivo" th:field="*{motivo}"
+                        th:classappend="${#fields.hasErrors('motivo')} ? 'is-invalid' : ''"
+                        placeholder="Ej: Vacunación, revisión anual..." required>
+                    <small class="texto-error" th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}"></small>
+                </div>
+
+                <button type="submit" class="boton-confirmar">Confirmar Reserva</button>
+
+            </form>
+
+            <a th:href="@{/home}" href="#" class="enlace-volver">Volver al inicio</a>
+
+        </div>
+
+    </main>
+
+ <!-- FOOTER -->
+    <footer th:replace="~{common/navfooter :: pie}"></footer>
+    
     <script th:inline="javascript">
-        // --- LÓGICA 1: CARGAR HORAS LIBRES ---
-        document.getElementById('fechaInput').addEventListener('change', function() {
+        document.getElementById('fechaInput').addEventListener('change', function () {
             const fecha = this.value;
             const select = document.getElementById('horaSelect');
             select.innerHTML = '<option value="">Cargando...</option>';
@@ -78,32 +101,30 @@
                 });
         });
 
-        // --- LÓGICA 2: ENVÍO ASÍNCRONO (AJAX) ---
-        document.getElementById('citaForm').addEventListener('submit', function(e) {
-            e.preventDefault(); 
+        document.getElementById('citaForm').addEventListener('submit', function (e) {
+            e.preventDefault();
 
             const formData = new FormData(this);
 
             fetch(this.action, {
                 method: 'POST',
                 body: formData,
-                // Si tienes Spring Security activado, fetch enviará automáticamente el token CSRF 
-                // si el campo oculto está dentro del FormData.
             })
-            .then(async response => {
-                const data = await response.json();
-                if (response.ok) {
-                    alert(data.mensaje);
-                    window.location.href = '/citas'; // Redirigir al éxito
-                } else {
-                    alert("⚠️ Error: " + data.error);
-                }
-            })
-            .catch(err => {
-                alert("❌ Error de conexión con el servidor");
-            });
+                .then(async response => {
+                    const data = await response.json();
+                    if (response.ok) {
+                        alert(data.mensaje);
+                        window.location.href = '/citas';
+                    } else {
+                        alert("⚠️ Error: " + data.error);
+                    }
+                })
+                .catch(err => {
+                    alert("❌ Error de conexión con el servidor");
+                });
         });
     </script>
 
 </body>
+
 </html>

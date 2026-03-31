@@ -1,0 +1,252 @@
+/* Variables */
+:root {
+    --menta:        #2ec4b6;
+    --menta-oscuro: #20968b;
+    --menta-claro:  #e6fffa;
+    --texto:        #1e293b;
+    --texto-suave:  #64748b;
+    --fondo:        #f8fafc;
+    --blanco:       #ffffff;
+    --borde:        #e2e8f0;
+    --nav-alto:     68px;
+    --fuente-marca: 'Quicksand', sans-serif;
+    --fuente-base:  'Golos Text', sans-serif;
+}
+
+/* Área principal */
+.contenido-principal {
+    padding-top: calc(var(--nav-alto) + 2.5rem);
+    padding-bottom: 4rem;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+/* Cabecera */
+.cabecera-pagina {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    gap: 1rem;
+}
+
+.titulo-pagina {
+    font-family: var(--fuente-marca);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--texto);
+    margin-bottom: 0.25rem;
+}
+
+.subtitulo-pagina {
+    font-size: 0.88rem;
+    color: var(--texto-suave);
+}
+
+/* Botón nuevo */
+.boton-nuevo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.3rem;
+    background: var(--menta);
+    color: var(--blanco);
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    font-family: var(--fuente-marca);
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+
+.boton-nuevo:hover { background: var(--menta-oscuro); }
+
+/* Sección vacía */
+.seccion-vacia {
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 16px;
+    padding: 4rem 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.icono-vacio {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--menta-claro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: var(--menta-oscuro);
+    margin-bottom: 0.5rem;
+}
+
+.titulo-vacio {
+    font-family: var(--fuente-marca);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--texto);
+}
+
+.texto-vacio {
+    font-size: 0.9rem;
+    color: var(--texto-suave);
+    max-width: 360px;
+    line-height: 1.6;
+}
+
+.boton-accion {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.4rem;
+    background: var(--menta);
+    color: var(--blanco);
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    font-family: var(--fuente-marca);
+    margin-top: 0.5rem;
+    transition: background 0.2s;
+}
+
+.boton-accion:hover { background: var(--menta-oscuro); }
+
+/* Grid de tarjetas */
+.mascotas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Tarjeta mascota */
+.mascota-tarjeta {
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.mascota-tarjeta:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+/* Cabecera tarjeta */
+.tarjeta-cabecera {
+    padding: 1.5rem 1.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mascota-icono {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.mascota-icono.perro {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.mascota-icono.gato {
+    background: #ede9fe;
+    color: #7c3aed;
+}
+
+.mascota-icono.otro {
+    background: var(--menta-claro);
+    color: var(--menta-oscuro);
+}
+
+/* Etiqueta especie */
+.etiqueta-especie {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: var(--menta-claro);
+    color: var(--menta-oscuro);
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.etiqueta-gato {
+    background: #ede9fe;
+    color: #7c3aed;
+}
+
+/* Cuerpo tarjeta */
+.tarjeta-cuerpo {
+    padding: 0 1.5rem 1.25rem;
+}
+
+.mascota-nombre {
+    font-family: var(--fuente-marca);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--texto);
+    margin-bottom: 0.2rem;
+}
+
+.mascota-raza {
+    font-size: 0.84rem;
+    color: var(--texto-suave);
+    margin-bottom: 1rem;
+}
+
+.mascota-dato {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-top: 1px solid var(--borde);
+}
+
+.dato-label {
+    font-size: 0.8rem;
+    color: var(--texto-suave);
+}
+
+.dato-valor {
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--texto);
+}
+
+/* Pie tarjeta */
+.tarjeta-pie {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--borde);
+    background: var(--fondo);
+}
+
+.boton-pedir-cita {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.86rem;
+    font-weight: 700;
+    font-family: var(--fuente-marca);
+    color: var(--menta-oscuro);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.boton-pedir-cita:hover { color: var(--menta); }

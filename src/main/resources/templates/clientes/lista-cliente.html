@@ -1,89 +1,95 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:replace="~{common/fragments :: head}"></th:block>
-    <title>Gestión de Clientes - SanityPet</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/navfooter.css}">
+    <link rel="stylesheet" th:href="@{/css/clientes/listadeclientes.css}">
 </head>
 <body>
-    <header th:replace="~{common/fragments :: navbar}"></header>
 
-    <main class="container">
-        <div class="card">
-            <h1>👥 Gestión de Clientes</h1>
-            <p>Administra la base de datos de propietarios de la clínica.</p>
+<header th:replace="~{common/navfooter :: navbar}">
+</header>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-                <form th:action="@{/clientes/buscar}" method="get" style="display: flex; gap: 10px;">
-                    <input type="text" name="busqueda" class="form-control" placeholder="Buscar por nombre..." style="width: 200px; padding: 8px;">
-                    <button type="submit" class="btn-action" style="padding: 8px 15px;">🔍</button>
-                </form>
-                <a th:href="@{/clientes}" 
-					   class="btn-secondary" 
-					   style="text-decoration: none; 
-					          padding: 8px 15px; 
-					          border-radius: 8px; 
-					          background-color: #e2e8f0; 
-					          color: #475569; 
-					          font-weight: 500;
-					          display: inline-flex;
-					          align-items: center;
-					          transition: background 0.3s;">
-					    🧹 Limpiar filtros
-					</a>
-                
-                <a th:href="@{/clientes/nuevo}" class="btn-action">
-                    ➕ Registrar Nuevo Cliente
-                </a>
-            </div>
+<main class="contenido-principal">
 
-            <table>
-    <thead>
-        <tr>
-            <th>DNI</th>
-            <th>Nombre Completo</th>
-            <th>Teléfono</th>
-            <th>Email</th>
-            <th>Mascotas</th>
-            <th style="text-align: center;">Acciones</th>
-            <th th:if="${#authorization.expression('hasRole(''admin'')')}" style="text-align: center;">Rango</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="cl : ${clientes}">
-            <td th:text="${cl.dni}" style="font-weight: bold;"></td>
-            <td th:text="${cl.usuario?.nombreCompleto} ?: 'Sin nombre'"></td>
-            <td th:text="${cl.telefono}?: 'Sin telefono'"></td>
-            <td th:text="${cl.email} ?: 'Sin email'"></td>
-            <td>
-                <span class="badge-mascota" th:text="${cl.mascotas != null ? #lists.size(cl.mascotas) : 0} + ' masc.'"></span>
-            </td>
-            
-            <td style="text-align: center; white-space: nowrap;">
-                <a th:href="@{/clientes/editar/{id}(id=${cl.id})}" style="margin-right: 15px; text-decoration: none; color: #3b82f6;">✏️</a>
-                <a th:href="@{/clientes/eliminar/{id}(id=${cl.id})}" 
-                   onclick="return confirm('¿Eliminar cliente?')" style="text-decoration: none; color: #ef4444;">🗑️</a>
-            </td>
-
-            <td th:if="${#authorization.expression('hasRole(''admin'')')}" style="text-align: center;">
-                <div th:if="${cl.usuario?.rol != 'admin'}">
-                    <a th:href="@{/clientes/hacer-admin/{id}(id=${cl.id})}" 
-                       class="btn-action" 
-                       style="background-color: #f59e0b; padding: 4px 8px; font-size: 0.75rem; white-space: nowrap;"
-                       onclick="return confirm('¿Promover a Admin?')">
-                       ⭐ Promover
-                    </a>
-                </div>
-                
-                <div th:if="${cl.usuario?.rol == 'admin'}">
-                    <span class="badge-admin" style="background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; display: inline-block;">
-                        Es Admin
-                    </span>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-</table>
+    <div class="cabecera-pagina">
+        <div>
+            <h1 class="titulo-pagina">Gestión de Clientes</h1>
+            <p class="subtitulo-pagina">Administra la base de datos de propietarios de la clínica</p>
         </div>
-    </main>
+        <a th:href="@{/clientes/nuevo}" href="#" class="boton-nuevo">
+            <i class="fa-solid fa-plus"></i>Registrar nuevo cliente
+        </a>
+    </div>
+
+    <div class="tarjeta-tabla">
+
+        <!-- Barra de búsqueda -->
+        <div class="barra-busqueda">
+            <form th:action="@{/clientes/buscar}" method="get" class="formulario-busqueda">
+                <div class="input-busqueda">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" name="busqueda" placeholder="Buscar por nombre...">
+                </div>
+                <button type="submit" class="boton-buscar">Buscar</button>
+            </form>
+            <a th:href="@{/clientes}"class="boton-limpiar">
+                <i class="fa-solid fa-xmark"></i> Limpiar filtros
+            </a>
+        </div>
+
+        <!-- Tabla -->
+        <div class="contenedor-tabla">
+            <table class="tabla-clientes">
+                <thead>
+                    <tr>
+                        <th>DNI</th>
+                        <th>Nombre completo</th>
+                        <th>Teléfono</th>
+                        <th>Email</th>
+                        <th>Mascotas</th>
+                        <th>Acciones</th>
+                        <th th:if="${#authorization.expression('hasRole(''admin'')')}">Rango</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cl : ${clientes}">
+                        <td class="col-dni" th:text="${cl.dni}"></td>
+                        <td th:text="${cl.usuario?.nombreCompleto} ?: 'Sin nombre'"></td>
+                        <td th:text="${cl.telefono} ?: 'Sin teléfono'"></td>
+                        <td th:text="${cl.email} ?: 'Sin email'"></td>
+                        <td>
+                            <span class="etiqueta-mascotas" th:text="${cl.mascotas != null ? #lists.size(cl.mascotas) : 0} + ' masc.'"></span>
+                        </td>
+                        <td class="col-acciones">
+                            <a th:href="@{/clientes/editar/{id}(id=${cl.id})}" class="boton-editar"><i class="fa-solid fa-pen"></i></a>
+                            <a th:href="@{/clientes/eliminar/{id}(id=${cl.id})}" class="boton-eliminar" onclick="return confirm('¿Eliminar cliente?')"><i class="fa-solid fa-trash"></i></a>
+                        </td>
+                        <td class="col-rango" th:if="${#authorization.expression('hasRole(''admin'')')}">
+                            <div th:if="${cl.usuario?.rol != 'admin'}">
+                                <a th:href="@{/clientes/hacer-admin/{id}(id=${cl.id})}" class="boton-promover"
+                                   onclick="return confirm('¿Promover a Admin?')">
+                                    <i class="fa-solid fa-star"></i> Promover
+                                </a>
+                            </div>
+                            <div th:if="${cl.usuario?.rol == 'admin'}">
+                                <span class="etiqueta-admin">Es Admin</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</main>
+  <!-- FOOTER -->
+    <footer th:replace="~{common/navfooter :: pie}"></footer>
+
 </body>
 </html>

@@ -1,0 +1,190 @@
+/* Variables compartidas con navfooter */
+:root {
+    --menta:        #2ec4b6;
+    --menta-oscuro: #20968b;
+    --menta-claro:  #e6fffa;
+    --texto:        #1e293b;
+    --texto-suave:  #64748b;
+    --fondo:        #f8fafc;
+    --blanco:       #ffffff;
+    --borde:        #e2e8f0;
+    --nav-alto:     68px;
+    --fuente-marca: 'Quicksand', sans-serif;
+    --fuente-base:  'Golos Text', sans-serif;
+}
+
+/* Área principal */
+.citas-main {
+    padding-top: calc(var(--nav-alto) + 2.5rem);
+    padding-bottom: 4rem;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+/* Cabecera de sección */
+.citas-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    gap: 1rem;
+}
+
+.citas-titulo {
+    font-family: var(--fuente-marca);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--texto);
+    margin-bottom: 0.25rem;
+}
+
+.citas-subtitulo {
+    font-size: 0.88rem;
+    color: var(--texto-suave);
+}
+
+/* Botón nueva cita */
+.btn-nueva-cita {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.3rem;
+    background: var(--menta);
+    color: var(--blanco);
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    font-family: var(--fuente-marca);
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.btn-nueva-cita:hover { background: var(--menta-oscuro); }
+
+/* Tarjeta contenedora */
+.citas-tarjeta {
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* Info encima de la tabla */
+.tabla-info {
+    padding: 1rem 1.5rem;
+    font-size: 0.84rem;
+    color: var(--texto-suave);
+    border-bottom: 1px solid var(--borde);
+}
+
+.tabla-info strong {
+    color: var(--texto);
+}
+
+/* Scroll horizontal en pantallas pequeñas */
+.tabla-contenedor {
+    overflow-x: auto;
+}
+
+/* Tabla */
+.tabla-citas {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.tabla-citas thead tr {
+    background: var(--fondo);
+    border-bottom: 1px solid var(--borde);
+}
+
+.tabla-citas thead th {
+    padding: 0.85rem 1.25rem;
+    text-align: left;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--texto-suave);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+
+.tabla-citas tbody tr {
+    border-bottom: 1px solid var(--borde);
+    transition: background 0.15s;
+}
+
+.tabla-citas tbody tr:last-child {
+    border-bottom: none;
+}
+
+.tabla-citas tbody tr:hover {
+    background: var(--fondo);
+}
+
+.tabla-citas tbody td {
+    padding: 1rem 1.25rem;
+    color: var(--texto);
+    vertical-align: middle;
+}
+
+/* Columna ID */
+.col-id {
+    color: var(--texto-suave) !important;
+    font-weight: 700;
+    font-size: 0.82rem !important;
+}
+
+/* Columna propietario */
+.col-propietario {
+    font-weight: 500;
+}
+
+/* Badge nombre mascota */
+.badge-mascota {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: var(--menta-claro);
+    color: var(--menta-oscuro);
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+/* Columna acciones */
+.col-acciones {
+    text-align: center;
+}
+
+/* Botón eliminar */
+.btn-eliminar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #ef4444;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-eliminar:hover {
+    background: #fee2e2;
+    border-color: #ef4444;
+}
+
+/* Pie de la tabla */
+.tabla-pie {
+    padding: 1rem 1.5rem;
+    font-size: 0.85rem;
+    color: var(--texto-suave);
+    text-align: right;
+    border-top: 1px solid var(--borde);
+}

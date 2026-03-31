@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>barra de navegacion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/navfooter.css}">
+</head>
+<body>
+
+<!-- navegacion-->
+<header th:fragment="navbar">
+    <div class="nav-contenedor">
+        <a th:href="@{/home}" class="nav-logo">
+            <img th:src="@{/logo/SANYTYPETlogo.png}" alt="SanityPet" class="nav-logo-img">
+        </a>
+        <nav class="nav-enlaces">
+            <ul class="nav-lista">
+                <li><a th:href="@{/home}" class="nav-link">Inicio</a></li>
+                <li sec:authorize="hasRole('admin')"><a th:href="@{/clientes}" class="nav-link">Clientes</a></li>
+                <li sec:authorize="hasRole('admin')"><a th:href="@{/citas}" class="nav-link">Citas</a></li>
+                <li sec:authorize="hasRole('user')"><a th:href="@{/citas}" class="nav-link">Mis citas</a></li>
+                <li sec:authorize="hasRole('admin')"><a th:href="@{/mascotas}" class="nav-link">Mascotas</a></li>
+                <li sec:authorize="hasRole('user')"><a th:href="@{/mascotas/mis-mascotas}" class="nav-link">Mis mascotas</a></li>
+                <li><a th:href="@{/home}" class="nav-link">Tienda virtual</a></li>
+            </ul>
+        </nav>
+        <div class="nav-acciones">
+            <span class="user-name" th:text="${#authentication.name}">Usuario</span>
+            <form th:action="@{/logout}" method="post" style="display:inline">
+                <button type="submit" class="btn-unirse">Cerrar sesión</button>
+            </form>
+        </div>
+    </div>
+</header>
+
+
+<footer th:fragment="pie">
+
+    <div class="pie-cuerpo">
+        <div class="pie-marca">
+            <img src="/logo/SANYTYPETlogo.png" alt="SanityPet" class="pie-logo">
+            <p class="pie-desc">Clínica veterinaria comprometida con el bienestar y la salud de tu mascota desde 2014.</p>
+            <div class="pie-redes">
+                <a href="#" class="pie-red"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="pie-red"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="pie-red"><i class="fa-brands fa-x-twitter"></i></a>
+            </div>
+        </div>
+
+        
+    </div>
+
+    <div class="pie-inferior">
+        <p>&copy; 2026 <strong>SanityPet</strong>. Todos los derechos reservados.</p>
+        <div class="pie-legal-enlaces">
+            <a href="#">Política de privacidad</a>
+            <span class="pie-legal-sep">·</span>
+            <a href="#">Términos de uso</a>
+            <span class="pie-legal-sep">·</span>
+            <a href="#">Política de cookies</a>
+            <span class="pie-legal-sep">·</span>
+            <a href="#">Aviso legal</a>
+        </div>
+    </div>
+
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,238 @@
+/* Variables */
+:root {
+    --menta:        #2ec4b6;
+    --menta-oscuro: #20968b;
+    --menta-claro:  #e6fffa;
+    --texto:        #1e293b;
+    --texto-suave:  #64748b;
+    --fondo:        #f8fafc;
+    --blanco:       #ffffff;
+    --borde:        #e2e8f0;
+    --nav-alto:     68px;
+    --fuente-marca: 'Quicksand', sans-serif;
+    --fuente-base:  'Golos Text', sans-serif;
+}
+
+/* Área principal */
+.contenido-principal {
+    padding-top: calc(var(--nav-alto) + 2.5rem);
+    padding-bottom: 4rem;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+/* Cabecera */
+.cabecera-pagina {
+    margin-bottom: 2rem;
+}
+
+.titulo-pagina {
+    font-family: var(--fuente-marca);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--texto);
+    margin-bottom: 0.25rem;
+}
+
+.subtitulo-pagina {
+    font-size: 0.88rem;
+    color: var(--texto-suave);
+}
+
+/* Sección vacía */
+.seccion-vacia {
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 16px;
+    padding: 4rem 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.icono-vacio {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--menta-claro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: var(--menta-oscuro);
+    margin-bottom: 0.5rem;
+}
+
+.icono-vacio--calendario {
+    background: #eff6ff;
+    color: #3b82f6;
+}
+
+.titulo-vacio {
+    font-family: var(--fuente-marca);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--texto);
+}
+
+.texto-vacio {
+    font-size: 0.9rem;
+    color: var(--texto-suave);
+    max-width: 380px;
+    line-height: 1.6;
+}
+
+.boton-accion {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.4rem;
+    background: var(--menta);
+    color: var(--blanco);
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    font-family: var(--fuente-marca);
+    margin-top: 0.5rem;
+    transition: background 0.2s;
+}
+
+.boton-accion:hover { background: var(--menta-oscuro); }
+
+/* Tarjeta con tabla */
+.tarjeta-tabla {
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* Scroll horizontal */
+.contenedor-tabla {
+    overflow-x: auto;
+}
+
+/* Tabla */
+.tabla-citas {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.tabla-citas thead tr {
+    background: var(--fondo);
+    border-bottom: 1px solid var(--borde);
+}
+
+.tabla-citas thead th {
+    padding: 0.85rem 1.25rem;
+    text-align: left;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--texto-suave);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+
+.tabla-citas tbody tr {
+    border-bottom: 1px solid var(--borde);
+    transition: background 0.15s;
+}
+
+.tabla-citas tbody tr:last-child { border-bottom: none; }
+
+.tabla-citas tbody tr:hover { background: var(--fondo); }
+
+.tabla-citas tbody td {
+    padding: 1rem 1.25rem;
+    color: var(--texto);
+    vertical-align: middle;
+}
+
+/* Etiqueta mascota */
+.etiqueta-mascota {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: var(--menta-claro);
+    color: var(--menta-oscuro);
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+/* Etiqueta estado */
+.etiqueta-estado {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.75rem;
+    background: #f0fdf4;
+    color: #16a34a;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.etiqueta-estado::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #16a34a;
+}
+
+/* Columna acciones */
+.columna-acciones { text-align: center; }
+
+/* Botón cancelar */
+.boton-cancelar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #ef4444;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.boton-cancelar:hover {
+    background: #fee2e2;
+    border-color: #ef4444;
+}
+
+/* Pie de la tarjeta */
+.pie-tabla {
+    padding: 1.25rem 1.5rem;
+    border-top: 1px solid var(--borde);
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Botón nueva cita */
+.boton-nueva-cita {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.3rem;
+    background: var(--menta);
+    color: var(--blanco);
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    font-family: var(--fuente-marca);
+    transition: background 0.2s;
+}
+
+.boton-nueva-cita:hover { background: var(--menta-oscuro); }

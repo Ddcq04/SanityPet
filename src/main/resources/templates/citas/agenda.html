@@ -1,24 +1,40 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <th:block th:replace="~{common/fragments :: head}"></th:block>
-    <title>Panel Admin - SanityPet</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/navfooter.css">
+    <link rel="stylesheet" href="css/citas/agenda.css">
 </head>
 <body>
-    <header th:replace="~{common/fragments :: navbar}"></header>
 
-    <main class="container">
-        <div class="card">
-            <h1>📋 Gestión Global de Citas</h1>
-            <p>Panel de administración para la gestión de la agenda diaria de la clínica.</p>
-            
-            <div style="margin-bottom: 25px; margin-top: 15px;">
-                <a th:href="@{/citas/reservar}" class="btn-action">
-                    ➕ Registrar Nueva Cita
-                </a>
-            </div>
+<header th:replace="~{common/navfooter :: navbar}">
+    <!-- navbar -->
+</header>
 
-            <table>
+<main class="citas-main">
+
+    <div class="citas-cabecera">
+        <div>
+            <h1 class="citas-titulo">Gestión de Citas</h1>
+            <p class="citas-subtitulo">Panel de administración de la agenda de la clínica</p>
+        </div>
+        <a th:href="@{/citas/reservar}" href="#" class="btn-nueva-cita">
+            <i class="fa-solid fa-plus"></i> Nueva Cita
+        </a>
+    </div>
+
+    <div class="citas-tarjeta">
+
+        <div class="tabla-info">
+            Mostrando <strong th:text="${#lists.size(citas)}">0</strong> citas programadas
+        </div>
+
+        <div class="tabla-contenedor">
+            <table class="tabla-citas">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -26,35 +42,42 @@
                         <th>Mascota</th>
                         <th>Propietario</th>
                         <th>Motivo</th>
-                        <th style="text-align: center;">Acciones</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="c : ${citas}">
-                        <td th:text="${c.id}" style="color: #94a3b8; font-weight: bold; font-size: 0.85rem;"></td>
-                        
+                        <td class="col-id" th:text="${c.id}"></td>
+
                         <td th:text="${#temporals.format(c.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
-                        
+
                         <td><span class="badge-mascota" th:text="${c.mascota?.nombre}"></span></td>
-                        
-                        <td th:text="${c.mascota?.cliente?.usuario?.nombreCompleto}" style="font-weight: 500;"></td>
-                        
+
+                        <td class="col-propietario" th:text="${c.mascota?.cliente?.usuario?.nombreCompleto}"></td>
+
                         <td th:text="${c.motivo}"></td>
                         
-                        <td style="text-align: center;">
-                            <a class="btn-del" th:href="@{/citas/cancelar/{id}(id=${c.id})}" 
+                        <td class="col-acciones">
+                            <a class="btn-eliminar"
+                               th:href="@{/citas/cancelar/{id}(id=${c.id})}"
                                onclick="return confirm('⚠️ ¿Estás seguro de que deseas eliminar esta cita de forma permanente?')">
-                               Eliminar
+                                <i class="fa-solid fa-trash"></i> Eliminar
                             </a>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            
-            <div style="margin-top: 20px; font-size: 0.85rem; color: #64748b; text-align: right;">
-                Mostrando <span th:text="${#lists.size(citas)}">0</span> citas programadas.
-            </div>
         </div>
-    </main>
+
+        <div class="tabla-pie">
+            Mostrando <span th:text="${#lists.size(citas)}">0</span> citas programadas.
+        </div>
+
+    </div>
+
+</main>
+  <!-- FOOTER -->
+    <footer th:replace="~{common/navfooter :: pie}"></footer>
+
 </body>
 </html>

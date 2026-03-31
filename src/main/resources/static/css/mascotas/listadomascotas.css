@@ -1,0 +1,282 @@
+/* Variables */
+:root {
+    --menta:        #2ec4b6;
+    --menta-oscuro: #20968b;
+    --menta-claro:  #e6fffa;
+    --texto:        #1e293b;
+    --texto-suave:  #64748b;
+    --fondo:        #f8fafc;
+    --blanco:       #ffffff;
+    --borde:        #e2e8f0;
+    --nav-alto:     68px;
+    --fuente-marca: 'Quicksand', sans-serif;
+    --fuente-base:  'Golos Text', sans-serif;
+}
+
+/* Área principal */
+.contenido-principal {
+    padding-top: calc(var(--nav-alto) + 2.5rem);
+    padding-bottom: 4rem;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+/* Cabecera */
+.cabecera-pagina {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    gap: 1rem;
+}
+
+.titulo-pagina {
+    font-family: var(--fuente-marca);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--texto);
+    margin-bottom: 0.25rem;
+}
+
+.subtitulo-pagina {
+    font-size: 0.88rem;
+    color: var(--texto-suave);
+}
+
+/* Botón nueva mascota */
+.boton-nuevo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.3rem;
+    background: var(--menta);
+    color: var(--blanco);
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    font-family: var(--fuente-marca);
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+
+.boton-nuevo:hover { background: var(--menta-oscuro); }
+
+/* Tarjeta contenedora */
+.tarjeta-tabla {
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* Barra de filtros */
+.barra-filtros {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--borde);
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.formulario-filtros {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.input-busqueda {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    background: var(--fondo);
+    transition: border-color 0.2s;
+}
+
+.input-busqueda:focus-within { border-color: var(--menta); }
+
+.input-busqueda i {
+    color: var(--texto-suave);
+    font-size: 0.82rem;
+}
+
+.input-busqueda input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 0.86rem;
+    font-family: var(--fuente-base);
+    color: var(--texto);
+    width: 140px;
+}
+
+.input-busqueda input::placeholder { color: #cbd5e1; }
+
+/* Select filtro */
+.filtro-select {
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    font-size: 0.86rem;
+    font-family: var(--fuente-base);
+    color: var(--texto);
+    background: var(--fondo);
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    appearance: none;
+}
+
+.filtro-select:focus { border-color: var(--menta); }
+
+/* Botón filtrar */
+.boton-filtrar {
+    padding: 0.55rem 1.1rem;
+    background: var(--menta);
+    color: var(--blanco);
+    border: none;
+    border-radius: 10px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    font-family: var(--fuente-marca);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.boton-filtrar:hover { background: var(--menta-oscuro); }
+
+/* Botón limpiar */
+.boton-limpiar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1rem;
+    background: var(--fondo);
+    color: var(--texto-suave);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    font-size: 0.86rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+}
+
+.boton-limpiar:hover { background: var(--borde); color: var(--texto); }
+
+/* Scroll horizontal */
+.contenedor-tabla { overflow-x: auto; }
+
+/* Tabla */
+.tabla-mascotas {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.tabla-mascotas thead tr {
+    background: var(--fondo);
+    border-bottom: 1px solid var(--borde);
+}
+
+.tabla-mascotas thead th {
+    padding: 0.85rem 1.25rem;
+    text-align: left;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--texto-suave);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+
+.tabla-mascotas tbody tr {
+    border-bottom: 1px solid var(--borde);
+    transition: background 0.15s;
+}
+
+.tabla-mascotas tbody tr:last-child { border-bottom: none; }
+.tabla-mascotas tbody tr:hover { background: var(--fondo); }
+
+.tabla-mascotas tbody td {
+    padding: 1rem 1.25rem;
+    color: var(--texto);
+    vertical-align: middle;
+}
+
+/* Columna nombre */
+.col-nombre {
+    font-weight: 700;
+    color: var(--menta-oscuro) !important;
+}
+
+/* Etiqueta especie */
+.etiqueta-especie {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    background: var(--menta-claro);
+    color: var(--menta-oscuro);
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-right: 0.4rem;
+}
+
+/* Raza */
+.col-raza {
+    font-size: 0.84rem;
+    color: var(--texto-suave);
+}
+
+/* Acciones */
+.col-acciones { white-space: nowrap; }
+
+.boton-editar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #eff6ff;
+    color: #3b82f6;
+    text-decoration: none;
+    font-size: 0.82rem;
+    margin-right: 0.4rem;
+    transition: background 0.2s;
+}
+
+.boton-editar:hover { background: #dbeafe; }
+
+.boton-eliminar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #fef2f2;
+    color: #ef4444;
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: background 0.2s;
+}
+
+.boton-eliminar:hover { background: #fee2e2; }
+
+/* Pie tabla */
+.tabla-pie {
+    padding: 1rem 1.5rem;
+    font-size: 0.84rem;
+    color: var(--texto-suave);
+    border-top: 1px solid var(--borde);
+}
+
+.tabla-pie strong { color: var(--texto); }

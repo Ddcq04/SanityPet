@@ -1,45 +1,60 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>SanityPet - Iniciar Sesión</title>
-    <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f7f6; }
-        .login-container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 300px; }
-        .error { color: red; margin-bottom: 1rem; font-size: 0.9rem; }
-        .logout { color: green; margin-bottom: 1rem; font-size: 0.9rem; }
-        input { width: 100%; padding: 0.5rem; margin: 0.5rem 0; box-sizing: border-box; }
-        button { width: 100%; padding: 0.7rem; background-color: #2c3e50; color: white; border: none; border-radius: 4px; cursor: pointer; }
-        button:hover { background-color: #34495e; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de sesión</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
 <body>
 
-<div class="login-container">
-    <h2>SanityPet Login</h2>
+    <div class="containermain">
+        <div class="seccionizq">
+            <div class="titulo">
+                <h2>Bienvenido a</h2>
+<img th:src="@{/logo/SANYTYPETlogo.png}" alt="SanityPet" class="logo-acceso">
+                <p>Comprometidos con el cuidado y bienestar de tu mascota</p>
+            </div>
+        </div>
 
-    <div th:if="${param.error}" class="error">
-        Usuario o contraseña incorrectos.
+        <div class="seccionder">
+            <form th:action="@{/login}" method="post">
+                <h3>Iniciar Sesión</h3>
+                <p>Ingresa tus credenciales</p>
+
+                <div th:if="${param.error}" class="error">
+                    Usuario o contraseña incorrectos.
+                </div>
+
+                <div th:if="${param.logout}" class="logout">
+                    Has cerrado sesión correctamente.
+                </div>
+
+                <div class="inputs">
+                    <label>Usuario</label>
+                    <input type="text" name="username" placeholder="DNI" required autofocus>
+                </div>
+
+                <div class="inputs">
+                    <label>Contraseña</label>
+                    <input type="password" name="password" placeholder="••••••••" required>
+                </div>
+
+                <div class="form-footer">
+                    <label><input type="checkbox"> Recordarme</label>
+                    <a href="#">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <button type="submit" class="buton">Acceder</button>
+            </form>
+
+            <div class="create-account">
+                ¿Nuevo en la clínica? <a href="registrarse.html">Crea una cuenta de socio</a>
+            </div>
+        </div>
     </div>
-
-    <div th:if="${param.logout}" class="logout">
-        Has cerrado sesión correctamente.
-    </div>
-
-    <form th:action="@{/login}" method="post">
-        <div>
-            <label>Usuario:</label>
-            <input type="text" name="username" required autofocus />
-        </div>
-        <div>
-            <label>Contraseña:</label>
-            <input type="password" name="password" required />
-        </div>
-        <div>
-            <button type="submit">Entrar</button>
-        </div>
-    </form>
-</div>
 
 </body>
 </html>

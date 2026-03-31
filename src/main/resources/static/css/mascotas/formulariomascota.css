@@ -1,0 +1,187 @@
+/* Variables */
+:root {
+    --menta:        #2ec4b6;
+    --menta-oscuro: #20968b;
+    --menta-claro:  #e6fffa;
+    --texto:        #1e293b;
+    --texto-suave:  #64748b;
+    --fondo:        #f8fafc;
+    --blanco:       #ffffff;
+    --borde:        #e2e8f0;
+    --nav-alto:     68px;
+    --fuente-marca: 'Quicksand', sans-serif;
+    --fuente-base:  'Golos Text', sans-serif;
+}
+
+/* Área principal */
+.contenido-principal {
+    padding-top: calc(var(--nav-alto) + 2.5rem);
+    padding-bottom: 4rem;
+    max-width: 680px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+/* Cabecera */
+.cabecera-pagina { margin-bottom: 2rem; }
+
+.titulo-pagina {
+    font-family: var(--fuente-marca);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--texto);
+    margin-bottom: 0.25rem;
+}
+
+.subtitulo-pagina {
+    font-size: 0.88rem;
+    color: var(--texto-suave);
+}
+
+/* Tarjeta */
+.tarjeta-formulario {
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+}
+
+/* Sección */
+.seccion {
+    padding: 2rem 2.5rem;
+    border-bottom: 1px solid var(--borde);
+}
+
+.seccion-propietario {
+    border-left: 4px solid var(--menta);
+    background: linear-gradient(to right, var(--menta-claro), var(--blanco));
+}
+
+.seccion-titulo {
+    font-family: var(--fuente-marca);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--menta-oscuro);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.seccion-titulo::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--borde);
+}
+
+.seccion-desc {
+    font-size: 0.82rem;
+    color: var(--texto-suave);
+    margin-top: -1rem;
+    margin-bottom: 1.25rem;
+}
+
+/* Dos columnas */
+.fila-dos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+/* Grupo campo */
+.campo-grupo { margin-bottom: 1.5rem; }
+.campo-grupo:last-child { margin-bottom: 0; }
+
+/* Etiqueta */
+.campo-etiqueta {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--texto);
+    margin-bottom: 0.5rem;
+}
+
+.campo-etiqueta::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--menta);
+    flex-shrink: 0;
+}
+
+/* Input y select */
+.campo-input,
+.campo-select {
+    width: 100%;
+    padding: 0.8rem 1.1rem;
+    border: 1.5px solid var(--borde);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-family: var(--fuente-base);
+    color: var(--texto);
+    background: var(--fondo);
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    box-sizing: border-box;
+    appearance: none;
+}
+
+.campo-input:focus,
+.campo-select:focus {
+    outline: none;
+    border-color: var(--menta);
+    background: var(--blanco);
+    box-shadow: 0 0 0 4px rgba(46, 196, 182, 0.1);
+}
+
+.campo-input::placeholder { color: #cbd5e1; }
+
+/* Botones */
+.botones-fila {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1.75rem 2.5rem;
+    justify-content: flex-end;
+    background: var(--fondo);
+}
+
+.boton-cancelar {
+    padding: 0.8rem 1.75rem;
+    background: var(--blanco);
+    color: var(--texto-suave);
+    border: 1.5px solid var(--borde);
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+}
+
+.boton-cancelar:hover {
+    background: var(--borde);
+    color: var(--texto);
+}
+
+.boton-guardar {
+    padding: 0.8rem 2rem;
+    background: var(--menta);
+    color: var(--blanco);
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-family: var(--fuente-marca);
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.boton-guardar:hover { background: var(--menta-oscuro); }
+.boton-guardar:active { transform: scale(0.98); }

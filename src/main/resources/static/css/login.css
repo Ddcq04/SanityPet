@@ -1,0 +1,183 @@
+:root {
+    --menta:           #2ec4b6;
+    --whitem:          #f7f9fb;
+    --bordeM:          1.25rem;
+    --text-main:       #2d3436;
+    --secondary-color: #2ec4b6;
+
+    font-family: 'Quicksand', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.containermain {
+    background: var(--whitem);
+    display: flex;
+    width: 56rem; /* 900px */
+    border-radius: var(--bordeM);
+    height: 34rem; /* 550px */
+    box-shadow: 0 0 2.1875rem rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+/* izquierda ----------------------------------------*/
+.seccionizq {
+    flex: 1;
+    background: var(--menta);
+    display: flex;
+    align-items: center;
+    padding: 2.5rem;
+    color: white;
+    overflow: hidden;
+}
+
+.titulo h2 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+}
+
+.logo-acceso {
+    width: 100%;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    display: block;
+    margin-top: 0.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.titulo p {
+    font-size: 0.95rem;
+    opacity: 0.85;
+    line-height: 1.6;
+}
+
+/* Área del formulario */
+.seccionder {
+    flex: 1.2;
+    padding: 2rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+}
+
+h3 {
+    font-size: 1.8rem;
+    color: var(--text-main);
+    margin-bottom: 0.25rem;
+}
+
+form p {
+    color: #888;
+    font-size: 0.9rem;
+    margin-bottom: 1.2rem;
+}
+
+.inputs {
+    margin-bottom: 0.85rem;
+}
+
+.inputs label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-main);
+}
+
+.inputs input {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    border: 0.12rem solid #edf2f7;
+    border-radius: 0.62rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+.inputs input:focus {
+    border-color: var(--menta);
+}
+
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 1.2rem;
+}
+
+.form-footer a {
+    text-decoration: none;
+    color: var(--menta);
+    font-weight: 600;
+}
+
+/* Botón ------------------------*/
+.buton {
+    width: 100%;
+    background-color: var(--menta);
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 0.6rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-bottom: 1rem;
+}
+
+.buton:hover {
+    background-color: #25a195;
+    transform: translateY(-0.125rem);
+}
+
+.create-account {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #888;
+}
+
+.create-account a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.error {
+    color: #e53e3e;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    text-align: center;
+    letter-spacing: 0.01em;
+}
+
+.logout {
+    color: var(--menta);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    text-align: center;
+    letter-spacing: 0.01em;
+}
+
+
+
+
+
+

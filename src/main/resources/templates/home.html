@@ -1,10 +1,284 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-	<head>
-	    <th:block th:replace="~{common/fragments :: head}"></th:block>
-	    <title>SanityPet</title>
-	</head>
-	<body>
-	    <header th:replace="~{common/fragments :: navbar}"></header>
-	</body>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <link rel="stylesheet" href="css/navfooter.css">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+
+    <!-- NAVEGACIÓN  -->
+    <header th:replace="~{common/navfooter :: navbar}">
+    </header>
+
+    <!-- PRINCIPAL -->
+    <section class="hero" id="inicio">
+        <div class="principal-contenido">
+            <span class="principal-badge"><i class="fa-solid fa-shield-heart"></i> Cuidamos lo que más quieres</span>
+            <h1 class="principal-titulo">
+                Tu mascota merece<br>
+                <span class="principal-titulo-color">la mejor atención</span>
+            </h1>
+            <p class="principal-descripcion">
+                En SanityPet combinamos experiencia veterinaria, tecnología y un trato cercano
+                para garantizar el bienestar de tu compañero de vida.
+            </p>
+            <div class="principal-botones">
+                <a href="#servicios" class="boton-principal">
+                    Ver servicios <i class="fa-solid fa-arrow-down"></i>
+                </a>
+            </div>
+            <div class="principal-estadisticas">
+                <div class="estadistica">
+                    <span class="estadistica-numero">+500</span>
+                    <span class="estadistica-texto">Socios</span>
+                </div>
+                <div class="estadistica-separador"></div>
+                <div class="estadistica">
+                    <span class="estadistica-numero">+1.200</span>
+                    <span class="estadistica-texto">Mascotas atendidas</span>
+                </div>
+                <div class="estadistica-separador"></div>
+                <div class="estadistica">
+                    <span class="estadistica-numero">10 años</span>
+                    <span class="estadistica-texto">de experiencia</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUIÉNES SOMOS -->
+    <section class="nosotros" id="nosotros">
+        <div class="seccion-contenedor nosotros-grid">
+            <div class="nosotros-texto">
+                <span class="etiqueta-seccion">Sobre nosotros</span>
+                <h2 class="seccion-titulo">Más de una década cuidando vidas</h2>
+                <p class="nosotros-parrafo">
+                    Somos un equipo de veterinarios apasionados comprometidos con ofrecer
+                    una atención de calidad, cercana y accesible. Desde 2014 hemos acompañado
+                    a cientos de familias y sus mascotas.
+                </p>
+                <div class="nosotros-puntos">
+                    <div class="nosotros-punto">
+                        <div class="punto-icono"><i class="fa-solid fa-check"></i></div>
+                        <span>Equipo titulado y en formación continua</span>
+                    </div>
+                    <div class="nosotros-punto">
+                        <div class="punto-icono"><i class="fa-solid fa-check"></i></div>
+                        <span>Instalaciones modernas y equipadas</span>
+                    </div>
+                    <div class="nosotros-punto">
+                        <div class="punto-icono"><i class="fa-solid fa-check"></i></div>
+                        <span>Atención personalizada para cada mascota</span>
+                    </div>
+                    <div class="nosotros-punto">
+                        <div class="punto-icono"><i class="fa-solid fa-check"></i></div>
+                        <span>Gestión digital de historial clínico</span>
+                    </div>
+                </div>
+                <a href="registrarse.html" class="boton-principal nosotros-btn">
+                    <i class="fa-solid fa-user-plus"></i> Únete como socio
+                </a>
+            </div>
+            <div class="nosotros-fotos">
+                <!-- Fotos del equipo médico -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CÓMO FUNCIONA -->
+    <section class="seccion-como-funciona">
+        <div class="seccion-contenedor">
+            <div class="seccion-cabecera">
+                <span class="etiqueta-seccion">¿Cómo funciona?</span>
+                <h2 class="seccion-titulo">Empieza en 4 sencillos pasos</h2>
+                <p class="seccion-subtitulo">Gestionar la salud de tu mascota nunca había sido tan fácil</p>
+            </div>
+            <div class="pasos-lista">
+
+                <div class="paso">
+                    <div class="paso-numero">01</div>
+                    <div class="paso-icono">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+                    <h3 class="paso-titulo">Regístrate</h3>
+                    <p class="paso-descripcion">Crea tu cuenta en segundos y accede a todos los servicios de la clínica desde cualquier dispositivo.</p>
+                </div>
+
+                <div class="paso-conector"></div>
+
+                <div class="paso">
+                    <div class="paso-numero">02</div>
+                    <div class="paso-icono">
+                        <i class="fa-solid fa-paw"></i>
+                    </div>
+                    <h3 class="paso-titulo">Añade tu mascota</h3>
+                    <p class="paso-descripcion">Registra a tu compañero con sus datos básicos para tener su historial siempre disponible.</p>
+                </div>
+
+                <div class="paso-conector"></div>
+
+                <div class="paso">
+                    <div class="paso-numero">03</div>
+                    <div class="paso-icono">
+                        <i class="fa-solid fa-calendar-plus"></i>
+                    </div>
+                    <h3 class="paso-titulo">Reserva una cita</h3>
+                    <p class="paso-descripcion">Elige el día y la hora que mejor te convenga y recibe confirmación al instante.</p>
+                </div>
+
+                <div class="paso-conector"></div>
+
+                <div class="paso">
+                    <div class="paso-numero">04</div>
+                    <div class="paso-icono">
+                        <i class="fa-solid fa-house-medical"></i>
+                    </div>
+                    <h3 class="paso-titulo">Acude a la clínica</h3>
+                    <p class="paso-descripcion">Nuestro equipo estará listo para atenderte. Sin esperas, sin complicaciones.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section class="seccion-servicios" id="servicios">
+        <div class="seccion-contenedor">
+            <div class="seccion-cabecera">
+                <span class="etiqueta-seccion">Nuestros servicios</span>
+                <h2 class="seccion-titulo">Todo lo que tu mascota necesita</h2>
+                <p class="seccion-subtitulo">Ofrecemos atención integral para que tu compañero siempre esté sano y feliz</p>
+            </div>
+            <div class="servicios-grid">
+
+                <div class="servicio-tarjeta tarjeta-verde">
+                    <i class="fa-solid fa-notes-medical servicio-icono"></i>
+                    <h3 class="servicio-nombre">Consulta general</h3>
+                    <p class="servicio-descripcion">Revisiones periódicas, diagnóstico y seguimiento del estado de salud de tu mascota con nuestro equipo especializado.</p>
+                </div>
+
+                <div class="servicio-tarjeta tarjeta-azul">
+                    <i class="fa-solid fa-vial servicio-icono"></i>
+                    <h3 class="servicio-nombre">Vacunaciones</h3>
+                    <p class="servicio-descripcion">Plan de vacunas personalizado para perros, gatos y pequeños animales según su edad y estilo de vida.</p>
+                </div>
+
+                <div class="servicio-tarjeta tarjeta-morado">
+                    <i class="fa-solid fa-heart-pulse servicio-icono"></i>
+                    <h3 class="servicio-nombre">Diagnóstico por imagen</h3>
+                    <p class="servicio-descripcion">Radiografía y ecografía con equipos de última generación para un diagnóstico rápido y preciso.</p>
+                </div>
+
+                <div class="servicio-tarjeta tarjeta-naranja">
+                    <i class="fa-solid fa-scissors servicio-icono"></i>
+                    <h3 class="servicio-nombre">Peluquería</h3>
+                    <p class="servicio-descripcion">Baño, corte y cuidado estético profesional para que tu mascota luzca siempre impecable y se sienta bien.</p>
+                </div>
+
+                <div class="servicio-tarjeta tarjeta-rosa">
+                    <i class="fa-solid fa-truck-medical servicio-icono"></i>
+                    <h3 class="servicio-nombre">Urgencias 24h</h3>
+                    <p class="servicio-descripcion">Servicio de urgencias disponible todos los días del año, porque los imprevistos no avisan y tu mascota no puede esperar.</p>
+                </div>
+
+                <div class="servicio-tarjeta tarjeta-amarillo">
+                    <i class="fa-solid fa-store servicio-icono"></i>
+                    <h3 class="servicio-nombre">Tienda</h3>
+                    <p class="servicio-descripcion">Alimentación, accesorios y productos de salud seleccionados por nuestros veterinarios para el bienestar de tu mascota.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA (comentado) -->
+  <!--   <section class="cta">
+        <div class="cta-contenido">
+            <i class="fa-solid fa-paw cta-icono"></i>
+            <h2 class="cta-titulo">¿Listo para cuidar a tu mascota?</h2>
+            <p class="cta-texto">Únete a nuestra clínica y accede a todos nuestros servicios con un trato cercano y profesional.</p>
+            <div class="cta-botones">
+                <a href="registrarse.html" class="btn-cta-blanco">
+                    <i class="fa-solid fa-user-plus"></i> Crear cuenta
+                </a>
+                <a href="#contacto" class="btn-cta-transparente">
+                    Contactar <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- CONTACTO -->
+    <section class="contacto" id="contacto">
+        <div class="seccion-contenedor contacto-grid">
+            <div class="contacto-info">
+                <span class="etiqueta-seccion">Contacto</span>
+                <h2 class="seccion-titulo">Estamos aquí para ayudarte</h2>
+                <p class="contacto-texto">Puedes contactarnos por teléfono, email o visitarnos directamente en la clínica.</p>
+                <div class="contacto-datos">
+                    <div class="contacto-dato">
+                        <div class="dato-icono"><i class="fa-solid fa-phone"></i></div>
+                        <div>
+                            <p class="dato-etiqueta">Teléfono</p>
+                            <p class="dato-valor">+34 612 345 678</p>
+                        </div>
+                    </div>
+                    <div class="contacto-dato">
+                        <div class="dato-icono"><i class="fa-solid fa-envelope"></i></div>
+                        <div>
+                            <p class="dato-etiqueta">Email</p>
+                            <p class="dato-valor">tusanitypet@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contacto-dato">
+                        <div class="dato-icono"><i class="fa-solid fa-location-dot"></i></div>
+                        <div>
+                            <p class="dato-etiqueta">Dirección</p>
+                            <p class="dato-valor">Avenida tetuán de las Victorias 8, Madrid</p>
+                        </div>
+                    </div>
+                    <div class="contacto-dato">
+                        <div class="dato-icono"><i class="fa-solid fa-clock"></i></div>
+                        <div>
+                            <p class="dato-etiqueta">Horario</p>
+                            <p class="dato-valor">Lun–Vie 9:00–20:00 · Urgencias 24h</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form class="contacto-formulario">
+                <div class="form-fila">
+                    <div class="form-campo">
+                        <label>Nombre</label>
+                        <input type="text" placeholder="Tu nombre">
+                    </div>
+                    <div class="form-campo">
+                        <label>Email</label>
+                        <input type="email" placeholder="correo@ejemplo.com">
+                    </div>
+                </div>
+                <div class="form-campo">
+                    <label>Asunto</label>
+                    <input type="text" placeholder="¿En qué podemos ayudarte?">
+                </div>
+                <div class="form-campo">
+                    <label>Mensaje</label>
+                    <textarea placeholder="Escribe tu mensaje aquí..." rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn-enviar">
+                    Enviar mensaje
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer th:replace="~{common/navfooter :: pie}"></footer>
+
+</body>
 </html>

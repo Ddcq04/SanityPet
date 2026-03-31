@@ -22,3 +22,4 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
     // OPCIONAL: Resumen diario (Citas entre dos horas, ej: hoy a las 00:00 y hoy a las 23:59)
     List<Cita> findByFechaHoraBetween(LocalDateTime inicio, LocalDateTime fin);
 }
+
