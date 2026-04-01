@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Virtual - SanityPet</title>
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Estilos compartidos -->
+    <link rel="stylesheet" th:href="@{/css/navfooter.css}">
+    <!-- Estilos propios de la tienda -->
+    <link rel="stylesheet" th:href="@{/css/tienda.css}">
+</head>
+<body>
+
+    <header th:replace="~{common/navfooter :: navbar}"></header>
+
+    <main class="tienda-container">
+        
+        <div class="tienda-header">
+            <div>
+                <h1 class="tienda-titulo">Nuestra Tienda <i class="fa-solid fa-store"></i></h1>
+                <p class="tienda-subtitulo">Los mejores productos seleccionados por veterinarios para el bienestar de tu compañero.</p>
+            </div>
+            
+            <!-- Botón exclusivo para administradores -->
+            <div th:if="${isAdmin}" class="admin-actions">
+                <a th:href="@{/tienda/nuevo}" class="btn-nuevo-producto">
+                    <i class="fa-solid fa-plus"></i> Añadir Producto
+                </a>
+            </div>
+        </div>
+
+        <div class="productos-grid">
+            <!-- Iteramos sobre cada producto -->
+            <div th:each="producto : ${productos}" class="producto-card">
+                <div class="producto-imagen-placeholder">
+                    <!-- Si tiene imagen -->
+                    <img th:if="${not #strings.isEmpty(producto.imagenUrl)}" 
+                         th:src="${producto.imagenUrl}" 
+                         alt="Foto de producto" 
+                         style="width: 100%; height: 100%; object-fit: cover;">
+                    <!-- Si NO tiene imagen, de muestra el icono por defecto -->
+                    <i th:unless="${not #strings.isEmpty(producto.imagenUrl)}" class="fa-solid fa-box-open"></i>
+                    <div th:if="${isAdmin}" class="admin-card-actions">
+                        <a th:href="@{/tienda/editar/{id}(id=${producto.id})}" class="btn-icon edit" title="Editar">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                        <a th:href="@{/tienda/eliminar/{id}(id=${producto.id})}" class="btn-icon delete" title="Eliminar">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="producto-info">
+                    <span class="producto-categoria" th:text="${producto.categoria}">Categoría</span>
+                    <h3 class="producto-nombre" th:text="${producto.nombre}">Nombre del Producto</h3>
+                    <p class="producto-descripcion" th:text="${producto.descripcion}">Descripción corta del producto.</p>
+                    
+                    <div class="producto-footer">
+                        <span class="producto-precio" th:text="'€' + ${producto.precio}">€0.00</span>
+                        <span class="producto-stock" th:classappend="${producto.stock > 0} ? 'stock-ok' : 'stock-out'">
+                            <i th:class="${producto.stock > 0} ? 'fa-solid fa-check-circle' : 'fa-solid fa-times-circle'"></i>
+                            <span th:text="${producto.stock > 0} ? 'Stock: ' + ${producto.stock} : 'Agotado'"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mensaje si no hay productos -->
+            <div th:if="${#lists.isEmpty(productos)}" class="sin-productos">
+                <i class="fa-solid fa-ghost"></i>
+                <p>No hay productos disponibles en la tienda por el momento.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <footer th:replace="~{common/navfooter :: pie}"></footer>
+
+</body>
+</html>

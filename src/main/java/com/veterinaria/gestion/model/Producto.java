@@ -20,4 +20,7 @@ public class Producto {
     private BigDecimal precio;
     private Integer stock;
     private String categoria;
+    
+    @Column(name = "imagen_url")
+    private String imagenUrl;
 }

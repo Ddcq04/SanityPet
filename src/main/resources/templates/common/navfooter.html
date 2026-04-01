@@ -24,7 +24,8 @@
                 <li sec:authorize="hasRole('user')"><a th:href="@{/citas}" class="nav-link">Mis citas</a></li>
                 <li sec:authorize="hasRole('admin')"><a th:href="@{/mascotas}" class="nav-link">Mascotas</a></li>
                 <li sec:authorize="hasRole('user')"><a th:href="@{/mascotas/mis-mascotas}" class="nav-link">Mis mascotas</a></li>
-                <li><a th:href="@{/home}" class="nav-link">Tienda virtual</a></li>
+                <li sec:authorize="hasRole('admin')"><a th:href="@{/tienda}" class="nav-link">Administrar Tienda</a></li>
+                <li sec:authorize="!hasRole('admin')"><a th:href="@{/tienda}" class="nav-link">Tienda virtual</a></li>
             </ul>
         </nav>
         <div class="nav-acciones">

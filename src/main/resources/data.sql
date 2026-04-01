@@ -42,7 +42,8 @@ CREATE TABLE productos (
     descripcion TEXT,
     precio DECIMAL(10, 2) NOT NULL,
     stock INT DEFAULT 0,
-    categoria VARCHAR(50)
+    categoria VARCHAR(50),
+    imagen_url VARCHAR(255)
 );
 
 -- 5. TABLA DE CITAS MÉDICAS

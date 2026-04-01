@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -27,6 +26,11 @@ public class SecurityConfig {
 	                .requestMatchers("/mascotas/**").hasRole("admin")
 	          // 4. Citas: 
 	                .requestMatchers("/citas/**").hasAnyRole("admin", "user")
+	          // 5. Tienda Virtual:
+	                // Los administradores pueden gestionar productos
+	                .requestMatchers("/tienda/nuevo", "/tienda/guardar", "/tienda/editar/**", "/tienda/eliminar/**").hasRole("admin")
+	                // Cualquier autenticado puede ver la tienda
+	                .requestMatchers("/tienda").hasAnyRole("admin", "user", "vet")
 	             .anyRequest().authenticated() // Todo lo demás requiere login
 	         )
 	         .formLogin(form -> form
@@ -40,7 +44,6 @@ public class SecurityConfig {
 	    }
 	    @Bean
 	    public PasswordEncoder passwordEncoder() {
-	    	return NoOpPasswordEncoder.getInstance();
-	       //return new BCryptPasswordEncoder(); // Para manejar contraseñas seguras
+	       return new BCryptPasswordEncoder(); // Para manejar contraseñas seguras
 	    }
 	}
