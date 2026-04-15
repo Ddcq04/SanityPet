@@ -6,8 +6,8 @@
     <title>Citas</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="css/navfooter.css">
-    <link rel="stylesheet" href="css/citas/agenda.css">
+    <link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
+    <link rel="stylesheet" th:href="@{/css/citas/agenda.css}">
 </head>
 <body>
 
@@ -15,13 +15,18 @@
     <!-- navbar -->
 </header>
 
+<div class="citas-banner">
+    <div class="citas-banner-overlay"></div>
+    <div class="citas-banner-contenido">
+        <h1 class="citas-banner-titulo">Gestión de Citas</h1>
+        <p class="citas-banner-subtitulo">Panel de administración de la agenda de la clínica</p>
+    </div>
+</div>
+
 <main class="citas-main">
 
     <div class="citas-cabecera">
         <div>
-            <h1 class="citas-titulo">Gestión de Citas</h1>
-            <p class="citas-subtitulo">Panel de administración de la agenda de la clínica</p>
-        </div>
         <a th:href="@{/citas/reservar}" href="#" class="btn-nueva-cita">
             <i class="fa-solid fa-plus"></i> Nueva Cita
         </a>
