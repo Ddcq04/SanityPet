@@ -24,9 +24,24 @@
                 <p class="tienda-subtitulo">Los mejores productos seleccionados por veterinarios para el bienestar de tu compañero.</p>
             </div>
 
-            <!-- Botón exclusivo para administradores -->
-            <div th:if="${isAdmin}" class="admin-actions">
-                <a th:href="@{/tienda/nuevo}" class="btn-nuevo-producto">
+            <!-- Contenedor dinámico de alertas (Éxito o Error) -->
+            <div id="dynamic-alert" style="display: none; background: #fff1f2; color: #be123c; padding: 0.8rem 1.2rem; border-radius: 10px; border-left: 5px solid #e11d48; margin-top: 1rem; flex: 1; max-width: 400px; align-items: center; gap: 0.8rem; font-size: 0.85rem;">
+                <i id="alert-icon" class="fa-solid fa-circle-exclamation"></i>
+                <span id="alert-message">Error</span>
+            </div>
+
+            <!-- Alerta estática (de redirección/backend) -->
+            <div th:if="${error}" class="error-alerta" style="background: #fff1f2; color: #be123c; padding: 0.8rem 1.2rem; border-radius: 10px; border-left: 5px solid #e11d48; margin-top: 1rem; flex: 1; max-width: 400px; display: flex; align-items: center; gap: 0.8rem; font-size: 0.85rem;">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span th:text="${error}">Error</span>
+            </div>
+
+            <!-- Botones de acciones -->
+            <div class="tienda-actions">
+                <a th:href="@{/tienda/carrito}" class="btn-carrito">
+                    <i class="fa-solid fa-cart-shopping"></i> Ver mi Carrito
+                </a>
+                <a th:if="${isAdmin}" th:href="@{/tienda/nuevo}" class="btn-nuevo-producto">
                     <i class="fa-solid fa-plus"></i> Añadir Producto
                 </a>
             </div>
@@ -83,6 +98,13 @@
                             <span th:text="${producto.stock > 0} ? 'Stock: ' + ${producto.stock} : 'Agotado'"></span>
                         </span>
                     </div>
+
+                    <!-- Botón Añadir al Carrito (Simplificado) -->
+                    <div class="producto-cart-action" th:if="${producto.stock > 0}">
+                        <button type="button" class="btn-add-cart" th:onclick="'agregarItem(' + ${producto.id} + ')'">
+                            <i class="fa-solid fa-cart-plus"></i> Añadir al carrito
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -98,6 +120,7 @@
     <footer th:replace="~{common/navfooter :: pie}"></footer>
 
     <script>
+        // --- LÓGICA DE FILTROS (Existente) ---
         const tarjetas = document.querySelectorAll('.producto-card');
         const botones  = document.querySelectorAll('.filtro-btn');
         const buscador = document.getElementById('buscador');
@@ -122,6 +145,51 @@
         });
 
         buscador.addEventListener('input', filtrar);
+
+        // --- LÓGICA DE CARRITO (Versión Estudiante) ---
+        
+        function mostrarMensaje(texto, esError) {
+            const alerta = document.getElementById('dynamic-alert');
+            const mensaje = document.getElementById('alert-message');
+            const icono = document.getElementById('alert-icon');
+
+            mensaje.innerText = texto;
+            alerta.style.display = 'flex';
+            
+            if (esError) {
+                alerta.style.background = '#fff1f2';
+                alerta.style.color = '#be123c';
+                alerta.style.borderLeftColor = '#e11d48';
+                icono.className = 'fa-solid fa-circle-exclamation';
+            } else {
+                alerta.style.background = '#dcfce7'; 
+                alerta.style.color = '#16a34a';
+                alerta.style.borderLeftColor = '#22c55e';
+                icono.className = 'fa-solid fa-circle-check';
+            }
+
+            // Ocultar automáticamente después de 3 segundos
+            setTimeout(() => {
+                alerta.style.display = 'none';
+            }, 3000);
+        }
+
+        function agregarItem(id) {
+            fetch('/tienda/api/carrito/agregar/' + id, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('cart-badge').innerText = data.totalItems;
+                        mostrarMensaje(data.message, false);
+                    } else {
+                        mostrarMensaje(data.message, true);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    mostrarMensaje("Error de conexión", true);
+                });
+        }
     </script>
 
 </body>

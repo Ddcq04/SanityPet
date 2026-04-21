@@ -29,8 +29,8 @@ public class SecurityConfig {
 	          // 5. Tienda Virtual:
 	                // Los administradores pueden gestionar productos
 	                .requestMatchers("/tienda/nuevo", "/tienda/guardar", "/tienda/editar/**", "/tienda/eliminar/**").hasRole("admin")
-	                // Cualquier autenticado puede ver la tienda
-	                .requestMatchers("/tienda").hasAnyRole("admin", "user", "vet")
+	                // Cualquier autenticado puede ver la tienda y el carrito
+	                .requestMatchers("/tienda", "/tienda/carrito/**").hasAnyRole("admin", "user", "vet")
 	             .anyRequest().authenticated() // Todo lo demás requiere login
 	         )
 	         .formLogin(form -> form

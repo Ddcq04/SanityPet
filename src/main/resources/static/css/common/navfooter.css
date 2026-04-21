@@ -1,20 +1,26 @@
 /* Variables */
 :root {
-    --menta:        #2ec4b6;
+    --menta: #2ec4b6;
     --menta-oscuro: #20968b;
-    --menta-claro:  #e6fffa;
-    --texto:        #1e293b;
-    --texto-suave:  #64748b;
-    --fondo:        #f8fafc;
-    --blanco:       #ffffff;
-    --borde:        #e2e8f0;
-    --nav-alto:     68px;
+    --menta-claro: #e6fffa;
+    --texto: #1e293b;
+    --texto-suave: #64748b;
+    --fondo: #f8fafc;
+    --blanco: #ffffff;
+    --borde: #e2e8f0;
+    --nav-alto: 68px;
     --fuente-marca: 'Quicksand', sans-serif;
-    --fuente-base:  'Golos Text', sans-serif;
+    --fuente-base: 'Golos Text', sans-serif;
 }
 
 /* Reset base */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
     font-family: var(--fuente-base);
@@ -24,14 +30,16 @@ body {
 /* Cabecera / Nav */
 header {
     position: fixed;
-    top: 0; left: 0; right: 0;
+    top: 0;
+    left: 0;
+    right: 0;
     height: var(--nav-alto);
     background: transparent;
     backdrop-filter: none;
     border-bottom: none;
     z-index: 200;
     transition: background 0.35s ease, border-radius 0.35s ease,
-                backdrop-filter 0.35s ease, box-shadow 0.35s ease;
+        backdrop-filter 0.35s ease, box-shadow 0.35s ease;
 }
 
 header.nav-con-fondo {
@@ -54,7 +62,10 @@ header.nav-con-fondo {
     gap: 2rem;
 }
 
-.nav-logo { text-decoration: none; flex-shrink: 0; }
+.nav-logo {
+    text-decoration: none;
+    flex-shrink: 0;
+}
 
 .nav-logo-img {
     height: 54px;
@@ -80,7 +91,9 @@ header.nav-con-fondo {
     padding: 0;
 }
 
-.nav-lista li { display: flex; }
+.nav-lista li {
+    display: flex;
+}
 
 .nav-enlace {
     padding: 0.45rem 0.85rem;
@@ -93,8 +106,16 @@ header.nav-con-fondo {
     white-space: nowrap;
 }
 
-.nav-enlace:hover  { color: #ffffff; background: rgba(255, 255, 255, 0.15); }
-.nav-enlace.activo { color: var(--menta-oscuro); font-weight: 700; background: var(--menta-claro); }
+.nav-enlace:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.nav-enlace.activo {
+    color: var(--menta-oscuro);
+    font-weight: 700;
+    background: var(--menta-claro);
+}
 
 .nav-acciones {
     display: flex;
@@ -103,7 +124,66 @@ header.nav-con-fondo {
     flex-shrink: 0;
 }
 
-/* Usuario minimalista */
+/* Carrito en Nav */
+.nav-cart-container {
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
+}
+
+.nav-cart-link {
+    position: relative;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: color 0.2s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+}
+
+.nav-cart-link:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.05);
+}
+
+.cart-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background: #e11d48;
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    min-width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    border: 2px solid #0f172a;
+    transition: all 0.3s ease;
+}
+
+header.nav-con-fondo .nav-cart-link {
+    color: var(--texto-suave);
+}
+
+header.nav-con-fondo .nav-cart-link:hover {
+    color: var(--texto);
+    background: var(--fondo);
+}
+
+header.nav-con-fondo .cart-badge {
+    border-color: white;
+}
+
+
 .nav-usuario {
     display: flex;
     align-items: center;
@@ -124,7 +204,7 @@ header.nav-con-fondo {
     transition: color 0.35s ease;
 }
 
-/* Botón cerrar sesión */
+
 .btn-salir {
     display: inline-flex;
     align-items: center;
@@ -147,7 +227,7 @@ header.nav-con-fondo {
     border-color: #ffffff;
 }
 
-/* Con fondo (al hacer scroll) */
+
 header.nav-con-fondo .nav-logo-img {
     filter: brightness(0);
 }
@@ -176,7 +256,7 @@ header.nav-con-fondo .btn-salir:hover {
     color: #ffffff;
 }
 
-/* Footer */
+
 footer {
     background: linear-gradient(180deg, #0f172a 0%, #0a1120 100%);
     border-top: 3px solid var(--menta);
@@ -318,7 +398,9 @@ footer {
     transition: color 0.2s;
 }
 
-.footer-legal a:hover { color: var(--menta); }
+.footer-legal a:hover {
+    color: var(--menta);
+}
 
 .footer-sep {
     color: rgba(255, 255, 255, 0.12);

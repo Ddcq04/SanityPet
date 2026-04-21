@@ -114,6 +114,69 @@ body {
     font-size: 0.82rem;
 }
 
+/* Botón Carrito */
+.btn-carrito {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.4rem;
+    background: var(--blanco);
+    color: var(--menta-oscuro);
+    border: 1.5px solid var(--menta);
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    font-family: var(--fuente-base);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(46, 196, 182, 0.1);
+}
+
+.btn-carrito:hover {
+    background: var(--menta-claro);
+    transform: translateY(-2px);
+}
+
+.tienda-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* Botón de añadir al carrito en tarjeta */
+.producto-cart-action {
+    margin-top: 1rem;
+}
+
+.btn-add-cart {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    background: var(--oscuro);
+    color: var(--blanco);
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: var(--fuente-base);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.btn-add-cart:hover {
+    background: var(--menta);
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(46, 196, 182, 0.3);
+}
+
+.btn-add-cart i {
+    font-size: 0.9rem;
+}
+
 /* Filtros */
 .tienda-filtros {
     display: flex;
