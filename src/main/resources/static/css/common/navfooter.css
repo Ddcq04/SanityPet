@@ -30,7 +30,7 @@ body {
 /* Cabecera / Nav */
 header {
     position: fixed;
-    top: 0;
+    top: 1.3rem;
     left: 0;
     right: 0;
     height: var(--nav-alto);
@@ -39,16 +39,19 @@ header {
     border-bottom: none;
     z-index: 200;
     transition: background 0.35s ease, border-radius 0.35s ease,
-        backdrop-filter 0.35s ease, box-shadow 0.35s ease;
+        backdrop-filter 0.35s ease, box-shadow 0.35s ease, top 0.35s ease;
 }
 
 header.nav-con-fondo {
+	top:0;
     background: rgba(255, 255, 255, 0.96);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--borde);
+    border: 1px solid var(--borde);
     border-radius: 0 0 18px 18px;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    left: 0rem;
+    right: 0rem;
 }
 
 .nav-contenedor {

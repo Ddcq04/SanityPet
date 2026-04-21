@@ -41,7 +41,7 @@
                 para garantizar el bienestar de tu compañero de vida.
             </p>
             <div class="principal-botones">
-                <a href="#servicios" class="boton-principal">
+                <a href="#servicios" class="boton-principal" id="btn-servicios">
                     Ver servicios <i class="fa-solid fa-arrow-down"></i>
                 </a>
             </div>
@@ -99,49 +99,64 @@
                     <i class="fa-solid fa-user-plus"></i> Únete como socio
                 </a>
             </div>
-            <!-- SLIDER EQUIPO -->
-            <div class="slider-equipo">
-                <div class="slider-ventana">
-                    <div class="slider-pista" id="sliderPista">
+            <!-- EQUIPO -->
+            <div class="equipo-grid">
 
-                        <div class="slider-item">
-                            <img src="/especialistas/vet1.jpg" alt="Dr. Victor Méndez" class="slider-foto">
-                        </div>
-                        <div class="slider-item">
-                            <img src="/especialistas/vet2.jpg" alt="Dra. Laura Vega" class="slider-foto">
-                        </div>
-                        <div class="slider-item">
-                            <img src="/especialistas/vet3.jpg" alt="Dr. Alejandro López" class="slider-foto">
-                        </div>
-                        <div class="slider-item">
-                            <img src="/especialistas/vet4.jpg" alt="Dra. Sofía Morales" class="slider-foto">
-                        </div>
-                        <div class="slider-item">
-                            <img src="/especialistas/vet5.jpg" alt="Dr. Alex Torres" class="slider-foto">
-                        </div>
-
+                <div class="equipo-tarjeta">
+                    <div class="equipo-foto-wrap">
+                        <img src="/especialistas/vet1.jpg" alt="Dr. Victor Méndez" class="equipo-foto">
                     </div>
-                </div><!-- fin slider-ventana -->
-
-                <div class="slider-info" id="sliderInfo">
-                    <div class="slider-info-texto">
-                        <h3 class="slider-nombre" id="sliderNombre"></h3>
-                        <p class="slider-cargo" id="sliderCargo"></p>
-                    </div>
-                    <span class="slider-cargo-badge" id="sliderBadge"></span>
-                </div>
-
-                <div class="slider-nav">
-                    <div class="slider-puntos" id="sliderPuntos"></div>
-                    <div class="slider-flechas">
-                        <button class="slider-btn" onclick="moverSlider(-1)">
-                            <i class="fa-solid fa-chevron-left"></i>
-                        </button>
-                        <button class="slider-btn" onclick="moverSlider(1)">
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </button>
+                    <div class="equipo-info">
+                        <span class="equipo-badge">Veterinario</span>
+                        <h3 class="equipo-nombre">Dr. Victor Méndez</h3>
+                        <p class="equipo-cargo">Director Médico</p>
                     </div>
                 </div>
+
+                <div class="equipo-tarjeta">
+                    <div class="equipo-foto-wrap">
+                        <img src="/especialistas/vet2.jpg" alt="Dra. Laura Vega" class="equipo-foto">
+                    </div>
+                    <div class="equipo-info">
+                        <span class="equipo-badge">Cirujana</span>
+                        <h3 class="equipo-nombre">Dra. Laura Vega</h3>
+                        <p class="equipo-cargo">Especialista en Cirugía</p>
+                    </div>
+                </div>
+
+                <div class="equipo-tarjeta">
+                    <div class="equipo-foto-wrap">
+                        <img src="/especialistas/vet3.jpg" alt="Dr. Alejandro López" class="equipo-foto">
+                    </div>
+                    <div class="equipo-info">
+                        <span class="equipo-badge">Radiólogo</span>
+                        <h3 class="equipo-nombre">Dr. Alejandro López</h3>
+                        <p class="equipo-cargo">Diagnóstico por Imagen</p>
+                    </div>
+                </div>
+
+                <div class="equipo-tarjeta">
+                    <div class="equipo-foto-wrap">
+                        <img src="/especialistas/vet4.jpg" alt="Dra. Sofía Morales" class="equipo-foto">
+                    </div>
+                    <div class="equipo-info">
+                        <span class="equipo-badge">Internista</span>
+                        <h3 class="equipo-nombre">Dra. Sofía Morales</h3>
+                        <p class="equipo-cargo">Medicina Interna</p>
+                    </div>
+                </div>
+
+                <div class="equipo-tarjeta">
+                    <div class="equipo-foto-wrap">
+                        <img src="/especialistas/vet5.jpg" alt="Dr. Alex Torres" class="equipo-foto">
+                    </div>
+                    <div class="equipo-info">
+                        <span class="equipo-badge">Urgenciólogo</span>
+                        <h3 class="equipo-nombre">Dr. Alex Torres</h3>
+                        <p class="equipo-cargo">Urgencias y Cuidados Intensivos</p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -353,6 +368,16 @@
     <!-- FOOTER -->
     <footer th:replace="~{common/navfooter :: pie}"></footer>
 
+    <!-- SCROLL SUAVE -->
+    <script>
+        document.getElementById('btn-servicios').addEventListener('click', function(e) {
+            e.preventDefault();
+            const destino = document.getElementById('servicios');
+            const offset = destino.getBoundingClientRect().top + window.scrollY - 90;
+            window.scrollTo({ top: offset, behavior: 'smooth' });
+        });
+    </script>
+
     <!-- FONDO HERO -->
     <script>
         const fondoImgs = document.querySelectorAll('.principal-fondo-img');
@@ -364,53 +389,6 @@
         }, 9000);
     </script>
 
-    <!-- SLIDER EQUIPO -->
-    <script>
-        const vets = [
-            { nombre: 'Dr. Victor Méndez',   cargo: 'Director Médico',                badge: 'Veterinario'    },
-            { nombre: 'Dra. Laura Vega',     cargo: 'Especialista en Cirugía',        badge: 'Cirujana'       },
-            { nombre: 'Dr. Alejandro López', cargo: 'Diagnóstico por Imagen',         badge: 'Radiólogo'      },
-            { nombre: 'Dra. Sofía Morales',  cargo: 'Medicina Interna',               badge: 'Internista'     },
-            { nombre: 'Dr. Alex Torres',     cargo: 'Urgencias y Cuidados Intensivos', badge: 'Urgenciólogo'  }
-        ];
-
-        let sliderActual = 0;
-        const total = vets.length;
-        const pista = document.getElementById('sliderPista');
-        const contenedorPuntos = document.getElementById('sliderPuntos');
-
-        for (let i = 0; i < total; i++) {
-            const p = document.createElement('div');
-            p.className = 'slider-punto' + (i === 0 ? ' activo' : '');
-            p.onclick = () => irA(i);
-            contenedorPuntos.appendChild(p);
-        }
-
-        function actualizarInfo(index) {
-            document.getElementById('sliderNombre').textContent = vets[index].nombre;
-            document.getElementById('sliderCargo').textContent = vets[index].cargo;
-            document.getElementById('sliderBadge').textContent = vets[index].badge;
-        }
-
-        function irA(index) {
-            sliderActual = index;
-            pista.style.transform = `translateX(-${sliderActual * 100}%)`;
-            document.querySelectorAll('.slider-punto').forEach((p, i) => {
-                p.classList.toggle('activo', i === sliderActual);
-            });
-            actualizarInfo(sliderActual);
-        }
-
-        function moverSlider(dir) {
-            irA((sliderActual + dir + total) % total);
-        }
-
-        // Inicializar info
-        actualizarInfo(0);
-
-        // Auto-play cada 10 segundos
-        setInterval(() => moverSlider(1), 10000);
-    </script>
 
 </body>
 

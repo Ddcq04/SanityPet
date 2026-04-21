@@ -32,6 +32,10 @@ html {
     scroll-behavior: smooth;
 }
 
+#inicio, #nosotros, #servicios, #contacto {
+    scroll-margin-top: calc(var(--nav-alto) + 1rem);
+}
+
 body {
     font-family: var(--fuente-base);
     color: var(--texto);
@@ -211,26 +215,6 @@ body {
     transform: translateY(-1px);
 }
 
-.btn-secundario-hero {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: transparent;
-    color: var(--texto);
-    text-decoration: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 10px;
-    font-size: 0.92rem;
-    font-weight: 600;
-    border: 1px solid var(--borde);
-    transition: border-color 0.2s, color 0.2s;
-}
-
-.btn-secundario-hero:hover {
-    border-color: var(--menta);
-    color: var(--menta);
-}
-
 /* Estadísticas: tarjeta translúcida horizontal abajo-derecha */
 .principal-estadisticas {
     position: absolute;
@@ -279,80 +263,6 @@ body {
     background: rgba(255, 255, 255, 0.18);
     align-self: stretch;
     flex-shrink: 0;
-}
-
-/* Hero visual */
-.hero-visual {
-    flex: 0 0 26.25rem;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.hero-imagen-fondo {
-    width: 21.25rem;
-    height: 21.25rem;
-    background: linear-gradient(135deg, var(--menta-claro), #c7f5f0);
-    border-radius: 40% 60% 55% 45% / 45% 50% 50% 55%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: flotar 4s ease-in-out infinite;
-}
-
-@keyframes flotar {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-10px);
-    }
-}
-
-.hero-paw-icon {
-    font-size: 7rem;
-    color: var(--menta);
-    opacity: 0.6;
-}
-
-.hero-tarjeta-flotante {
-    position: absolute;
-    background: var(--blanco);
-    border: 1px solid var(--borde);
-    border-radius: 12px;
-    padding: 0.65rem 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--texto);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    white-space: nowrap;
-}
-
-.tarjeta-1 {
-    top: 15%;
-    left: -20px;
-}
-
-.tarjeta-1 i {
-    color: #22c55e;
-    font-size: 1rem;
-}
-
-.tarjeta-2 {
-    bottom: 15%;
-    right: -10px;
-}
-
-.tarjeta-2 i {
-    color: #f59e0b;
-    font-size: 1rem;
 }
 
 /*
@@ -565,9 +475,8 @@ body {
 
 .nosotros-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 3rem;
     align-items: center;
 }
 
@@ -610,126 +519,79 @@ body {
     margin-top: 1.75rem;
 }
 
-/* Slider equipo médico */
-.slider-equipo {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-    min-width: 0;
+/* Equipo médico - tarjetas grid */
+.equipo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    align-content: start;
 }
 
-.slider-ventana {
-    width: 100%;
+.equipo-tarjeta {
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 16px;
     overflow: hidden;
-    border-radius: 12px;
+    transition: transform 0.22s, box-shadow 0.22s;
 }
 
-.slider-pista {
-    display: flex;
-    transition: transform 0.5s ease;
-    will-change: transform;
+.equipo-tarjeta:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
 }
 
-.slider-item {
-    min-width: 100%;
-    flex-shrink: 0;
-}
 
-.slider-foto {
+.equipo-foto-wrap {
     width: 100%;
-    height: 400px;
-    object-fit: contain;
-    object-position: center;
-    background: linear-gradient(160deg, #e6fffa 0%, #d0f5ef 100%);
+    aspect-ratio: 3 / 3.5;
+    overflow: hidden;
+    background: linear-gradient(160deg, #e6fffa 0%, #c7f5f0 100%);
+}
+
+.equipo-foto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
     display: block;
-    border-radius: 12px;
+    transition: transform 0.35s ease;
 }
 
-/* Info debajo de la foto */
-.slider-info {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 0.25rem;
+.equipo-tarjeta:hover .equipo-foto {
+    transform: scale(1.04);
 }
 
-.slider-info-texto {
+.equipo-info {
+    padding: 0.9rem 1rem 1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.1rem;
+    gap: 0.2rem;
 }
 
-.slider-nombre {
-    font-family: var(--fuente-marca);
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--texto);
-}
-
-.slider-cargo {
-    font-size: 0.84rem;
-    color: var(--texto-suave);
-}
-
-.slider-cargo-badge {
-    font-size: 0.75rem;
+.equipo-badge {
+    font-size: 0.7rem;
     font-weight: 700;
     color: var(--menta-oscuro);
     background: var(--menta-claro);
-    padding: 0.3rem 0.85rem;
+    padding: 0.2rem 0.7rem;
     border-radius: 20px;
-    white-space: nowrap;
+    width: fit-content;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
 }
 
-/* Navegación */
-.slider-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 0.25rem;
-}
-
-.slider-puntos {
-    display: flex;
-    gap: 6px;
-}
-
-.slider-punto {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--borde);
-    cursor: pointer;
-    transition: background 0.2s, transform 0.2s;
-}
-
-.slider-punto.activo {
-    background: var(--menta);
-    transform: scale(1.2);
-}
-
-.slider-flechas {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.slider-btn {
-    background: var(--blanco);
-    border: 1px solid var(--borde);
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 0.8rem;
+.equipo-nombre {
+    font-family: var(--fuente-marca);
+    font-size: 0.95rem;
+    font-weight: 700;
     color: var(--texto);
-    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    margin-top: 0.3rem;
 }
 
-.slider-btn:hover { background: var(--menta); color: var(--blanco); border-color: var(--menta); }
+.equipo-cargo {
+    font-size: 0.8rem;
+    color: var(--texto-suave);
+}
 
 /* 
    CTA
