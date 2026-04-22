@@ -13,9 +13,47 @@
     --fuente-base:  'Golos Text', sans-serif;
 }
 
+/* Banner portada */
+.mascotas-banner {
+    position: relative;
+    margin-top: var(--nav-alto);
+    height: 300px;
+    background-image: url('/portada/mascotas/mas9.jpg');
+    background-size: cover;
+    background-position: center bottom;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mascotas-banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 17, 32, 0.55);
+}
+
+.mascotas-banner-contenido {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.mascotas-banner-titulo {
+    font-family: var(--fuente-marca);
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.4rem;
+}
+
+.mascotas-banner-subtitulo {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.80);
+}
+
 /* Área principal */
 .contenido-principal {
-    padding-top: calc(var(--nav-alto) + 2.5rem);
+    padding-top: 2.5rem;
     padding-bottom: 4rem;
     max-width: 1180px;
     margin: 0 auto;

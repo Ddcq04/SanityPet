@@ -6,7 +6,7 @@
     <title>Listado de Mascotas </title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" th:href="@{css/navfooter.css}">
+    <link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
     <link rel="stylesheet" th:href="@{css/mascotas/listadomascotas.css}">
 </head>
 <body>
@@ -15,13 +15,18 @@
     <!-- navbar -->
 </header>
 
+<div class="mascotas-banner">
+    <div class="mascotas-banner-overlay"></div>
+    <div class="mascotas-banner-contenido">
+        <h1 class="mascotas-banner-titulo">Listado de Mascotas</h1>
+        <p class="mascotas-banner-subtitulo">Consulta todos los pacientes registrados en la clínica</p>
+    </div>
+</div>
+
 <main class="contenido-principal">
 
     <div class="cabecera-pagina">
         <div>
-            <h1 class="titulo-pagina">Listado de Mascotas</h1>
-            <p class="subtitulo-pagina">Consulta todos los pacientes registrados en la clínica</p>
-        </div>
         <a th:href="@{/mascotas/nueva}" href="#" class="boton-nuevo">
             <i class="fa-solid fa-plus"></i> Nueva Mascota
         </a>
