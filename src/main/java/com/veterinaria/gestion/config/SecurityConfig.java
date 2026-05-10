@@ -15,7 +15,7 @@ public class SecurityConfig {
 		http
 	         .csrf(csrf -> csrf.disable())
 	         .authorizeHttpRequests(auth -> auth
-	             .requestMatchers("/css/**", "/js/**", "/images/**","/logo/**","/portada/**").permitAll() // Permite cargar estilos sin login
+	             .requestMatchers("/css/**", "/js/**", "/images/**","/logo/**","/portada/**", "/registrarse", "/registrar-socio").permitAll() // Permite cargar estilos sin login
 	          // 2. GESTIÓN DE CLIENTES: Solo el administrador puede crear, buscar o listar dueños
 	             .requestMatchers("/clientes/**").hasRole("admin")
 	          // 3. MASCOTAS: 
@@ -38,8 +38,11 @@ public class SecurityConfig {
 	              .defaultSuccessUrl("/home", true) // A donde va tras loguearse con éxito
 	              .permitAll()
 	            )
-	            .logout(logout -> logout.permitAll());
-
+	            .logout(logout -> logout.permitAll())
+	            .rememberMe(remember -> remember
+	                    .key("uniqueAndSecretKey") // Una clave para cifrar la cookie
+	                    .tokenValiditySeconds(86400) // Tiempo de vida (ej: 1 día)
+	                );
 	        return http.build();
 	    }
 	    @Bean

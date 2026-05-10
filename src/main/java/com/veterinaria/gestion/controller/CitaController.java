@@ -32,22 +32,39 @@ public class CitaController {
 
     // 1. Mostrar una vista u otra segun el rol de quien accede
     @GetMapping
-    public String verAgenda(Model model, Principal principal) {
+    public String verAgenda(@RequestParam(value = "filtro", required = false) String filtro, 
+                           Model model, Principal principal) {
+        
         Authentication auth = (Authentication) principal;
         boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_admin"));
         String username = principal.getName();
         
-        System.out.println("Roles del usuario: " + auth.getAuthorities());
         if (isAdmin) {
-            // El ADMIN ve todo
-            model.addAttribute("citas", citaService.obtenerAgendaCompleta());
-            return "citas/agenda"; // Retorna el HTML de gestión
+            // LÓGICA PARA ADMIN (VETERINARIO) CON FILTROS
+            List<Cita> listaCitas;
+            String titulo;
+
+            if ("hoy".equals(filtro)) {
+                listaCitas = citaService.obtenerCitasHoy();
+                titulo = "Citas para Hoy";
+            } else if ("semana".equals(filtro)) {
+                listaCitas = citaService.obtenerCitasSemana();
+                titulo = "Citas de los próximos 7 días";
+            } else {
+                listaCitas = citaService.obtenerAgendaCompleta();
+                titulo = "Agenda Completa";
+            }
+
+            model.addAttribute("citas", listaCitas);
+            model.addAttribute("tituloFiltro", titulo);
+            model.addAttribute("filtroActivo", filtro); // Para resaltar el botón en el HTML
+            
+            return "citas/agenda"; 
         } else {
-        	// 1. Enviamos las citas del usuario
+            // LÓGICA PARA CLIENTE (Sin cambios)
             model.addAttribute("citas", citaService.obtenerMisCitas(username));
-            // El USUARIO solo ve las SUYAS
             model.addAttribute("mascotas", mascotaService.buscarMisMascotas(username));
-            return "citas/mis-citas"; // Retorna el HTML de cliente
+            return "citas/mis-citas";
         }
     }
     
@@ -97,6 +114,31 @@ public class CitaController {
             return ResponseEntity.badRequest().body("{\"error\": \"" + e.getMessage() + "\"}");
         }
     }
+    
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEditar(@PathVariable("id") Long id, Model model, Principal principal) {
+        Cita cita = citaService.buscarPorId(id);
+        Authentication auth = (Authentication) principal;
+        String username = principal.getName();
+        
+        boolean isAdmin = auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_admin"));
+
+        // SEGURIDAD: Si no es admin, verificar que la cita es suya
+        if (!isAdmin && !cita.getMascota().getCliente().getUsuario().getUsername().equals(username)) {
+            return "redirect:/citas?error=access-denied";
+        }
+
+        if (isAdmin) {
+            model.addAttribute("listaMascotas", mascotaService.listarTodas());
+        } else {
+            model.addAttribute("listaMascotas", mascotaService.buscarMisMascotas(username));
+        }
+
+        model.addAttribute("cita", cita);
+        model.addAttribute("esEdicion", true); 
+        return "citas/reserva-rapida";
+    }
 
     // 5. Cancelar cita
     @GetMapping("/cancelar/{id}")
@@ -109,5 +151,4 @@ public class CitaController {
         }
         return "redirect:/citas";
     }
-    
 }

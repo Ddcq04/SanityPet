@@ -2,129 +2,132 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reservar Cita</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
-    <link rel="stylesheet" th:href="@{css/citas/reserva-rapida.css}">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Reservar Cita</title>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
+	<link rel="stylesheet" th:href="@{css/citas/reserva-rapida.css}">
 </head>
 
 <body>
 
-    <header th:replace="~{common/navfooter :: navbar}">
-    </header>
+	<header th:replace="~{common/navfooter :: navbar}">
+	</header>
 
-    <main class="contenido-principal">
+	<main class="contenido-principal">
 
-        <div class="cabecera-pagina">
-            <div>
-                <h1 class="titulo-pagina">Nueva Cita</h1>
-                <p class="subtitulo-pagina">Rellena el formulario para reservar una cita con nuestros veterinarios</p>
-            </div>
-        </div>
+		<div class="cabecera-pagina">
+			<div>
+				<h1 class="titulo-pagina" th:text="${esEdicion} ? 'Modificar Cita' : 'Nueva Cita'">Nueva Cita</h1>
+				<p class="subtitulo-pagina">Rellena el formulario para reservar una cita con nuestros veterinarios</p>
+			</div>
+		</div>
 
-        <div class="tarjeta-formulario">
+		<div class="tarjeta-formulario">
 
-            <form id="citaForm" th:action="@{/citas/reservar/guardar}" th:object="${cita}" method="post">
+			<form id="citaForm" th:action="@{/citas/reservar/guardar}" th:object="${cita}" method="post">
+				<input type="hidden" th:field="*{id}" />
+				<!-- Mascota -->
+				<div class="campo-grupo">
+					<label class="campo-etiqueta" for="mascota">Mascota</label>
+					<select class="campo-select" id="mascota" th:field="*{mascota}"
+						th:classappend="${#fields.hasErrors('mascota')} ? 'is-invalid' : ''" required>
+						<option value="">-- Selecciona una mascota --</option>
+						<option th:each="m : ${listaMascotas}" th:value="${m.id}"
+							th:text="${m.nombre} + ' (' + ${m.cliente?.usuario?.nombreCompleto} + ')'">
+						</option>
+					</select>
+					<small class="texto-error" th:if="${#fields.hasErrors('mascota')}" th:errors="*{mascota}"></small>
+				</div>
 
-                <!-- Mascota -->
-                <div class="campo-grupo">
-                    <label class="campo-etiqueta" for="mascota">Mascota</label>
-                    <select class="campo-select" id="mascota" th:field="*{mascota}"
-                        th:classappend="${#fields.hasErrors('mascota')} ? 'is-invalid' : ''" required>
-                        <option value="">-- Selecciona una mascota --</option>
-                        <option th:each="m : ${listaMascotas}" th:value="${m.id}"
-                            th:text="${m.nombre} + ' (' + ${m.cliente?.usuario?.nombreCompleto} + ')'">
-                        </option>
-                    </select>
-                    <small class="texto-error" th:if="${#fields.hasErrors('mascota')}" th:errors="*{mascota}"></small>
-                </div>
+				<!-- Día -->
+				<div class="campo-grupo">
+					<label class="campo-etiqueta" for="fechaInput">Día</label>
+					<input class="campo-input" type="date" id="fechaInput"
+						th:classappend="${#fields.hasErrors('fechaHora')} ? 'is-invalid' : ''"
+						th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}" required>
+					<small class="texto-error" th:if="${#fields.hasErrors('fechaHora')}"
+						th:errors="*{fechaHora}"></small>
+				</div>
 
-                <!-- Día -->
-                <div class="campo-grupo">
-                    <label class="campo-etiqueta" for="fechaInput">Día</label>
-                    <input class="campo-input" type="date" id="fechaInput"
-                        th:classappend="${#fields.hasErrors('fechaHora')} ? 'is-invalid' : ''"
-                        th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}" required>
-                    <small class="texto-error" th:if="${#fields.hasErrors('fechaHora')}"
-                        th:errors="*{fechaHora}"></small>
-                </div>
+				<!-- Hora -->
+				<div class="campo-grupo">
+					<label class="campo-etiqueta" for="horaSelect">Hora</label>
+					<select class="campo-select" id="horaSelect" th:field="*{fechaHora}" required>
+						<option value="">-- Selecciona un día primero --</option>
+					</select>
+				</div>
 
-                <!-- Hora -->
-                <div class="campo-grupo">
-                    <label class="campo-etiqueta" for="horaSelect">Hora</label>
-                    <select class="campo-select" id="horaSelect" th:field="*{fechaHora}" required>
-                        <option value="">-- Selecciona un día primero --</option>
-                    </select>
-                </div>
+				<!-- Motivo -->
+				<div class="campo-grupo">
+				    <label class="campo-etiqueta" for="motivo">Servicio / Motivo</label>
+				    <select class="campo-select" id="motivo" th:field="*{motivo}" required>
+				        <option value="">-- Selecciona un servicio --</option>
+				        <option value="Consulta General - 30€">Consulta General (30€)</option>
+				        <option value="Vacunación - 45€">Vacunación (45€)</option>
+				        <option value="Diagnóstico (Eco/Rx) - 60€">Diagnóstico Eco/Rx (60€)</option>
+				        <option value="Peluquería - 25€">Peluquería (25€)</option>
+				        <option value="Cirugía - Desde 120€">Cirugía (Consultar presupuesto)</option>
+				    </select>
+				    <small class="texto-error" th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}"></small>
+				</div>
 
-                <!-- Motivo -->
-                <div class="campo-grupo">
-                    <label class="campo-etiqueta" for="motivo">Motivo</label>
-                    <input class="campo-input" type="text" id="motivo" th:field="*{motivo}"
-                        th:classappend="${#fields.hasErrors('motivo')} ? 'is-invalid' : ''"
-                        placeholder="Ej: Vacunación, revisión anual..." required>
-                    <small class="texto-error" th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}"></small>
-                </div>
+				<button type="submit" class="boton-confirmar">Confirmar Reserva</button>
 
-                <button type="submit" class="boton-confirmar">Confirmar Reserva</button>
+			</form>
 
-            </form>
+			<a th:href="@{/home}" href="#" class="enlace-volver">Volver al inicio</a>
 
-            <a th:href="@{/home}" href="#" class="enlace-volver">Volver al inicio</a>
+		</div>
 
-        </div>
+	</main>
 
-    </main>
+	<!-- FOOTER -->
+	<footer th:replace="~{common/navfooter :: pie}"></footer>
 
- <!-- FOOTER -->
-    <footer th:replace="~{common/navfooter :: pie}"></footer>
-    
-    <script th:inline="javascript">
-        document.getElementById('fechaInput').addEventListener('change', function () {
-            const fecha = this.value;
-            const select = document.getElementById('horaSelect');
-            select.innerHTML = '<option value="">Cargando...</option>';
+	<script th:inline="javascript">
+		document.getElementById('fechaInput').addEventListener('change', function () {
+			const fecha = this.value;
+			const select = document.getElementById('horaSelect');
+			select.innerHTML = '<option value="">Cargando...</option>';
 
-            fetch('/citas/horas-disponibles?fecha=' + fecha)
-                .then(res => res.json())
-                .then(horas => {
-                    select.innerHTML = '<option value="">-- Selecciona hora --</option>';
-                    horas.forEach(h => {
-                        const option = new Option(h, fecha + 'T' + h + ':00');
-                        select.add(option);
-                    });
-                });
-        });
+			fetch('/citas/horas-disponibles?fecha=' + fecha)
+				.then(res => res.json())
+				.then(horas => {
+					select.innerHTML = '<option value="">-- Selecciona hora --</option>';
+					horas.forEach(h => {
+						const option = new Option(h, fecha + 'T' + h + ':00');
+						select.add(option);
+					});
+				});
+		});
+		document.getElementById('citaForm').addEventListener('submit', function (e) {
+			e.preventDefault();
 
-        document.getElementById('citaForm').addEventListener('submit', function (e) {
-            e.preventDefault();
+			const formData = new FormData(this);
 
-            const formData = new FormData(this);
-
-            fetch(this.action, {
-                method: 'POST',
-                body: formData,
-            })
-                .then(async response => {
-                    const data = await response.json();
-                    if (response.ok) {
-                        alert(data.mensaje);
-                        window.location.href = '/citas';
-                    } else {
-                        alert("⚠️ Error: " + data.error);
-                    }
-                })
-                .catch(err => {
-                    alert("❌ Error de conexión con el servidor");
-                });
-        });
-    </script>
-
+			fetch(this.action, {
+				method: 'POST',
+				body: formData,
+			})
+				.then(async response => {
+					const data = await response.json();
+					if (response.ok) {
+						alert(data.mensaje);
+						window.location.href = '/citas';
+					} else {
+						alert("⚠️ Error: " + data.error);
+					}
+				})
+				.catch(err => {
+					alert("❌ Error de conexión con el servidor");
+				});
+		});
+		
+	</script>
 </body>
-
 </html>

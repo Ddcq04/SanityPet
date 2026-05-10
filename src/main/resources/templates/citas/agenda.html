@@ -1,88 +1,111 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Citas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
-    <link rel="stylesheet" th:href="@{/css/citas/agenda.css}">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Citas</title>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
+	<link rel="stylesheet" th:href="@{/css/citas/agenda.css}">
 </head>
+
 <body>
 
-<header th:replace="~{common/navfooter :: navbar}">
-    <!-- navbar -->
-</header>
+	<header th:replace="~{common/navfooter :: navbar}">
+		<!-- navbar -->
+	</header>
 
-<div class="citas-banner">
-    <div class="citas-banner-overlay"></div>
-    <div class="citas-banner-contenido">
-        <h1 class="citas-banner-titulo">Gestión de Citas</h1>
-        <p class="citas-banner-subtitulo">Panel de administración de la agenda de la clínica</p>
-    </div>
-</div>
+	<div class="citas-banner">
+		<div class="citas-banner-overlay"></div>
+		<div class="citas-banner-contenido">
+			<h1 class="citas-banner-titulo">Gestión de Citas</h1>
+			<p class="citas-banner-subtitulo">Panel de administración de la agenda de la clínica</p>
+		</div>
+	</div>
 
-<main class="citas-main">
+	<main class="citas-main">
 
-    <div class="citas-cabecera">
-        <div>
-        <a th:href="@{/citas/reservar}" href="#" class="btn-nueva-cita">
-            <i class="fa-solid fa-plus"></i> Nueva Cita
-        </a>
-    </div>
+		<div class="citas-cabecera">
+			<div>
+				<a th:href="@{/citas/reservar}" href="#" class="btn-nueva-cita">
+					<i class="fa-solid fa-plus"></i> Nueva Cita
+				</a>
+			</div>
 
-    <div class="citas-tarjeta">
+			<div class="citas-tarjeta">
 
-        <div class="tabla-info">
-            Mostrando <strong th:text="${#lists.size(citas)}">0</strong> citas programadas
-        </div>
+		    <div class="agenda-filtros-container">
+		        <div class="filtros-grupo">
+		            <a th:href="@{/citas}" 
+		               class="btn-filtro-item" th:classappend="${filtroActivo == null} ? 'activo' : ''">
+		                <i class="fa-solid fa-calendar-check"></i> Todo
+		            </a>
+		            <a th:href="@{/citas(filtro='hoy')}" 
+		               class="btn-filtro-item" th:classappend="${filtroActivo == 'hoy'} ? 'activo' : ''">
+		                <i class="fa-solid fa-clock"></i> Hoy
+		            </a>
+		            <a th:href="@{/citas(filtro='semana')}" 
+		               class="btn-filtro-item" th:classappend="${filtroActivo == 'semana'} ? 'activo' : ''">
+		                <i class="fa-solid fa-calendar-week"></i> Esta Semana
+		            </a>
+		        </div>
+		        
+		        <div class="tabla-info">
+		            <span th:text="${tituloFiltro}">Agenda Completa</span>: 
+		            <strong th:text="${#lists.size(citas)}">0</strong> citas
+		        </div>
+		    </div>
 
-        <div class="tabla-contenedor">
-            <table class="tabla-citas">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Fecha y Hora</th>
-                        <th>Mascota</th>
-                        <th>Propietario</th>
-                        <th>Motivo</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="c : ${citas}">
-                        <td class="col-id" th:text="${c.id}"></td>
+				<div class="tabla-contenedor">
+					<table class="tabla-citas">
+						<thead>
+							<tr>
+								<th>Fecha y Hora</th>
+								<th>Mascota</th>
+								<th>Propietario</th>
+								<th>Motivo</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="c : ${citas}">
 
-                        <td th:text="${#temporals.format(c.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+								<td th:text="${#temporals.format(c.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
 
-                        <td><span class="badge-mascota" th:text="${c.mascota?.nombre}"></span></td>
+								<td><span class="badge-mascota" th:text="${c.mascota?.nombre}"></span></td>
 
-                        <td class="col-propietario" th:text="${c.mascota?.cliente?.usuario?.nombreCompleto}"></td>
+								<td class="col-propietario" th:text="${c.mascota?.cliente?.usuario?.nombreCompleto}">
+								</td>
 
-                        <td th:text="${c.motivo}"></td>
-                        
-                        <td class="col-acciones">
-                            <a class="btn-eliminar"
-                               th:href="@{/citas/cancelar/{id}(id=${c.id})}"
-                               onclick="return confirm('⚠️ ¿Estás seguro de que deseas eliminar esta cita de forma permanente?')">
-                                <i class="fa-solid fa-trash"></i> Eliminar
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+								<td th:text="${c.motivo}"></td>
 
-        <div class="tabla-pie">
-            Mostrando <span th:text="${#lists.size(citas)}">0</span> citas programadas.
-        </div>
+								<td class="col-acciones">
+									<a th:href="@{/citas/editar/{id}(id=${c.id})}" class="btn-editar">
+								        <i class="fa-solid fa-pen-to-square"></i> Editar
+								    </a>
+									<a class="btn-eliminar" th:href="@{/citas/cancelar/{id}(id=${c.id})}"
+										onclick="return confirm('⚠️ ¿Estás seguro de que deseas eliminar esta cita de forma permanente?')">
+										<i class="fa-solid fa-trash"></i> Eliminar
+									</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 
-    </div>
+				<div class="tabla-pie">
+					Mostrando <span th:text="${#lists.size(citas)}">0</span> citas programadas.
+				</div>
 
-</main>
-  <!-- FOOTER -->
-    <footer th:replace="~{common/navfooter :: pie}"></footer>
+			</div>
+
+	</main>
+	<!-- FOOTER -->
+	<footer th:replace="~{common/navfooter :: pie}"></footer>
 
 </body>
 </html>

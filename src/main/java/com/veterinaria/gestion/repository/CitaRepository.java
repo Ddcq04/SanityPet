@@ -18,8 +18,6 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
 	           "ORDER BY c.fechaHora ASC")
 	List<Cita> findAllByOrderByFechaHoraAsc();
     List<Cita> findByMascotaClienteUsuarioUsernameOrderByFechaHoraAsc(String username);
-
-    // OPCIONAL: Resumen diario (Citas entre dos horas, ej: hoy a las 00:00 y hoy a las 23:59)
-    List<Cita> findByFechaHoraBetween(LocalDateTime inicio, LocalDateTime fin);
+    List<Cita> findByFechaHoraBetweenOrderByFechaHoraAsc(LocalDateTime inicio, LocalDateTime fin);
 }
 

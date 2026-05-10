@@ -29,6 +29,28 @@ public class CitaService {
         return citaRepository.findByMascotaClienteUsuarioUsernameOrderByFechaHoraAsc(dni);
     }
     
+    public Cita buscarPorId(Long id) {
+        return citaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("La cita no existe."));
+    }
+    
+    // --- FILTRO: CITAS DE HOY (Ordenadas) ---
+    public List<Cita> obtenerCitasHoy() {
+        LocalDateTime inicio = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0);
+        LocalDateTime fin = LocalDateTime.now().withHour(23).withMinute(59).withSecond(59);
+        
+        return citaRepository.findByFechaHoraBetweenOrderByFechaHoraAsc(inicio, fin);
+    }
+
+    // --- FILTRO: CITAS DE LA SEMANA (Ordenadas) ---
+    public List<Cita> obtenerCitasSemana() {
+        LocalDateTime inicio = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0);
+        // Próximos 7 días naturales
+        LocalDateTime fin = inicio.plusDays(7).withHour(23).withMinute(59).withSecond(59);
+        
+        return citaRepository.findByFechaHoraBetweenOrderByFechaHoraAsc(inicio, fin);
+    }
+    
     @Transactional
     public void reservarCita(Cita cita) {
         // Lógica de negocio: Podrías validar que la fecha no sea anterior a "ahora"
@@ -66,7 +88,7 @@ public class CitaService {
         // 2. Buscamos qué citas hay ese día en la BBDD
         LocalDateTime inicioDia = fecha.atStartOfDay();
         LocalDateTime finDia = fecha.atTime(23, 59);
-        List<Cita> citasDelDia = citaRepository.findByFechaHoraBetween(inicioDia, finDia);
+        List<Cita> citasDelDia = citaRepository.findByFechaHoraBetweenOrderByFechaHoraAsc(inicioDia, finDia);
 
         // 3. Extraemos solo las horas ocupadas en formato String "HH:mm"
         List<String> horasOcupadas = citasDelDia.stream()

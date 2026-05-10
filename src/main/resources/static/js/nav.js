@@ -1,4 +1,4 @@
-(function () {
+(function() {
     const nav = document.querySelector('header');
     const tienePrincipal = document.querySelector('.principal');
 

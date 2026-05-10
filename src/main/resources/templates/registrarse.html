@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Alta de Socio - SanityPet</title>
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+	<!-- Reutilizamos tu CSS de login para que se vea igual de bien -->
+	<link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+
+<body>
+	<div class="containermain">
+		<div class="seccionder" style="width: 100%; max-width: 600px; margin: auto;">
+
+			<form th:action="@{/registrar-socio}" th:object="${cliente}" method="post">
+				<h3>Únete a SanityPet</h3>
+
+				<ul th:if="${#fields.hasErrors('*')}">
+					<li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="error"></li>
+				</ul>
+				<p>Crea tu cuenta de socio para gestionar tus mascotas</p>
+				<div class="inputs">
+					<label>DNI (Será tu usuario)</label>
+					<input type="text" th:field="*{dni}" placeholder="12345678X" required>
+					<small class="text-danger" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></small>
+				</div>
+				<div class="inputs">
+					<label>Nombre Completo</label>
+					<input type="text" th:field="*{usuario.nombreCompleto}" placeholder="Juan Pérez" required>
+					<small class="text-danger" th:if="${#fields.hasErrors('usuario.nombreCompleto')}"
+						th:errors="*{usuario.nombreCompleto}"></small>
+				</div>
+
+				<div class="inputs">
+					<label>Teléfono</label>
+					<input type="text" th:field="*{telefono}" placeholder="600000000">
+				</div>
+
+				<div class="inputs">
+					<label>Email</label>
+					<input type="email" th:field="*{email}" placeholder="usuario@ejemplo.com">
+				</div>
+
+				<!-- Campos del objeto Usuario dentro de Cliente -->
+				<div class="inputs">
+					<label>Contraseña</label>
+					<input type="password" th:field="*{usuario.passwordPlana}" required>
+					<small th:if="${#fields.hasErrors('usuario.passwordPlana')}"
+						th:errors="*{usuario.passwordPlana}"></small>
+				</div>
+
+				<div class="inputs">
+					<label>Repetir Contraseña</label>
+					<input type="password" th:field="*{usuario.passwordRepeat}" required>
+					<small th:if="${#fields.hasErrors('usuario.passwordRepeat')}"
+						th:errors="*{usuario.passwordRepeat}"></small>
+				</div>
+
+				<button type="submit" class="buton">Registrarme</button>
+
+				<div class="create-account" style="margin-top: 20px;">
+					¿Ya tienes cuenta? <a th:href="@{/login}">Inicia sesión aquí</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

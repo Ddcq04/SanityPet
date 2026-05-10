@@ -1,249 +1,310 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito de Compra - SanityPet</title>
-    <!-- Fuentes -->
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <!-- Estilos compartidos -->
-    <link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
-    <!-- Reutilizamos estilos de tienda para coherencia -->
-    <link rel="stylesheet" th:href="@{/css/tienda.css}">
-    <style>
-        .carrito-card {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: var(--radio);
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
-            margin-top: 2rem;
-        }
-        .carrito-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 2rem;
-        }
-        .carrito-table th {
-            text-align: left;
-            padding: 1rem;
-            border-bottom: 2px solid var(--borde);
-            color: var(--texto-suave);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 0.05em;
-        }
-        .carrito-table td {
-            padding: 1.5rem 1rem;
-            border-bottom: 1px solid var(--borde);
-        }
-        .item-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .item-img {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
-            background: var(--menta-claro);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden; /* Asegura que la imagen no se salga */
-        }
-        .item-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .item-img i { color: var(--menta); font-size: 1.5rem; }
-        .item-nombre { font-weight: 600; font-family: var(--fuente-marca); }
-        
-        .cantidad-controles {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-        .btn-qty {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            border: 1px solid var(--borde);
-            background: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            transition: all 0.2s;
-        }
-        .btn-qty:hover { border-color: var(--menta); color: var(--menta-oscuro); }
-        
-        .carrito-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 1.5rem;
-            border-top: 2px solid var(--borde);
-        }
-        .total-container { text-align: right; }
-        .total-label { color: var(--texto-suave); font-size: 0.9rem; }
-        .total-monto { 
-            font-size: 1.8rem; 
-            font-weight: 700; 
-            color: var(--menta-oscuro); 
-            display: block;
-            margin-top: 0.2rem;
-        }
-        
-        .btn-comprar {
-            background: var(--oscuro);
-            color: white;
-            padding: 1rem 2.5rem;
-            border-radius: 12px;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: var(--fuente-base);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-        .btn-comprar:hover { background: var(--menta); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(46, 196, 182, 0.3); }
-        .btn-comprar:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; box-shadow: none; }
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Carrito de Compra - SanityPet</title>
+	<!-- Fuentes -->
+	<link
+		href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<!-- Estilos compartidos -->
+	<link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
+	<!-- Reutilizamos estilos de tienda para coherencia -->
+	<link rel="stylesheet" th:href="@{/css/tienda.css}">
+	<style>
+		.carrito-card {
+			background: rgba(255, 255, 255, 0.9);
+			border-radius: var(--radio);
+			padding: 2rem;
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+			backdrop-filter: blur(10px);
+			margin-top: 2rem;
+		}
 
-        .btn-back {
-            color: var(--texto-suave);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        .btn-back:hover { color: var(--menta-oscuro); }
+		.carrito-table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-bottom: 2rem;
+		}
 
-        .form-inline { display: inline; }
-        
-        .error-alerta {
-            background: #fff1f2;
-            color: #be123c;
-            padding: 1rem;
-            border-radius: 10px;
-            border-left: 5px solid #e11d48;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-    </style>
+		.carrito-table th {
+			text-align: left;
+			padding: 1rem;
+			border-bottom: 2px solid var(--borde);
+			color: var(--texto-suave);
+			text-transform: uppercase;
+			font-size: 0.8rem;
+			letter-spacing: 0.05em;
+		}
+
+		.carrito-table td {
+			padding: 1.5rem 1rem;
+			border-bottom: 1px solid var(--borde);
+		}
+
+		.item-info {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+		}
+
+		.item-img {
+			width: 60px;
+			height: 60px;
+			border-radius: 8px;
+			background: var(--menta-claro);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			overflow: hidden;
+			/* Asegura que la imagen no se salga */
+		}
+
+		.item-img img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		.item-img i {
+			color: var(--menta);
+			font-size: 1.5rem;
+		}
+
+		.item-nombre {
+			font-weight: 600;
+			font-family: var(--fuente-marca);
+		}
+
+		.cantidad-controles {
+			display: flex;
+			align-items: center;
+			gap: 0.8rem;
+		}
+
+		.btn-qty {
+			width: 28px;
+			height: 28px;
+			border-radius: 6px;
+			border: 1px solid var(--borde);
+			background: white;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 0.7rem;
+			transition: all 0.2s;
+		}
+
+		.btn-qty:hover {
+			border-color: var(--menta);
+			color: var(--menta-oscuro);
+		}
+
+		.carrito-footer {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding-top: 1.5rem;
+			border-top: 2px solid var(--borde);
+		}
+
+		.total-container {
+			text-align: right;
+		}
+
+		.total-label {
+			color: var(--texto-suave);
+			font-size: 0.9rem;
+		}
+
+		.total-monto {
+			font-size: 1.8rem;
+			font-weight: 700;
+			color: var(--menta-oscuro);
+			display: block;
+			margin-top: 0.2rem;
+		}
+
+		.btn-comprar {
+			background: var(--oscuro);
+			color: white;
+			padding: 1rem 2.5rem;
+			border-radius: 12px;
+			font-weight: 700;
+			border: none;
+			cursor: pointer;
+			transition: all 0.3s;
+			font-family: var(--fuente-base);
+			display: inline-flex;
+			align-items: center;
+			gap: 0.8rem;
+		}
+
+		.btn-comprar:hover {
+			background: var(--menta);
+			transform: translateY(-3px);
+			box-shadow: 0 10px 20px rgba(46, 196, 182, 0.3);
+		}
+
+		.btn-comprar:disabled {
+			background: #cbd5e1;
+			cursor: not-allowed;
+			transform: none;
+			box-shadow: none;
+		}
+
+		.btn-back {
+			color: var(--texto-suave);
+			text-decoration: none;
+			display: inline-flex;
+			align-items: center;
+			gap: 0.5rem;
+			font-weight: 500;
+			transition: color 0.2s;
+		}
+
+		.btn-back:hover {
+			color: var(--menta-oscuro);
+		}
+
+		.form-inline {
+			display: inline;
+		}
+
+		.error-alerta {
+			background: #fff1f2;
+			color: #be123c;
+			padding: 1rem;
+			border-radius: 10px;
+			border-left: 5px solid #e11d48;
+			margin-bottom: 1.5rem;
+			display: flex;
+			align-items: center;
+			gap: 0.8rem;
+		}
+	</style>
 </head>
+
 <body>
 
-    <header th:replace="~{common/navfooter :: navbar}"></header>
+	<header th:replace="~{common/navfooter :: navbar}"></header>
 
-    <main class="tienda-container">
-        
-        <div class="tienda-header">
-            <div>
-                <h1 class="tienda-titulo"><i class="fa-solid fa-cart-shopping"></i> Mi Carrito</h1>
-                <p class="tienda-subtitulo">Revisa tus productos antes de finalizar la compra.</p>
-            </div>
-            <a th:href="@{/tienda}" class="btn-back">
-                <i class="fa-solid fa-arrow-left"></i> Volver a la tienda
-            </a>
-        </div>
+	<main class="tienda-container">
 
-        <!-- Alerta de Error -->
-        <div th:if="${error}" class="error-alerta">
-            <i class="fa-solid fa-circle-exclamation"></i>
-            <span th:text="${error}">Error al procesar la compra.</span>
-        </div>
+		<div class="tienda-header">
+			<div>
+				<h1 class="tienda-titulo"><i class="fa-solid fa-cart-shopping"></i> Mi Carrito</h1>
+				<p class="tienda-subtitulo">Revisa tus productos antes de finalizar la compra.</p>
+			</div>
+			<a th:href="@{/tienda}" class="btn-back">
+				<i class="fa-solid fa-arrow-left"></i> Volver a la tienda
+			</a>
+		</div>
 
-        <div class="carrito-card">
-            <div th:if="${#lists.isEmpty(items)}" class="sin-productos">
-                <i class="fa-solid fa-cart-arrow-down" style="font-size: 4rem; opacity: 0.2;"></i>
-                <p>Tu carrito está vacío. ¡Añade algo delicioso para tu mascota!</p>
-                <a th:href="@{/tienda}" class="btn-nuevo-producto" style="margin-top: 1rem;">Ir a la tienda</a>
-            </div>
+		<!-- Alerta de Error -->
+		<div th:if="${error}" class="error-alerta">
+			<i class="fa-solid fa-circle-exclamation"></i>
+			<span th:text="${error}">Error al procesar la compra.</span>
+		</div>
 
-            <div th:if="${not #lists.isEmpty(items)}">
-                <table class="carrito-table">
-                    <thead>
-                        <tr>
-                            <th>Producto</th>
-                            <th>Precio</th>
-                            <th>Cantidad</th>
-                            <th>Subtotal</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="item : ${items}">
-                            <td>
-                                <div class="item-info">
-                                    <div class="item-img">
-                                        <img th:if="${not #strings.isEmpty(item.producto.imagenUrl)}" th:src="${item.producto.imagenUrl}" alt="Prod">
-                                        <i th:unless="${not #strings.isEmpty(item.producto.imagenUrl)}" class="fa-solid fa-box"></i>
-                                    </div>
-                                    <div>
-                                        <span class="item-nombre" th:text="${item.producto.nombre}">Nombre</span>
-                                        <br>
-                                        <small class="producto-categoria" style="padding: 0.1rem 0.4rem; font-size: 0.6rem;" th:text="${item.producto.categoria}">Cat</small>
-                                    </div>
-                                </div>
-                            </td>
-                            <td th:text="'€' + ${item.producto.precio}">€0.00</td>
-                            <td>
-                                <div class="cantidad-controles">
-                                    <form th:action="@{/tienda/carrito/quitar/{id}(id=${item.producto.id})}" method="post" class="form-inline">
-                                        <button type="submit" class="btn-qty"><i class="fa-solid fa-minus"></i></button>
-                                    </form>
-                                    <span th:text="${item.cantidad}" style="font-weight: 600; width: 20px; text-align: center;">1</span>
-                                    <form th:action="@{/tienda/carrito/agregar/{id}(id=${item.producto.id})}" method="post" class="form-inline">
-                                        <!-- En el carrito, agregar redirige al carrito de nuevo (se maneja en controller por la ruta o simplificamos) -->
-                                        <!-- Modificaremos el controller para que el agregar sepa de dónde viene o simplemente acepte la redirección manual -->
-                                        <button type="submit" class="btn-qty" th:disabled="${item.cantidad >= item.producto.stock}"><i class="fa-solid fa-plus"></i></button>
-                                    </form>
-                                </div>
-                                <small th:if="${item.cantidad >= item.producto.stock}" style="color: #e11d48; font-size: 0.65rem;">Máximo stock alcanzado</small>
-                            </td>
-                            <td style="font-weight: 700;" th:text="'€' + ${item.subtotal}">€0.00</td>
-                            <td>
-                                <form th:action="@{/tienda/carrito/eliminar/{id}(id=${item.producto.id})}" method="post">
-                                    <button type="submit" class="btn-icon delete" style="background: #fee2e2; border: none; cursor: pointer;">
-                                        <i class="fa-solid fa-trash-can"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+		<div class="carrito-card">
+			<div th:if="${#lists.isEmpty(items)}" class="sin-productos">
+				<i class="fa-solid fa-cart-arrow-down" style="font-size: 4rem; opacity: 0.2;"></i>
+				<p>Tu carrito está vacío. ¡Añade algo delicioso para tu mascota!</p>
+				<a th:href="@{/tienda}" class="btn-nuevo-producto" style="margin-top: 1rem;">Ir a la tienda</a>
+			</div>
 
-                <div class="carrito-footer">
-                    <div>
-                        <!-- Espacio extra -->
-                    </div>
-                    <div class="total-container">
-                        <span class="total-label">Total a pagar:</span>
-                        <span class="total-monto" th:text="'€' + ${total}">€0.00</span>
-                        
-                        <form th:action="@{/tienda/carrito/comprar}" method="post" style="margin-top: 1.5rem;">
-                            <button type="submit" class="btn-comprar">
-                                Finalizar Compra <i class="fa-solid fa-bag-shopping"></i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+			<div th:if="${not #lists.isEmpty(items)}">
+				<table class="carrito-table">
+					<thead>
+						<tr>
+							<th>Producto</th>
+							<th>Precio</th>
+							<th>Cantidad</th>
+							<th>Subtotal</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item : ${items}">
+							<td>
+								<div class="item-info">
+									<div class="item-img">
+										<img th:if="${not #strings.isEmpty(item.producto.imagenUrl)}"
+											th:src="${item.producto.imagenUrl}" alt="Prod">
+										<i th:unless="${not #strings.isEmpty(item.producto.imagenUrl)}"
+											class="fa-solid fa-box"></i>
+									</div>
+									<div>
+										<span class="item-nombre" th:text="${item.producto.nombre}">Nombre</span>
+										<br>
+										<small class="producto-categoria"
+											style="padding: 0.1rem 0.4rem; font-size: 0.6rem;"
+											th:text="${item.producto.categoria}">Cat</small>
+									</div>
+								</div>
+							</td>
+							<td th:text="'€' + ${item.producto.precio}">€0.00</td>
+							<td>
+								<div class="cantidad-controles">
+									<form th:action="@{/tienda/carrito/quitar/{id}(id=${item.producto.id})}"
+										method="post" class="form-inline">
+										<button type="submit" class="btn-qty"><i class="fa-solid fa-minus"></i></button>
+									</form>
+									<span th:text="${item.cantidad}"
+										style="font-weight: 600; width: 20px; text-align: center;">1</span>
+									<form th:action="@{/tienda/carrito/agregar/{id}(id=${item.producto.id})}"
+										method="post" class="form-inline">
+										<!-- En el carrito, agregar redirige al carrito de nuevo (se maneja en controller por la ruta o simplificamos) -->
+										<!-- Modificaremos el controller para que el agregar sepa de dónde viene o simplemente acepte la redirección manual -->
+										<button type="submit" class="btn-qty"
+											th:disabled="${item.cantidad >= item.producto.stock}"><i
+												class="fa-solid fa-plus"></i></button>
+									</form>
+								</div>
+								<small th:if="${item.cantidad >= item.producto.stock}"
+									style="color: #e11d48; font-size: 0.65rem;">Máximo stock alcanzado</small>
+							</td>
+							<td style="font-weight: 700;" th:text="'€' + ${item.subtotal}">€0.00</td>
+							<td>
+								<form th:action="@{/tienda/carrito/eliminar/{id}(id=${item.producto.id})}"
+									method="post">
+									<button type="submit" class="btn-icon delete"
+										style="background: #fee2e2; border: none; cursor: pointer;">
+										<i class="fa-solid fa-trash-can"></i>
+									</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 
-    </main>
+				<div class="carrito-footer">
+					<div>
+						<!-- Espacio extra -->
+					</div>
+					<div class="total-container">
+						<span class="total-label">Total a pagar:</span>
+						<span class="total-monto" th:text="'€' + ${total}">€0.00</span>
 
-    <footer th:replace="~{common/navfooter :: pie}"></footer>
+						<form th:action="@{/tienda/carrito/comprar}" method="post" style="margin-top: 1.5rem;">
+							<button type="submit" class="btn-comprar">
+								Finalizar Compra <i class="fa-solid fa-bag-shopping"></i>
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</main>
+
+	<footer th:replace="~{common/navfooter :: pie}"></footer>
 
 </body>
+
 </html>

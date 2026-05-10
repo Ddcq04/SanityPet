@@ -1,60 +1,67 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio de sesión</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" th:href="@{/css/login.css}">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Inicio de sesión</title>
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
+
 <body>
 
-    <div class="containermain">
-        <div class="seccionizq">
-            <div class="titulo">
-                <h2>Bienvenido a</h2>
-<img th:src="@{/logo/SANYTYPETlogo.png}" alt="SanityPet" class="logo-acceso">
-                <p>Comprometidos con el cuidado y bienestar de tu mascota</p>
-            </div>
-        </div>
+	<div class="containermain">
+		<div class="seccionizq">
+			<div class="titulo">
+				<h2>Bienvenido a</h2>
+				<img th:src="@{/logo/SANYTYPETlogo.png}" alt="SanityPet" class="logo-acceso">
+				<p>Comprometidos con el cuidado y bienestar de tu mascota</p>
+			</div>
+		</div>
 
-        <div class="seccionder">
-            <form th:action="@{/login}" method="post">
-                <h3>Iniciar Sesión</h3>
-                <p>Ingresa tus credenciales</p>
+		<div class="seccionder">
+			<form th:action="@{/login}" method="post">
+				<h3>Iniciar Sesión</h3>
+				<p>Ingresa tus credenciales</p>
 
-                <div th:if="${param.error}" class="error">
-                    Usuario o contraseña incorrectos.
-                </div>
+				<div th:if="${param.registrado}" class="logout">
+					¡Registro completado! Ya puedes iniciar sesión con tu DNI.
+				</div>
 
-                <div th:if="${param.logout}" class="logout">
-                    Has cerrado sesión correctamente.
-                </div>
+				<div th:if="${param.error}" class="error">
+					Usuario o contraseña incorrectos.
+				</div>
 
-                <div class="inputs">
-                    <label>Usuario</label>
-                    <input type="text" name="username" placeholder="DNI" required autofocus>
-                </div>
+				<div th:if="${param.logout}" class="logout">
+					Has cerrado sesión correctamente.
+				</div>
 
-                <div class="inputs">
-                    <label>Contraseña</label>
-                    <input type="password" name="password" placeholder="••••••••" required>
-                </div>
+				<div class="inputs">
+					<label>Usuario</label>
+					<input type="text" name="username" placeholder="DNI" required autofocus>
+				</div>
 
-                <div class="form-footer">
-                    <label><input type="checkbox"> Recordarme</label>
-                    <a href="#">¿Olvidaste tu contraseña?</a>
-                </div>
+				<div class="inputs">
+					<label>Contraseña</label>
+					<input type="password" name="password" placeholder="Contraseña" required>
+				</div>
 
-                <button type="submit" class="buton">Acceder</button>
-            </form>
+				<div class="form-footer">
+					<label><input type="checkbox" name="remember-me"> Recordarme</label>
+					<!-- <a href="#">¿Olvidaste tu contraseña?</a>-->
+				</div>
 
-            <div class="create-account">
-                ¿Nuevo en la clínica? <a href="registrarse.html">Crea una cuenta de socio</a>
-            </div>
-        </div>
-    </div>
+				<button type="submit" class="buton">Acceder</button>
+			</form>
+
+			<div class="create-account">
+				¿Nuevo en la clínica? <a th:href="@{/registrarse}">Crea una cuenta de socio</a>
+			</div>
+		</div>
+	</div>
 
 </body>
+
 </html>

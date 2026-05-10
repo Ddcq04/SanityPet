@@ -2,102 +2,103 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Citas</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
-    <link rel="stylesheet" th:href="@{/css/citas/mis-citas.css}">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Mis Citas</title>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
+	<link rel="stylesheet" th:href="@{/css/citas/mis-citas.css}">
 </head>
 
 <body>
-<!-- navbar -->
-    <header th:replace="~{common/navfooter :: navbar}">
-    </header>
+	<!-- navbar -->
+	<header th:replace="~{common/navfooter :: navbar}">
+	</header>
 
-    <main class="contenido-principal">
+	<main class="contenido-principal">
 
-        <div class="cabecera-pagina">
-            <div>
-                <h1 class="titulo-pagina">Mis Citas</h1>
-                <p class="subtitulo-pagina">Consulta y gestiona las citas de tus mascotas</p>
-            </div>
-        </div>
+		<div class="cabecera-pagina">
+			<div>
+				<h1 class="titulo-pagina">Mis Citas</h1>
+				<p class="subtitulo-pagina">Consulta y gestiona las citas de tus mascotas</p>
+			</div>
+		</div>
 
-        <!-- Estados vacíos: solo se muestran si no hay citas -->
-        <div th:if="${#lists.isEmpty(citas)}">
+		<!-- Estados vacíos: solo se muestran si no hay citas -->
+		<div th:if="${#lists.isEmpty(citas)}">
 
-            <!-- Sin mascotas registradas -->
-            <div class="seccion-vacia" th:if="${#lists.isEmpty(mascotas)}">
-                <div class="icono-vacio">
-                    <i class="fa-solid fa-paw"></i>
-                </div>
-                <h2 class="titulo-vacio">¡Aún no tienes mascotas registradas!</h2>
-                <p class="texto-vacio">Para pedir una cita, primero necesitamos conocer a tu compañero.</p>
-                <a th:href="@{/mascotas/nueva}" href="#" class="boton-accion">
-                    <i class="fa-solid fa-plus"></i> Registrar mi primera mascota
-                </a>
-            </div>
+			<!-- Sin mascotas registradas -->
+			<div class="seccion-vacia" th:if="${#lists.isEmpty(mascotas)}">
+				<div class="icono-vacio">
+					<i class="fa-solid fa-paw"></i>
+				</div>
+				<h2 class="titulo-vacio">¡Aún no tienes mascotas registradas!</h2>
+				<p class="texto-vacio">Para pedir una cita, primero necesitamos conocer a tu compañero.</p>
+				<a th:href="@{/mascotas/nueva}" href="#" class="boton-accion">
+					<i class="fa-solid fa-plus"></i> Registrar mi primera mascota
+				</a>
+			</div>
 
-            <!-- Tiene mascotas pero no tiene citas -->
-            <div class="seccion-vacia" th:unless="${#lists.isEmpty(mascotas)}">
-                <div class="icono-vacio icono-vacio--calendario">
-                    <i class="fa-regular fa-calendar-xmark"></i>
-                </div>
-                <h2 class="titulo-vacio">No tienes citas programadas</h2>
-                <p class="texto-vacio">Reserva una cita para que nuestros veterinarios cuiden de tu mascota.</p>
-                <a th:href="@{/citas/reservar}" href="#" class="boton-accion">
-                    <i class="fa-solid fa-calendar-plus"></i> Reservar mi primera cita
-                </a>
-            </div>
+			<!-- Tiene mascotas pero no tiene citas -->
+			<div class="seccion-vacia" th:unless="${#lists.isEmpty(mascotas)}">
+				<div class="icono-vacio icono-vacio--calendario">
+					<i class="fa-regular fa-calendar-xmark"></i>
+				</div>
+				<h2 class="titulo-vacio">No tienes citas programadas</h2>
+				<p class="texto-vacio">Reserva una cita para que nuestros veterinarios cuiden de tu mascota.</p>
+				<a th:href="@{/citas/reservar}" href="#" class="boton-accion">
+					<i class="fa-solid fa-calendar-plus"></i> Reservar mi primera cita
+				</a>
+			</div>
 
-        </div>
+		</div>
 
-        <!-- Tabla de citas: solo se muestra si hay citas -->
-        <div class="tarjeta-tabla" th:unless="${#lists.isEmpty(citas)}">
+		<!-- Tabla de citas: solo se muestra si hay citas -->
+		<div class="tarjeta-tabla" th:unless="${#lists.isEmpty(citas)}">
 
-            <div class="contenedor-tabla">
-                <table class="tabla-citas">
-                    <thead>
-                        <tr>
-                            <th>Mascota</th>
-                            <th>Día y Hora</th>
-                            <th>Motivo</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="c : ${citas}">
-                            <td><span class="etiqueta-mascota" th:text="${c.mascota.nombre}"></span></td>
-                            <td th:text="${#temporals.format(c.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
-                            <td th:text="${c.motivo}"></td>
-                            <td><span class="etiqueta-estado">Confirmada</span></td>
-                            <td class="columna-acciones">
-                                <a class="boton-cancelar" th:href="@{/citas/cancelar/{id}(id=${c.id})}"
-                                    onclick="return confirm('¿Seguro que quieres cancelar esta cita?')">
-                                    <i class="fa-solid fa-xmark"></i> Cancelar
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+			<div class="contenedor-tabla">
+				<table class="tabla-citas">
+					<thead>
+						<tr>
+							<th>Mascota</th>
+							<th>Día y Hora</th>
+							<th>Motivo</th>
+							<th>Estado</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="c : ${citas}">
+							<td><span class="etiqueta-mascota" th:text="${c.mascota.nombre}"></span></td>
+							<td th:text="${#temporals.format(c.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+							<td th:text="${c.motivo}"></td>
+							<td><span class="etiqueta-estado">Confirmada</span></td>
+							<td class="columna-acciones">
+								<a th:href="@{/citas/editar/{id}(id=${c.id})}" class="boton-editar"><i
+	                                        class="fa-solid fa-pen"></i></a>
+	                            <a th:href="@{/citas/eliminar/{id}(id=${c.id})}" class="boton-eliminar"
+	                                 onclick="return confirm('¿Cancelar esta cita?')"><i
+	                            	 class="fa-solid fa-trash"></i></a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 
-            <div class="pie-tabla">
-                <a th:href="@{/citas/reservar}" href="#" class="boton-nueva-cita">
-                    <i class="fa-solid fa-calendar-plus"></i> Pedir otra cita
-                </a>
-            </div>
+			<div class="pie-tabla">
+				<a th:href="@{/citas/reservar}" href="#" class="boton-nueva-cita">
+					<i class="fa-solid fa-calendar-plus"></i> Pedir otra cita
+				</a>
+			</div>
 
-        </div>
+		</div>
 
-    </main>
-      <!-- FOOTER -->
-    <footer th:replace="~{common/navfooter :: pie}"></footer>
+	</main>
+	<!-- FOOTER -->
+	<footer th:replace="~{common/navfooter :: pie}"></footer>
 
 </body>
 

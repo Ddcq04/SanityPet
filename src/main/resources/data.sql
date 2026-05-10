@@ -7,7 +7,7 @@ CREATE TABLE usuarios (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(20) NOT NULL UNIQUE, -- Aquí guardaremos el DNI (Login)
     password VARCHAR(255) NOT NULL,
-    rol VARCHAR(20) NOT NULL,             -- 'admin', 'user', 'vet'
+    rol VARCHAR(20) NOT NULL,             -- 'admin', 'user'
     nombre_completo VARCHAR(100)
 );
 
@@ -19,7 +19,7 @@ CREATE TABLE clientes (
     telefono VARCHAR(15),
     email VARCHAR(100),
     saldo DECIMAL(10, 2) DEFAULT 0.00,
-    usuario_id BIGINT UNIQUE,             -- Relación 1-a-1: Un login = Un cliente
+    usuario_id BIGINT UNIQUE,            
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 

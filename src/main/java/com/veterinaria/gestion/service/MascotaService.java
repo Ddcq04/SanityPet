@@ -35,6 +35,13 @@ public class MascotaService {
     public Mascota buscarPorId(Long id) {
         return mascotaRepository.findById(id).orElse(null);
     }
+    public Mascota buscarPorIdSeguro(Long id, String username, boolean isAdmin) {
+        Mascota mascota = buscarPorId(id);
+        if (mascota != null && !isAdmin && !mascota.getCliente().getUsuario().getUsername().equals(username)) {
+            throw new RuntimeException("Acceso denegado a esta mascota.");
+        }
+        return mascota;
+    }
 
     // Para insertar o actualizar la mascota
     public void guardar(Mascota mascota) {
@@ -45,13 +52,13 @@ public class MascotaService {
         mascotaRepository.deleteById(id);
     }
     
-    public List<Mascota> buscarFiltrado(String nombre, String especie, String raza) {
-        // Limpiamos los nulos para evitar errores
-        String n = (nombre == null) ? "" : nombre;
-        String e = (especie == null) ? "" : especie;
-        String r = (raza == null) ? "" : raza;
+    public List<Mascota> buscarFiltrado(String nombre, String especie, String raza, String dueno) {
+    	String n = (nombre == null || nombre.isBlank()) ? null : nombre;
+        String e = (especie == null || especie.isBlank()) ? null : especie;
+        String r = (raza == null || raza.isBlank()) ? null : raza;
+        String d = (dueno == null || dueno.isBlank()) ? null : dueno;
 
         // Ejecuta la búsqueda combinada
-        return mascotaRepository.findByNombreContainingIgnoreCaseAndEspecieContainingIgnoreCaseAndRazaContainingIgnoreCase(n, e, r);
+        return mascotaRepository.buscarConFiltros(n, e, r, d);
     }
 }

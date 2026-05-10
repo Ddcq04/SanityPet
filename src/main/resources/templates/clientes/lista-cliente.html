@@ -1,95 +1,103 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clientes</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
-    <link rel="stylesheet" th:href="@{/css/clientes/listadeclientes.css}">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Clientes</title>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
+	<link rel="stylesheet" th:href="@{/css/clientes/listadeclientes.css}">
 </head>
+
 <body>
 
-<header th:replace="~{common/navfooter :: navbar}">
-</header>
+	<header th:replace="~{common/navfooter :: navbar}">
+	</header>
 
-<main class="contenido-principal">
+	<main class="contenido-principal">
 
-    <div class="cabecera-pagina">
-        <div>
-            <h1 class="titulo-pagina">Gestión de Clientes</h1>
-            <p class="subtitulo-pagina">Administra la base de datos de propietarios de la clínica</p>
-        </div>
-        <a th:href="@{/clientes/nuevo}" href="#" class="boton-nuevo">
-            <i class="fa-solid fa-plus"></i>Registrar nuevo cliente
-        </a>
-    </div>
+		<div class="cabecera-pagina">
+			<div>
+				<h1 class="titulo-pagina">Gestión de Clientes</h1>
+				<p class="subtitulo-pagina">Administra la base de datos de propietarios de la clínica</p>
+			</div>
+			<a th:href="@{/clientes/nuevo}" href="#" class="boton-nuevo">
+				<i class="fa-solid fa-plus"></i>Registrar nuevo cliente
+			</a>
+		</div>
 
-    <div class="tarjeta-tabla">
+		<div class="tarjeta-tabla">
 
-        <!-- Barra de búsqueda -->
-        <div class="barra-busqueda">
-            <form th:action="@{/clientes/buscar}" method="get" class="formulario-busqueda">
-                <div class="input-busqueda">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" name="busqueda" placeholder="Buscar por nombre...">
-                </div>
-                <button type="submit" class="boton-buscar">Buscar</button>
-            </form>
-            <a th:href="@{/clientes}"class="boton-limpiar">
-                <i class="fa-solid fa-xmark"></i> Limpiar filtros
-            </a>
-        </div>
+			<!-- Barra de búsqueda -->
+			<div class="barra-busqueda">
+				<form th:action="@{/clientes/buscar}" method="get" class="formulario-busqueda">
+					<div class="input-busqueda">
+						<i class="fa-solid fa-magnifying-glass"></i>
+						<input type="text" name="busqueda" placeholder="Buscar por nombre...">
+					</div>
+					<button type="submit" class="boton-buscar">Buscar</button>
+				</form>
+				<a th:href="@{/clientes}" class="boton-limpiar">
+					<i class="fa-solid fa-xmark"></i> Limpiar filtros
+				</a>
+			</div>
 
-        <!-- Tabla -->
-        <div class="contenedor-tabla">
-            <table class="tabla-clientes">
-                <thead>
-                    <tr>
-                        <th>DNI</th>
-                        <th>Nombre completo</th>
-                        <th>Teléfono</th>
-                        <th>Email</th>
-                        <th>Mascotas</th>
-                        <th>Acciones</th>
-                        <th th:if="${#authorization.expression('hasRole(''admin'')')}">Rango</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="cl : ${clientes}">
-                        <td class="col-dni" th:text="${cl.dni}"></td>
-                        <td th:text="${cl.usuario?.nombreCompleto} ?: 'Sin nombre'"></td>
-                        <td th:text="${cl.telefono} ?: 'Sin teléfono'"></td>
-                        <td th:text="${cl.email} ?: 'Sin email'"></td>
-                        <td>
-                            <span class="etiqueta-mascotas" th:text="${cl.mascotas != null ? #lists.size(cl.mascotas) : 0} + ' masc.'"></span>
-                        </td>
-                        <td class="col-acciones">
-                            <a th:href="@{/clientes/editar/{id}(id=${cl.id})}" class="boton-editar"><i class="fa-solid fa-pen"></i></a>
-                            <a th:href="@{/clientes/eliminar/{id}(id=${cl.id})}" class="boton-eliminar" onclick="return confirm('¿Eliminar cliente?')"><i class="fa-solid fa-trash"></i></a>
-                        </td>
-                        <td class="col-rango" th:if="${#authorization.expression('hasRole(''admin'')')}">
-                            <div th:if="${cl.usuario?.rol != 'admin'}">
-                                <a th:href="@{/clientes/hacer-admin/{id}(id=${cl.id})}" class="boton-promover"
-                                   onclick="return confirm('¿Promover a Admin?')">
-                                    <i class="fa-solid fa-star"></i> Promover
-                                </a>
-                            </div>
-                            <div th:if="${cl.usuario?.rol == 'admin'}">
-                                <span class="etiqueta-admin">Es Admin</span>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+			<!-- Tabla -->
+			<div class="contenedor-tabla">
+				<table class="tabla-clientes">
+					<thead>
+						<tr>
+							<th>DNI</th>
+							<th>Nombre completo</th>
+							<th>Teléfono</th>
+							<th>Email</th>
+							<th>Mascotas</th>
+							<th>Acciones</th>
+							<th th:if="${#authorization.expression('hasRole(''admin'')')}">Rango</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="cl : ${clientes}">
+							<td class="col-dni" th:text="${cl.dni}"></td>
+							<td th:text="${cl.usuario?.nombreCompleto} ?: 'Sin nombre'"></td>
+							<td th:text="${cl.telefono} ?: 'Sin teléfono'"></td>
+							<td th:text="${cl.email} ?: 'Sin email'"></td>
+							<td>
+								<span class="etiqueta-mascotas"
+									th:text="${cl.mascotas != null ? #lists.size(cl.mascotas) : 0} + ' masc.'"></span>
+							</td>
+							<td class="col-acciones">
+								<a th:href="@{/clientes/editar/{id}(id=${cl.id})}" class="boton-editar"><i
+										class="fa-solid fa-pen"></i></a>
+								<a th:href="@{/clientes/eliminar/{id}(id=${cl.id})}" class="boton-eliminar"
+									onclick="return confirm('¿Eliminar cliente?')"><i class="fa-solid fa-trash"></i></a>
+							</td>
+							<td class="col-rango" th:if="${#authorization.expression('hasRole(''admin'')')}">
+								<div th:if="${cl.usuario?.rol != 'admin'}">
+									<a th:href="@{/clientes/hacer-admin/{id}(id=${cl.id})}" class="boton-promover"
+										onclick="return confirm('¿Promover a Admin?')">
+										<i class="fa-solid fa-star"></i> Promover
+									</a>
+								</div>
+								<div th:if="${cl.usuario?.rol == 'admin'}">
+									<span class="etiqueta-admin">Es Admin</span>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 
-    </div>
+		</div>
 
-</main>
-  <!-- FOOTER -->
-    <footer th:replace="~{common/navfooter :: pie}"></footer>
+	</main>
+	<!-- FOOTER -->
+	<footer th:replace="~{common/navfooter :: pie}"></footer>
 
 </body>
+
 </html>

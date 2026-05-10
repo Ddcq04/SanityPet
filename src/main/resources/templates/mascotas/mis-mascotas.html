@@ -1,77 +1,83 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Mascotas </title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
-    <link rel="stylesheet" th:href="@{/css/mascotas/mis-mascotas.css}">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Mis Mascotas </title>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
+	<link rel="stylesheet" th:href="@{/css/mascotas/mis-mascotas.css}">
 </head>
+
 <body>
 
-<header th:replace="~{common/navfooter :: navbar}">
-    <!-- navegacion -->
-</header>
+	<header th:replace="~{common/navfooter :: navbar}">
+		<!-- navegacion -->
+	</header>
 
-<main class="contenido-principal">
+	<main class="contenido-principal">
 
-    <div class="cabecera-pagina">
-        <div>
-            <h1 class="titulo-pagina">Mis Mascotas</h1>
-            <p class="subtitulo-pagina">Aquí puedes ver a todos tus compañeros registrados</p>
-        </div>
-        <a th:href="@{/mascotas/nueva}" href="#" class="boton-nuevo">
-            <i class="fa-solid fa-plus"></i> Registrar nueva
-        </a>
-    </div>
+		<div class="cabecera-pagina">
+			<div>
+				<h1 class="titulo-pagina">Mis Mascotas</h1>
+				<p class="subtitulo-pagina">Aquí puedes ver a todos tus compañeros registrados</p>
+			</div>
+			<a th:href="@{/mascotas/nueva}" href="#" class="boton-nuevo">
+				<i class="fa-solid fa-plus"></i> Registrar nueva
+			</a>
+		</div>
 
-    <!-- Estado vacío -->
-    <div class="seccion-vacia" th:if="${#lists.isEmpty(mascotas)}">
-        <div class="icono-vacio">
-            <i class="fa-solid fa-paw"></i>
-        </div>
-        <h2 class="titulo-vacio">¡Aún no tienes mascotas registradas!</h2>
-        <p class="texto-vacio">Haz clic en el botón superior para añadir a tu primer compañero.</p>
-        <a th:href="@{/mascotas/nueva}" href="#" class="boton-accion">
-            <i class="fa-solid fa-plus"></i> Registrar mi primera mascota
-        </a>
-    </div>
+		<!-- Estado vacío -->
+		<div class="seccion-vacia" th:if="${#lists.isEmpty(mascotas)}">
+			<div class="icono-vacio">
+				<i class="fa-solid fa-paw"></i>
+			</div>
+			<h2 class="titulo-vacio">¡Aún no tienes mascotas registradas!</h2>
+			<p class="texto-vacio">Haz clic en el botón superior para añadir a tu primer compañero.</p>
+			<a th:href="@{/mascotas/nueva}" href="#" class="boton-accion">
+				<i class="fa-solid fa-plus"></i> Registrar mi primera mascota
+			</a>
+		</div>
 
-    <!-- Grid de tarjetas -->
-    <div class="mascotas-grid" th:if="${!#lists.isEmpty(mascotas)}">
+		<!-- Grid de tarjetas -->
+		<div class="mascotas-grid" th:if="${!#lists.isEmpty(mascotas)}">
 
-        <div class="mascota-tarjeta" th:each="m : ${mascotas}">
-            <div class="tarjeta-cabecera">
-                <div class="mascota-icono"
-                     th:classappend="${m.especie == 'Perro'} ? 'perro' : (${m.especie == 'Gato'} ? 'gato' : 'otro')">
-                    <i class="fa-solid fa-dog" th:if="${m.especie == 'Perro'}"></i>
-                    <i class="fa-solid fa-cat" th:if="${m.especie == 'Gato'}"></i>
-                    <i class="fa-solid fa-paw" th:unless="${m.especie == 'Perro' or m.especie == 'Gato'}"></i>
-                </div>
-                <span class="etiqueta-especie" th:text="${m.especie}"></span>
-            </div>
-            <div class="tarjeta-cuerpo">
-                <h3 class="mascota-nombre" th:text="${m.nombre}"></h3>
-                <p class="mascota-raza" th:text="${m.raza}"></p>
-                <div class="mascota-dato">
-                    <span class="dato-label">Nacimiento</span>
-                    <span class="dato-valor" th:text="${m.fechaNacimiento != null ? #temporals.format(m.fechaNacimiento, 'dd/MM/yyyy') : 'No registrada'}"></span>
-                </div>
-            </div>
-            <div class="tarjeta-pie">
-                <a th:href="@{/citas/reservar(mascotaId=${m.id})}" href="#" class="boton-pedir-cita">
-                    <i class="fa-regular fa-calendar-plus"></i> Pedir Cita
-                </a>
-            </div>
-        </div>
+			<div class="mascota-tarjeta" th:each="m : ${mascotas}">
+				<div class="tarjeta-cabecera">
+					<div class="mascota-icono"
+						th:classappend="${m.especie == 'Perro'} ? 'perro' : (${m.especie == 'Gato'} ? 'gato' : 'otro')">
+						<i class="fa-solid fa-dog" th:if="${m.especie == 'Perro'}"></i>
+						<i class="fa-solid fa-cat" th:if="${m.especie == 'Gato'}"></i>
+						<i class="fa-solid fa-paw" th:unless="${m.especie == 'Perro' or m.especie == 'Gato'}"></i>
+					</div>
+					<span class="etiqueta-especie" th:text="${m.especie}"></span>
+				</div>
+				<div class="tarjeta-cuerpo">
+					<h3 class="mascota-nombre" th:text="${m.nombre}"></h3>
+					<p class="mascota-raza" th:text="${m.raza}"></p>
+					<div class="mascota-dato">
+						<span class="dato-label">Nacimiento</span>
+						<span class="dato-valor"
+							th:text="${m.fechaNacimiento != null ? #temporals.format(m.fechaNacimiento, 'dd/MM/yyyy') : 'No registrada'}"></span>
+					</div>
+				</div>
+				<div class="tarjeta-pie">
+					<a th:href="@{/citas/reservar(mascotaId=${m.id})}" href="#" class="boton-pedir-cita">
+						<i class="fa-regular fa-calendar-plus"></i> Pedir Cita
+					</a>
+				</div>
+			</div>
 
-    </div>
+		</div>
 
-</main>
-  <!-- FOOTER -->
-    <footer th:replace="~{common/navfooter :: pie}"></footer>
+	</main>
+	<!-- FOOTER -->
+	<footer th:replace="~{common/navfooter :: pie}"></footer>
 
 </body>
+
 </html>

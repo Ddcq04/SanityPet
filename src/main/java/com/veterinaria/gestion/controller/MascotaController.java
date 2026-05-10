@@ -44,17 +44,25 @@ public class MascotaController {
         return "mascotas/formulario-mascota";
     }
 
-    // 4. Editar Mascota
+    // 4. Editar Mascota    
     @GetMapping("/editar/{id}")
-    public String mostrarFormularioEditar(@PathVariable("id") Long id, Model model) {
-        Mascota mascota = mascotaService.buscarPorId(id);
-        if (mascota == null) return "redirect:/mascotas";
-        
-        model.addAttribute("mascota", mascota);
-        model.addAttribute("todosClientes", clienteService.listarTodos());
-        return "mascotas/formulario-mascota";
-    }
+    public String mostrarFormularioEditar(@PathVariable("id") Long id, Model model, Principal principal, Authentication auth) {
+        String username = principal.getName();
+        boolean isAdmin = auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_admin"));
 
+        try {
+            Mascota mascota = mascotaService.buscarPorIdSeguro(id, username, isAdmin);
+            if (mascota == null) return "redirect:/mascotas";
+            
+            model.addAttribute("mascota", mascota);
+            model.addAttribute("todosClientes", clienteService.listarTodos());
+            return "mascotas/formulario-mascota";
+        } catch (RuntimeException e) {
+            return "redirect:/mascotas/mis-mascotas";
+        }
+    }
+    
     @PostMapping("/guardar")
     public String guardarMascota(@ModelAttribute("mascota") Mascota mascota, Principal principal, Authentication auth) {
         // Si la mascota viene sin cliente (porque la crea el propio usuario desde su perfil)
@@ -87,14 +95,16 @@ public class MascotaController {
             @RequestParam(value = "nombre", required = false) String nombre,
             @RequestParam(value = "especie", required = false) String especie,
             @RequestParam(value = "raza", required = false) String raza,
+            @RequestParam(value = "dueno", required = false) String dueno,
             Model model) {
         
-        model.addAttribute("mascotas", mascotaService.buscarFiltrado(nombre, especie, raza));
+        model.addAttribute("mascotas", mascotaService.buscarFiltrado(nombre, especie, raza, dueno));
         
         // Muy importante: devolvemos los valores al modelo para que el input no se vacíe al pulsar "Filtrar"
         model.addAttribute("nombreSeleccionado", nombre);
         model.addAttribute("especieSeleccionada", especie);
         model.addAttribute("razaSeleccionada", raza);
+        model.addAttribute("duenoSeleccionado", dueno);
         
         return "mascotas/lista-mascota";
     }

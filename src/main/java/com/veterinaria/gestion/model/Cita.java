@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.FutureOrPresent;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -32,5 +34,6 @@ public class Cita {
     @NotNull(message = "Debes seleccionar una mascota")
     @ManyToOne
     @JoinColumn(name = "mascota_id", nullable = false)
+    @ToString.Exclude
     private Mascota mascota;
 }
