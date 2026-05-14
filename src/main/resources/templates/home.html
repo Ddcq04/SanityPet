@@ -3,6 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
+	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Inicio</title>
 	<link
@@ -82,6 +83,10 @@
 				<div class="nosotros-puntos">
 					<div class="nosotros-punto">
 						<div class="punto-icono"><i class="fa-solid fa-check"></i></div>
+						<span>Atención personalizada para cada mascota</span>
+					</div>
+					<div class="nosotros-punto">
+						<div class="punto-icono"><i class="fa-solid fa-check"></i></div>
 						<span>Equipo titulado y en formación continua</span>
 					</div>
 					<div class="nosotros-punto">
@@ -90,75 +95,98 @@
 					</div>
 					<div class="nosotros-punto">
 						<div class="punto-icono"><i class="fa-solid fa-check"></i></div>
-						<span>Atención personalizada para cada mascota</span>
-					</div>
-					<div class="nosotros-punto">
-						<div class="punto-icono"><i class="fa-solid fa-check"></i></div>
 						<span>Gestión digital de historial clínico</span>
 					</div>
 				</div>
-				<a href="registrarse.html" class="boton-principal nosotros-btn">
-					<i class="fa-solid fa-user-plus"></i> Únete como socio
-				</a>
 			</div>
-			<!-- EQUIPO -->
-			<div class="equipo-grid">
+			<!-- EQUIPO SLIDER -->
+			<div class="equipo-slider-wrapper">
+				<button class="equipo-btn equipo-btn-prev" id="equipoPrev" aria-label="Anterior">
+					<i class="fa-solid fa-chevron-left"></i>
+				</button>
 
-				<div class="equipo-tarjeta">
-					<div class="equipo-foto-wrap">
-						<img src="/especialistas/vet1.jpg" alt="Dr. Victor Méndez" class="equipo-foto">
+				<div class="equipo-slider" id="equipoSlider">
+				<div class="equipo-slider-track" id="equipoTrack">
+
+					<div class="equipo-slide">
+						<div class="equipo-tarjeta">
+							<div class="equipo-foto-wrap">
+								<img src="/especialistas/vet1.jpg" alt="Dr. Victor Méndez" class="equipo-foto">
+							</div>
+							<div class="equipo-info">
+								<span class="equipo-badge">Veterinario</span>
+								<h3 class="equipo-nombre">Dr. Victor Méndez</h3>
+								<p class="equipo-cargo">Director Médico</p>
+							</div>
+						</div>
 					</div>
-					<div class="equipo-info">
-						<span class="equipo-badge">Veterinario</span>
-						<h3 class="equipo-nombre">Dr. Victor Méndez</h3>
-						<p class="equipo-cargo">Director Médico</p>
+
+					<div class="equipo-slide">
+						<div class="equipo-tarjeta">
+							<div class="equipo-foto-wrap">
+								<img src="/especialistas/vet2.jpg" alt="Dra. Laura Vega" class="equipo-foto">
+							</div>
+							<div class="equipo-info">
+								<span class="equipo-badge">Cirujana</span>
+								<h3 class="equipo-nombre">Dra. Laura Vega</h3>
+								<p class="equipo-cargo">Especialista en Cirugía</p>
+							</div>
+						</div>
 					</div>
+
+					<div class="equipo-slide">
+						<div class="equipo-tarjeta">
+							<div class="equipo-foto-wrap">
+								<img src="/especialistas/vet3.jpg" alt="Dr. Alejandro López" class="equipo-foto">
+							</div>
+							<div class="equipo-info">
+								<span class="equipo-badge">Radiólogo</span>
+								<h3 class="equipo-nombre">Dr. Alejandro López</h3>
+								<p class="equipo-cargo">Diagnóstico por Imagen</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="equipo-slide">
+						<div class="equipo-tarjeta">
+							<div class="equipo-foto-wrap">
+								<img src="/especialistas/vet4.jpg" alt="Dra. Sofía Morales" class="equipo-foto">
+							</div>
+							<div class="equipo-info">
+								<span class="equipo-badge">Internista</span>
+								<h3 class="equipo-nombre">Dra. Sofía Morales</h3>
+								<p class="equipo-cargo">Medicina Interna</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="equipo-slide">
+						<div class="equipo-tarjeta">
+							<div class="equipo-foto-wrap">
+								<img src="/especialistas/vet5.jpg" alt="Dra. Alexandra Torres" class="equipo-foto">
+							</div>
+							<div class="equipo-info">
+								<span class="equipo-badge">Urgenciólogo</span>
+								<h3 class="equipo-nombre">Dra. Alexandra Torres</h3>
+								<p class="equipo-cargo">Urgencias y Cuidados Intensivos</p>
+							</div>
+						</div>
+					</div>
+
 				</div>
 
-				<div class="equipo-tarjeta">
-					<div class="equipo-foto-wrap">
-						<img src="/especialistas/vet2.jpg" alt="Dra. Laura Vega" class="equipo-foto">
-					</div>
-					<div class="equipo-info">
-						<span class="equipo-badge">Cirujana</span>
-						<h3 class="equipo-nombre">Dra. Laura Vega</h3>
-						<p class="equipo-cargo">Especialista en Cirugía</p>
-					</div>
+				<div class="equipo-dots" id="equipoDots">
+					<span class="equipo-dot activo"></span>
+					<span class="equipo-dot"></span>
+					<span class="equipo-dot"></span>
+					<span class="equipo-dot"></span>
+					<span class="equipo-dot"></span>
+				</div>
 				</div>
 
-				<div class="equipo-tarjeta">
-					<div class="equipo-foto-wrap">
-						<img src="/especialistas/vet3.jpg" alt="Dr. Alejandro López" class="equipo-foto">
-					</div>
-					<div class="equipo-info">
-						<span class="equipo-badge">Radiólogo</span>
-						<h3 class="equipo-nombre">Dr. Alejandro López</h3>
-						<p class="equipo-cargo">Diagnóstico por Imagen</p>
-					</div>
-				</div>
-
-				<div class="equipo-tarjeta">
-					<div class="equipo-foto-wrap">
-						<img src="/especialistas/vet4.jpg" alt="Dra. Sofía Morales" class="equipo-foto">
-					</div>
-					<div class="equipo-info">
-						<span class="equipo-badge">Internista</span>
-						<h3 class="equipo-nombre">Dra. Sofía Morales</h3>
-						<p class="equipo-cargo">Medicina Interna</p>
-					</div>
-				</div>
-
-				<div class="equipo-tarjeta">
-					<div class="equipo-foto-wrap">
-						<img src="/especialistas/vet5.jpg" alt="Dr. Alex Torres" class="equipo-foto">
-					</div>
-					<div class="equipo-info">
-						<span class="equipo-badge">Urgenciólogo</span>
-						<h3 class="equipo-nombre">Dr. Alex Torres</h3>
-						<p class="equipo-cargo">Urgencias y Cuidados Intensivos</p>
-					</div>
-				</div>
-
+				<button class="equipo-btn equipo-btn-next" id="equipoNext" aria-label="Siguiente">
+					<i class="fa-solid fa-chevron-right"></i>
+				</button>
 			</div>
 		</div>
 	</section>
@@ -305,66 +333,69 @@
 
 	<!-- CONTACTO -->
 	<section class="contacto" id="contacto">
-		<div class="seccion-contenedor contacto-grid">
-			<div class="contacto-info">
+		<div class="seccion-contenedor">
+			<div class="seccion-cabecera">
 				<span class="etiqueta-seccion">Contacto</span>
 				<h2 class="seccion-titulo">Estamos aquí para ayudarte</h2>
-				<p class="contacto-texto">Puedes contactarnos por teléfono, email o visitarnos directamente en la
-					clínica.</p>
-				<div class="contacto-datos">
-					<div class="contacto-dato">
-						<div class="dato-icono"><i class="fa-solid fa-phone"></i></div>
-						<div>
-							<p class="dato-etiqueta">Teléfono</p>
-							<p class="dato-valor">+34 612 345 678</p>
-						</div>
-					</div>
-					<div class="contacto-dato">
-						<div class="dato-icono"><i class="fa-solid fa-envelope"></i></div>
-						<div>
-							<p class="dato-etiqueta">Email</p>
-							<p class="dato-valor">tusanitypet@gmail.com</p>
-						</div>
-					</div>
-					<div class="contacto-dato">
-						<div class="dato-icono"><i class="fa-solid fa-location-dot"></i></div>
-						<div>
-							<p class="dato-etiqueta">Dirección</p>
-							<p class="dato-valor">Avenida de la Constitución 8, Madrid</p>
-						</div>
-					</div>
-					<div class="contacto-dato">
-						<div class="dato-icono"><i class="fa-solid fa-clock"></i></div>
-						<div>
-							<p class="dato-etiqueta">Horario</p>
-							<p class="dato-valor">Lun–Vie 9:00–20:00 · Urgencias 24h</p>
-						</div>
-					</div>
-				</div>
+				<p class="seccion-subtitulo">Puedes contactarnos por teléfono, email o visitarnos directamente en la clínica.</p>
 			</div>
-			<form class="contacto-formulario">
-				<div class="form-fila">
-					<div class="form-campo">
-						<label>Nombre</label>
-						<input type="text" placeholder="Tu nombre">
+			<div class="contacto-grid">
+				<div class="contacto-info">
+					<div class="contacto-datos">
+						<div class="contacto-dato">
+							<div class="dato-icono"><i class="fa-solid fa-location-dot"></i></div>
+							<div>
+								<p class="dato-etiqueta">Dirección</p>
+								<p class="dato-valor">Avenida de la Constitución 8, Madrid</p>
+							</div>
+						</div>
+						<div class="contacto-dato">
+							<div class="dato-icono"><i class="fa-solid fa-clock"></i></div>
+							<div>
+								<p class="dato-etiqueta">Horario</p>
+								<p class="dato-valor">Lun–Vie 9:00–20:00</p>
+							</div>
+						</div>
+						<div class="contacto-dato">
+							<div class="dato-icono"><i class="fa-solid fa-envelope"></i></div>
+							<div>
+								<p class="dato-etiqueta">Email</p>
+								<p class="dato-valor">tusanitypet@gmail.com</p>
+							</div>
+						</div>
+						<div class="contacto-dato">
+							<div class="dato-icono"><i class="fa-solid fa-phone"></i></div>
+							<div>
+								<p class="dato-etiqueta">Teléfono</p>
+								<p class="dato-valor">+34 612 345 678</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<form class="contacto-formulario">
+					<div class="form-fila">
+						<div class="form-campo">
+							<label>Nombre</label>
+							<input type="text" placeholder="Tu nombre">
+						</div>
+						<div class="form-campo">
+							<label>Email</label>
+							<input type="email" placeholder="correo@ejemplo.com">
+						</div>
 					</div>
 					<div class="form-campo">
-						<label>Email</label>
-						<input type="email" placeholder="correo@ejemplo.com">
+						<label>Asunto</label>
+						<input type="text" placeholder="¿En qué podemos ayudarte?">
 					</div>
-				</div>
-				<div class="form-campo">
-					<label>Asunto</label>
-					<input type="text" placeholder="¿En qué podemos ayudarte?">
-				</div>
-				<div class="form-campo">
-					<label>Mensaje</label>
-					<textarea placeholder="Escribe tu mensaje aquí..." rows="4"></textarea>
-				</div>
-				<button type="submit" class="btn-enviar">
-					Enviar mensaje
-				</button>
-			</form>
+					<div class="form-campo">
+						<label>Mensaje</label>
+						<textarea placeholder="Escribe tu mensaje aquí..." rows="4"></textarea>
+					</div>
+					<button type="submit" class="btn-enviar">
+						Enviar mensaje
+					</button>
+				</form>
+			</div>
 		</div>
 	</section>
 
@@ -390,6 +421,86 @@
 			fondoActual = (fondoActual + 1) % fondoImgs.length;
 			fondoImgs[fondoActual].classList.add('activa');
 		}, 9000);
+	</script>
+
+	<!-- SLIDER EQUIPO -->
+	<script>
+		(function () {
+			const track = document.getElementById('equipoTrack');
+			const slides = Array.from(track.querySelectorAll('.equipo-slide'));
+			const dots = Array.from(document.querySelectorAll('.equipo-dot'));
+			const btnPrev = document.getElementById('equipoPrev');
+			const btnNext = document.getElementById('equipoNext');
+			const total = slides.length;
+			let actual = 0;
+			let pos = 1;
+			let intervalo;
+
+			/* Clonar primero y último para loop infinito */
+			const clonePrimero = slides[0].cloneNode(true);
+			const cloneUltimo = slides[total - 1].cloneNode(true);
+			track.appendChild(clonePrimero);
+			track.insertBefore(cloneUltimo, slides[0]);
+
+			function mover(newPos, animar) {
+				track.style.transition = animar ? 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)' : 'none';
+				track.style.transform = 'translateX(-' + (newPos * 100) + '%)';
+				pos = newPos;
+			}
+
+			function actualizarDots() {
+				dots.forEach(function(d) { d.classList.remove('activo'); });
+				dots[actual].classList.add('activo');
+			}
+
+			function siguiente() {
+				actual = (actual + 1) % total;
+				pos++;
+				mover(pos, true);
+				actualizarDots();
+				if (pos === total + 1) {
+					setTimeout(function() { mover(1, false); pos = 1; }, 620);
+				}
+			}
+
+			function anterior() {
+				actual = (actual - 1 + total) % total;
+				pos--;
+				mover(pos, true);
+				actualizarDots();
+				if (pos === 0) {
+					setTimeout(function() { mover(total, false); pos = total; }, 620);
+				}
+			}
+
+			function iniciarAuto() {
+				intervalo = setInterval(siguiente, 9000);
+			}
+
+			function reiniciarAuto() {
+				clearInterval(intervalo);
+				iniciarAuto();
+			}
+
+			/* Inicio */
+			mover(1, false);
+			actualizarDots();
+
+			btnNext.addEventListener('click', function() { siguiente(); reiniciarAuto(); });
+			btnPrev.addEventListener('click', function() { anterior(); reiniciarAuto(); });
+
+			dots.forEach(function(dot, i) {
+				dot.addEventListener('click', function() {
+					actual = i;
+					pos = i + 1;
+					mover(pos, true);
+					actualizarDots();
+					reiniciarAuto();
+				});
+			});
+
+			iniciarAuto();
+		})();
 	</script>
 
 

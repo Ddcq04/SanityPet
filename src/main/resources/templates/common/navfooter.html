@@ -48,7 +48,32 @@
 						Cerrar sesión
 					</button>
 				</form>
+				<button class="nav-hamburguesa" id="navHamburguesa" aria-label="Abrir menú">
+					<span></span><span></span><span></span>
+				</button>
 			</div>
+		</div>
+
+		<!-- Menú móvil desplegable -->
+		<div class="nav-movil" id="navMovil">
+			<ul class="nav-movil-lista">
+				<li><a th:href="@{/home}" class="nav-movil-enlace">Inicio</a></li>
+				<li sec:authorize="hasRole('admin')"><a th:href="@{/clientes}" class="nav-movil-enlace">Clientes</a></li>
+				<li sec:authorize="hasRole('admin')"><a th:href="@{/citas}" class="nav-movil-enlace">Citas</a></li>
+				<li sec:authorize="hasRole('user')"><a th:href="@{/citas}" class="nav-movil-enlace">Mis citas</a></li>
+				<li sec:authorize="hasRole('admin')"><a th:href="@{/mascotas}" class="nav-movil-enlace">Mascotas</a></li>
+				<li sec:authorize="hasRole('user')"><a th:href="@{/mascotas/mis-mascotas}" class="nav-movil-enlace">Mis mascotas</a></li>
+				<li><a th:href="@{/tienda}" class="nav-movil-enlace">Tienda virtual</a></li>
+				<li><a th:href="@{/tienda/carrito}" class="nav-movil-enlace"><i class="fa-solid fa-cart-shopping"></i> Carrito</a></li>
+				<li class="nav-movil-separador"></li>
+				<li>
+					<form th:action="@{/logout}" method="post" style="margin:0">
+						<button type="submit" class="nav-movil-enlace nav-movil-salir">
+							<i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+						</button>
+					</form>
+				</li>
+			</ul>
 		</div>
 	</header>
 
@@ -67,16 +92,16 @@
 				<p class="footer-tit">Contáctanos</p>
 				<ul class="footer-lista">
 					<li>
-						<i class="fa-solid fa-phone"></i>
-						<span>+34 954 123 456</span>
+						<i class="fa-solid fa-location-dot"></i>
+						<span>Avenida de la Constitución 8, Madrid</span>
 					</li>
 					<li>
 						<i class="fa-solid fa-envelope"></i>
 						<span>info@sanitypet.es</span>
 					</li>
 					<li>
-						<i class="fa-solid fa-location-dot"></i>
-						<span>Avenida de la Constitución 8, Madrid</span>
+						<i class="fa-solid fa-phone"></i>
+						<span>+34 954 123 456</span>
 					</li>
 				</ul>
 			</div>
@@ -84,9 +109,9 @@
 			<div class="footer-redes">
 				<p class="footer-tit">Síguenos</p>
 				<div class="footer-iconos">
-					<a href="#" class="footer-red"><i class="fa-brands fa-instagram"></i></a>
-					<a href="#" class="footer-red"><i class="fa-brands fa-facebook"></i></a>
-					<a href="#" class="footer-red"><i class="fa-brands fa-x-twitter"></i></a>
+					<a href="https://www.instagram.com/?hl=es" target="_blank" class="footer-red"><i class="fa-brands fa-instagram"></i></a>
+					<a href="https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F%3Flocale%3Des_ES" target="_blank" class="footer-red"><i class="fa-brands fa-facebook"></i></a>
+					<a href="https://es.linkedin.com/" target="_blank" class="footer-red"><i class="fa-brands fa-linkedin-in"></i></a>
 				</div>
 			</div>
 

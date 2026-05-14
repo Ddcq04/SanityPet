@@ -246,3 +246,85 @@
 .boton-nueva-cita:hover {
 	background: var(--menta-oscuro);
 }
+
+/* Tablet */
+@media (max-width: 900px) {
+	.contenido-principal { padding-left: 1.5rem; padding-right: 1.5rem; }
+	.cabecera-pagina { flex-direction: column; align-items: flex-start; gap: 1rem; }
+}
+
+/* Móvil — tabla convertida en tarjetas */
+@media (max-width: 600px) {
+	.contenido-principal {
+		padding-left: 1rem;
+		padding-right: 1rem;
+		padding-top: calc(var(--nav-alto) + 1.5rem);
+	}
+
+	/* Cabecera centrada */
+	.cabecera-pagina { text-align: center; }
+
+	/* Quitar el contenedor con scroll y la tabla normal */
+	.contenedor-tabla { overflow-x: visible; }
+	.tabla-citas thead { display: none; }
+
+	/* Cada fila → tarjeta independiente */
+	.tabla-citas,
+	.tabla-citas tbody {
+		display: block;
+		width: 100%;
+	}
+
+	.tabla-citas tbody tr {
+		display: block;
+		background: var(--blanco);
+		border: 1px solid var(--borde);
+		border-radius: 14px;
+		margin-bottom: 0.85rem;
+		overflow: hidden;
+		box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+	}
+
+	/* Cada celda → fila label + valor */
+	.tabla-citas tbody td {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+		padding: 0.7rem 1rem;
+		border-bottom: 1px solid var(--borde);
+		font-size: 0.875rem;
+		color: var(--texto);
+	}
+
+	.tabla-citas tbody td:last-child {
+		border-bottom: none;
+	}
+
+	/* Label automático desde data-label */
+	.tabla-citas tbody td::before {
+		content: attr(data-label);
+		font-size: 0.72rem;
+		font-weight: 700;
+		color: var(--texto-suave);
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		flex-shrink: 0;
+		white-space: nowrap;
+	}
+
+	/* Columna acciones centrada */
+	.tabla-citas tbody td.columna-acciones {
+		justify-content: space-between;
+	}
+
+	/* Pie */
+	.pie-tabla {
+		flex-direction: column;
+		padding: 1rem;
+	}
+	.boton-nueva-cita {
+		width: 100%;
+		justify-content: center;
+	}
+}

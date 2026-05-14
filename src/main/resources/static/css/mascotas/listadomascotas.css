@@ -346,3 +346,23 @@
 .tabla-pie strong {
 	color: var(--texto);
 }
+
+/* Tablet */
+@media (max-width: 900px) {
+	.mascotas-banner { height: 220px; }
+	.contenido-principal { padding-left: 1.5rem; padding-right: 1.5rem; }
+	.cabecera-pagina { flex-direction: column; align-items: flex-start; gap: 1rem; }
+	.boton-nuevo { width: 100%; justify-content: center; }
+	.barra-filtros { flex-direction: column; align-items: flex-start; }
+	.formulario-filtros { flex-wrap: wrap; width: 100%; }
+}
+
+/* Móvil */
+@media (max-width: 600px) {
+	.mascotas-banner { height: 180px; }
+	.mascotas-banner-titulo { font-size: 1.5rem; }
+	.contenido-principal { padding-left: 1rem; padding-right: 1rem; padding-top: 1.5rem; }
+	.tabla-mascotas thead th { padding: 0.65rem 0.85rem; font-size: 0.72rem; }
+	.tabla-mascotas tbody td { padding: 0.75rem 0.85rem; font-size: 0.84rem; }
+	.titulo-pagina { font-size: 1.35rem; }
+}

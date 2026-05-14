@@ -3,68 +3,105 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Alta de Socio - SanityPet</title>
-	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-	<!-- Reutilizamos tu CSS de login para que se vea igual de bien -->
-	<link rel="stylesheet" th:href="@{/css/login.css}">
+	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-512x512.png">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Registrarse - SanityPet</title>
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/css/registrarse.css}">
 </head>
 
 <body>
-	<div class="containermain">
-		<div class="seccionder" style="width: 100%; max-width: 600px; margin: auto;">
+
+	<div class="contenedor-registro">
+
+		<!-- Cabecera de la tarjeta — branding -->
+		<div class="card-cabecera">
+			<img src="/logo/SANYTYPETlogo.png" alt="SanityPet" class="panel-logo">
+			<div class="cabecera-info">
+				<h2 class="panel-titulo">Bienvenido a SanityPet</h2>
+				<p class="panel-desc">Gestiona las citas y el historial de tus mascotas desde cualquier dispositivo.</p>
+			</div>
+		</div>
+
+		<!-- Cuerpo — formulario -->
+		<div class="card-cuerpo">
+
+			<h1 class="form-titulo">Crear cuenta</h1>
+			<p class="form-subtitulo">Regístrate como socio para acceder a todos los servicios</p>
 
 			<form th:action="@{/registrar-socio}" th:object="${cliente}" method="post">
-				<h3>Únete a SanityPet</h3>
 
-				<ul th:if="${#fields.hasErrors('*')}">
-					<li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="error"></li>
+				<!-- Errores globales -->
+				<ul class="lista-errores" th:if="${#fields.hasErrors('*')}">
+					<li th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
 				</ul>
-				<p>Crea tu cuenta de socio para gestionar tus mascotas</p>
-				<div class="inputs">
-					<label>DNI (Será tu usuario)</label>
-					<input type="text" th:field="*{dni}" placeholder="12345678X" required>
-					<small class="text-danger" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></small>
-				</div>
-				<div class="inputs">
-					<label>Nombre Completo</label>
-					<input type="text" th:field="*{usuario.nombreCompleto}" placeholder="Juan Pérez" required>
-					<small class="text-danger" th:if="${#fields.hasErrors('usuario.nombreCompleto')}"
-						th:errors="*{usuario.nombreCompleto}"></small>
+
+				<!-- DNI + Nombre -->
+				<div class="fila-dos">
+					<div class="campo-grupo">
+						<label class="campo-etiqueta" for="dni">DNI</label>
+						<input class="campo-input" type="text" id="dni" th:field="*{dni}"
+							placeholder="12345678X" required
+							th:classappend="${#fields.hasErrors('dni')} ? ' is-invalid' : ''">
+						<small class="texto-error" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></small>
+					</div>
+					<div class="campo-grupo">
+						<label class="campo-etiqueta" for="nombreCompleto">Nombre completo</label>
+						<input class="campo-input" type="text" id="nombreCompleto"
+							th:field="*{usuario.nombreCompleto}" placeholder="Juan Pérez" required
+							th:classappend="${#fields.hasErrors('usuario.nombreCompleto')} ? ' is-invalid' : ''">
+						<small class="texto-error" th:if="${#fields.hasErrors('usuario.nombreCompleto')}"
+							th:errors="*{usuario.nombreCompleto}"></small>
+					</div>
 				</div>
 
-				<div class="inputs">
-					<label>Teléfono</label>
-					<input type="text" th:field="*{telefono}" placeholder="600000000">
+				<!-- Teléfono + Email -->
+				<div class="fila-dos">
+					<div class="campo-grupo">
+						<label class="campo-etiqueta" for="telefono">Teléfono</label>
+						<input class="campo-input" type="tel" id="telefono" th:field="*{telefono}"
+							placeholder="600 000 000">
+					</div>
+					<div class="campo-grupo">
+						<label class="campo-etiqueta" for="email">Email</label>
+						<input class="campo-input" type="email" id="email" th:field="*{email}"
+							placeholder="correo@ejemplo.com">
+					</div>
 				</div>
 
-				<div class="inputs">
-					<label>Email</label>
-					<input type="email" th:field="*{email}" placeholder="usuario@ejemplo.com">
+				<!-- Contraseña + Repetir -->
+				<div class="fila-dos">
+					<div class="campo-grupo">
+						<label class="campo-etiqueta" for="password">Contraseña</label>
+						<input class="campo-input" type="password" id="password"
+							th:field="*{usuario.passwordPlana}" placeholder="Mínimo 6 caracteres" required
+							th:classappend="${#fields.hasErrors('usuario.passwordPlana')} ? ' is-invalid' : ''">
+						<small class="texto-error" th:if="${#fields.hasErrors('usuario.passwordPlana')}"
+							th:errors="*{usuario.passwordPlana}"></small>
+					</div>
+					<div class="campo-grupo">
+						<label class="campo-etiqueta" for="passwordRepeat">Repetir contraseña</label>
+						<input class="campo-input" type="password" id="passwordRepeat"
+							th:field="*{usuario.passwordRepeat}" placeholder="Repite la contraseña" required
+							th:classappend="${#fields.hasErrors('usuario.passwordRepeat')} ? ' is-invalid' : ''">
+						<small class="texto-error" th:if="${#fields.hasErrors('usuario.passwordRepeat')}"
+							th:errors="*{usuario.passwordRepeat}"></small>
+					</div>
 				</div>
 
-				<!-- Campos del objeto Usuario dentro de Cliente -->
-				<div class="inputs">
-					<label>Contraseña</label>
-					<input type="password" th:field="*{usuario.passwordPlana}" required>
-					<small th:if="${#fields.hasErrors('usuario.passwordPlana')}"
-						th:errors="*{usuario.passwordPlana}"></small>
-				</div>
+				<button type="submit" class="boton-registro">
+					<i class="fa-solid fa-user-plus"></i> Crear mi cuenta
+				</button>
 
-				<div class="inputs">
-					<label>Repetir Contraseña</label>
-					<input type="password" th:field="*{usuario.passwordRepeat}" required>
-					<small th:if="${#fields.hasErrors('usuario.passwordRepeat')}"
-						th:errors="*{usuario.passwordRepeat}"></small>
-				</div>
-
-				<button type="submit" class="buton">Registrarme</button>
-
-				<div class="create-account" style="margin-top: 20px;">
-					¿Ya tienes cuenta? <a th:href="@{/login}">Inicia sesión aquí</a>
-				</div>
 			</form>
+
+			<p class="enlace-login">
+				¿Ya tienes cuenta? <a th:href="@{/login}">Inicia sesión aquí</a>
+			</p>
+
 		</div>
 	</div>
-</body>
 
+</body>
 </html>

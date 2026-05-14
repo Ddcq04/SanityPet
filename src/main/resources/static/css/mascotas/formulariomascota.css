@@ -199,3 +199,55 @@
 .boton-guardar:active {
 	transform: scale(0.98);
 }
+
+/* Tablet */
+@media (max-width: 768px) {
+	.contenido-principal { padding-left: 1.5rem; padding-right: 1.5rem; }
+	.fila-dos { grid-template-columns: 1fr; }
+}
+
+/* Móvil */
+@media (max-width: 600px) {
+	/* Contenedor */
+	.contenido-principal {
+		padding-left: 1rem;
+		padding-right: 1rem;
+		padding-top: calc(var(--nav-alto) + 1.5rem);
+	}
+
+	/* Título y subtítulo centrados */
+	.cabecera-pagina {
+		text-align: center;
+		margin-bottom: 1.5rem;
+	}
+	.titulo-pagina {
+		font-size: 1.4rem;
+	}
+	.subtitulo-pagina {
+		font-size: 0.85rem;
+	}
+
+	/* Secciones con padding ajustado */
+	.seccion {
+		padding: 1.5rem 1.25rem;
+	}
+
+	/* Inputs y selects ocupan todo el ancho */
+	.campo-input,
+	.campo-select {
+		font-size: 1rem; /* evita zoom automático en iOS */
+	}
+
+	/* Botones apilados y a ancho completo */
+	.botones-fila {
+		flex-direction: column-reverse;
+		padding: 1.25rem;
+		gap: 0.6rem;
+	}
+	.boton-cancelar,
+	.boton-guardar {
+		width: 100%;
+		text-align: center;
+		justify-content: center;
+	}
+}

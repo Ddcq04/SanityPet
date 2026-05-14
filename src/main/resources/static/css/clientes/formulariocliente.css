@@ -182,3 +182,18 @@
 .boton-guardar:hover {
 	background: var(--menta-oscuro);
 }
+
+/* Tablet */
+@media (max-width: 768px) {
+	.contenido-principal { padding-left: 1.5rem; padding-right: 1.5rem; }
+	.fila-dos { grid-template-columns: 1fr; }
+}
+
+/* Móvil */
+@media (max-width: 480px) {
+	.contenido-principal { padding-left: 1rem; padding-right: 1rem; padding-top: calc(var(--nav-alto) + 1.5rem); }
+	.seccion { padding: 1.25rem 1.25rem; }
+	.botones-fila { flex-direction: column-reverse; padding: 1.25rem; }
+	.boton-cancelar, .boton-guardar { width: 100%; text-align: center; justify-content: center; }
+	.titulo-pagina { font-size: 1.35rem; }
+}
