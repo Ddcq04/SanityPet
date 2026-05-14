@@ -53,20 +53,12 @@ body {
 	justify-content: space-between;
 	gap: 1.5rem;
 	margin-bottom: 3rem;
-	padding-bottom: 2rem;
-	border-bottom: 1px solid var(--borde);
+	padding: 1.75rem 2rem;
 	position: relative;
-}
-
-.tienda-header::after {
-	content: '';
-	position: absolute;
-	bottom: -1px;
-	left: 0;
-	width: 72px;
-	height: 3px;
-	background: var(--menta);
-	border-radius: 99px;
+	background: #ffffff;
+	border-radius: 16px;
+	box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+	border-left: 4px solid var(--menta);
 }
 
 .tienda-titulo {

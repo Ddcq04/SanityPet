@@ -19,14 +19,35 @@
 	<header th:replace="~{common/navfooter :: navbar}">
 	</header>
 
-	<main class="contenido-principal">
-
-		<div class="cabecera-pagina">
-			<div>
-				<h1 class="titulo-pagina">Mis Citas</h1>
-				<p class="subtitulo-pagina">Consulta y gestiona las citas de tus mascotas</p>
-			</div>
+	<!-- SLIDER HERO -->
+	<div class="citas-hero">
+		<div class="hero-slider">
+			<div class="hero-slide activa"><img src="/portada/citas/revi1.jpg" alt=""></div>
+			<div class="hero-slide"><img src="/portada/citas/revis2.jpg" alt="" style="object-position: center 85%; filter: brightness(0.75);"></div>
+			<div class="hero-slide"><img src="/portada/citas/revi3.jpg" alt=""></div>
+			<div class="hero-slide"><img src="/portada/citas/revi6.jpg" alt="" style="object-position: center 85%; filter: brightness(0.75);"></div>
+			<div class="hero-slide"><img src="/portada/citas/rev7.JPG" alt=""></div>
+			<div class="hero-slide"><img src="/portada/citas/revis8.jpg" alt=""></div>
+			<div class="hero-slide"><img src="/portada/citas/vacuna.jpg" alt=""></div>
 		</div>
+		<div class="hero-overlay"></div>
+		<div class="hero-contenido">
+			<span class="hero-badge"><i class="fa-solid fa-calendar-check"></i> Gestión de citas</span>
+			<h1 class="hero-titulo">Mis Citas</h1>
+			<p class="hero-subtitulo">Consulta y gestiona las citas de tus mascotas</p>
+		</div>
+		<div class="hero-dots" id="heroDots">
+			<span class="hero-dot activa"></span>
+			<span class="hero-dot"></span>
+			<span class="hero-dot"></span>
+			<span class="hero-dot"></span>
+			<span class="hero-dot"></span>
+			<span class="hero-dot"></span>
+			<span class="hero-dot"></span>
+		</div>
+	</div>
+
+	<main class="contenido-principal">
 
 		<!-- Estados vacíos: solo se muestran si no hay citas -->
 		<div th:if="${#lists.isEmpty(citas)}">
@@ -100,6 +121,31 @@
 	</main>
 	<!-- FOOTER -->
 	<footer th:replace="~{common/navfooter :: pie}"></footer>
+
+	<script>
+		(function () {
+			const slides = document.querySelectorAll('.hero-slide');
+			const dots = document.querySelectorAll('.hero-dot');
+			let actual = 0;
+
+			function irA(i) {
+				slides[actual].classList.remove('activa');
+				dots[actual].classList.remove('activa');
+				actual = i;
+				slides[actual].classList.add('activa');
+				dots[actual].classList.add('activa');
+			}
+
+			dots.forEach(function (dot, i) {
+				dot.addEventListener('click', function () { irA(i); });
+			});
+
+			setInterval(function () {
+				irA((actual + 1) % slides.length);
+			}, 4000);
+		})();
+	</script>
+
 
 </body>
 

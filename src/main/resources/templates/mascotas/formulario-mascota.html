@@ -22,12 +22,28 @@
 
 	<main class="contenido-principal">
 
-		<div class="cabecera-pagina">
-			<h1 class="titulo-pagina">Registrar Mascota</h1>
-			<p class="subtitulo-pagina">Completa la información del nuevo paciente</p>
-		</div>
+		<div class="pagina-split">
 
-		<div class="tarjeta-formulario">
+			<!-- Lado visual con slider -->
+			<div class="split-visual">
+				<div class="split-slide activa"><img src="/portada/mascotas/mascotaha.jpg" alt=""></div>
+				<div class="split-slide"><img src="/portada/mascotas/mas7.jpg" alt=""></div>
+				<div class="split-slide"><img src="/portada/mascotas/mas6.jpg" alt=""></div>
+				<div class="split-overlay"></div>
+				<div class="split-contenido">
+					<span class="portada-badge"><i class="fa-solid fa-paw"></i> SanityPet</span>
+					<h1 class="split-titulo">Registra a tu<br>mascota</h1>
+					<p class="split-desc">Añade a tu compañero y gestiona sus citas desde tu perfil.</p>
+				</div>
+			</div>
+
+			<!-- Lado formulario -->
+			<div class="split-form">
+				<div class="cabecera-pagina">
+					<h2 class="titulo-pagina">Nueva mascota</h2>
+					<p class="subtitulo-pagina">Completa la información del nuevo paciente</p>
+				</div>
+				<div class="tarjeta-formulario">
 
 			<form th:action="@{/mascotas/guardar}" th:object="${mascota}" method="post">
 
@@ -88,11 +104,26 @@
 
 			</form>
 
-		</div>
+			</div><!-- fin tarjeta-formulario -->
+			</div><!-- fin split-form -->
+
+		</div><!-- fin pagina-split -->
 
 	</main>
 	<!-- FOOTER -->
 	<footer th:replace="~{common/navfooter :: pie}"></footer>
+
+	<script>
+		(function () {
+			const slides = document.querySelectorAll('.split-slide');
+			let actual = 0;
+			setInterval(function () {
+				slides[actual].classList.remove('activa');
+				actual = (actual + 1) % slides.length;
+				slides[actual].classList.add('activa');
+			}, 8000);
+		})();
+	</script>
 
 </body>
 

@@ -21,69 +21,88 @@
 
 	<main class="contenido-principal">
 
-		<div class="cabecera-pagina">
-			<div>
-				<h1 class="titulo-pagina" th:text="${esEdicion} ? 'Modificar Cita' : 'Nueva Cita'">Nueva Cita</h1>
-				<p class="subtitulo-pagina">Rellena el formulario para reservar una cita con nuestros veterinarios</p>
+		<div class="pagina-split">
+
+			<!-- Panel visual izquierdo -->
+			<div class="split-visual">
+				<div class="split-slide activa"><img src="/portada/citas/perritogolde.jpg" alt=""></div>
+				<div class="split-slide"><img src="/portada/citas/citaaa.jpg" alt=""></div>
+				<div class="split-slide"><img src="/portada/citas/doctorexa.jpg" alt=""></div>
+				<div class="split-overlay"></div>
+				<div class="split-contenido">
+					<span class="portada-badge"><i class="fa-solid fa-calendar-check"></i> SanityPet</span>
+					<h1 class="split-titulo" th:utext="${esEdicion} ? 'Modifica tu<br>cita' : 'Reserva tu<br>cita'">Reserva tu<br>cita</h1>
+					<p class="split-desc">Nuestros veterinarios están listos para cuidar a tu mascota.</p>
+				</div>
 			</div>
-		</div>
 
-		<div class="tarjeta-formulario">
+			<!-- Panel formulario derecho -->
+			<div class="split-form">
 
-			<form id="citaForm" th:action="@{/citas/reservar/guardar}" th:object="${cita}" method="post">
-				<input type="hidden" th:field="*{id}" />
-				<!-- Mascota -->
-				<div class="campo-grupo">
-					<label class="campo-etiqueta" for="mascota">Mascota</label>
-					<select class="campo-select" id="mascota" th:field="*{mascota}"
-						th:classappend="${#fields.hasErrors('mascota')} ? 'is-invalid' : ''" required>
-						<option value="">-- Selecciona una mascota --</option>
-						<option th:each="m : ${listaMascotas}" th:value="${m.id}"
-							th:text="${m.nombre} + ' (' + ${m.cliente?.usuario?.nombreCompleto} + ')'">
-						</option>
-					</select>
-					<small class="texto-error" th:if="${#fields.hasErrors('mascota')}" th:errors="*{mascota}"></small>
+				<div class="cabecera-pagina">
+					<h2 class="titulo-pagina" th:text="${esEdicion} ? 'Modificar Cita' : 'Nueva Cita'">Nueva Cita</h2>
+					<p class="subtitulo-pagina">Rellena el formulario para reservar con nuestros veterinarios</p>
 				</div>
 
-				<!-- Día -->
-				<div class="campo-grupo">
-					<label class="campo-etiqueta" for="fechaInput">Día</label>
-					<input class="campo-input" type="date" id="fechaInput"
-						th:classappend="${#fields.hasErrors('fechaHora')} ? 'is-invalid' : ''"
-						th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}" required>
-					<small class="texto-error" th:if="${#fields.hasErrors('fechaHora')}"
-						th:errors="*{fechaHora}"></small>
+				<div class="tarjeta-formulario">
+					<form id="citaForm" th:action="@{/citas/reservar/guardar}" th:object="${cita}" method="post">
+						<input type="hidden" th:field="*{id}" />
+
+						<!-- Mascota -->
+						<div class="campo-grupo">
+							<label class="campo-etiqueta" for="mascota">Mascota</label>
+							<select class="campo-select" id="mascota" th:field="*{mascota}"
+								th:classappend="${#fields.hasErrors('mascota')} ? 'is-invalid' : ''" required>
+								<option value="">-- Selecciona una mascota --</option>
+								<option th:each="m : ${listaMascotas}" th:value="${m.id}"
+									th:text="${m.nombre} + ' (' + ${m.cliente?.usuario?.nombreCompleto} + ')'">
+								</option>
+							</select>
+							<small class="texto-error" th:if="${#fields.hasErrors('mascota')}" th:errors="*{mascota}"></small>
+						</div>
+
+						<!-- Día -->
+						<div class="campo-grupo">
+							<label class="campo-etiqueta" for="fechaInput">Día</label>
+							<input class="campo-input" type="date" id="fechaInput"
+								th:classappend="${#fields.hasErrors('fechaHora')} ? 'is-invalid' : ''"
+								th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}" required>
+							<small class="texto-error" th:if="${#fields.hasErrors('fechaHora')}"
+								th:errors="*{fechaHora}"></small>
+						</div>
+
+						<!-- Hora -->
+						<div class="campo-grupo">
+							<label class="campo-etiqueta" for="horaSelect">Hora</label>
+							<select class="campo-select" id="horaSelect" th:field="*{fechaHora}" required>
+								<option value="">-- Selecciona un día primero --</option>
+							</select>
+						</div>
+
+						<!-- Motivo -->
+						<div class="campo-grupo">
+							<label class="campo-etiqueta" for="motivo">Servicio / Motivo</label>
+							<select class="campo-select" id="motivo" th:field="*{motivo}" required>
+								<option value="">-- Selecciona un servicio --</option>
+								<option value="Consulta General - 30€">Consulta General (30€)</option>
+								<option value="Vacunación - 45€">Vacunación (45€)</option>
+								<option value="Diagnóstico (Eco/Rx) - 60€">Diagnóstico Eco/Rx (60€)</option>
+								<option value="Peluquería - 25€">Peluquería (25€)</option>
+								<option value="Cirugía - Desde 120€">Cirugía (Consultar presupuesto)</option>
+							</select>
+							<small class="texto-error" th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}"></small>
+						</div>
+
+						<button type="submit" class="boton-confirmar">Confirmar Reserva</button>
+
+					</form>
+
+					<a th:href="@{/home}" href="#" class="enlace-volver">Volver al inicio</a>
 				</div>
 
-				<!-- Hora -->
-				<div class="campo-grupo">
-					<label class="campo-etiqueta" for="horaSelect">Hora</label>
-					<select class="campo-select" id="horaSelect" th:field="*{fechaHora}" required>
-						<option value="">-- Selecciona un día primero --</option>
-					</select>
-				</div>
+			</div><!-- fin split-form -->
 
-				<!-- Motivo -->
-				<div class="campo-grupo">
-				    <label class="campo-etiqueta" for="motivo">Servicio / Motivo</label>
-				    <select class="campo-select" id="motivo" th:field="*{motivo}" required>
-				        <option value="">-- Selecciona un servicio --</option>
-				        <option value="Consulta General - 30€">Consulta General (30€)</option>
-				        <option value="Vacunación - 45€">Vacunación (45€)</option>
-				        <option value="Diagnóstico (Eco/Rx) - 60€">Diagnóstico Eco/Rx (60€)</option>
-				        <option value="Peluquería - 25€">Peluquería (25€)</option>
-				        <option value="Cirugía - Desde 120€">Cirugía (Consultar presupuesto)</option>
-				    </select>
-				    <small class="texto-error" th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}"></small>
-				</div>
-
-				<button type="submit" class="boton-confirmar">Confirmar Reserva</button>
-
-			</form>
-
-			<a th:href="@{/home}" href="#" class="enlace-volver">Volver al inicio</a>
-
-		</div>
+		</div><!-- fin pagina-split -->
 
 	</main>
 
@@ -128,7 +147,17 @@
 					alert("❌ Error de conexión con el servidor");
 				});
 		});
-		
+
+		// Slider
+		(function () {
+			const slides = document.querySelectorAll('.split-slide');
+			let actual = 0;
+			setInterval(function () {
+				slides[actual].classList.remove('activa');
+				actual = (actual + 1) % slides.length;
+				slides[actual].classList.add('activa');
+			}, 8000);
+		})();
 	</script>
 </body>
 </html>

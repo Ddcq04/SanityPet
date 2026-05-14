@@ -20,6 +20,26 @@
 		<!-- navegacion -->
 	</header>
 
+	<!-- HERO SLIDER -->
+	<div class="mascotas-hero">
+		<div class="hero-slider">
+			<div class="hero-slide activa"><img src="/portada/mascotas/g1.jpg" alt=""></div>
+			<div class="hero-slide"><img src="/portada/mascotas/g2.jpg" alt=""></div>
+			<div class="hero-slide"><img src="/portada/mascotas/g3.jpg" alt=""></div>
+		</div>
+		<div class="hero-overlay"></div>
+		<div class="hero-contenido">
+			<span class="hero-badge"><i class="fa-solid fa-paw"></i> Mis Mascotas</span>
+			<h1 class="hero-titulo">Tus compañeros</h1>
+			<p class="hero-subtitulo">Aquí puedes ver y gestionar a todos tus compañeros registrados</p>
+		</div>
+		<div class="hero-dots">
+			<span class="hero-dot activa"></span>
+			<span class="hero-dot"></span>
+			<span class="hero-dot"></span>
+		</div>
+	</div>
+
 	<main class="contenido-principal">
 
 		<div class="cabecera-pagina">
@@ -34,43 +54,61 @@
 
 		<!-- Estado vacío -->
 		<div class="seccion-vacia" th:if="${#lists.isEmpty(mascotas)}">
-			<div class="icono-vacio">
-				<i class="fa-solid fa-paw"></i>
+			<div class="vacio-deco">
+				<span class="deco-animal"><i class="fa-solid fa-dog"></i></span>
+				<span class="deco-animal"><i class="fa-solid fa-cat"></i></span>
+				<span class="deco-animal"><i class="fa-solid fa-dove"></i></span>
+				<span class="deco-animal"><i class="fa-solid fa-fish"></i></span>
+				<span class="deco-animal"><i class="fa-solid fa-horse"></i></span>
 			</div>
-			<h2 class="titulo-vacio">¡Aún no tienes mascotas registradas!</h2>
-			<p class="texto-vacio">Haz clic en el botón superior para añadir a tu primer compañero.</p>
-			<a th:href="@{/mascotas/nueva}" href="#" class="boton-accion">
-				<i class="fa-solid fa-plus"></i> Registrar mi primera mascota
-			</a>
+			<div class="vacio-centro">
+				<div class="icono-vacio">
+					<i class="fa-solid fa-paw"></i>
+				</div>
+				<h2 class="titulo-vacio">¡Aún no tienes mascotas!</h2>
+				<p class="texto-vacio">Tu lista está vacía por ahora. Registra a tu primer compañero y empieza a gestionar sus citas y salud desde aquí.</p>
+				<a th:href="@{/mascotas/nueva}" href="#" class="boton-accion">
+					<i class="fa-solid fa-plus"></i> Registrar mi primera mascota
+				</a>
+			</div>
 		</div>
 
 		<!-- Grid de tarjetas -->
 		<div class="mascotas-grid" th:if="${!#lists.isEmpty(mascotas)}">
 
 			<div class="mascota-tarjeta" th:each="m : ${mascotas}">
-				<div class="tarjeta-cabecera">
+
+				<!-- Lateral izquierdo con icono -->
+				<div class="tarjeta-lateral"
+					th:classappend="${m.especie == 'Perro'} ? 'lateral-perro' : (${m.especie == 'Gato'} ? 'lateral-gato' : 'lateral-otro')">
 					<div class="mascota-icono"
 						th:classappend="${m.especie == 'Perro'} ? 'perro' : (${m.especie == 'Gato'} ? 'gato' : 'otro')">
 						<i class="fa-solid fa-dog" th:if="${m.especie == 'Perro'}"></i>
 						<i class="fa-solid fa-cat" th:if="${m.especie == 'Gato'}"></i>
 						<i class="fa-solid fa-paw" th:unless="${m.especie == 'Perro' or m.especie == 'Gato'}"></i>
 					</div>
-					<span class="etiqueta-especie" th:text="${m.especie}"></span>
 				</div>
-				<div class="tarjeta-cuerpo">
-					<h3 class="mascota-nombre" th:text="${m.nombre}"></h3>
-					<p class="mascota-raza" th:text="${m.raza}"></p>
-					<div class="mascota-dato">
-						<span class="dato-label">Nacimiento</span>
-						<span class="dato-valor"
-							th:text="${m.fechaNacimiento != null ? #temporals.format(m.fechaNacimiento, 'dd/MM/yyyy') : 'No registrada'}"></span>
+
+				<!-- Info derecha -->
+				<div class="tarjeta-info">
+					<div class="tarjeta-info-top">
+						<span class="etiqueta-especie"
+							th:classappend="${m.especie == 'Perro'} ? 'especie-perro' : (${m.especie == 'Gato'} ? 'especie-gato' : 'especie-otro')"
+							th:text="${m.especie}"></span>
+						<h3 class="mascota-nombre" th:text="${m.nombre}"></h3>
+						<p class="mascota-raza" th:text="${m.raza}"></p>
+					</div>
+					<div class="tarjeta-info-bottom">
+						<div class="mascota-dato">
+							<i class="fa-regular fa-calendar"></i>
+							<span th:text="${m.fechaNacimiento != null ? #temporals.format(m.fechaNacimiento, 'dd/MM/yyyy') : 'Sin fecha'}"></span>
+						</div>
+						<a th:href="@{/citas/reservar(mascotaId=${m.id})}" href="#" class="boton-pedir-cita">
+							<i class="fa-regular fa-calendar-plus"></i> Pedir Cita
+						</a>
 					</div>
 				</div>
-				<div class="tarjeta-pie">
-					<a th:href="@{/citas/reservar(mascotaId=${m.id})}" href="#" class="boton-pedir-cita">
-						<i class="fa-regular fa-calendar-plus"></i> Pedir Cita
-					</a>
-				</div>
+
 			</div>
 
 		</div>
@@ -78,6 +116,30 @@
 	</main>
 	<!-- FOOTER -->
 	<footer th:replace="~{common/navfooter :: pie}"></footer>
+
+	<script>
+		(function () {
+			const slides = document.querySelectorAll('.hero-slide');
+			const dots = document.querySelectorAll('.hero-dot');
+			let actual = 0;
+
+			function irA(i) {
+				slides[actual].classList.remove('activa');
+				dots[actual].classList.remove('activa');
+				actual = i;
+				slides[actual].classList.add('activa');
+				dots[actual].classList.add('activa');
+			}
+
+			dots.forEach(function (dot, i) {
+				dot.addEventListener('click', function () { irA(i); });
+			});
+
+			setInterval(function () {
+				irA((actual + 1) % slides.length);
+			}, 8000);
+		})();
+	</script>
 
 </body>
 
