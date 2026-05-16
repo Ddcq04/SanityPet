@@ -296,6 +296,12 @@
 			<i class="fa-solid fa-circle-exclamation"></i>
 			<span th:text="${error}">Error al procesar la compra.</span>
 		</div>
+		
+		<!-- Alerta de Éxito -->
+		<div th:if="${mensaje}" class="error-alerta" style="background: #ecfdf5; color: #047857; border-left-color: #10b981;">
+			<i class="fa-solid fa-check-circle"></i>
+			<span th:text="${mensaje}">Operación exitosa.</span>
+		</div>
 
 		<div class="carrito-card">
 			<div th:if="${#lists.isEmpty(items)}" class="sin-productos carrito-vacio-hero">
@@ -376,8 +382,13 @@
 				</table>
 
 				<div class="carrito-footer">
-					<div>
-						<!-- Espacio extra -->
+					<div style="background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid var(--borde);">
+						<h4 style="margin-bottom: 0.5rem; font-family: var(--fuente-marca);">Mi Billetera</h4>
+						<p style="margin-bottom: 1rem; color: var(--texto-suave);">Saldo actual: <strong style="color: var(--menta-oscuro); font-size: 1.2rem;" th:text="'€' + ${saldo}">€0.00</strong></p>
+						<form th:action="@{/tienda/carrito/agregar-saldo}" method="post" style="display: flex; gap: 0.5rem; align-items: center;">
+							<input type="number" name="cantidad" step="0.01" min="1" placeholder="Ej. 20.00" style="padding: 0.5rem; border: 1px solid var(--borde); border-radius: 6px; width: 100px;" required>
+							<button type="submit" style="background: var(--menta); color: white; padding: 0.5rem 1rem; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">Añadir Saldo</button>
+						</form>
 					</div>
 					<div class="total-container">
 						<span class="total-label">Total a pagar:</span>

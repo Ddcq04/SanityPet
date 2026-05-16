@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-512x512.png">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Mis Compras - SanityPet</title>
+	<!-- Fuentes -->
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<!-- Estilos compartidos -->
+	<link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
+	<link rel="stylesheet" th:href="@{/css/tienda.css}">
+	<style>
+		.historial-card {
+			background: rgba(255, 255, 255, 0.9);
+			border-radius: var(--radio);
+			padding: 2rem;
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+			backdrop-filter: blur(10px);
+			margin-top: 2rem;
+		}
+
+		.historial-table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-bottom: 2rem;
+		}
+
+		.historial-table th {
+			text-align: left;
+			padding: 1rem;
+			border-bottom: 2px solid var(--borde);
+			color: var(--texto-suave);
+			text-transform: uppercase;
+			font-size: 0.8rem;
+			letter-spacing: 0.05em;
+		}
+
+		.historial-table td {
+			padding: 1.5rem 1rem;
+			border-bottom: 1px solid var(--borde);
+		}
+
+		.item-info {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+		}
+
+		.item-img {
+			width: 50px;
+			height: 50px;
+			border-radius: 8px;
+			background: var(--menta-claro);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			overflow: hidden;
+		}
+
+		.item-img img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		.item-nombre {
+			font-weight: 600;
+			font-family: var(--fuente-marca);
+		}
+
+		.btn-back {
+			color: var(--texto-suave);
+			text-decoration: none;
+			display: inline-flex;
+			align-items: center;
+			gap: 0.5rem;
+			font-weight: 500;
+			transition: color 0.2s;
+		}
+
+		.btn-back:hover {
+			color: var(--menta-oscuro);
+		}
+	</style>
+</head>
+
+<body>
+
+	<header th:replace="~{common/navfooter :: navbar}"></header>
+
+	<main class="tienda-container">
+
+		<div class="tienda-header">
+			<div>
+				<h1 class="tienda-titulo"><i class="fa-solid fa-clock-rotate-left"></i> Historial de Compras</h1>
+				<p class="tienda-subtitulo">Revisa los productos que has comprado anteriormente.</p>
+			</div>
+			<a th:href="@{/tienda}" class="btn-back">
+				<i class="fa-solid fa-arrow-left"></i> Volver a la tienda
+			</a>
+		</div>
+
+		<!-- Alerta de Éxito -->
+		<div th:if="${mensaje}" style="background: #ecfdf5; color: #047857; padding: 1rem; border-radius: 10px; border-left: 5px solid #10b981; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem;">
+			<i class="fa-solid fa-check-circle"></i>
+			<span th:text="${mensaje}">Operación exitosa.</span>
+		</div>
+
+		<div class="historial-card">
+			<div th:if="${#lists.isEmpty(compras)}" style="text-align: center; padding: 3rem;">
+				<i class="fa-solid fa-box-open" style="font-size: 4rem; color: #cbd5e1; margin-bottom: 1rem;"></i>
+				<h2 style="font-family: var(--fuente-marca); color: var(--oscuro);">Aún no has realizado compras</h2>
+				<p style="color: var(--texto-suave);">¡Explora nuestra tienda y descubre lo mejor para tu mascota!</p>
+			</div>
+
+			<div th:if="${not #lists.isEmpty(compras)}">
+				<table class="historial-table">
+					<thead>
+						<tr>
+							<th>Fecha</th>
+							<th>Producto</th>
+							<th>Precio Pagado</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="compra : ${compras}">
+							<td th:text="${#temporals.format(compra.fechaCompra, 'dd-MM-yyyy HH:mm')}">01-01-2026</td>
+							<td>
+								<div class="item-info">
+									<div class="item-img">
+										<img th:if="${not #strings.isEmpty(compra.producto.imagenUrl)}"
+											th:src="${compra.producto.imagenUrl}" alt="Prod">
+										<i th:unless="${not #strings.isEmpty(compra.producto.imagenUrl)}"
+											class="fa-solid fa-box"></i>
+									</div>
+									<div>
+										<span class="item-nombre" th:text="${compra.producto.nombre}">Nombre</span>
+									</div>
+								</div>
+							</td>
+							<td style="font-weight: 700; color: var(--menta-oscuro);" th:text="'€' + ${compra.precioPagado}">€0.00</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</main>
+
+	<footer th:replace="~{common/navfooter :: pie}"></footer>
+
+</body>
+
+</html>
