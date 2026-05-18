@@ -34,16 +34,18 @@
 		<div class="hero-contenido">
 			<span class="hero-badge"><i class="fa-solid fa-calendar-check"></i> Gestión de citas</span>
 			<h1 class="hero-titulo">Mis Citas</h1>
-			<p class="hero-subtitulo">Consulta y gestiona las citas de tus mascotas</p>
-		</div>
-		<div class="hero-dots" id="heroDots">
-			<span class="hero-dot activa"></span>
-			<span class="hero-dot"></span>
-			<span class="hero-dot"></span>
-			<span class="hero-dot"></span>
-			<span class="hero-dot"></span>
-			<span class="hero-dot"></span>
-			<span class="hero-dot"></span>
+			<div class="hero-fila-bottom">
+				<p class="hero-subtitulo">Consulta y gestiona las citas de tus mascotas</p>
+				<div class="hero-dots" id="heroDots">
+					<span class="hero-dot activa"></span>
+					<span class="hero-dot"></span>
+					<span class="hero-dot"></span>
+					<span class="hero-dot"></span>
+					<span class="hero-dot"></span>
+					<span class="hero-dot"></span>
+					<span class="hero-dot"></span>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -78,6 +80,16 @@
 
 		</div>
 
+		<!-- Cabecera encima de la tabla -->
+		<div class="cabecera-tabla" th:unless="${#lists.isEmpty(citas)}">
+			<div class="cabecera-tabla-texto">
+				<h2 class="cabecera-tabla-titulo">Citas programadas</h2>
+			</div>
+			<a th:href="@{/citas/reservar}" href="#" class="boton-nueva-cita">
+				<i class="fa-solid fa-calendar-plus"></i> Pedir otra cita
+			</a>
+		</div>
+
 		<!-- Tabla de citas: solo se muestra si hay citas -->
 		<div class="tarjeta-tabla" th:unless="${#lists.isEmpty(citas)}">
 
@@ -99,21 +111,14 @@
 							<td data-label="Motivo" th:text="${c.motivo}"></td>
 							<td data-label="Estado"><span class="etiqueta-estado">Confirmada</span></td>
 							<td data-label="Acciones" class="columna-acciones">
-								<a th:href="@{/citas/editar/{id}(id=${c.id})}" class="boton-editar"><i
-	                                        class="fa-solid fa-pen"></i></a>
-	                            <a th:href="@{/citas/eliminar/{id}(id=${c.id})}" class="boton-eliminar"
-	                                 onclick="return confirm('¿Cancelar esta cita?')"><i
-	                            	 class="fa-solid fa-trash"></i></a>
+								<div class="acciones-grupo">
+									<a th:href="@{/citas/editar/{id}(id=${c.id})}" class="boton-editar"><i class="fa-solid fa-pen"></i></a>
+									<a th:href="@{/citas/eliminar/{id}(id=${c.id})}" class="boton-eliminar" onclick="return confirm('¿Cancelar esta cita?')"><i class="fa-solid fa-trash"></i></a>
+								</div>
 							</td>
 						</tr>
 					</tbody>
 				</table>
-			</div>
-
-			<div class="pie-tabla">
-				<a th:href="@{/citas/reservar}" href="#" class="boton-nueva-cita">
-					<i class="fa-solid fa-calendar-plus"></i> Pedir otra cita
-				</a>
 			</div>
 
 		</div>
@@ -142,7 +147,7 @@
 
 			setInterval(function () {
 				irA((actual + 1) % slides.length);
-			}, 4000);
+			}, 8000);
 		})();
 	</script>
 

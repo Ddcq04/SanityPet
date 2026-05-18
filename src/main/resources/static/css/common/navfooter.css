@@ -63,6 +63,7 @@ header.nav-con-fondo .nav-contenedor { padding: 0 2.5rem; }
 
 header.nav-con-fondo .nav-enlace { color: var(--texto-suave); }
 header.nav-con-fondo .nav-enlace:hover { color: var(--texto); background: var(--fondo); }
+header.nav-con-fondo .nav-enlace.activo { color: var(--menta-oscuro); background: var(--menta-claro); }
 header.nav-con-fondo .nav-logo-img { filter: brightness(0); }
 header.nav-con-fondo .nav-cart-link { color: var(--texto-suave); }
 header.nav-con-fondo .nav-cart-link:hover { color: var(--texto); background: var(--fondo); }
@@ -349,7 +350,7 @@ footer {
 
 .footer-base {
 	border-top: 1px solid rgba(255, 255, 255, 0.06);
-	padding: 1.2rem 2rem;
+	padding: 1.2rem 2rem 2.5rem;
 	max-width: 1180px;
 	margin: 0 auto;
 	display: flex;
@@ -459,6 +460,14 @@ footer {
 	color: var(--menta-oscuro);
 }
 
+.nav-movil-enlace.activo {
+	color: var(--menta-oscuro);
+	font-weight: 700;
+	background: var(--menta-claro);
+	border-left: 3px solid var(--menta);
+	padding-left: calc(1.5rem - 3px);
+}
+
 .nav-movil-separador {
 	height: 1px;
 	background: var(--borde);
@@ -543,7 +552,7 @@ footer {
 	.footer-contacto { grid-column: 1; }
 	.footer-redes { grid-column: 2; }
 	.footer-base {
-		padding: 1.25rem 3rem;
+		padding: 1.25rem 3rem 2.5rem;
 		justify-content: center;
 		gap: 1.5rem;
 		text-align: center;
@@ -644,7 +653,7 @@ footer {
 		align-items: center;
 		text-align: center;
 		gap: 0.65rem;
-		padding: 1.25rem 1.5rem;
+		padding: 1.25rem 1.5rem 2.5rem;
 	}
 	.footer-legal {
 		justify-content: center;

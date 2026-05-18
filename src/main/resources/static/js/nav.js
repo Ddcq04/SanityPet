@@ -34,6 +34,27 @@
         actualizar();
     }
 
+    /* Enlace activo según la URL actual */
+    (function marcarActivo() {
+        const ruta = window.location.pathname;
+
+        function esActivo(href) {
+            try {
+                const path = new URL(href, window.location.origin).pathname;
+                if (path === '/home') return ruta === '/home';
+                return ruta === path || ruta.startsWith(path + '/');
+            } catch (e) { return false; }
+        }
+
+        document.querySelectorAll('.nav-enlace').forEach(function (a) {
+            if (esActivo(a.href)) a.classList.add('activo');
+        });
+
+        document.querySelectorAll('.nav-movil-enlace').forEach(function (a) {
+            if (esActivo(a.href)) a.classList.add('activo');
+        });
+    })();
+
     /* Menú hamburguesa */
     const hamburguesa = document.getElementById('navHamburguesa');
     const menuMovil = document.getElementById('navMovil');

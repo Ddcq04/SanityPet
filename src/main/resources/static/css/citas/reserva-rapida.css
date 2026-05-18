@@ -1,49 +1,48 @@
-/* Variables */
 :root {
 	--menta: #2ec4b6;
 	--menta-oscuro: #20968b;
 	--menta-claro: #e6fffa;
 	--texto: #1e293b;
 	--texto-suave: #64748b;
-	--fondo: #f8fafc;
 	--blanco: #ffffff;
 	--borde: #e2e8f0;
-	--error: #e11d48;
-	--error-claro: #fff1f2;
+	--fondo: #f8fafc;
 	--nav-alto: 68px;
 	--fuente-marca: 'Quicksand', sans-serif;
 	--fuente-base: 'Golos Text', sans-serif;
 }
 
-body {
-	background: var(--fondo);
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
-/* Área principal sin padding */
+body {
+	background: #0d1f1e;
+	overflow-x: hidden;
+	font-family: var(--fuente-base);
+}
+
 .contenido-principal {
 	padding: 0;
 	max-width: none;
-	margin-top: 68px;
+	margin-top: var(--nav-alto);
 }
 
-/* Split pantalla completa */
-.pagina-split {
-	display: flex;
-	min-height: calc(100vh - 68px);
+/* ══════════════════════════════════════
+   FONDO SLIDER (fixed, pantalla completa)
+══════════════════════════════════════ */
+.rc-fondo {
+	position: fixed;
+	top: var(--nav-alto);
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 0;
 }
 
-/* Panel visual izquierdo */
-.split-visual {
-	width: 50%;
-	flex-shrink: 0;
-	flex-grow: 0;
-	position: sticky;
-	top: 68px;
-	height: calc(100vh - 68px);
-	overflow: hidden;
-}
-
-.split-slide {
+.rc-slide {
 	position: absolute;
 	top: 0; left: 0;
 	width: 100%; height: 100%;
@@ -51,297 +50,264 @@ body {
 	transition: opacity 2.5s ease;
 }
 
-.split-slide.activa {
+.rc-slide.activa {
 	opacity: 1;
 }
 
-.split-slide img {
+.rc-slide img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
 	object-position: center;
 	display: block;
+	filter: brightness(0.42);
 }
 
-.split-overlay {
+.rc-overlay {
 	position: absolute;
-	top: 0; left: 0; width: 100%; height: 100%;
+	top: 0; left: 0;
+	width: 100%; height: 100%;
 	background: linear-gradient(
-		to bottom,
-		rgba(32, 150, 139, 0.38) 0%,
-		rgba(10, 17, 32, 0.82) 100%
+		135deg,
+		rgba(32, 150, 139, 0.30) 0%,
+		rgba(10, 17, 32, 0.68) 100%
 	);
 }
 
-.split-contenido {
+/* ══════════════════════════════════════
+   PÁGINA (contenedor centrado)
+══════════════════════════════════════ */
+.rc-pagina {
 	position: relative;
-	z-index: 1;
-	height: 100%;
+	z-index: 2;
+	min-height: calc(100vh - var(--nav-alto));
 	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
-	padding: 3rem;
-	gap: 1rem;
-}
-
-.portada-badge {
-	display: inline-flex;
 	align-items: center;
-	gap: 0.45rem;
-	padding: 0.35rem 0.9rem;
-	background: rgba(46, 196, 182, 0.2);
-	border: 1px solid rgba(46, 196, 182, 0.5);
-	border-radius: 20px;
-	font-size: 0.78rem;
-	font-weight: 600;
-	color: var(--menta-claro);
-	letter-spacing: 0.04em;
-	width: fit-content;
+	justify-content: center;
+	padding: 3rem 1.5rem;
 }
 
-.split-titulo {
-	font-family: var(--fuente-marca);
-	font-size: 3rem;
-	font-weight: 700;
-	color: #ffffff;
-	line-height: 1.1;
-	text-shadow: 0 2px 20px rgba(0,0,0,0.4);
-}
-
-.split-desc {
-	font-size: 0.95rem;
-	color: rgba(255,255,255,0.72);
-	max-width: 320px;
-	line-height: 1.6;
-}
-
-/* Panel formulario derecho */
-.split-form {
-	flex: 1;
-	background: var(--fondo);
-	padding: 3rem 2rem 4rem;
-	display: flex;
-	flex-direction: column;
-	gap: 1.5rem;
-	align-items: center;
-}
-
-.split-form > * {
-	width: 100%;
-	max-width: 420px;
-}
-
-/* Cabecera */
-.cabecera-pagina {
-	margin-bottom: 0.5rem;
-}
-
-.titulo-pagina {
-	font-family: var(--fuente-marca);
-	font-size: 1.6rem;
-	font-weight: 700;
-	color: var(--texto);
-	margin-bottom: 0.25rem;
-}
-
-.subtitulo-pagina {
-	font-size: 0.88rem;
-	color: var(--texto-suave);
-}
-
-/* Tarjeta formulario */
-.tarjeta-formulario {
+/* ══════════════════════════════════════
+   CARD (tarjeta blanca del formulario)
+══════════════════════════════════════ */
+.rc-card {
 	background: var(--blanco);
-	border: 1px solid var(--borde);
-	border-radius: 20px;
-	overflow: hidden;
-	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+	border-radius: 24px;
+	box-shadow: 0 32px 80px rgba(0, 0, 0, 0.45);
+	padding: 2.5rem 3rem 3rem;
+	width: 100%;
+	max-width: 560px;
 }
 
-.tarjeta-formulario form {
-	padding: 2rem 2.5rem;
-	display: flex;
-	flex-direction: column;
-	gap: 0;
-	border-bottom: 1px solid var(--borde);
-}
-
-/* Grupo de campo */
-.campo-grupo {
-	margin-bottom: 1.5rem;
-}
-
-.campo-grupo:last-of-type {
-	margin-bottom: 0;
-}
-
-/* Etiqueta */
-.campo-etiqueta {
+/* Cabecera de la card */
+.rc-card-header {
 	display: flex;
 	align-items: center;
-	gap: 0.45rem;
-	font-size: 0.85rem;
-	font-weight: 600;
-	color: var(--texto);
-	margin-bottom: 0.5rem;
+	gap: 1rem;
+	margin-bottom: 2rem;
 }
 
-.campo-etiqueta::before {
-	content: '';
-	width: 7px;
-	height: 7px;
-	border-radius: 50%;
-	background: var(--menta);
+.rc-icono {
+	width: 48px;
+	height: 48px;
+	border-radius: 14px;
+	background: linear-gradient(135deg, var(--menta) 0%, var(--menta-oscuro) 100%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.25rem;
+	color: var(--blanco);
 	flex-shrink: 0;
+	box-shadow: 0 6px 18px rgba(46, 196, 182, 0.35);
 }
 
-/* Input y Select */
-.campo-input,
-.campo-select {
+.rc-titulo {
+	font-family: var(--fuente-marca);
+	font-size: 1.45rem;
+	font-weight: 700;
+	color: var(--texto);
+	line-height: 1.2;
+}
+
+.rc-sub {
+	font-size: 0.82rem;
+	color: var(--texto-suave);
+	margin-top: 0.15rem;
+}
+
+/* ══════════════════════════════════════
+   CAMPOS DEL FORMULARIO
+══════════════════════════════════════ */
+.rc-fila-dos {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1.25rem 1.5rem;
+	margin-bottom: 1.25rem;
+}
+
+.rc-campo {
+	display: flex;
+	flex-direction: column;
+}
+
+.rc-label {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	font-size: 0.72rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--texto-suave);
+	margin-bottom: 0.45rem;
+}
+
+.rc-label i {
+	color: var(--menta-oscuro);
+	font-size: 0.68rem;
+}
+
+.rc-select,
+.rc-input {
 	width: 100%;
-	padding: 0.8rem 1.1rem;
+	padding: 0.82rem 1rem;
 	border: 1.5px solid var(--borde);
-	border-radius: 10px;
-	font-size: 0.9rem;
+	border-radius: 11px;
+	font-size: 0.88rem;
 	font-family: var(--fuente-base);
 	color: var(--texto);
 	background: var(--fondo);
+	outline: none;
 	transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
-	box-sizing: border-box;
 	appearance: none;
 	-webkit-appearance: none;
+	box-sizing: border-box;
 }
 
-.campo-input:focus,
-.campo-select:focus {
-	outline: none;
+.rc-select:focus,
+.rc-input:focus {
 	border-color: var(--menta);
+	box-shadow: 0 0 0 4px rgba(46, 196, 182, 0.12);
 	background: var(--blanco);
-	box-shadow: 0 0 0 4px rgba(46, 196, 182, 0.1);
 }
 
-.campo-input::placeholder {
-	color: #cbd5e1;
-}
-
-.campo-select {
+.rc-select {
 	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
 	background-repeat: no-repeat;
 	background-position: right 1rem center;
 	padding-right: 2.5rem;
-}
-
-/* Estados inválidos */
-.campo-input.is-invalid,
-.campo-select.is-invalid {
-	border-color: var(--error);
-	background: var(--error-claro);
-}
-
-.texto-error {
-	display: block;
-	margin-top: 0.4rem;
-	font-size: 0.78rem;
-	color: var(--error);
-	font-weight: 500;
-}
-
-/* Botón confirmar */
-.boton-confirmar {
-	display: block;
-	width: 100%;
-	padding: 0.9rem;
-	background: var(--menta);
-	color: var(--blanco);
-	border: none;
-	border-radius: 10px;
-	font-size: 0.95rem;
-	font-weight: 700;
-	font-family: var(--fuente-marca);
 	cursor: pointer;
-	text-align: center;
-	margin-top: 1.75rem;
-	transition: background 0.2s, transform 0.15s;
-	letter-spacing: 0.02em;
 }
 
-.boton-confirmar:hover {
-	background: var(--menta-oscuro);
+.rc-select.is-invalid,
+.rc-input.is-invalid {
+	border-color: #e11d48;
 }
 
-.boton-confirmar:active {
-	transform: scale(0.98);
+.rc-error {
+	font-size: 0.72rem;
+	color: #e11d48;
+	margin-top: 0.3rem;
 }
 
-/* Enlace volver */
-.enlace-volver {
+/* ══════════════════════════════════════
+   ACCIONES (botones)
+══════════════════════════════════════ */
+.rc-acciones {
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-top: 1.75rem;
+}
+
+.rc-link-volver {
+	display: inline-flex;
+	align-items: center;
 	gap: 0.4rem;
-	padding: 1.25rem 2.5rem;
 	font-size: 0.85rem;
 	color: var(--texto-suave);
 	text-decoration: none;
+	font-family: var(--fuente-base);
 	transition: color 0.2s;
 }
 
-.enlace-volver:hover {
+.rc-link-volver:hover {
 	color: var(--menta-oscuro);
 }
 
-/* ── Pantalla media (1100px) — imagen más estrecha ── */
-@media (max-width: 1100px) {
-	.split-visual { width: 42%; }
-	.split-titulo { font-size: 2.2rem; }
+.rc-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.88rem 2rem;
+	background: linear-gradient(135deg, var(--menta) 0%, var(--menta-oscuro) 100%);
+	color: var(--blanco);
+	border: none;
+	border-radius: 11px;
+	font-size: 0.92rem;
+	font-weight: 700;
+	font-family: var(--fuente-marca);
+	cursor: pointer;
+	box-shadow: 0 6px 20px rgba(46, 196, 182, 0.38);
+	transition: opacity 0.2s, transform 0.15s;
 }
 
-/* ── Tablet (900px) — imagen pasa a banner superior ── */
-@media (max-width: 900px) {
-	.contenido-principal { margin-top: 68px; }
-
-	.pagina-split {
-		flex-direction: column;
-	}
-
-	.split-visual {
-		width: 100%;
-		height: 240px;
-		position: relative;
-		top: 0;
-		flex-shrink: 0;
-	}
-
-	.split-contenido {
-		padding: 1.5rem 2rem;
-		justify-content: flex-end;
-	}
-
-	.split-titulo { font-size: 2rem; }
-	.split-desc { display: none; }
-
-	.split-form {
-		width: 100%;
-		padding: 2rem 1.5rem 3rem;
-		align-items: center;
-	}
-
-	.split-form > * { max-width: 560px; }
+.rc-btn:hover {
+	opacity: 0.9;
+	transform: translateY(-2px);
 }
 
-/* ── Tablet pequeño (680px) ── */
-@media (max-width: 680px) {
-	.split-visual { height: 180px; }
-	.split-titulo { font-size: 1.6rem; }
-	.split-form { padding: 1.5rem 1rem 3rem; }
+/* Footer visible sobre el fondo fijo */
+footer {
+	position: relative;
+	z-index: 2;
 }
 
-/* ── Móvil (480px) — imagen desaparece ── */
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+
+/* Tablet */
+@media (max-width: 640px) {
+	.rc-card {
+		padding: 2rem 1.75rem 2.5rem;
+		max-width: 100%;
+	}
+
+	.rc-titulo {
+		font-size: 1.25rem;
+	}
+}
+
+/* Móvil */
 @media (max-width: 480px) {
-	.split-visual { display: none; }
-	.contenido-principal { margin-top: 68px; }
+	.rc-pagina {
+		padding: 2rem 1rem;
+		align-items: flex-start;
+		padding-top: 2.5rem;
+	}
 
-	.tarjeta-formulario form { padding: 1.5rem 1.25rem; }
-	.campo-input, .campo-select { font-size: 1rem; }
-	.titulo-pagina { font-size: 1.4rem; }
+	.rc-card {
+		padding: 1.75rem 1.25rem 2rem;
+		border-radius: 18px;
+	}
+
+	.rc-fila-dos {
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+
+	.rc-acciones {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.rc-btn {
+		justify-content: center;
+	}
+
+	.rc-link-volver {
+		justify-content: center;
+	}
 }

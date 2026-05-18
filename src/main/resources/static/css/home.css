@@ -214,8 +214,7 @@ body {
 }
 
 .boton-principal:hover {
-	background: var(--menta-oscuro);
-	transform: translateY(-1px);
+	background: var(--menta-oscuro);	transform: translateY(-1px);
 }
 
 /* Estadísticas: tarjeta translúcida horizontal abajo-derecha */
