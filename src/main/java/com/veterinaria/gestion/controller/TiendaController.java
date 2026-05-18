@@ -19,6 +19,12 @@ public class TiendaController {
     @Autowired
     private com.veterinaria.gestion.service.PedidoService pedidoService;
 
+    @Autowired
+    private com.veterinaria.gestion.repository.ClienteRepository clienteRepository;
+
+    @Autowired
+    private com.veterinaria.gestion.repository.PedidoRepository pedidoRepository;
+
     // Listar todos los productos
     @GetMapping
     public String listarProductos(Model model, jakarta.servlet.http.HttpServletRequest request) {
@@ -59,7 +65,7 @@ public class TiendaController {
         return "redirect:/tienda";
     }
 
-    // --- MÉTODOS DEL CARRITO ---
+
 
     @SuppressWarnings("unchecked")
     private java.util.Map<Long, Integer> getCarrito(jakarta.servlet.http.HttpSession session) {
@@ -72,7 +78,7 @@ public class TiendaController {
     }
 
     @GetMapping("/carrito")
-    public String verCarrito(jakarta.servlet.http.HttpSession session, Model model) {
+    public String verCarrito(jakarta.servlet.http.HttpSession session, Model model, java.security.Principal principal) {
         java.util.Map<Long, Integer> carrito = getCarrito(session);
         java.util.List<java.util.Map<String, Object>> items = new java.util.ArrayList<>();
         java.math.BigDecimal total = java.math.BigDecimal.ZERO;
@@ -93,6 +99,21 @@ public class TiendaController {
 
         model.addAttribute("items", items);
         model.addAttribute("total", total);
+
+
+        java.math.BigDecimal saldo = java.math.BigDecimal.ZERO;
+        if (principal != null) {
+            String username = principal.getName();
+            com.veterinaria.gestion.model.Cliente cliente = clienteRepository.findByUsuarioUsername(username).orElse(null);
+            if (cliente == null) {
+                cliente = clienteRepository.findAll().stream().findFirst().orElse(null);
+            }
+            if (cliente != null && cliente.getSaldo() != null) {
+                saldo = cliente.getSaldo();
+            }
+        }
+        model.addAttribute("saldo", saldo);
+
         return "carrito";
     }
 
@@ -146,6 +167,21 @@ public class TiendaController {
         return "redirect:/tienda/carrito";
     }
 
+    @GetMapping("/mis-compras")
+    public String misCompras(java.security.Principal principal, Model model) {
+        if (principal != null) {
+            String username = principal.getName();
+            com.veterinaria.gestion.model.Cliente cliente = clienteRepository.findByUsuarioUsername(username).orElse(null);
+            if (cliente == null) {
+                cliente = clienteRepository.findAll().stream().findFirst().orElse(null);
+            }
+            if (cliente != null) {
+                model.addAttribute("compras", pedidoRepository.findByClienteIdOrderByFechaCompraDesc(cliente.getId()));
+            }
+        }
+        return "mis-compras";
+    }
+
     @PostMapping("/carrito/comprar")
     public String finalizarCompra(jakarta.servlet.http.HttpSession session, java.security.Principal principal, org.springframework.web.servlet.mvc.support.RedirectAttributes redirectAttributes) {
         java.util.Map<Long, Integer> carrito = getCarrito(session);
@@ -162,10 +198,41 @@ public class TiendaController {
             return "redirect:/tienda/carrito";
         }
 
-        return "redirect:/home";
+        return "redirect:/tienda/mis-compras";
     }
 
-    // --- API DINÁMICA ---
+    @PostMapping("/carrito/agregar-saldo")
+    public String agregarSaldo(@RequestParam("cantidad") java.math.BigDecimal cantidad, java.security.Principal principal, org.springframework.web.servlet.mvc.support.RedirectAttributes redirectAttributes, jakarta.servlet.http.HttpServletRequest request) {
+        if (cantidad == null || cantidad.compareTo(java.math.BigDecimal.ZERO) <= 0) {
+            redirectAttributes.addFlashAttribute("error", "La cantidad debe ser mayor a 0.");
+            return "redirect:/tienda/carrito";
+        }
+        
+        com.veterinaria.gestion.model.Cliente cliente = clienteRepository.findByUsuarioUsername(principal.getName()).orElse(null);
+        if (cliente == null) {
+            cliente = clienteRepository.findAll().stream().findFirst().orElse(null);
+            if (cliente == null) {
+                redirectAttributes.addFlashAttribute("error", "Error al encontrar tu cuenta.");
+                return "redirect:/tienda/carrito";
+            }
+        }
+        
+        if (cliente.getSaldo() == null) {
+            cliente.setSaldo(java.math.BigDecimal.ZERO);
+        }
+        cliente.setSaldo(cliente.getSaldo().add(cantidad));
+        clienteRepository.save(cliente);
+        
+        redirectAttributes.addFlashAttribute("mensaje", "Se han añadido " + cantidad + "€ a tu saldo exitosamente.");
+        
+        String referer = request.getHeader("Referer");
+        if (referer != null && referer.contains("/carrito")) {
+            return "redirect:/tienda/carrito";
+        }
+        return "redirect:/tienda";
+    }
+
+
 
     @PostMapping("/api/carrito/agregar/{id}")
     @ResponseBody

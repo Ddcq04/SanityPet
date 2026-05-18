@@ -30,6 +30,10 @@ public class Cliente {
     @Email(message = "Debe ser un correo válido") // Valida formato si se escribe algo, pero permite nulo
     private String email;
 
+    @Column(columnDefinition = "DECIMAL(10,2) DEFAULT 0.00")
+    private java.math.BigDecimal saldo = java.math.BigDecimal.ZERO;
+
+
     @OneToOne(cascade = CascadeType.ALL)
     @NotNull(message = "El usuario asociado no puede ser nulo")
     private Usuario usuario;
