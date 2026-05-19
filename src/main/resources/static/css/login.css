@@ -16,21 +16,24 @@
 }
 
 body {
-	height: 100vh;
-	overflow: hidden;
+	min-height: 100vh;
+	overflow: auto;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	padding: 1.5rem;
+	background-image: url('/portada/mascotas/mas8.jpg');
+	background-size: cover;
+	background-position: center center;
+	background-attachment: fixed;
 }
 
 .containermain {
 	background: var(--whitem);
 	display: flex;
-	width: 56rem;
-	/* 900px */
+	width: min(56rem, 96vw);
 	border-radius: var(--bordeM);
-	height: 34rem;
-	/* 550px */
+	min-height: 34rem;
 	box-shadow: 0 0 2.1875rem rgba(0, 0, 0, 0.12);
 	overflow: hidden;
 }
@@ -178,17 +181,64 @@ form p {
 	letter-spacing: 0.01em;
 }
 
-/* Tablet */
-@media (max-width: 768px) {
-	.containermain { width: 90vw; height: auto; flex-direction: column; }
-	.seccionizq { display: none; }
-	.seccionder { padding: 2.5rem 2rem; }
+/* ── Tablet: ambos paneles visibles pero más compactos ── */
+@media (max-width: 860px) {
+	.seccionizq { display: flex !important; padding: 2rem 1.25rem; flex: 0.85; }
+	.titulo h2 { font-size: 1.65rem; }
+	.titulo p { font-size: 0.82rem; }
+	.logo-acceso { margin-bottom: 0.75rem; }
+	.seccionder { padding: 2rem 1.75rem; flex: 1; }
+	h3 { font-size: 1.5rem; }
 }
 
-/* Móvil */
-@media (max-width: 480px) {
-	body { align-items: flex-start; padding-top: 2rem; overflow: auto; }
-	.containermain { width: 95vw; border-radius: 12px; }
-	.seccionder { padding: 2rem 1.5rem; }
-	h3 { font-size: 1.5rem; }
+/* ── Móvil pequeño: banner verde arriba + formulario abajo ── */
+@media (max-width: 500px) {
+	body { padding: 0; align-items: flex-start; }
+
+	.containermain {
+		flex-direction: column;
+		width: 100%;
+		border-radius: 0;
+		min-height: 100vh;
+	}
+
+	/* Panel verde — banner centrado arriba */
+	.seccionizq {
+		flex: none;
+		width: 100%;
+		padding: 2rem 2rem 1.75rem;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		flex-direction: column;
+	}
+
+	.titulo {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.titulo h2 {
+		font-size: 1.3rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.logo-acceso {
+		max-width: 170px;
+		margin: 0 auto 0.75rem;
+	}
+
+	.titulo p {
+		font-size: 0.82rem;
+		opacity: 0.85;
+	}
+
+	/* Formulario debajo */
+	.seccionder {
+		flex: 1;
+		padding: 2rem 1.5rem 2.5rem;
+	}
+
+	h3 { font-size: 1.4rem; }
 }

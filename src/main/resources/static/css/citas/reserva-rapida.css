@@ -27,7 +27,7 @@ body {
 .contenido-principal {
 	padding: 0;
 	max-width: none;
-	margin-top: var(--nav-alto);
+	margin-top: 0;
 }
 
 /* ══════════════════════════════════════
@@ -35,7 +35,7 @@ body {
 ══════════════════════════════════════ */
 .rc-fondo {
 	position: fixed;
-	top: var(--nav-alto);
+	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
@@ -80,9 +80,11 @@ body {
 .rc-pagina {
 	position: relative;
 	z-index: 2;
-	min-height: calc(100vh - var(--nav-alto));
+	min-height: 100vh;
 	display: flex;
 	align-items: center;
+	padding-top: var(--nav-alto);
+	padding-bottom: 2rem;
 	justify-content: center;
 	padding: 3rem 1.5rem;
 }
@@ -91,12 +93,16 @@ body {
    CARD (tarjeta blanca del formulario)
 ══════════════════════════════════════ */
 .rc-card {
-	background: var(--blanco);
+	background: rgba(255, 255, 255, 0.05);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	border: 1px solid rgba(255, 255, 255, 0.14);
 	border-radius: 24px;
 	box-shadow: 0 32px 80px rgba(0, 0, 0, 0.45);
 	padding: 2.5rem 3rem 3rem;
 	width: 100%;
 	max-width: 560px;
+	margin-top: 0;
 }
 
 /* Cabecera de la card */
@@ -125,13 +131,14 @@ body {
 	font-family: var(--fuente-marca);
 	font-size: 1.45rem;
 	font-weight: 700;
-	color: var(--texto);
+	color: #ffffff;
 	line-height: 1.2;
+	text-shadow: 0 2px 12px rgba(0,0,0,0.4);
 }
 
 .rc-sub {
 	font-size: 0.82rem;
-	color: var(--texto-suave);
+	color: rgba(255, 255, 255, 0.72);
 	margin-top: 0.15rem;
 }
 
@@ -158,7 +165,7 @@ body {
 	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
-	color: var(--texto-suave);
+	color: rgba(255, 255, 255, 0.75);
 	margin-bottom: 0.45rem;
 }
 
@@ -171,12 +178,12 @@ body {
 .rc-input {
 	width: 100%;
 	padding: 0.82rem 1rem;
-	border: 1.5px solid var(--borde);
+	border: 1.5px solid rgba(255, 255, 255, 0.22);
 	border-radius: 11px;
 	font-size: 0.88rem;
 	font-family: var(--fuente-base);
-	color: var(--texto);
-	background: var(--fondo);
+	color: #ffffff;
+	background: rgba(255, 255, 255, 0.10);
 	outline: none;
 	transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 	appearance: none;
@@ -184,11 +191,16 @@ body {
 	box-sizing: border-box;
 }
 
+.rc-select option {
+	color: var(--texto);
+	background: #1e3a38;
+}
+
 .rc-select:focus,
 .rc-input:focus {
 	border-color: var(--menta);
-	box-shadow: 0 0 0 4px rgba(46, 196, 182, 0.12);
-	background: var(--blanco);
+	box-shadow: 0 0 0 4px rgba(46, 196, 182, 0.20);
+	background: rgba(255, 255, 255, 0.15);
 }
 
 .rc-select {
@@ -226,14 +238,14 @@ body {
 	align-items: center;
 	gap: 0.4rem;
 	font-size: 0.85rem;
-	color: var(--texto-suave);
+	color: rgba(255, 255, 255, 0.65);
 	text-decoration: none;
 	font-family: var(--fuente-base);
 	transition: color 0.2s;
 }
 
 .rc-link-volver:hover {
-	color: var(--menta-oscuro);
+	color: #ffffff;
 }
 
 .rc-btn {

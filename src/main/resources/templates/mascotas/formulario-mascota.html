@@ -6,116 +6,101 @@
 	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Registrar Mascota</title>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
-		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 	<link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
 	<link rel="stylesheet" th:href="@{/css/mascotas/formulariomascota.css}">
 </head>
 
 <body>
-
-	<header th:replace="~{common/navfooter :: navbar}">
-		<!-- navbar -->
-	</header>
+	<header th:replace="~{common/navfooter :: navbar}"></header>
 
 	<main class="contenido-principal">
 
-		<div class="pagina-split">
+		<!-- Fondo slider -->
+		<div class="fm-fondo">
+			<div class="fm-slide activa"><img src="/portada/mascotas/mascotaha.jpg" alt=""></div>
+			<div class="fm-slide"><img src="/portada/mascotas/mas7.jpg" alt=""></div>
+			<div class="fm-slide"><img src="/portada/mascotas/mas6.jpg" alt=""></div>
+			<div class="fm-overlay"></div>
+		</div>
 
-			<!-- Lado visual con slider -->
-			<div class="split-visual">
-				<div class="split-slide activa"><img src="/portada/mascotas/mascotaha.jpg" alt=""></div>
-				<div class="split-slide"><img src="/portada/mascotas/mas7.jpg" alt=""></div>
-				<div class="split-slide"><img src="/portada/mascotas/mas6.jpg" alt=""></div>
-				<div class="split-overlay"></div>
-				<div class="split-contenido">
-					<span class="portada-badge"><i class="fa-solid fa-paw"></i> SanityPet</span>
-					<h1 class="split-titulo">Registra a tu<br>mascota</h1>
-					<p class="split-desc">Añade a tu compañero y gestiona sus citas desde tu perfil.</p>
-				</div>
-			</div>
+		<!-- Formulario centrado -->
+		<div class="fm-pagina">
+			<div class="fm-card">
 
-			<!-- Lado formulario -->
-			<div class="split-form">
-				<div class="cabecera-pagina">
-					<h2 class="titulo-pagina">Nueva mascota</h2>
-					<p class="subtitulo-pagina">Completa la información del nuevo paciente</p>
-				</div>
-				<div class="tarjeta-formulario">
-
-			<form th:action="@{/mascotas/guardar}" th:object="${mascota}" method="post">
-
-				<!-- Datos básicos -->
-				<div class="seccion">
-					<p class="seccion-titulo">Datos básicos</p>
-
-					<div class="campo-grupo">
-						<label class="campo-etiqueta" for="nombre">Nombre de la mascota</label>
-						<input class="campo-input" type="text" id="nombre" th:field="*{nombre}" placeholder="Ej: Toby"
-							required>
+				<div class="fm-card-header">
+					<div>
+						<h1 class="fm-titulo">Nueva mascota</h1>
+						<p class="fm-sub">Completa la información del nuevo paciente</p>
 					</div>
+				</div>
 
-					<!-- Especie -->
-					<div class="campo-grupo">
-						<label class="campo-etiqueta" for="especie">Especie</label>
-						<select class="campo-select" id="especie" th:field="*{especie}" required>
-							<option value="Perro">Perro</option>
-							<option value="Gato">Gato</option>
-							<option value="Ave">Ave</option>
-							<option value="Otro">Otro</option>
-						</select>
-					</div>
+				<form th:action="@{/mascotas/guardar}" th:object="${mascota}" method="post">
 
-					<div class="fila-dos">
-						<div class="campo-grupo">
-							<label class="campo-etiqueta" for="raza">Raza</label>
-							<input class="campo-input" type="text" id="raza" th:field="*{raza}"
-								placeholder="Ej: Labrador">
+					<!-- Nombre | Especie -->
+					<div class="fm-fila-dos">
+						<div class="fm-campo">
+							<label class="fm-label">Nombre</label>
+							<input class="fm-input" type="text" th:field="*{nombre}" placeholder="Ej: Toby" required>
 						</div>
-						<div class="campo-grupo">
-							<label class="campo-etiqueta" for="fechaNacimiento">Fecha de nacimiento</label>
-							<input class="campo-input" type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}">
+						<div class="fm-campo">
+							<label class="fm-label">Especie</label>
+							<select class="fm-select" th:field="*{especie}" required>
+								<option value="Perro">Perro</option>
+								<option value="Gato">Gato</option>
+								<option value="Ave">Ave</option>
+								<option value="Otro">Otro</option>
+							</select>
 						</div>
 					</div>
-				</div>
 
-				<!-- Propietario (solo admin) -->
-				<div class="seccion seccion-propietario" sec:authorize="hasRole('admin')">
-					<p class="seccion-titulo">Propietario</p>
-					<p class="seccion-desc">Si se deja vacío y eres cliente, se te asignará automáticamente.</p>
-					<div class="campo-grupo">
-						<label class="campo-etiqueta" for="cliente">Asignar a cliente</label>
-						<select class="campo-select" id="cliente" th:field="*{cliente}">
-							<option value="">-- Seleccionar cliente --</option>
+					<!-- Raza | Fecha de nacimiento -->
+					<div class="fm-fila-dos">
+						<div class="fm-campo">
+							<label class="fm-label">Raza</label>
+							<input class="fm-input" type="text" th:field="*{raza}" placeholder="Ej: Labrador">
+						</div>
+						<div class="fm-campo">
+							<label class="fm-label">Fecha de nacimiento</label>
+							<input class="fm-input" type="date" th:field="*{fechaNacimiento}">
+						</div>
+					</div>
+
+					<!-- Propietario (solo admin) -->
+					<div class="fm-campo fm-campo-full" sec:authorize="hasRole('admin')">
+						<label class="fm-label">Asignar a cliente</label>
+						<select class="fm-select" th:field="*{cliente}">
+							<option value="">— Seleccionar cliente —</option>
 							<option th:each="c : ${todosClientes}" th:value="${c.id}"
 								th:text="${c.dni} + ' - ' + ${c.usuario.nombreCompleto}">
 							</option>
 						</select>
 					</div>
-				</div>
 
-				<!-- Botones -->
-				<div class="botones-fila">
-					<a th:href="@{/mascotas/mis-mascotas}" class="boton-cancelar">Cancelar</a>
-					<button type="submit" class="boton-guardar">Guardar Mascota</button>
-				</div>
+					<div class="fm-acciones">
+						<a th:href="@{/mascotas/mis-mascotas}" class="fm-link-volver">
+							<i class="fa-solid fa-arrow-left"></i> Cancelar
+						</a>
+						<button type="submit" class="fm-btn">
+							<i class="fa-solid fa-circle-check"></i>
+							<span>Guardar mascota</span>
+						</button>
+					</div>
 
-			</form>
+				</form>
 
-			</div><!-- fin tarjeta-formulario -->
-			</div><!-- fin split-form -->
-
-		</div><!-- fin pagina-split -->
+			</div>
+		</div>
 
 	</main>
-	<!-- FOOTER -->
+
 	<footer th:replace="~{common/navfooter :: pie}"></footer>
 
 	<script>
+		// Slider
 		(function () {
-			const slides = document.querySelectorAll('.split-slide');
+			const slides = document.querySelectorAll('.fm-slide');
 			let actual = 0;
 			setInterval(function () {
 				slides[actual].classList.remove('activa');
@@ -124,7 +109,5 @@
 			}, 8000);
 		})();
 	</script>
-
 </body>
-
 </html>

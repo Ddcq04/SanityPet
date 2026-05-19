@@ -16,8 +16,8 @@
 /* Hero slider */
 .mascotas-hero {
 	position: relative;
-	height: 400px;
-	margin-top: 68px;
+	height: 468px;
+	margin-top: 0;
 	overflow: hidden;
 	background: #0d1f1e;
 }

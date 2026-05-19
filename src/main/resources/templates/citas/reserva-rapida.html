@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Reservar Cita</title>
+	<title>Nueva Cita</title>
 	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 	<link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
@@ -41,7 +41,7 @@
 
 					<div class="rc-fila-dos">
 						<div class="rc-campo">
-							<label class="rc-label"><i class="fa-solid fa-paw"></i> Mascota</label>
+							<label class="rc-label">Mascota</label>
 							<select class="rc-select" th:field="*{mascota}"
 								th:classappend="${#fields.hasErrors('mascota')} ? 'is-invalid' : ''" required>
 								<option value="">— Selecciona —</option>
@@ -53,7 +53,7 @@
 						</div>
 
 						<div class="rc-campo">
-							<label class="rc-label"><i class="fa-solid fa-stethoscope"></i> Servicio</label>
+							<label class="rc-label">Servicio</label>
 							<select class="rc-select" th:field="*{motivo}"
 								th:classappend="${#fields.hasErrors('motivo')} ? 'is-invalid' : ''" required>
 								<option value="">— Selecciona —</option>
@@ -69,7 +69,7 @@
 
 					<div class="rc-fila-dos">
 						<div class="rc-campo">
-							<label class="rc-label"><i class="fa-regular fa-calendar"></i> Día</label>
+							<label class="rc-label">Día</label>
 							<input class="rc-input" type="date" id="fechaInput"
 								th:classappend="${#fields.hasErrors('fechaHora')} ? 'is-invalid' : ''"
 								th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}" required>
@@ -77,7 +77,7 @@
 						</div>
 
 						<div class="rc-campo">
-							<label class="rc-label"><i class="fa-regular fa-clock"></i> Hora</label>
+							<label class="rc-label">Hora</label>
 							<select class="rc-select" id="horaSelect" th:field="*{fechaHora}" required>
 								<option value="">— Elige día primero —</option>
 							</select>

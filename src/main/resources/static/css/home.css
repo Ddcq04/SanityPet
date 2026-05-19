@@ -1,4 +1,8 @@
-/* 
+html {
+	scroll-behavior: smooth;
+}
+
+/*
    VARIABLES
 */
 :root {

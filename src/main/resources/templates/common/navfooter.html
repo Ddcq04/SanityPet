@@ -44,6 +44,9 @@
 					<i class="fa-regular fa-user usuario-icono"></i>
 					<span class="usuario-nombre" th:text="${#authentication.name}">Usuario</span>
 				</div>
+				<a th:href="@{/login}" class="btn-login">
+					Iniciar sesión
+				</a>
 				<form th:action="@{/logout}" method="post" style="display:inline">
 					<button type="submit" class="btn-salir">
 						Cerrar sesión
@@ -68,6 +71,11 @@
 				<li sec:authorize="hasRole('user')"><a th:href="@{/tienda/mis-compras}" class="nav-movil-enlace">Mis compras</a></li>
 				<li><a th:href="@{/tienda/carrito}" class="nav-movil-enlace"><i class="fa-solid fa-cart-shopping"></i> Carrito</a></li>
 				<li class="nav-movil-separador"></li>
+				<li>
+					<a th:href="@{/login}" class="nav-movil-enlace nav-movil-login">
+						<i class="fa-solid fa-right-to-bracket"></i> Iniciar sesión
+					</a>
+				</li>
 				<li>
 					<form th:action="@{/logout}" method="post" style="margin:0">
 						<button type="submit" class="nav-movil-enlace nav-movil-salir">
@@ -122,11 +130,11 @@
 		<div class="footer-base">
 			<p>&copy; 2026 <strong>SanityPet</strong>. Todos los derechos reservados.</p>
 			<div class="footer-legal">
-				<a href="#">Política de privacidad</a>
+				<a th:href="@{/politicas/privacidad}">Política de privacidad</a>
 				<span class="footer-sep">·</span>
-				<a href="#">Política de cookies</a>
+				<a th:href="@{/politicas/cookies}">Política de cookies</a>
 				<span class="footer-sep">·</span>
-				<a href="#">Aviso legal</a>
+				<a th:href="@{/politicas/aviso-legal}">Aviso legal</a>
 			</div>
 		</div>
 

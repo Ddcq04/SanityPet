@@ -16,13 +16,22 @@
 	<!-- Reutilizamos estilos de tienda para coherencia -->
 	<link rel="stylesheet" th:href="@{/css/tienda.css}">
 	<style>
+		body {
+			background-image: linear-gradient(to bottom, rgba(10,20,20,0.62) 0%, rgba(10,20,20,0.62) 12%, rgba(32,150,139,0.18) 35%), url('/portada/productos/prod1.jpg');
+			background-size: cover;
+			background-position: center center;
+			background-attachment: fixed;
+		}
+
 		.carrito-card {
-			background: rgba(255, 255, 255, 0.9);
-			border-radius: var(--radio);
+			background: rgba(255, 255, 255, 0.05);
+			backdrop-filter: blur(8px);
+			-webkit-backdrop-filter: blur(8px);
+			border: 1px solid rgba(255, 255, 255, 0.14);
+			border-radius: 20px;
 			padding: 2rem;
-			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-			backdrop-filter: blur(10px);
 			margin-top: 2rem;
+			box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
 		}
 
 		.carrito-table {
@@ -34,8 +43,8 @@
 		.carrito-table th {
 			text-align: left;
 			padding: 1rem;
-			border-bottom: 2px solid var(--borde);
-			color: var(--texto-suave);
+			border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+			color: rgba(255, 255, 255, 0.6);
 			text-transform: uppercase;
 			font-size: 0.8rem;
 			letter-spacing: 0.05em;
@@ -43,7 +52,8 @@
 
 		.carrito-table td {
 			padding: 1.5rem 1rem;
-			border-bottom: 1px solid var(--borde);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+			color: #ffffff;
 		}
 
 		.item-info {
@@ -78,6 +88,7 @@
 		.item-nombre {
 			font-weight: 600;
 			font-family: var(--fuente-marca);
+			color: #ffffff;
 		}
 
 		.cantidad-controles {
@@ -110,7 +121,7 @@
 			justify-content: space-between;
 			align-items: center;
 			padding-top: 1.5rem;
-			border-top: 2px solid var(--borde);
+			border-top: 2px solid rgba(255, 255, 255, 0.15);
 		}
 
 		.total-container {
@@ -118,7 +129,7 @@
 		}
 
 		.total-label {
-			color: var(--texto-suave);
+			color: rgba(255, 255, 255, 0.65);
 			font-size: 0.9rem;
 		}
 
@@ -159,17 +170,17 @@
 		}
 
 		.btn-back {
-			color: var(--texto-suave);
+			color: var(--menta-oscuro);
 			text-decoration: none;
 			display: inline-flex;
 			align-items: center;
 			gap: 0.5rem;
-			font-weight: 500;
+			font-weight: 600;
 			transition: color 0.2s;
 		}
 
 		.btn-back:hover {
-			color: var(--menta-oscuro);
+			color: var(--menta);
 		}
 
 		.form-inline {
@@ -194,9 +205,7 @@
 			min-height: 420px;
 			border-radius: 16px;
 			overflow: hidden;
-			background-image: url('/portada/tienda/tiendageneral.jpg');
-			background-size: cover;
-			background-position: center;
+			background: transparent;
 			padding: 0;
 			gap: 0;
 			margin: -2rem;
@@ -205,7 +214,10 @@
 		.carrito-vacio-overlay {
 			position: absolute;
 			top: 0; left: 0; width: 100%; height: 100%;
-			background: linear-gradient(135deg, rgba(5,10,20,0.78) 0%, rgba(20,100,92,0.70) 100%);
+			background: rgba(255, 255, 255, 0.07);
+			backdrop-filter: blur(8px);
+			-webkit-backdrop-filter: blur(8px);
+			border: 1px solid rgba(255, 255, 255, 0.3);
 		}
 
 		.carrito-vacio-contenido {
@@ -219,50 +231,52 @@
 		}
 
 		.carrito-vacio-icono {
-			width: 90px;
-			height: 90px;
+			width: 56px;
+			height: 56px;
 			border-radius: 50%;
-			background: rgba(46, 196, 182, 0.35);
-			border: 2.5px solid rgba(46, 196, 182, 0.8);
+			background: rgba(46, 196, 182, 0.15);
+			border: 2px solid rgba(46, 196, 182, 0.4);
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			font-size: 2.2rem;
-			color: #ffffff;
+			font-size: 18px;
+			color: var(--menta-oscuro);
+			backdrop-filter: blur(6px);
 			margin-bottom: 0.5rem;
-			box-shadow: 0 0 0 8px rgba(46, 196, 182, 0.12);
+			flex-shrink: 0;
+			overflow: hidden;
 		}
 
 		.carrito-vacio-titulo {
 			font-family: var(--fuente-marca);
-			font-size: 1.8rem;
+			font-size: 1.5rem;
 			font-weight: 700;
 			color: #ffffff;
 			text-shadow: 0 2px 12px rgba(0,0,0,0.6);
 		}
 
 		.carrito-vacio-texto {
-			font-size: 1rem;
-			color: #ffffff;
-			max-width: 300px;
+			font-size: 0.95rem;
+			color: var(--texto-suave);
+			max-width: 360px;
 			line-height: 1.6;
 			text-align: center;
+			text-shadow: none;
 			font-weight: 600;
-			text-shadow: 0 2px 10px rgba(0,0,0,0.8);
 		}
 
 		.carrito-vacio-btn {
 			display: inline-flex;
 			align-items: center;
 			gap: 0.5rem;
-			padding: 0.85rem 2rem;
+			padding: 0.75rem 1.75rem;
 			background: var(--menta);
-			color: #fff;
-			border-radius: 12px;
+			color: #ffffff;
+			border-radius: 10px;
 			text-decoration: none;
 			font-weight: 700;
 			font-family: var(--fuente-marca);
-			font-size: 0.92rem;
+			font-size: 0.9rem;
 			margin-top: 0.5rem;
 			transition: background 0.2s, transform 0.2s;
 			box-shadow: 0 4px 18px rgba(46,196,182,0.4);
@@ -283,7 +297,7 @@
 
 		<div class="tienda-header">
 			<div>
-				<h1 class="tienda-titulo"><i class="fa-solid fa-cart-shopping"></i> Mi Carrito</h1>
+				<h1 class="tienda-titulo">Mi Carrito</h1>
 				<p class="tienda-subtitulo">Revisa tus productos antes de finalizar la compra.</p>
 			</div>
 			<a th:href="@{/tienda}" class="btn-back">
@@ -307,10 +321,7 @@
 			<div th:if="${#lists.isEmpty(items)}" class="sin-productos carrito-vacio-hero">
 				<div class="carrito-vacio-overlay"></div>
 				<div class="carrito-vacio-contenido">
-					<div class="carrito-vacio-icono">
-						<i class="fa-solid fa-cart-shopping"></i>
-					</div>
-					<h2 class="carrito-vacio-titulo">Tu carrito está vacío</h2>
+<h2 class="carrito-vacio-titulo">Tu carrito está vacío</h2>
 					<p class="carrito-vacio-texto">¡Añade cualquier producto!</p>
 					<a th:href="@{/tienda}" class="carrito-vacio-btn">Ir a la tienda</a>
 				</div>
@@ -382,9 +393,9 @@
 				</table>
 
 				<div class="carrito-footer">
-					<div style="background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid var(--borde);">
-						<h4 style="margin-bottom: 0.5rem; font-family: var(--fuente-marca);">Mi Billetera</h4>
-						<p style="margin-bottom: 1rem; color: var(--texto-suave);">Saldo actual: <strong style="color: var(--menta-oscuro); font-size: 1.2rem;" th:text="'€' + ${saldo}">€0.00</strong></p>
+					<div style="background: rgba(255,255,255,0.07); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15);">
+						<h4 style="margin-bottom: 0.5rem; font-family: var(--fuente-marca); color: #ffffff;">Mi Billetera</h4>
+						<p style="margin-bottom: 1rem; color: rgba(255,255,255,0.65);">Saldo actual: <strong style="color: var(--menta); font-size: 1.2rem;" th:text="'€' + ${saldo}">€0.00</strong></p>
 						<form th:action="@{/tienda/carrito/agregar-saldo}" method="post" style="display: flex; gap: 0.5rem; align-items: center;">
 							<input type="number" name="cantidad" step="0.01" min="1" placeholder="Ej. 20.00" style="padding: 0.5rem; border: 1px solid var(--borde); border-radius: 6px; width: 100px;" required>
 							<button type="submit" style="background: var(--menta); color: white; padding: 0.5rem 1rem; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">Añadir Saldo</button>

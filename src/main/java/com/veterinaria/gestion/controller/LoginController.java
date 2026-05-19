@@ -34,6 +34,21 @@ public class LoginController {
     public String home() {
         return "home"; // Esto buscará src/main/resources/templates/home.html
     }
+
+    @GetMapping("/politicas/privacidad")
+    public String politicaPrivacidad() {
+        return "politicas/politica";
+    }
+
+    @GetMapping("/politicas/cookies")
+    public String politicaCookies() {
+        return "politicas/cookies";
+    }
+
+    @GetMapping("/politicas/aviso-legal")
+    public String avisoLegal() {
+        return "politicas/aviso";
+    }
  // --- FLUJO DE REGISTRO PÚBLICO ---
 
     @GetMapping("/registrarse")

@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Inicio</title>
+	<title>SanityPet</title>
 	<link
 		href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
 		rel="stylesheet">
@@ -407,8 +407,24 @@
 		document.getElementById('btn-servicios').addEventListener('click', function (e) {
 			e.preventDefault();
 			const destino = document.getElementById('servicios');
-			const offset = destino.getBoundingClientRect().top + window.scrollY - 90;
-			window.scrollTo({top: offset, behavior: 'smooth'});
+			const inicio = window.scrollY;
+			const fin = destino.getBoundingClientRect().top + window.scrollY - 80;
+			const distancia = fin - inicio;
+			const duracion = 900;
+			let tiempoInicio = null;
+
+			function easeInOutCubic(t) {
+				return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+			}
+
+			function paso(timestamp) {
+				if (!tiempoInicio) tiempoInicio = timestamp;
+				const progreso = Math.min((timestamp - tiempoInicio) / duracion, 1);
+				window.scrollTo(0, inicio + distancia * easeInOutCubic(progreso));
+				if (progreso < 1) requestAnimationFrame(paso);
+			}
+
+			requestAnimationFrame(paso);
 		});
 	</script>
 

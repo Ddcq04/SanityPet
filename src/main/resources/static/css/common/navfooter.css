@@ -50,6 +50,7 @@ header.nav-con-fondo {
 	-webkit-backdrop-filter: blur(14px);
 	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
 	border-radius: 0 0 18px 18px;
+	height: calc(var(--nav-alto) + 0.75rem);
 }
 
 /* Cuando el menú móvil está abierto, el header pierde el redondeo inferior
@@ -59,11 +60,11 @@ header.nav-con-fondo:has(.nav-movil.abierto) {
 	box-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-header.nav-con-fondo .nav-contenedor { padding: 0 2.5rem; }
+header.nav-con-fondo .nav-contenedor { padding: 0.75rem 2.5rem 0; }
 
-header.nav-con-fondo .nav-enlace { color: var(--texto-suave); }
-header.nav-con-fondo .nav-enlace:hover { color: var(--texto); background: var(--fondo); }
-header.nav-con-fondo .nav-enlace.activo { color: var(--menta-oscuro); background: var(--menta-claro); }
+header.nav-con-fondo .nav-enlace { color: var(--texto); font-weight: 600; }
+header.nav-con-fondo .nav-enlace:hover { color: var(--menta-oscuro); background: var(--fondo); }
+header.nav-con-fondo .nav-enlace.activo { color: var(--menta-oscuro) !important; background: transparent; }
 header.nav-con-fondo .nav-logo-img { filter: brightness(0); }
 header.nav-con-fondo .nav-cart-link { color: var(--texto-suave); }
 header.nav-con-fondo .nav-cart-link:hover { color: var(--texto); background: var(--fondo); }
@@ -134,9 +135,9 @@ header.nav-con-fondo .cart-badge { border-color: white; }
 }
 
 .nav-enlace.activo {
-	color: var(--menta-oscuro);
+	color: #85e5de;
 	font-weight: 700;
-	background: var(--menta-claro);
+	background: transparent;
 }
 
 .nav-acciones {
@@ -171,6 +172,10 @@ header.nav-con-fondo .cart-badge { border-color: white; }
 	color: #ffffff;
 	background: rgba(255, 255, 255, 0.15);
 	transform: scale(1.05);
+}
+
+.nav-cart-link.activo {
+	color: #85e5de !important;
 }
 
 .cart-badge {
@@ -234,6 +239,41 @@ header.nav-con-fondo .cart-badge { border-color: white; }
 	background: rgba(255, 255, 255, 0.15);
 	color: #ffffff;
 	border-color: #ffffff;
+}
+
+.btn-login {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.4rem 1rem;
+	border-radius: 0.5rem;
+	font-size: 0.88rem;
+	font-weight: 600;
+	color: #ffffff;
+	background: var(--menta);
+	border: 1.5px solid var(--menta);
+	font-family: var(--fuente-base);
+	text-decoration: none;
+	white-space: nowrap;
+	transition: background 0.2s, color 0.2s;
+}
+
+.btn-login:hover {
+	background: var(--menta-oscuro);
+	border-color: var(--menta-oscuro);
+}
+
+/* Login btn en nav blanca */
+header.nav-con-fondo .btn-login {
+	background: var(--menta);
+	color: #ffffff;
+	border-color: var(--menta);
+}
+
+/* Móvil login */
+.nav-movil-login {
+	color: var(--menta);
+	font-weight: 700;
 }
 
 
@@ -461,11 +501,9 @@ footer {
 }
 
 .nav-movil-enlace.activo {
-	color: var(--menta-oscuro);
+	color: #85e5de !important;
 	font-weight: 700;
-	background: var(--menta-claro);
-	border-left: 3px solid var(--menta);
-	padding-left: calc(1.5rem - 3px);
+	background: transparent;
 }
 
 .nav-movil-separador {
@@ -495,7 +533,7 @@ footer {
 		padding: 2rem 3rem 0;
 	}
 	header.nav-con-fondo .nav-contenedor {
-		padding: 0 3rem;
+		padding: 0.75rem 3rem 0;
 	}
 	.nav-enlace {
 		padding: 0.6rem 0.75rem;
@@ -513,6 +551,7 @@ footer {
 	.nav-movil { display: block; }
 	.usuario-nombre { display: block; font-size: 0.85rem; }
 	.btn-salir { display: none; }
+	.btn-login { display: none; }
 	.usuario-icono { font-size: 1rem; }
 	.nav-contenedor {
 		grid-template-columns: auto 1fr;
@@ -520,7 +559,7 @@ footer {
 		gap: 1rem;
 	}
 	header.nav-con-fondo .nav-contenedor {
-		padding: 0 3.5rem;
+		padding: 0.75rem 3.5rem 0;
 	}
 	.nav-acciones { justify-self: end; }
 
@@ -564,7 +603,7 @@ footer {
 @media (max-width: 600px) {
 	/* Nav */
 	.nav-contenedor { padding: 1rem 1.25rem 0; }
-	header.nav-con-fondo .nav-contenedor { padding: 0 1.25rem; }
+	header.nav-con-fondo .nav-contenedor { padding: 0.5rem 1.25rem 0; }
 	.nav-acciones { gap: 0.4rem; }
 	.nav-logo-img { height: 3rem; }
 

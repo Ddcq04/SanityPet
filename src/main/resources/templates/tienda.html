@@ -25,7 +25,7 @@
 
 		<div class="tienda-header">
 			<div>
-				<h1 class="tienda-titulo">Nuestra Tienda <i class="fa-solid fa-store"></i></h1>
+				<h1 class="tienda-titulo">Nuestra Tienda</h1>
 				<p class="tienda-subtitulo">Los mejores productos seleccionados por veterinarios para el bienestar de tu
 					compañero.</p>
 			</div>
@@ -118,7 +118,6 @@
 
 			<!-- Mensaje si no hay productos -->
 			<div th:if="${#lists.isEmpty(productos)}" class="sin-productos">
-				<i class="fa-solid fa-ghost"></i>
 				<p>No hay productos disponibles en la tienda por el momento.</p>
 			</div>
 		</div>

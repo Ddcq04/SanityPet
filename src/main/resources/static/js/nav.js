@@ -1,28 +1,22 @@
 (function () {
     const nav = document.querySelector('header');
-    const tienePrincipal = document.querySelector('.principal');
     let ultimoScroll = 0;
 
-    if (!tienePrincipal) {
+    /* Si la página pide nav siempre sólido (fondo blanco fijo) */
+    const navSolido = document.body.dataset.navSolid === 'true';
+
+    if (navSolido) {
         nav.classList.add('nav-con-fondo');
     } else {
         function actualizar() {
             const scrollActual = window.scrollY;
-            const alturaHero = tienePrincipal.offsetHeight;
 
             if (scrollActual <= 10) {
-                /* Arriba del todo: transparente, siempre visible */
-                nav.classList.remove('nav-oculto');
-                nav.classList.remove('nav-con-fondo');
-            } else if (scrollActual < alturaHero) {
-                /* Dentro del hero: transparente, siempre visible */
                 nav.classList.remove('nav-oculto');
                 nav.classList.remove('nav-con-fondo');
             } else if (scrollActual > ultimoScroll) {
-                /* Bajando fuera del hero: ocultar */
                 nav.classList.add('nav-oculto');
             } else {
-                /* Subiendo fuera del hero: mostrar con fondo */
                 nav.classList.remove('nav-oculto');
                 nav.classList.add('nav-con-fondo');
             }
@@ -34,25 +28,45 @@
         actualizar();
     }
 
-    /* Enlace activo según la URL actual */
+    /* Enlace activo según la URL actual — gana el match más largo */
     (function marcarActivo() {
         const ruta = window.location.pathname;
 
-        function esActivo(href) {
-            try {
-                const path = new URL(href, window.location.origin).pathname;
-                if (path === '/home') return ruta === '/home';
-                return ruta === path || ruta.startsWith(path + '/');
-            } catch (e) { return false; }
+        /* Si estamos en el carrito, solo pintar el icono del carrito */
+        if (ruta === '/tienda/carrito') {
+            const cartLink = document.querySelector('.nav-cart-link');
+            if (cartLink) cartLink.classList.add('activo');
+            return;
         }
 
-        document.querySelectorAll('.nav-enlace').forEach(function (a) {
-            if (esActivo(a.href)) a.classList.add('activo');
-        });
+        function activarEnlaces(selector) {
+            const enlaces = Array.from(document.querySelectorAll(selector));
+            let mejorPath = '';
 
-        document.querySelectorAll('.nav-movil-enlace').forEach(function (a) {
-            if (esActivo(a.href)) a.classList.add('activo');
-        });
+            enlaces.forEach(function (a) {
+                try {
+                    const path = new URL(a.href, window.location.origin).pathname;
+                    const coincide = path === '/home'
+                        ? ruta === '/home'
+                        : ruta === path || ruta.startsWith(path + '/');
+                    if (coincide && path.length > mejorPath.length) {
+                        mejorPath = path;
+                    }
+                } catch (e) {}
+            });
+
+            if (mejorPath) {
+                enlaces.forEach(function (a) {
+                    try {
+                        const path = new URL(a.href, window.location.origin).pathname;
+                        if (path === mejorPath) a.classList.add('activo');
+                    } catch (e) {}
+                });
+            }
+        }
+
+        activarEnlaces('.nav-enlace');
+        activarEnlaces('.nav-movil-enlace');
     })();
 
     /* Menú hamburguesa */

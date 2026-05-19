@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Mis Compras - SanityPet</title>
+	<title>Mis Compras</title>
 	<!-- Fuentes -->
 	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -13,13 +13,22 @@
 	<link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
 	<link rel="stylesheet" th:href="@{/css/tienda.css}">
 	<style>
+		body {
+			background-image: linear-gradient(to bottom, rgba(10,20,20,0.62) 0%, rgba(10,20,20,0.62) 12%, rgba(32,150,139,0.18) 35%), url('/portada/productos/p3.jpg');
+			background-size: cover;
+			background-position: center center;
+			background-attachment: fixed;
+		}
+
 		.historial-card {
-			background: rgba(255, 255, 255, 0.9);
-			border-radius: var(--radio);
+			background: rgba(255, 255, 255, 0.05);
+			backdrop-filter: blur(8px);
+			-webkit-backdrop-filter: blur(8px);
+			border: 1px solid rgba(255, 255, 255, 0.14);
+			border-radius: 20px;
 			padding: 2rem;
-			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-			backdrop-filter: blur(10px);
 			margin-top: 2rem;
+			box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
 		}
 
 		.historial-table {
@@ -31,8 +40,8 @@
 		.historial-table th {
 			text-align: left;
 			padding: 1rem;
-			border-bottom: 2px solid var(--borde);
-			color: var(--texto-suave);
+			border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+			color: rgba(255, 255, 255, 0.6);
 			text-transform: uppercase;
 			font-size: 0.8rem;
 			letter-spacing: 0.05em;
@@ -40,7 +49,8 @@
 
 		.historial-table td {
 			padding: 1.5rem 1rem;
-			border-bottom: 1px solid var(--borde);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+			color: #ffffff;
 		}
 
 		.item-info {
@@ -69,10 +79,11 @@
 		.item-nombre {
 			font-weight: 600;
 			font-family: var(--fuente-marca);
+			color: #ffffff;
 		}
 
 		.btn-back {
-			color: var(--texto-suave);
+			color: rgba(255, 255, 255, 0.65);
 			text-decoration: none;
 			display: inline-flex;
 			align-items: center;
@@ -82,7 +93,95 @@
 		}
 
 		.btn-back:hover {
-			color: var(--menta-oscuro);
+			color: #ffffff;
+		}
+
+		/* ── Estado vacío con imagen de fondo ── */
+		.vacio-banner {
+			position: relative;
+			border-radius: 16px;
+			overflow: hidden;
+			min-height: 420px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: transparent;
+			margin: -2rem;
+			padding: 0;
+			gap: 0;
+		}
+
+		.vacio-overlay {
+			position: absolute;
+			inset: 0;
+			background: rgba(255, 255, 255, 0.07);
+			backdrop-filter: blur(8px);
+			-webkit-backdrop-filter: blur(8px);
+			border: 1px solid rgba(255, 255, 255, 0.3);
+		}
+
+		.vacio-contenido {
+			position: relative;
+			z-index: 2;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 0.85rem;
+			padding: 3rem 2rem;
+			text-align: center;
+		}
+
+		.vacio-icono {
+			width: 72px;
+			height: 72px;
+			border-radius: 50%;
+			background: rgba(255,255,255,0.15);
+			border: 2px solid rgba(255,255,255,0.3);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.8rem;
+			color: #ffffff;
+			backdrop-filter: blur(6px);
+			margin-bottom: 0.5rem;
+		}
+
+		.vacio-titulo {
+			font-family: var(--fuente-marca);
+			font-size: 1.5rem;
+			font-weight: 700;
+			color: #ffffff;
+			text-shadow: 0 2px 16px rgba(0,0,0,0.6);
+		}
+
+		.vacio-texto {
+			font-size: 0.95rem;
+			color: rgba(255,255,255,0.90);
+			max-width: 360px;
+			line-height: 1.6;
+			text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+		}
+
+		.vacio-btn {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.5rem;
+			padding: 0.75rem 1.75rem;
+			background: var(--menta);
+			color: #ffffff;
+			border-radius: 10px;
+			text-decoration: none;
+			font-size: 0.9rem;
+			font-weight: 700;
+			font-family: var(--fuente-marca);
+			margin-top: 0.5rem;
+			transition: background 0.2s, transform 0.2s;
+			box-shadow: 0 4px 18px rgba(46,196,182,0.4);
+		}
+
+		.vacio-btn:hover {
+			background: var(--menta-oscuro);
+			transform: translateY(-2px);
 		}
 	</style>
 </head>
@@ -95,7 +194,7 @@
 
 		<div class="tienda-header">
 			<div>
-				<h1 class="tienda-titulo"><i class="fa-solid fa-clock-rotate-left"></i> Historial de Compras</h1>
+				<h1 class="tienda-titulo">Historial de Compras</h1>
 				<p class="tienda-subtitulo">Revisa los productos que has comprado anteriormente.</p>
 			</div>
 			<a th:href="@{/tienda}" class="btn-back">
@@ -110,10 +209,15 @@
 		</div>
 
 		<div class="historial-card">
-			<div th:if="${#lists.isEmpty(compras)}" style="text-align: center; padding: 3rem;">
-				<i class="fa-solid fa-box-open" style="font-size: 4rem; color: #cbd5e1; margin-bottom: 1rem;"></i>
-				<h2 style="font-family: var(--fuente-marca); color: var(--oscuro);">Aún no has realizado compras</h2>
-				<p style="color: var(--texto-suave);">¡Explora nuestra tienda y descubre lo mejor para tu mascota!</p>
+			<div th:if="${#lists.isEmpty(compras)}" class="vacio-banner">
+				<div class="vacio-overlay"></div>
+				<div class="vacio-contenido">
+<h2 class="vacio-titulo">Aún no has realizado compras</h2>
+					<p class="vacio-texto">¡Explora nuestra tienda y descubre lo mejor para tu mascota!</p>
+					<a th:href="@{/tienda}" class="vacio-btn">
+						Ir a la tienda
+					</a>
+				</div>
 			</div>
 
 			<div th:if="${not #lists.isEmpty(compras)}">
