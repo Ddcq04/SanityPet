@@ -19,16 +19,24 @@
 	<header th:replace="~{common/navfooter :: navbar}">
 	</header>
 
+	<div class="clientes-banner">
+		<div class="clientes-banner-overlay"></div>
+		<div class="clientes-banner-contenido">
+			<h1 class="clientes-banner-titulo">Gestión de Clientes</h1>
+			<p class="clientes-banner-subtitulo">Administra la base de datos de propietarios de la clínica</p>
+		</div>
+	</div>
+
 	<main class="contenido-principal">
 
 		<div class="cabecera-pagina">
-			<div>
-				<h1 class="titulo-pagina">Gestión de Clientes</h1>
-				<p class="subtitulo-pagina">Administra la base de datos de propietarios de la clínica</p>
-			</div>
 			<a th:href="@{/clientes/nuevo}" href="#" class="boton-nuevo">
-				<i class="fa-solid fa-plus"></i>Registrar nuevo cliente
+				<i class="fa-solid fa-plus"></i>Registrar cliente
 			</a>
+			<div class="cabecera-contador">
+				<span class="contador-numero" th:text="${#lists.size(clientes)}">0</span>
+				<span class="contador-label">Clientes registrados</span>
+			</div>
 		</div>
 
 		<div class="tarjeta-tabla">
@@ -43,7 +51,7 @@
 					<button type="submit" class="boton-buscar">Buscar</button>
 				</form>
 				<a th:href="@{/clientes}" class="boton-limpiar">
-					<i class="fa-solid fa-xmark"></i> Limpiar filtros
+					Limpiar
 				</a>
 			</div>
 
@@ -81,7 +89,7 @@
 								<div th:if="${cl.usuario?.rol != 'admin'}">
 									<a th:href="@{/clientes/hacer-admin/{id}(id=${cl.id})}" class="boton-promover"
 										onclick="return confirm('¿Promover a Admin?')">
-										<i class="fa-solid fa-star"></i> Promover
+										Promover
 									</a>
 								</div>
 								<div th:if="${cl.usuario?.rol == 'admin'}">

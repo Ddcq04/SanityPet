@@ -13,11 +13,17 @@
 	--fuente-base: 'Golos Text', sans-serif;
 }
 
+body {
+	background: var(--fondo);
+	min-height: 100vh;
+}
+
 /* Banner portada */
 .citas-banner {
 	position: relative;
-	margin-top: var(--nav-alto);
-	height: 300px;
+	margin-top: 0;
+	height: calc(300px + var(--nav-alto));
+	padding-top: var(--nav-alto);
 	background-image: url('/portada/mascotas/mas3.jpg');
 	background-size: cover;
 	background-position: center 30%;
@@ -29,7 +35,11 @@
 .citas-banner-overlay {
 	position: absolute;
 	inset: 0;
-	background: rgba(10, 17, 32, 0.55);
+	background: linear-gradient(
+		135deg,
+		rgba(32, 150, 139, 0.72) 0%,
+		rgba(46, 196, 182, 0.55) 100%
+	);
 }
 
 .citas-banner-contenido {
@@ -69,6 +79,29 @@
 	margin-bottom: 2rem;
 	gap: 1rem;
 }
+
+/* Contador cabecera */
+.cabecera-contador {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.contador-numero {
+	font-family: var(--fuente-marca);
+	font-size: 2rem;
+	font-weight: 700;
+	color: var(--menta-oscuro);
+	line-height: 1;
+}
+
+.contador-label {
+	font-size: 0.78rem;
+	color: var(--texto-suave);
+	margin-top: 0.1rem;
+}
+
+.contador-divider { display: none; }
 
 .citas-titulo {
 	font-family: var(--fuente-marca);
@@ -110,14 +143,62 @@
 	border: 1px solid var(--borde);
 	border-radius: 16px;
 	overflow: hidden;
+	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Filtros container */
+.agenda-filtros-container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	padding: 1rem 1.5rem;
+	border-bottom: 1px solid var(--borde);
+}
+
+/* Grupo de botones filtro */
+.filtros-grupo {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	flex-wrap: wrap;
+}
+
+/* Botón filtro individual */
+.btn-filtro-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.45rem 1rem;
+	border-radius: 20px;
+	font-size: 0.82rem;
+	font-weight: 600;
+	font-family: var(--fuente-base);
+	text-decoration: none;
+	color: var(--texto-suave);
+	background: var(--fondo);
+	border: 1.5px solid var(--borde);
+	transition: background 0.2s, color 0.2s, border-color 0.2s;
+	white-space: nowrap;
+}
+
+.btn-filtro-item:hover {
+	background: var(--menta-claro);
+	color: var(--menta-oscuro);
+	border-color: var(--menta);
+}
+
+.btn-filtro-item.activo {
+	background: var(--menta);
+	color: #ffffff;
+	border-color: var(--menta);
 }
 
 /* Info encima de la tabla */
 .tabla-info {
-	padding: 1rem 1.5rem;
 	font-size: 0.84rem;
 	color: var(--texto-suave);
-	border-bottom: 1px solid var(--borde);
 }
 
 .tabla-info strong {
@@ -199,26 +280,41 @@
 	text-align: center;
 }
 
-/* Botón eliminar */
+/* Columna acciones */
+.col-acciones {
+	white-space: nowrap;
+	text-align: left;
+}
+
+/* Botones de acción */
+.btn-editar,
 .btn-eliminar {
 	display: inline-flex;
 	align-items: center;
-	gap: 0.4rem;
-	padding: 0.4rem 0.9rem;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
 	border-radius: 8px;
 	font-size: 0.82rem;
-	font-weight: 600;
 	text-decoration: none;
-	color: #ef4444;
-	background: #fef2f2;
-	border: 1px solid #fecaca;
-	transition: background 0.2s, border-color 0.2s;
+	border: none;
+	transition: background 0.2s;
+	margin-right: 0.4rem;
 }
 
-.btn-eliminar:hover {
-	background: #fee2e2;
-	border-color: #ef4444;
+.btn-editar {
+	background: var(--menta-claro);
+	color: var(--menta-oscuro);
 }
+
+.btn-editar:hover { background: var(--menta); color: #ffffff; }
+
+.btn-eliminar {
+	color: #ef4444;
+	background: #fef2f2;
+}
+
+.btn-eliminar:hover { background: #fee2e2; }
 
 /* Pie de la tabla */
 .tabla-pie {

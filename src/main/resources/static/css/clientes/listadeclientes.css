@@ -13,9 +13,48 @@
 	--fuente-base: 'Golos Text', sans-serif;
 }
 
+/* Banner portada */
+.clientes-banner {
+	position: relative;
+	margin-top: 0;
+	height: calc(300px + var(--nav-alto));
+	padding-top: var(--nav-alto);
+	background-image: url('/portada/clinica/port1.jpg');
+	background-size: cover;
+	background-position: center 30%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.clientes-banner-overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(135deg, rgba(32, 150, 139, 0.72) 0%, rgba(46, 196, 182, 0.55) 100%);
+}
+
+.clientes-banner-contenido {
+	position: relative;
+	z-index: 1;
+	text-align: center;
+}
+
+.clientes-banner-titulo {
+	font-family: var(--fuente-marca);
+	font-size: 2rem;
+	font-weight: 700;
+	color: #ffffff;
+	margin-bottom: 0.4rem;
+}
+
+.clientes-banner-subtitulo {
+	font-size: 0.95rem;
+	color: rgba(255, 255, 255, 0.85);
+}
+
 /* Área principal */
 .contenido-principal {
-	padding-top: calc(var(--nav-alto) + 2.5rem);
+	padding-top: 2.5rem;
 	padding-bottom: 4rem;
 	max-width: 1180px;
 	margin: 0 auto;
@@ -31,6 +70,29 @@
 	margin-bottom: 2rem;
 	gap: 1rem;
 }
+
+/* Contador cabecera */
+.cabecera-contador {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.contador-numero {
+	font-family: var(--fuente-marca);
+	font-size: 2rem;
+	font-weight: 700;
+	color: var(--menta-oscuro);
+	line-height: 1;
+}
+
+.contador-label {
+	font-size: 0.78rem;
+	color: var(--texto-suave);
+	margin-top: 0.1rem;
+}
+
+.contador-divider { display: none; }
 
 .titulo-pagina {
 	font-family: var(--fuente-marca);
@@ -147,20 +209,22 @@
 	display: inline-flex;
 	align-items: center;
 	gap: 0.4rem;
-	padding: 0.55rem 1rem;
-	background: var(--fondo);
-	color: var(--texto-suave);
-	border: 1px solid var(--borde);
+	padding: 0.55rem 1.2rem;
+	background: var(--blanco);
+	color: var(--menta-oscuro);
+	border: 1.5px solid var(--menta);
 	border-radius: 10px;
 	font-size: 0.86rem;
-	font-weight: 500;
+	font-weight: 600;
+	font-family: var(--fuente-marca);
 	text-decoration: none;
 	transition: background 0.2s, color 0.2s;
+	white-space: nowrap;
 }
 
 .boton-limpiar:hover {
-	background: var(--borde);
-	color: var(--texto);
+	background: var(--menta);
+	color: var(--blanco);
 }
 
 /* Scroll horizontal */
@@ -241,8 +305,8 @@
 	width: 32px;
 	height: 32px;
 	border-radius: 8px;
-	background: #eff6ff;
-	color: #3b82f6;
+	background: var(--menta-claro);
+	color: var(--menta-oscuro);
 	text-decoration: none;
 	font-size: 0.82rem;
 	margin-right: 0.4rem;
@@ -250,7 +314,8 @@
 }
 
 .boton-editar:hover {
-	background: #dbeafe;
+	background: var(--menta);
+	color: #ffffff;
 }
 
 /* Botón eliminar */

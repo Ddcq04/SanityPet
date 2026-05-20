@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Citas</title>
+	<title>Agenda</title>
 	<link
 		href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
 		rel="stylesheet">
@@ -31,35 +31,33 @@
 	<main class="citas-main">
 
 		<div class="citas-cabecera">
-			<div>
-				<a th:href="@{/citas/reservar}" href="#" class="btn-nueva-cita">
-					<i class="fa-solid fa-plus"></i> Nueva Cita
-				</a>
+			<a th:href="@{/citas/reservar}" href="#" class="btn-nueva-cita">
+				<i class="fa-solid fa-plus"></i> Nueva Cita
+			</a>
+			<div class="cabecera-contador">
+				<span class="contador-numero" th:text="${#lists.size(citas)}">0</span>
+				<span class="contador-label" th:text="${filtroActivo == 'hoy'} ? 'Citas de hoy' : (${filtroActivo == 'semana'} ? 'Citas esta semana' : 'Citas en agenda')">Citas en agenda</span>
 			</div>
+		</div>
 
-			<div class="citas-tarjeta">
+		<div class="citas-tarjeta">
 
-		    <div class="agenda-filtros-container">
-		        <div class="filtros-grupo">
-		            <a th:href="@{/citas}" 
-		               class="btn-filtro-item" th:classappend="${filtroActivo == null} ? 'activo' : ''">
-		                <i class="fa-solid fa-calendar-check"></i> Todo
-		            </a>
-		            <a th:href="@{/citas(filtro='hoy')}" 
-		               class="btn-filtro-item" th:classappend="${filtroActivo == 'hoy'} ? 'activo' : ''">
-		                <i class="fa-solid fa-clock"></i> Hoy
-		            </a>
-		            <a th:href="@{/citas(filtro='semana')}" 
-		               class="btn-filtro-item" th:classappend="${filtroActivo == 'semana'} ? 'activo' : ''">
-		                <i class="fa-solid fa-calendar-week"></i> Esta Semana
-		            </a>
-		        </div>
-		        
-		        <div class="tabla-info">
-		            <span th:text="${tituloFiltro}">Agenda Completa</span>: 
-		            <strong th:text="${#lists.size(citas)}">0</strong> citas
-		        </div>
-		    </div>
+			<div class="agenda-filtros-container">
+				<div class="filtros-grupo">
+					<a th:href="@{/citas}"
+					   class="btn-filtro-item" th:classappend="${filtroActivo == null} ? ' activo' : ''">
+						Todo
+					</a>
+					<a th:href="@{/citas(filtro='hoy')}"
+					   class="btn-filtro-item" th:classappend="${filtroActivo == 'hoy'} ? ' activo' : ''">
+						Hoy
+					</a>
+					<a th:href="@{/citas(filtro='semana')}"
+					   class="btn-filtro-item" th:classappend="${filtroActivo == 'semana'} ? ' activo' : ''">
+						Esta Semana
+					</a>
+				</div>
+			</div>
 
 				<div class="tabla-contenedor">
 					<table class="tabla-citas">
@@ -85,12 +83,12 @@
 								<td th:text="${c.motivo}"></td>
 
 								<td class="col-acciones">
-									<a th:href="@{/citas/editar/{id}(id=${c.id})}" class="btn-editar">
-								        <i class="fa-solid fa-pen-to-square"></i> Editar
+									<a th:href="@{/citas/editar/{id}(id=${c.id})}" class="btn-editar" title="Editar">
+								        <i class="fa-solid fa-pen"></i>
 								    </a>
 									<a class="btn-eliminar" th:href="@{/citas/cancelar/{id}(id=${c.id})}"
-										onclick="return confirm('⚠️ ¿Estás seguro de que deseas eliminar esta cita de forma permanente?')">
-										<i class="fa-solid fa-trash"></i> Eliminar
+										onclick="return confirm('⚠️ ¿Estás seguro de que deseas eliminar esta cita de forma permanente?')" title="Eliminar">
+										<i class="fa-solid fa-trash"></i>
 									</a>
 								</td>
 							</tr>
@@ -102,7 +100,7 @@
 					Mostrando <span th:text="${#lists.size(citas)}">0</span> citas programadas.
 				</div>
 
-			</div>
+		</div>
 
 	</main>
 	<!-- FOOTER -->

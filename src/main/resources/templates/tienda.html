@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 	<meta charset="UTF-8">
@@ -46,7 +46,7 @@
 
 			<!-- Botones de acciones -->
 			<div class="tienda-actions">
-				<a th:href="@{/tienda/carrito}" class="btn-carrito">
+				<a th:href="@{/tienda/carrito}" class="btn-carrito" sec:authorize="hasRole('user')">
 					<i class="fa-solid fa-cart-shopping"></i> Ver mi Carrito
 				</a>
 				<a th:if="${isAdmin}" th:href="@{/tienda/nuevo}" class="btn-nuevo-producto">
