@@ -27,34 +27,39 @@
 					<li sec:authorize="hasRole('admin')"><a th:href="@{/citas}" class="nav-enlace">Citas</a></li>
 					<li sec:authorize="hasRole('user')"><a th:href="@{/citas}" class="nav-enlace">Mis citas</a></li>
 					<li sec:authorize="hasRole('admin')"><a th:href="@{/mascotas}" class="nav-enlace">Mascotas</a></li>
-					<li sec:authorize="hasRole('user')"><a th:href="@{/mascotas/mis-mascotas}" class="nav-enlace">Mis
-							mascotas</a></li>
-					<li><a th:href="@{/tienda}" class="nav-enlace">Tienda virtual</a></li>
+					<li sec:authorize="hasRole('user')"><a th:href="@{/mascotas/mis-mascotas}" class="nav-enlace">Mis mascotas</a></li>
+					<li sec:authorize="hasAnyRole('user', 'admin')"><a th:href="@{/tienda}" class="nav-enlace">Tienda virtual</a></li>
 					<li sec:authorize="hasRole('user')"><a th:href="@{/tienda/mis-compras}" class="nav-enlace">Mis compras</a></li>
-					<li class="nav-cart-container">
+					<li class="nav-cart-container" sec:authorize="isAuthenticated()">
 						<a th:href="@{/tienda/carrito}" class="nav-cart-link" title="Ver carrito">
 							<i class="fa-solid fa-cart-shopping"></i>
-							<span id="cart-badge" class="cart-badge" th:text="${cartCount}">0</span>
+							<span id="cart-badge" class="cart-badge" th:text="${cartCount != null ? cartCount : 0}">0</span>
 						</a>
 					</li>
 				</ul>
 			</nav>
 			<div class="nav-acciones">
-				<div class="nav-usuario">
-					<i class="fa-regular fa-user usuario-icono"></i>
-					<span class="usuario-nombre" th:text="${#authentication.name}">Usuario</span>
-				</div>
-				<a th:href="@{/login}" class="btn-login">
-					Iniciar sesión
-				</a>
-				<form th:action="@{/logout}" method="post" style="display:inline">
-					<button type="submit" class="btn-salir">
-						Cerrar sesión
-					</button>
-				</form>
-				<button class="nav-hamburguesa" id="navHamburguesa" aria-label="Abrir menú">
-					<span></span><span></span><span></span>
-				</button>
+			    <div th:if="${#authorization.expression('isAuthenticated()')}" style="display: flex; align-items: center; gap: 1rem;">
+			        <div class="nav-usuario">
+			            <i class="fa-regular fa-user usuario-icono"></i>
+			            <span class="usuario-nombre" sec:authentication="name">Usuario</span>
+			        </div>
+			        <form th:action="@{/logout}" method="post" style="display:inline">
+			            <button type="submit" class="btn-salir">
+			                Cerrar sesión
+			            </button>
+			        </form>
+			    </div>
+			
+			    <div th:if="${#authorization.expression('isAnonymous()')}">
+			        <a th:href="@{/login}" class="btn-login">
+			            Iniciar sesión
+			        </a>
+			    </div>
+			
+			    <button class="nav-hamburguesa" id="navHamburguesa" aria-label="Abrir menú">
+			        <span></span><span></span><span></span>
+			    </button>
 			</div>
 		</div>
 
@@ -67,7 +72,7 @@
 				<li sec:authorize="hasRole('user')"><a th:href="@{/citas}" class="nav-movil-enlace">Mis citas</a></li>
 				<li sec:authorize="hasRole('admin')"><a th:href="@{/mascotas}" class="nav-movil-enlace">Mascotas</a></li>
 				<li sec:authorize="hasRole('user')"><a th:href="@{/mascotas/mis-mascotas}" class="nav-movil-enlace">Mis mascotas</a></li>
-				<li><a th:href="@{/tienda}" class="nav-movil-enlace">Tienda virtual</a></li>
+				<li sec:authorize="hasAnyRole('user','admin')"><a th:href="@{/tienda}" class="nav-movil-enlace">Tienda virtual</a></li>
 				<li sec:authorize="hasRole('user')"><a th:href="@{/tienda/mis-compras}" class="nav-movil-enlace">Mis compras</a></li>
 				<li><a th:href="@{/tienda/carrito}" class="nav-movil-enlace"><i class="fa-solid fa-cart-shopping"></i> Carrito</a></li>
 				<li class="nav-movil-separador"></li>

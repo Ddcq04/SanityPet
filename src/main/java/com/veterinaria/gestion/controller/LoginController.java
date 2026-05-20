@@ -27,7 +27,7 @@ public class LoginController {
     
     @GetMapping("/")
     public String index() {
-        return "redirect:/login"; // Si entran a la raíz, los manda al login
+        return "redirect:/home"; // Si entran a la raíz, los manda al login
     }
     
     @GetMapping("/home")
