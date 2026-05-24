@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<meta charset="UTF-8">
 	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-512x512.png">
@@ -85,9 +85,9 @@
 					</div>
 
 					<div class="rc-acciones">
-						<a th:href="@{/home}" href="#" class="rc-link-volver">
-							<i class="fa-solid fa-arrow-left"></i> Volver
-						</a>
+						<a th:href="@{/citas}" class="rc-link-volver">
+					        <i class="fa-solid fa-arrow-left"></i> Volver
+					    </a>
 						<button type="submit" class="rc-btn">
 							<i class="fa-solid fa-circle-check"></i>
 							<span th:text="${esEdicion} ? 'Guardar cambios' : 'Confirmar reserva'">Confirmar reserva</span>

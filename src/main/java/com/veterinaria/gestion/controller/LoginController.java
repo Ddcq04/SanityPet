@@ -22,17 +22,17 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login() {
-        return "login"; // Busca templates/login.html
+        return "login"; 
     }
     
     @GetMapping("/")
     public String index() {
-        return "redirect:/home"; // Si entran a la raíz, los manda al login
+        return "redirect:/home"; 
     }
     
     @GetMapping("/home")
     public String home() {
-        return "home"; // Esto buscará src/main/resources/templates/home.html
+        return "home";
     }
 
     @GetMapping("/politicas/privacidad")

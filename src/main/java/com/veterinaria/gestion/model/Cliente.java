@@ -27,7 +27,7 @@ public class Cliente {
 
     private String telefono; 
     
-    @Email(message = "Debe ser un correo válido") // Valida formato si se escribe algo, pero permite nulo
+    @Email(message = "Debe ser un correo válido") 
     private String email;
 
     @Column(columnDefinition = "DECIMAL(10,2) DEFAULT 0.00")

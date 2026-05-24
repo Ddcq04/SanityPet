@@ -113,7 +113,7 @@
 							<td data-label="Acciones" class="columna-acciones">
 								<div class="acciones-grupo">
 									<a th:href="@{/citas/editar/{id}(id=${c.id})}" class="boton-editar"><i class="fa-solid fa-pen"></i></a>
-									<a th:href="@{/citas/eliminar/{id}(id=${c.id})}" class="boton-eliminar" onclick="return confirm('¿Cancelar esta cita?')"><i class="fa-solid fa-trash"></i></a>
+									<a th:href="@{/citas/cancelar/{id}(id=${c.id})}" class="boton-eliminar" onclick="return confirm('¿Cancelar esta cita?')"><i class="fa-solid fa-trash"></i></a>
 								</div>
 							</td>
 						</tr>
