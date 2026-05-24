@@ -51,6 +51,7 @@ CREATE TABLE citas (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     fecha_hora DATETIME NOT NULL,
     motivo VARCHAR(255),
+    descripcion TEXT,
     mascota_id BIGINT,
     FOREIGN KEY (mascota_id) REFERENCES mascotas(id) ON DELETE CASCADE
 );

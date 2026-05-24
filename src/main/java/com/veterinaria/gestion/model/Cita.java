@@ -3,7 +3,6 @@ package com.veterinaria.gestion.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.FutureOrPresent;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -22,7 +21,6 @@ public class Cita {
     private Long id;
 
     @NotNull(message = "La fecha y hora son obligatorias")
-    @FutureOrPresent(message = "No puedes programar una cita en el pasado")
     @Column(name = "fecha_hora", nullable = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime fechaHora;
@@ -30,7 +28,9 @@ public class Cita {
     @NotEmpty(message = "El motivo de la consulta no puede estar vacío")
     @Column(nullable = false)
     private String motivo;
-
+    
+    private String descripcion;
+    
     @NotNull(message = "Debes seleccionar una mascota")
     @ManyToOne
     @JoinColumn(name = "mascota_id", nullable = false)

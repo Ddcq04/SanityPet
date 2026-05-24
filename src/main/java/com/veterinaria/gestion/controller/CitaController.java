@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jakarta.validation.Valid;
 import org.springframework.validation.BindingResult;
 
 @Controller
@@ -84,6 +83,7 @@ public class CitaController {
                 .anyMatch(a -> a.getAuthority().equals("ROLE_admin"));
         
         model.addAttribute("cita", new Cita());
+        model.addAttribute("esEdicion", false);
 
         if (isAdmin) {
             // Si es Admin, cargamos TODAS las mascotas de la clínica
@@ -97,19 +97,28 @@ public class CitaController {
         return "citas/reserva-rapida";
     }
     //4. Guardar cita
+  //4. Guardar cita
+  //4. Guardar cita
     @PostMapping("/reservar/guardar")
     @ResponseBody
-    public ResponseEntity<?> guardarReserva(@Valid @ModelAttribute("cita") Cita cita, BindingResult result) {
+    public ResponseEntity<?> guardarReserva(@ModelAttribute("cita") Cita cita, BindingResult result) {
         
-        // 1. Si hay errores de validación (campos vacíos)
+        // Evaluamos errores de validación (ignorando la fecha si es una edición pasada donde el front la mandó nula)
         if (result.hasErrors()) {
-            String mensajeError = result.getFieldError().getDefaultMessage();
-            return ResponseEntity.badRequest().body("{\"error\": \"" + mensajeError + "\"}");
+            boolean soloErrorFecha = result.getFieldErrors().stream()
+                    .allMatch(error -> error.getField().equals("fechaHora"));
+
+            // Si hay otros errores diferentes a la fecha, o si es cita nueva y falta la fecha:
+            if (!soloErrorFecha || (cita.getId() == null && cita.getFechaHora() == null)) {
+                String mensajeError = result.getFieldError().getDefaultMessage();
+                return ResponseEntity.badRequest().body("{\"error\": \"" + mensajeError + "\"}");
+            }
         }
 
         try {
-            citaService.reservarCita(cita);
-            return ResponseEntity.ok().body("{\"mensaje\": \"¡Cita reservada con éxito!\"}");
+            // Pasamos el objeto directamente al servicio; él se encargará de fusionarlo de forma segura
+            citaService.reservarCita(cita); 
+            return ResponseEntity.ok().body("{\"mensaje\": \"¡Cita guardada con éxito!\"}");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body("{\"error\": \"" + e.getMessage() + "\"}");
         }

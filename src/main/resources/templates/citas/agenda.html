@@ -67,6 +67,7 @@
 								<th>Mascota</th>
 								<th>Propietario</th>
 								<th>Motivo</th>
+								<th>Descripción</th>
 								<th>Acciones</th>
 							</tr>
 						</thead>
@@ -81,13 +82,13 @@
 								</td>
 
 								<td th:text="${c.motivo}"></td>
-
+								<td th:text="${c.descripcion}"></td>
 								<td class="col-acciones">
 									<a th:href="@{/citas/editar/{id}(id=${c.id})}" class="btn-editar" title="Editar">
 								        <i class="fa-solid fa-pen"></i>
 								    </a>
 									<a class="btn-eliminar" th:href="@{/citas/cancelar/{id}(id=${c.id})}"
-										onclick="return confirm('⚠️ ¿Estás seguro de que deseas eliminar esta cita de forma permanente?')" title="Eliminar">
+										onclick="return confirm('¿Estás seguro de que deseas eliminar esta cita de forma permanente?')" title="Eliminar">
 										<i class="fa-solid fa-trash"></i>
 									</a>
 								</td>

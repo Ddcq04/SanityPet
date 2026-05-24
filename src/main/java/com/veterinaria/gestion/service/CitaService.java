@@ -11,8 +11,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Collections;
 
 //FALLLLTA BOTON DE AGREGAR CITA EN EL PANEL DE ADMIN
 @Service
@@ -23,6 +25,10 @@ public class CitaService {
 
     public List<Cita> obtenerAgendaCompleta() {
         return citaRepository.findAllByOrderByFechaHoraAsc();
+    }
+    
+    public List<Cita> obtenerHistorialMascota(Long mascotaId) {
+        return citaRepository.findByMascotaIdOrderByFechaHoraDesc(mascotaId);
     }
     
     public List<Cita> obtenerMisCitas(String dni) {
@@ -53,11 +59,55 @@ public class CitaService {
     
     @Transactional
     public void reservarCita(Cita cita) {
-        // Lógica de negocio: Podrías validar que la fecha no sea anterior a "ahora"
-        if (cita.getFechaHora().isBefore(LocalDateTime.now())) {
-            throw new RuntimeException("No se puede programar una cita en el pasado.");
+        Cita citaFinal;
+
+        if (cita.getId() != null) {
+            // === MODO EDICIÓN SEGURO ===
+            // Recuperamos la entidad directamente dentro de esta transacción (Estado Managed)
+            Cita citaOriginal = citaRepository.findById(cita.getId())
+                    .orElseThrow(() -> new RuntimeException("La cita no existe."));
+
+            // Actualizamos los campos editables permitidos
+            citaOriginal.setMascota(cita.getMascota());
+            citaOriginal.setMotivo(cita.getMotivo());
+            citaOriginal.setDescripcion(cita.getDescripcion()); // Guarda tus observaciones clínicas
+
+            // Si el front envió una nueva fecha/hora (cita futura), la actualizamos
+            if (cita.getFechaHora() != null) {
+                // Validación de fin de semana para la nueva fecha propuesta
+                DayOfWeek diaCita = cita.getFechaHora().getDayOfWeek();
+                if (diaCita == DayOfWeek.SATURDAY || diaCita == DayOfWeek.SUNDAY) {
+                    throw new RuntimeException("La clínica solo atiende de lunes a viernes.");
+                }
+                citaOriginal.setFechaHora(cita.getFechaHora());
+            }
+            // Si el front la mandó nula (porque estaba deshabilitada por ser cita pasada), 
+            // 'citaOriginal' conserva intacta su fecha histórica original.
+
+            citaFinal = citaOriginal;
+
+        } else {
+            // === MODO NUEVA CITA ===
+            if (cita.getFechaHora() == null) {
+                throw new RuntimeException("La fecha y hora son obligatorias.");
+            }
+
+            // Validar que no sea en el pasado
+            if (cita.getFechaHora().isBefore(LocalDateTime.now())) {
+                throw new RuntimeException("No se puede programar una cita en el pasado.");
+            }
+            
+            // Validar fin de semana
+            DayOfWeek diaCita = cita.getFechaHora().getDayOfWeek();
+            if (diaCita == DayOfWeek.SATURDAY || diaCita == DayOfWeek.SUNDAY) {
+                throw new RuntimeException("La clínica solo atiende de lunes a viernes.");
+            }
+
+            citaFinal = cita;
         }
-        citaRepository.save(cita);
+        
+        // Guardado limpio sin conflictos de estados de Hibernate
+        citaRepository.save(citaFinal);
     }
 
     @Transactional
@@ -81,7 +131,13 @@ public class CitaService {
     }
 
     public List<String> obtenerHorasLibres(LocalDate fecha) {
-        // 1. Definimos el horario de la clínica (ej: de 09:00 a 14:00)
+        // --- NUEVA VALIDACIÓN: Si es fin de semana, devolvemos una lista vacía de inmediato ---
+        DayOfWeek dia = fecha.getDayOfWeek();
+        if (dia == DayOfWeek.SATURDAY || dia == DayOfWeek.SUNDAY) {
+            return Collections.emptyList(); // No devuelve horas disponibles
+        }
+
+        // 1. Definimos el horario de la clínica (de lunes a viernes)
         List<String> horarioClinica = List.of("09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30");
         LocalDateTime ahora = LocalDateTime.now();
 
@@ -98,10 +154,7 @@ public class CitaService {
         // 4. Filtramos el horario de la clínica quitando las ocupadas
         return horarioClinica.stream()
                 .filter(hora -> {
-                    // Creamos un LocalDateTime con la fecha elegida y la hora del bucle
                     LocalDateTime fechaHoraCita = fecha.atTime(LocalTime.parse(hora));
-                    
-                    // REGLA: No debe estar ocupada Y debe ser después de "ahora"
                     return !horasOcupadas.contains(hora) && fechaHoraCita.isAfter(ahora);
                 })
                 .toList();
