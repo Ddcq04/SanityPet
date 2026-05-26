@@ -15,89 +15,87 @@
 
 	<div class="contenedor-registro">
 
-		<!-- Cabecera de la tarjeta — branding -->
 		<div class="card-cabecera">
-			<img src="/logo/SANYTYPETlogo.png" alt="SanityPet" class="panel-logo">
-			<div class="cabecera-info">
-				<h2 class="panel-titulo">Bienvenido a SanityPet</h2>
-				<p class="panel-desc">Gestiona las citas y el historial de tus mascotas desde cualquier dispositivo.</p>
-			</div>
+		    <img src="/logo/SANYTYPETlogo.png" alt="SanityPet" class="panel-logo">
+		    <div class="cabecera-info">
+		        <h2 class="panel-titulo">Bienvenido a SanityPet</h2>
+		        <p class="panel-desc">Gestiona las citas y el historial de tus mascotas desde cualquier dispositivo.</p>
+		    </div>
 		</div>
 
-		<!-- Cuerpo — formulario -->
 		<div class="card-cuerpo">
 
 			<h1 class="form-titulo">Crear cuenta</h1>
 			<p class="form-subtitulo">Regístrate como socio para acceder a todos los servicios</p>
 
+			<div th:if="${error}" style="color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 12px; border-radius: 5px; margin-bottom: 20px; font-family: 'Golos Text', sans-serif;">
+				<i class="fa-solid fa-circle-xmark"></i> <span th:text="${error}"></span>
+			</div>
+
 			<form th:action="@{/registrar-socio}" th:object="${cliente}" method="post">
-
-				<!-- Errores globales -->
-				<ul class="lista-errores" th:if="${#fields.hasErrors('*')}">
-					<li th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
-				</ul>
-
-				<!-- DNI + Nombre -->
+				<input type="hidden" th:field="*{id}">
+		    	<input type="hidden" th:field="*{usuario.id}">
+				
 				<div class="fila-dos">
 					<div class="campo-grupo">
 						<label class="campo-etiqueta" for="dni">DNI</label>
 						<input class="campo-input" type="text" id="dni" th:field="*{dni}"
 							placeholder="12345678X" required
 							th:classappend="${#fields.hasErrors('dni')} ? ' is-invalid' : ''">
-						<small class="texto-error" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></small>
+						<small style="color: #dc3545; font-size: 0.85rem;" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></small>
 					</div>
 					<div class="campo-grupo">
 						<label class="campo-etiqueta" for="nombreCompleto">Nombre completo</label>
 						<input class="campo-input" type="text" id="nombreCompleto"
 							th:field="*{usuario.nombreCompleto}" placeholder="Juan Pérez" required
 							th:classappend="${#fields.hasErrors('usuario.nombreCompleto')} ? ' is-invalid' : ''">
-						<small class="texto-error" th:if="${#fields.hasErrors('usuario.nombreCompleto')}"
-							th:errors="*{usuario.nombreCompleto}"></small>
+						<small style="color: #dc3545; font-size: 0.85rem;" th:if="${#fields.hasErrors('usuario.nombreCompleto')}" th:errors="*{usuario.nombreCompleto}"></small>
 					</div>
 				</div>
 
-				<!-- Teléfono + Email -->
 				<div class="fila-dos">
 					<div class="campo-grupo">
 						<label class="campo-etiqueta" for="telefono">Teléfono</label>
 						<input class="campo-input" type="tel" id="telefono" th:field="*{telefono}"
-							placeholder="600 000 000">
+							placeholder="600 000 000"
+							th:classappend="${#fields.hasErrors('telefono')} ? ' is-invalid' : ''">
+						<small style="color: #dc3545; font-size: 0.85rem;" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></small>
 					</div>
 					<div class="campo-grupo">
 						<label class="campo-etiqueta" for="email">Email</label>
 						<input class="campo-input" type="email" id="email" th:field="*{email}"
-							placeholder="correo@ejemplo.com">
+							placeholder="correo@ejemplo.com"
+							th:classappend="${#fields.hasErrors('email')} ? ' is-invalid' : ''">
+						<small style="color: #dc3545; font-size: 0.85rem;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
 					</div>
 				</div>
 
-				<!-- Contraseña + Repetir -->
 				<div class="fila-dos">
-					<div class="campo-grupo">
-						<label class="campo-etiqueta" for="password">Contraseña</label>
-						<input class="campo-input" type="password" id="password"
-							th:field="*{usuario.passwordPlana}" placeholder="Mínimo 6 caracteres" required
-							th:classappend="${#fields.hasErrors('usuario.passwordPlana')} ? ' is-invalid' : ''">
-						<small class="texto-error" th:if="${#fields.hasErrors('usuario.passwordPlana')}"
-							th:errors="*{usuario.passwordPlana}"></small>
-					</div>
-					<div class="campo-grupo">
-						<label class="campo-etiqueta" for="passwordRepeat">Repetir contraseña</label>
-						<input class="campo-input" type="password" id="passwordRepeat"
-							th:field="*{usuario.passwordRepeat}" placeholder="Repite la contraseña" required
-							th:classappend="${#fields.hasErrors('usuario.passwordRepeat')} ? ' is-invalid' : ''">
-						<small class="texto-error" th:if="${#fields.hasErrors('usuario.passwordRepeat')}"
-							th:errors="*{usuario.passwordRepeat}"></small>
-					</div>
+				    <div class="campo-grupo">
+				        <label class="campo-etiqueta" for="password">Contraseña</label>
+				        <input class="campo-input" type="password" id="password"
+				            th:field="*{usuario.passwordPlana}" placeholder="Mínimo 6 caracteres" required
+				            th:classappend="${#fields.hasErrors('usuario.passwordPlana')} ? ' is-invalid' : ''">
+				        <small style="color: #dc3545; font-size: 0.85rem;" th:if="${#fields.hasErrors('usuario.passwordPlana')}" th:errors="*{usuario.passwordPlana}"></small>
+				    </div>
+				    <div class="campo-grupo">
+				        <label class="campo-etiqueta" for="passwordRepeat">Repetir contraseña</label>
+				        <input class="campo-input" type="password" id="passwordRepeat"
+				            th:field="*{usuario.passwordRepeat}" placeholder="Repite la contraseña" required
+				            th:classappend="${#fields.hasErrors('usuario.passwordRepeat')} ? ' is-invalid' : ''">
+				        <small style="color: #dc3545; font-size: 0.85rem;" th:if="${#fields.hasErrors('usuario.passwordRepeat')}" th:errors="*{usuario.passwordRepeat}"></small>
+				    </div>
 				</div>
 
 				<button type="submit" class="boton-registro">
-					<i class="fa-solid fa-user-plus"></i> Crear mi cuenta
+				    <i class="fa-solid fa-user-plus"></i>
+				    <span>Crear mi cuenta</span>
 				</button>
 
 			</form>
 
 			<p class="enlace-login">
-				¿Ya tienes cuenta? <a th:href="@{/login}">Inicia sesión aquí</a>
+			    ¿Ya tienes cuenta? <a th:href="@{/login}">Inicia sesión aquí</a>
 			</p>
 
 		</div>

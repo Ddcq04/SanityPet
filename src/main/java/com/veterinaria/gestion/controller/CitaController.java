@@ -1,5 +1,6 @@
 package com.veterinaria.gestion.controller;
 
+import com.veterinaria.gestion.model.Mascota;
 import com.veterinaria.gestion.model.Cita;
 import com.veterinaria.gestion.service.CitaService;
 import com.veterinaria.gestion.service.MascotaService;
@@ -32,7 +33,8 @@ public class CitaController {
     // 1. Mostrar una vista u otra segun el rol de quien accede
     @GetMapping
     public String verAgenda(@RequestParam(value = "filtro", required = false) String filtro, 
-                           Model model, Principal principal) {
+            @RequestParam(value = "mascotaId", required = false) Long mascotaId, // <-- MODIFICADO: Recibe el ID de la mascota a filtrar
+            Model model, Principal principal) {
         
         Authentication auth = (Authentication) principal;
         boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_admin"));
@@ -43,7 +45,12 @@ public class CitaController {
             List<Cita> listaCitas;
             String titulo;
 
-            if ("hoy".equals(filtro)) {
+         // === MODIFICADO: Bloque condicional para capturar el nuevo filtro de Mascota ===
+            if (mascotaId != null) {
+                listaCitas = citaService.obtenerHistorialMascota(mascotaId); 
+                Mascota m = mascotaService.buscarPorId(mascotaId);
+                titulo = "Historial de citas: " + m.getNombre();
+            } else if ("hoy".equals(filtro)) {
                 listaCitas = citaService.obtenerCitasHoy();
                 titulo = "Citas para Hoy";
             } else if ("semana".equals(filtro)) {
@@ -54,9 +61,12 @@ public class CitaController {
                 titulo = "Agenda Completa";
             }
 
+            // === MODIFICADO: Añadimos los atributos extra que requiere la plantilla agenda.html ===
             model.addAttribute("citas", listaCitas);
             model.addAttribute("tituloFiltro", titulo);
-            model.addAttribute("filtroActivo", filtro); // Para resaltar el botón en el HTML
+            model.addAttribute("filtroActivo", filtro); 
+            model.addAttribute("todasLasMascotas", mascotaService.listarTodas()); // Para rellenar el select
+            model.addAttribute("mascotaSeleccionada", mascotaId); // Para dejar marcada la opción seleccionada
             
             return "citas/agenda"; 
         } else {

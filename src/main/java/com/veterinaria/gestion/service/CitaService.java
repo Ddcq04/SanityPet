@@ -59,6 +59,18 @@ public class CitaService {
     
     @Transactional
     public void reservarCita(Cita cita) {
+    	List<String> motivosValidos = List.of(
+                "Consulta General - 30€", 
+                "Vacunación - 45€", 
+                "Diagnóstico (Eco/Rx) - 60€", 
+                "Peluquería - 25€", 
+                "Cirugía - Desde 120€"
+            );
+
+            if (cita.getMotivo() == null || !motivosValidos.contains(cita.getMotivo())) {
+                throw new RuntimeException("El servicio seleccionado no es válido o su precio ha sido alterado.");
+            }
+            
         Cita citaFinal;
 
         if (cita.getId() != null) {

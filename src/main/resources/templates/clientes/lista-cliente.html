@@ -30,7 +30,7 @@
 	<main class="contenido-principal">
 
 		<div class="cabecera-pagina">
-			<a th:href="@{/clientes/nuevo}" href="#" class="boton-nuevo">
+			<a th:href="@{/clientes/nuevo}" class="boton-nuevo">
 				<i class="fa-solid fa-plus"></i>Registrar cliente
 			</a>
 			<div class="cabecera-contador">
@@ -40,8 +40,9 @@
 		</div>
 
 		<div class="tarjeta-tabla">
-
-			<!-- Barra de búsqueda -->
+			<div th:if="${param.creado}" style="color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; padding: 12px; border-radius: 5px; margin-bottom: 20px; font-family: 'Golos Text', sans-serif;">
+				<i class="fa-solid fa-circle-check"></i> El nuevo cliente ha sido registrado correctamente en el sistema.
+			</div>
 			<div class="barra-busqueda">
 				<form th:action="@{/clientes/buscar}" method="get" class="formulario-busqueda">
 					<div class="input-busqueda">
@@ -55,7 +56,6 @@
 				</a>
 			</div>
 
-			<!-- Tabla -->
 			<div class="contenedor-tabla">
 				<table class="tabla-clientes">
 					<thead>
@@ -104,7 +104,6 @@
 		</div>
 
 	</main>
-	<!-- FOOTER -->
 	<footer th:replace="~{common/navfooter :: pie}"></footer>
 
 </body>

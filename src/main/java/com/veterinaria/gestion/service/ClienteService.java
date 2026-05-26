@@ -17,7 +17,7 @@ public class ClienteService {
     }
 
     public void guardar(Cliente cliente) {
-        clienteRepository.save(cliente);
+    	clienteRepository.save(cliente); 
     }
 
     public List<Cliente> buscarPorNombre(String nombre) {

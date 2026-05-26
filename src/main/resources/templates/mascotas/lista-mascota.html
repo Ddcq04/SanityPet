@@ -88,7 +88,11 @@
 							</td>
 							<td th:text="${#temporals.format(m.fechaNacimiento, 'dd/MM/yyyy')} ?: 'No registrada'"></td>
 							<td th:text="${m.cliente?.usuario?.nombreCompleto} ?: 'Sin asignar'"></td>
-							<td><span class="badge-citas" th:text="${m.cantidadCitas}">0</span></td>
+							<td>
+						    <a th:href="@{/citas(mascotaId=${m.id})}" class="enlace-historial" title="Ver historial clínico">
+						        <span class="badge-citas" th:text="${m.cantidadCitas}">0</span>
+						    </a>
+						</td>
 							<td class="col-acciones">
 								<a th:href="@{/mascotas/editar/{id}(id=${m.id})}" class="boton-editar" title="Editar">
 									<i class="fa-solid fa-pen"></i>
