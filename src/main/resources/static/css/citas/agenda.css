@@ -10,8 +10,7 @@
 	--borde: #e2e8f0;
 	--nav-alto: 68px;
 	--fuente-marca: 'Quicksand', sans-serif;
-	--fuente-base: 'Golos Text', sans-serif;
-}
+	--fuente-base: 'Golos Text', sans-serif;}
 
 body {
 	background: var(--fondo);

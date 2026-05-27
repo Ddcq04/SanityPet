@@ -270,144 +270,97 @@
 /* Grid de tarjetas */
 .mascotas-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-	gap: 1.25rem;
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+	gap: 0.85rem;
 }
 
-/* Tarjeta horizontal */
+/* Tarjeta */
 .mascota-tarjeta {
 	background: var(--blanco);
-	border-radius: 18px;
-	overflow: hidden;
-	display: flex;
-	flex-direction: row;
-	transition: transform 0.25s, box-shadow 0.25s;
-	box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+	border-radius: 10px;
 	border: 1px solid var(--borde);
+	overflow: hidden;
+	transition: box-shadow 0.2s, border-color 0.2s;
 }
 
 .mascota-tarjeta:hover {
-	transform: translateY(-4px);
-	box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+	box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+	border-color: #cbd5e1;
 }
 
-/* Lateral izquierdo */
-.tarjeta-lateral {
-	width: 90px;
-	flex-shrink: 0;
+/* Cabecera de tarjeta con fondo oscuro */
+.tarjeta-cabecera {
+	padding: 0.75rem 1.25rem;
 	display: flex;
 	align-items: center;
-	justify-content: center;
-}
-
-.tarjeta-lateral.lateral-perro { background: linear-gradient(180deg, #fff7e6 0%, #ffe4b2 100%); }
-.tarjeta-lateral.lateral-gato  { background: linear-gradient(180deg, #f3f0ff 0%, #e0d9ff 100%); }
-.tarjeta-lateral.lateral-otro  { background: linear-gradient(180deg, #e6fffa 0%, #c3f0ea 100%); }
-
-/* Icono */
-.mascota-icono {
-	width: 52px;
-	height: 52px;
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 1.4rem;
-}
-
-.mascota-icono.perro { background: #fff; color: #d97706; border: 2px solid #fed7aa; }
-.mascota-icono.gato  { background: #fff; color: #7c3aed; border: 2px solid #ddd6fe; }
-.mascota-icono.otro  { background: #fff; color: var(--menta-oscuro); border: 2px solid #a7f3d0; }
-
-/* Info derecha */
-.tarjeta-info {
-	flex: 1;
-	padding: 1.1rem 1.25rem;
-	display: flex;
-	flex-direction: column;
 	justify-content: space-between;
-	gap: 0.75rem;
-	min-width: 0;
 }
 
-.tarjeta-info-top {
-	display: flex;
-	flex-direction: column;
-	gap: 0.15rem;
+.tarjeta-perro .tarjeta-cabecera,
+.tarjeta-gato  .tarjeta-cabecera,
+.tarjeta-otro  .tarjeta-cabecera { background: #1e5c56; }
+
+.mascota-nombre {
+	font-family: var(--fuente-marca);
+	font-size: 0.95rem;
+	font-weight: 700;
+	color: #ffffff;
+	letter-spacing: 0.03em;
 }
 
 /* Etiqueta especie */
 .etiqueta-especie {
 	display: inline-block;
-	padding: 0.15rem 0.65rem;
-	border-radius: 20px;
-	font-size: 0.68rem;
+	padding: 0.15rem 0.6rem;
+	border-radius: 4px;
+	font-size: 0.62rem;
 	font-weight: 700;
-	letter-spacing: 0.05em;
+	letter-spacing: 0.07em;
 	text-transform: uppercase;
-	width: fit-content;
-	margin-bottom: 0.2rem;
 }
 
-.especie-perro { background: rgba(217,119,6,0.1); color: #92400e; }
-.especie-gato  { background: rgba(124,58,237,0.1); color: #5b21b6; }
-.especie-otro  { background: rgba(46,196,182,0.12); color: var(--menta-oscuro); }
+.especie-perro,
+.especie-gato,
+.especie-otro  { background: rgba(46,196,182,0.2); color: #5eead4; }
 
-.mascota-nombre {
-	font-family: var(--fuente-marca);
-	font-size: 1.05rem;
+/* Cuerpo */
+.tarjeta-cuerpo {
+	padding: 1rem 1.25rem;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.75rem 1rem;
+}
+
+.tarjeta-campo {
+	display: flex;
+	flex-direction: column;
+	gap: 0.15rem;
+}
+
+.campo-etiqueta {
+	font-size: 0.62rem;
 	font-weight: 700;
-	color: var(--texto);
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-.mascota-raza {
-	font-size: 0.8rem;
+	text-transform: uppercase;
+	letter-spacing: 0.07em;
 	color: var(--texto-suave);
 }
 
-/* Fila inferior: fecha + botón */
-.tarjeta-info-bottom {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 0.5rem;
+.campo-valor {
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: var(--texto);
 }
 
 .mascota-dato {
 	display: flex;
 	align-items: center;
-	gap: 0.4rem;
-	font-size: 0.78rem;
-	color: var(--texto-suave);
+	gap: 0.35rem;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: var(--texto);
 }
 
-.mascota-dato i { color: var(--menta); }
-
-/* Botón */
-.boton-pedir-cita {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.4rem;
-	padding: 0.5rem 1rem;
-	font-size: 0.78rem;
-	font-weight: 700;
-	font-family: var(--fuente-marca);
-	color: var(--blanco);
-	background: var(--menta);
-	border-radius: 50px;
-	text-decoration: none;
-	white-space: nowrap;
-	transition: background 0.2s, transform 0.15s;
-	box-shadow: 0 3px 10px rgba(46,196,182,0.3);
-}
-
-.boton-pedir-cita:hover {
-	background: var(--menta-oscuro);
-	transform: translateY(-1px);
-}
+.mascota-dato i { color: var(--menta); font-size: 0.75rem; }
 
 /* Tablet */
 @media (max-width: 900px) {

@@ -4,18 +4,12 @@
 	<meta charset="UTF-8">
 	<link rel="icon" type="image/png" sizes="192x192" href="/img/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
 	<title>Añadir nuevo cliente</title>
 	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
-=======
-	<title th:text="${cliente.id != null} ? 'Editar Socio' : 'Crear Socio'">Formulario Socio</title>
-	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght=500;600;700&family=Golos+Text:wght=400;500;600;700&display=swap" rel="stylesheet">
->>>>>>> 2a6a67170a6c685873015148af728ce05d9bf4ae
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 	<link rel="stylesheet" th:href="@{/css/registrarse.css}">
 </head>
 <body>
-<<<<<<< HEAD
 
 	<header th:replace="~{common/navfooter :: navbar}"></header>
 
@@ -73,36 +67,8 @@
 							th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
 							placeholder="Ej: maria@gmail.com">
 						<small class="cl-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
-=======
-	<div class="contenedor-registro">
-		<div class="card-cabecera">
-		    <img src="/logo/SANYTYPETlogo.png" alt="SanityPet" class="panel-logo">
-		</div>
-
-		<div class="card-cuerpo">
-			<h1 class="form-titulo" th:text="${cliente.id != null} ? 'Editar Socio' : 'Crear cuenta'">Crear cuenta</h1>
-			<p class="form-subtitulo" th:text="${cliente.id != null} ? 'Modifica los datos del socio seleccionado' : 'Alta de un nuevo socio en el sistema administrativo'"></p>
-
-			<form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post">
-				<input type="hidden" th:field="*{id}">
-		    	<input type="hidden" th:field="*{usuario.id}">
-
-				<ul class="lista-errores" th:if="${#fields.hasErrors('*')}">
-					<li th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
-				</ul>
-
-				<div class="fila-dos">
-					<div class="campo-grupo">
-						<label class="campo-etiqueta" for="dni">DNI</label>
-						<input class="campo-input" type="text" id="dni" th:field="*{dni}" placeholder="12345678X" required>
-					</div>
-					<div class="campo-grupo">
-						<label class="campo-etiqueta" for="nombreCompleto">Nombre completo</label>
-						<input class="campo-input" type="text" id="nombreCompleto" th:field="*{usuario.nombreCompleto}" placeholder="Juan Pérez" required>
->>>>>>> 2a6a67170a6c685873015148af728ce05d9bf4ae
 					</div>
 
-<<<<<<< HEAD
 					<!-- Credenciales -->
 					<p class="cl-seccion-titulo" style="margin-top: 1.5rem;">Credenciales</p>
 
@@ -123,19 +89,8 @@
 							<small class="cl-error" th:if="${#fields.hasErrors('usuario.passwordRepeat')}"
 								th:errors="*{usuario.passwordRepeat}"></small>
 						</div>
-=======
-				<div class="fila-dos">
-					<div class="campo-grupo">
-						<label class="campo-etiqueta" for="telefono">Teléfono</label>
-						<input class="campo-input" type="tel" id="telefono" th:field="*{telefono}" placeholder="600 000 000">
-					</div>
-					<div class="campo-grupo">
-						<label class="campo-etiqueta" for="email">Email</label>
-						<input class="campo-input" type="email" id="email" th:field="*{email}" placeholder="correo@ejemplo.com">
->>>>>>> 2a6a67170a6c685873015148af728ce05d9bf4ae
 					</div>
 
-<<<<<<< HEAD
 					<!-- Botones -->
 					<div class="cl-acciones">
 						<a th:href="@{/clientes}" class="cl-link-volver">
@@ -157,7 +112,6 @@
 	<footer th:replace="~{common/navfooter :: pie}"></footer>
 
 	<script>
-		// Validar contraseñas
 		const pass1 = document.getElementById('usuario.passwordPlana');
 		const pass2 = document.getElementById('usuario.passwordRepeat');
 		if (pass1 && pass2) {
@@ -170,25 +124,3 @@
 </body>
 
 </html>
-=======
-				<div class="fila-dos" th:if="${cliente.id == null}">
-				    <div class="campo-grupo">
-				        <label class="campo-etiqueta" for="password">Contraseña</label>
-				        <input class="campo-input" type="password" id="password" th:field="*{usuario.passwordPlana}" placeholder="Mínimo 6 caracteres" required>
-				    </div>
-				    <div class="campo-grupo">
-				        <label class="campo-etiqueta" for="passwordRepeat">Repetir contraseña</label>
-				        <input class="campo-input" type="password" id="passwordRepeat" th:field="*{usuario.passwordRepeat}" placeholder="Repite la contraseña" required>
-				    </div>
-				</div>
-
-				<button type="submit" class="boton-registro">
-				    <i th:class="${cliente.id != null} ? 'fa-solid fa-floppy-disk' : 'fa-solid fa-user-plus'"></i>
-				    <span th:text="${cliente.id != null} ? 'Guardar Cambios' : 'Registrar Socio'">Registrar Socio</span>
-				</button>
-			</form>
-			</div>
-	</div>
-</body>
-</html>
->>>>>>> 2a6a67170a6c685873015148af728ce05d9bf4ae
