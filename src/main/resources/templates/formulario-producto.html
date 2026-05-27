@@ -3,17 +3,12 @@
 
 <head>
 	<meta charset="UTF-8">
-	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-512x512.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="/img/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title th:text="${producto.id == null ? 'Añadir Producto' : 'Editar Producto'}">Gestión Tienda</title>
-	<!-- Fuentes -->
-	<link
-		href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
-		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-	<!-- Estilos compartidos -->
 	<link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
-	<!-- Estilos de formulario -->
 	<link rel="stylesheet" th:href="@{/css/formulario-producto.css}">
 </head>
 
@@ -21,77 +16,151 @@
 
 	<header th:replace="~{common/navfooter :: navbar}"></header>
 
-	<main class="form-container">
+	<main class="contenido-principal">
 
-		<div class="form-card">
-			<h1 class="form-titulo">
-				<span th:text="${producto.id == null ? 'Añadir Nuevo Producto' : 'Editar Producto'}"></span>
-			</h1>
-			<p class="form-subtitulo"
-				th:text="${producto.id == null ? 'Agrega un artículo al catálogo de la tienda.' : 'Modifica los datos del artículo seleccionado.'}">
-			</p>
+		<!-- Fondo slider -->
+		<div class="fp-fondo">
+			<div class="fp-slide activa"><img src="/img/portada/tienda/tienda3.jpg" alt=""></div>
+			<div class="fp-slide"><img src="/img/portada/productos/p2.jpg" alt=""></div>
+			<div class="fp-slide"><img src="/img/portada/tienda/tienda7.jpg" alt=""></div>
+			<div class="fp-overlay"></div>
+		</div>
 
-			<form th:action="@{/tienda/guardar}" th:object="${producto}" method="post" class="dynamic-form">
+		<!-- Formulario centrado -->
+		<div class="fp-pagina">
+			<div class="fp-card">
 
-				<!-- Campo oculto para ID -->
-				<input type="hidden" th:field="*{id}">
-
-				<div class="input-group">
-					<label for="nombre">Nombre del Producto</label>
-					<input type="text" id="nombre" th:field="*{nombre}" placeholder="Ej. Pienso Royal Canin" required>
-				</div>
-
-				<div class="input-group">
-					<label for="categoria">Categoría</label>
-					<select id="categoria" th:field="*{categoria}" required>
-						<option value="">Selecciona una categoría...</option>
-						<option value="Alimentación">Alimentación</option>
-						<option value="Accesorios">Accesorios</option>
-						<option value="Higiene">Higiene</option>
-						<option value="Salud">Salud</option>
-						<option value="Juguetes">Juguetes</option>
-					</select>
-				</div>
-
-				<div class="input-row">
-					<div class="input-group">
-						<label for="precio">Precio (€)</label>
-						<input type="number" step="0.01" id="precio" th:field="*{precio}" placeholder="0.00" required>
-					</div>
-
-					<div class="input-group">
-						<label for="stock">Stock (Unidades)</label>
-						<input type="number" id="stock" th:field="*{stock}" placeholder="0" required min="0">
+				<div class="fp-card-header">
+					<div>
+						<h1 class="fp-titulo" th:text="${producto.id == null ? 'Añadir Producto' : 'Editar Producto'}">Añadir Producto</h1>
+						<p class="fp-sub">Completa la información del producto</p>
 					</div>
 				</div>
 
-				<div class="input-group">
-					<label for="descripcion">Descripción</label>
-					<textarea id="descripcion" th:field="*{descripcion}" rows="4"
-						placeholder="Detalles de lo que incluye o características..." required></textarea>
-				</div>
+				<form th:action="@{/tienda/guardar}" th:object="${producto}" method="post">
 
-				<div class="input-group">
-					<label for="imagenUrl">URL de la Imagen (Opcional)</label>
-					<input type="url" id="imagenUrl" th:field="*{imagenUrl}"
-						placeholder="https://ejemplo.com/fotodelproducto.jpg">
-				</div>
+					<input type="hidden" th:field="*{id}">
 
-				<div class="form-actions">
-					<a th:href="@{/tienda}" class="btn-secondary">
-						Volver
-					</a>
-					<button type="submit" class="btn-primary">
-						Guardar Producto
-					</button>
-				</div>
-			</form>
+					<!-- Nombre -->
+					<div class="fp-campo fp-campo-full">
+						<label class="fp-label">Nombre del Producto</label>
+						<input class="fp-input" type="text" th:field="*{nombre}" placeholder="Ej. Pienso Royal Canin" required>
+					</div>
+
+					<!-- Categoría (custom select) -->
+					<div class="fp-campo fp-campo-full">
+						<label class="fp-label">Categoría</label>
+						<div class="fp-custom-select">
+							<select class="fp-select" th:field="*{categoria}" required>
+								<option value="">— Selecciona categoría —</option>
+								<option value="Alimentación">Alimentación</option>
+								<option value="Accesorios">Accesorios</option>
+								<option value="Higiene">Higiene</option>
+								<option value="Salud">Salud</option>
+								<option value="Juguetes">Juguetes</option>
+							</select>
+							<div class="fp-select-trigger">
+								<span>— Selecciona categoría —</span>
+								<i class="fa-solid fa-chevron-down"></i>
+							</div>
+							<div class="fp-select-lista"></div>
+						</div>
+					</div>
+
+					<!-- Precio | Stock -->
+					<div class="fp-fila-dos">
+						<div class="fp-campo">
+							<label class="fp-label">Precio (€)</label>
+							<input class="fp-input" type="number" step="0.01" th:field="*{precio}" placeholder="0.00" required>
+						</div>
+						<div class="fp-campo">
+							<label class="fp-label">Stock (Unidades)</label>
+							<input class="fp-input" type="number" th:field="*{stock}" placeholder="0" required min="0">
+						</div>
+					</div>
+
+					<!-- Descripción -->
+					<div class="fp-campo fp-campo-full">
+						<label class="fp-label">Descripción</label>
+						<textarea class="fp-input fp-textarea" th:field="*{descripcion}" placeholder="Detalles del producto..." required></textarea>
+					</div>
+
+					<!-- URL Imagen -->
+					<div class="fp-campo fp-campo-full">
+						<label class="fp-label">URL de la Imagen (Opcional)</label>
+						<input class="fp-input" type="url" th:field="*{imagenUrl}" placeholder="https://...">
+					</div>
+
+					<!-- Acciones -->
+					<div class="fp-acciones">
+						<a th:href="@{/tienda}" class="fp-link-volver">
+							<i class="fa-solid fa-arrow-left"></i> Cancelar
+						</a>
+						<button type="submit" class="fp-btn">
+							<i class="fa-solid fa-circle-check"></i>
+							<span th:text="${producto.id == null ? 'Guardar Producto' : 'Actualizar Producto'}">Guardar Producto</span>
+						</button>
+					</div>
+
+				</form>
+
+			</div>
 		</div>
 
 	</main>
 
 	<footer th:replace="~{common/navfooter :: pie}"></footer>
 
-</body>
+	<script>
+		// Slider
+		(function () {
+			const slides = document.querySelectorAll('.fp-slide');
+			let actual = 0;
+			setInterval(function () {
+				slides[actual].classList.remove('activa');
+				actual = (actual + 1) % slides.length;
+				slides[actual].classList.add('activa');
+			}, 8000);
+		})();
 
+		// Custom select categoría
+		document.querySelectorAll('.fp-custom-select').forEach(function (wrapper) {
+			const realSelect = wrapper.querySelector('select');
+			const trigger = wrapper.querySelector('.fp-select-trigger');
+			const triggerText = trigger.querySelector('span');
+			const lista = wrapper.querySelector('.fp-select-lista');
+
+			Array.from(realSelect.options).forEach(function (opt) {
+				const div = document.createElement('div');
+				div.className = 'fp-option' + (opt.selected ? ' seleccionado' : '');
+				div.textContent = opt.text;
+				div.dataset.value = opt.value;
+				div.addEventListener('click', function () {
+					realSelect.value = opt.value;
+					triggerText.textContent = opt.text;
+					lista.querySelectorAll('.fp-option').forEach(o => o.classList.remove('seleccionado'));
+					div.classList.add('seleccionado');
+					trigger.classList.remove('abierto');
+					lista.classList.remove('abierto');
+				});
+				lista.appendChild(div);
+			});
+
+			const seleccionado = realSelect.options[realSelect.selectedIndex];
+			if (seleccionado) triggerText.textContent = seleccionado.text;
+
+			trigger.addEventListener('click', function (e) {
+				e.stopPropagation();
+				trigger.classList.toggle('abierto');
+				lista.classList.toggle('abierto');
+			});
+
+			document.addEventListener('click', function () {
+				trigger.classList.remove('abierto');
+				lista.classList.remove('abierto');
+			});
+		});
+	</script>
+
+</body>
 </html>

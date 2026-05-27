@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-512x512.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="/img/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Tienda Virtual</title>
 	<!-- Fuentes -->
@@ -107,8 +107,8 @@
 						</span>
 					</div>
 
-					<!-- Botón Añadir al Carrito (Simplificado) -->
-					<div class="producto-cart-action" th:if="${producto.stock > 0}">
+					<!-- Botón Añadir al Carrito (solo usuarios) -->
+					<div class="producto-cart-action" th:if="${producto.stock > 0 and !isAdmin}">
 						<button type="button" class="btn-add-cart" th:onclick="'agregarItem(' + ${producto.id} + ')'">
 							<i class="fa-solid fa-cart-plus"></i> Añadir al carrito
 						</button>

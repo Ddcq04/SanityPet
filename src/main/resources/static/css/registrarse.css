@@ -30,7 +30,7 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-image: url('/portada/mascotas/re.jpg');
+	background-image: url('/img/portada/mascotas/re.jpg');
 	background-size: cover;
 	background-position: center center;
 	background-attachment: fixed;

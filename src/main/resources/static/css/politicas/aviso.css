@@ -1,1 +1,221 @@
-/* Estilos Aviso Legal */
+/* ── Aviso Legal ── */
+:root {
+	--menta: #2ec4b6;
+	--menta-oscuro: #20968b;
+	--menta-claro: #e6fffa;
+	--texto: #1e293b;
+	--texto-suave: #64748b;
+	--fondo: #f8fafc;
+	--blanco: #ffffff;
+	--borde: #e2e8f0;
+	--nav-alto: 68px;
+	--fuente-marca: 'Quicksand', sans-serif;
+	--fuente-base: 'Golos Text', sans-serif;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+	font-family: var(--fuente-base);
+	color: var(--texto);
+	background: var(--blanco);
+}
+
+/* ── Hero izquierda con foto ── */
+.aviso-hero {
+	position: relative;
+	height: calc(320px + var(--nav-alto));
+	padding-top: var(--nav-alto);
+	background-image: url('/img/politicas/pr3.jpg');
+	background-size: cover;
+	background-position: center 20%;
+	display: flex;
+	align-items: flex-end;
+}
+
+.aviso-hero-overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(90deg, rgba(10,25,40,0.85) 0%, rgba(10,25,40,0.35) 60%, transparent 100%);
+}
+
+.aviso-hero-contenido {
+	position: relative;
+	z-index: 1;
+	padding: 0 3.5rem 3rem;
+	max-width: 560px;
+}
+
+.aviso-hero-tag {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.3rem 0.9rem;
+	background: rgba(46,196,182,0.2);
+	border: 1px solid rgba(46,196,182,0.5);
+	border-radius: 20px;
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: var(--menta-claro);
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	margin-bottom: 0.75rem;
+}
+
+.aviso-hero-titulo {
+	font-family: var(--fuente-marca);
+	font-size: 2.5rem;
+	font-weight: 700;
+	color: #ffffff;
+	line-height: 1.1;
+	letter-spacing: -0.02em;
+	margin-bottom: 0.6rem;
+}
+
+.aviso-hero-sub {
+	font-size: 0.88rem;
+	color: rgba(255,255,255,0.6);
+}
+
+/* ── Contenido principal ── */
+.aviso-main {
+	max-width: 1060px;
+	margin: 0 auto;
+	padding: 4rem 2rem 5rem;
+}
+
+/* ── Intro con imagen lateral ── */
+.aviso-intro {
+	display: grid;
+	grid-template-columns: 1fr 360px;
+	gap: 2.5rem;
+	align-items: center;
+	margin-bottom: 3.5rem;
+	background: var(--fondo);
+	border-radius: 18px;
+	padding: 2rem 2.5rem;
+	border: 1px solid var(--borde);
+}
+
+.aviso-intro-texto h3 {
+	font-family: var(--fuente-marca);
+	font-size: 1.3rem;
+	font-weight: 700;
+	color: var(--texto);
+	margin-bottom: 0.75rem;
+}
+
+.aviso-intro-texto p {
+	font-size: 0.91rem;
+	color: var(--texto-suave);
+	line-height: 1.8;
+}
+
+.aviso-intro-img {
+	border-radius: 14px;
+	overflow: hidden;
+	height: 220px;
+	box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+}
+
+.aviso-intro-img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	display: block;
+}
+
+/* ── Divisor ── */
+.aviso-divisor {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	margin-bottom: 2.5rem;
+}
+
+.aviso-divisor-linea {
+	flex: 1;
+	height: 1px;
+	background: var(--borde);
+}
+
+.aviso-divisor-texto {
+	font-family: var(--fuente-marca);
+	font-size: 0.78rem;
+	font-weight: 700;
+	color: var(--texto-suave);
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	white-space: nowrap;
+}
+
+/* ── Grid de secciones ── */
+.aviso-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1.25rem;
+}
+
+.aviso-bloque {
+	background: var(--fondo);
+	border: 1px solid var(--borde);
+	border-radius: 14px;
+	padding: 1.5rem;
+	transition: border-color 0.2s;
+}
+
+.aviso-bloque:hover {
+	border-color: var(--menta);
+}
+
+.aviso-bloque h2 {
+	font-family: var(--fuente-marca);
+	font-size: 1rem;
+	font-weight: 700;
+	color: var(--texto);
+	margin-bottom: 0.65rem;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.aviso-bloque h2::before {
+	content: '';
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: var(--menta);
+	flex-shrink: 0;
+}
+
+.aviso-bloque p {
+	font-size: 0.9rem;
+	color: var(--texto-suave);
+	line-height: 1.8;
+}
+
+.aviso-bloque ul {
+	padding-left: 1rem;
+	margin-top: 0.3rem;
+}
+
+.aviso-bloque ul li {
+	font-size: 0.9rem;
+	color: var(--texto-suave);
+	line-height: 1.8;
+}
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+	.aviso-grid { grid-template-columns: 1fr; }
+	.aviso-intro { grid-template-columns: 1fr; }
+	.aviso-intro-img { height: 200px; }
+}
+
+@media (max-width: 640px) {
+	.aviso-hero { height: calc(240px + var(--nav-alto)); }
+	.aviso-hero-titulo { font-size: 1.8rem; }
+	.aviso-hero-contenido { padding: 0 1.5rem 2rem; }
+	.aviso-main { padding: 2.5rem 1rem 4rem; }
+}

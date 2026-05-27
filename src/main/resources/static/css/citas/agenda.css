@@ -22,9 +22,9 @@ body {
 .citas-banner {
 	position: relative;
 	margin-top: 0;
-	height: calc(300px + var(--nav-alto));
+	height: calc(380px + var(--nav-alto));
 	padding-top: var(--nav-alto);
-	background-image: url('/portada/mascotas/mas3.jpg');
+	background-image: url('/img/portada/mascotas/mas3.jpg');
 	background-size: cover;
 	background-position: center 30%;
 	display: flex;
@@ -35,30 +35,33 @@ body {
 .citas-banner-overlay {
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(
-		135deg,
-		rgba(32, 150, 139, 0.72) 0%,
-		rgba(46, 196, 182, 0.55) 100%
-	);
+	background: rgba(10, 20, 35, 0.48);
 }
 
 .citas-banner-contenido {
 	position: relative;
 	z-index: 1;
 	text-align: center;
+	max-width: 600px;
+	padding: 0 2rem;
+	background: transparent;
 }
 
 .citas-banner-titulo {
 	font-family: var(--fuente-marca);
-	font-size: 2rem;
+	font-size: 2.8rem;
 	font-weight: 700;
 	color: #ffffff;
-	margin-bottom: 0.4rem;
+	margin-bottom: 0.6rem;
+	letter-spacing: -0.02em;
+	line-height: 1.15;
 }
 
 .citas-banner-subtitulo {
-	font-size: 0.95rem;
-	color: rgba(255, 255, 255, 0.80);
+	font-size: 1rem;
+	color: var(--menta);
+	font-weight: 600;
+	letter-spacing: 0.01em;
 }
 
 /* Área principal */
@@ -140,10 +143,10 @@ body {
 /* Tarjeta contenedora */
 .citas-tarjeta {
 	background: var(--blanco);
-	border: 1px solid var(--borde);
+	border: 1.5px solid var(--menta);
 	border-radius: 16px;
 	overflow: hidden;
-	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+	box-shadow: none;
 }
 
 /* Filtros container */
@@ -153,8 +156,8 @@ body {
 	justify-content: space-between;
 	flex-wrap: wrap;
 	gap: 0.75rem;
-	padding: 1rem 1.5rem;
-	border-bottom: 1px solid var(--borde);
+	padding: 0.5rem 0;
+	margin-bottom: 1rem;
 }
 
 /* Grupo de botones filtro */
@@ -325,19 +328,80 @@ body {
 	border-top: 1px solid var(--borde);
 }
 
-/* Tablet */
-@media (max-width: 900px) {
-	.citas-banner { height: 220px; }
-	.citas-main { padding-left: 1.5rem; padding-right: 1.5rem; }
-	.citas-cabecera { flex-direction: column; align-items: flex-start; gap: 1rem; }
-	.btn-nueva-cita { width: 100%; justify-content: center; }
+/* Compacto (1024px) */
+@media (max-width: 1024px) {
+	.citas-main { padding-left: 1.25rem; padding-right: 1.25rem; }
+	.tabla-citas { font-size: 0.83rem; }
+	.tabla-citas thead th { padding: 0.75rem 0.9rem; font-size: 0.74rem; }
+	.tabla-citas tbody td { padding: 0.8rem 0.9rem; }
+	.agenda-filtros-container { flex-wrap: wrap; }
+	.filtros-grupo { flex-wrap: wrap; }
 }
 
-/* Móvil */
-@media (max-width: 600px) {
+/* Tablet (900px) — tabla compacta */
+@media (max-width: 900px) {
+	.citas-banner { height: 220px; }
+	.citas-main { padding-left: 1.25rem; padding-right: 1.25rem; }
+	.btn-nueva-cita { width: fit-content; }
+	.filtros-grupo { flex-wrap: wrap; }
+	.tabla-citas thead th { padding: 0.65rem 0.8rem; font-size: 0.72rem; }
+	.tabla-citas tbody td { padding: 0.7rem 0.8rem; font-size: 0.83rem; }
+}
+
+/* Tarjetas (860px) */
+@media (max-width: 860px) {
 	.citas-banner { height: 180px; }
 	.citas-banner-titulo { font-size: 1.5rem; }
 	.citas-main { padding-left: 1rem; padding-right: 1rem; padding-top: 1.5rem; }
-	.tabla-citas thead th { padding: 0.65rem 0.85rem; font-size: 0.72rem; }
-	.tabla-citas tbody td { padding: 0.75rem 0.85rem; font-size: 0.84rem; }
+	.tabla-citas { font-size: 0.83rem; }
+	.btn-filtro-item { font-size: 0.78rem; padding: 0.4rem 0.75rem; }
+	.citas-titulo { font-size: 1.35rem; }
+	.agenda-filtros-container { justify-content: center; }
+	.filtros-grupo { justify-content: center; }
+
+	/* Layout de tarjetas */
+	.citas-tarjeta { border: none; background: transparent; box-shadow: none; overflow: visible; }
+	.tabla-contenedor { padding: 0.25rem 0; overflow: visible; }
+	.tabla-citas { display: block; overflow: visible; }
+	.tabla-citas tbody { display: block; overflow: visible; }
+	.tabla-citas thead { display: none; }
+	.tabla-citas tbody tr {
+		display: block;
+		border-radius: 12px;
+		border: none;
+		outline: 1.5px solid var(--menta);
+		margin-bottom: 0.75rem;
+		padding: 0.5rem 0.75rem;
+	}
+	.tabla-citas tbody tr:last-child { margin-bottom: 0; }
+	.tabla-citas tbody td {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0.45rem 0;
+		border-bottom: 1px solid #f1f5f9;
+		font-size: 0.86rem;
+		gap: 0.5rem;
+		color: var(--texto);
+	}
+	.tabla-citas tbody td:last-child { border-bottom: none; padding-bottom: 0; }
+	.tabla-citas tbody td.col-acciones::before { flex: 1; }
+	.tabla-citas tbody td::before {
+		content: attr(data-label);
+		font-weight: 700;
+		font-size: 0.72rem;
+		color: var(--texto-suave);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		flex-shrink: 0;
+		min-width: 85px;
+	}
+}
+
+/* Móvil pequeño (480px) */
+@media (max-width: 480px) {
+	.citas-banner { height: 150px; }
+	.citas-banner-titulo { font-size: 1.25rem; }
+	.citas-titulo { font-size: 1.2rem; }
+	.btn-nueva-cita { font-size: 0.82rem; }
 }

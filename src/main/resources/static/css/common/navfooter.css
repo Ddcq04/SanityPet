@@ -236,9 +236,9 @@ header.nav-con-fondo .cart-badge { border-color: white; }
 }
 
 .btn-salir:hover {
-	background: rgba(255, 255, 255, 0.15);
+	background: var(--menta);
 	color: #ffffff;
-	border-color: #ffffff;
+	border-color: var(--menta);
 }
 
 .btn-login {

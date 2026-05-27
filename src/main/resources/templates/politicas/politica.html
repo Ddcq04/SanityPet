@@ -3,12 +3,10 @@
 
 <head>
 	<meta charset="UTF-8">
-	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-512x512.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="/img/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Política de Privacidad</title>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
-		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 	<link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
 	<link rel="stylesheet" th:href="@{/css/politicas/politica.css}">
@@ -18,12 +16,95 @@
 
 	<header th:replace="~{common/navfooter :: navbar}"></header>
 
-	<main>
-		<!-- Contenido política de privacidad -->
+	<div class="priv-hero">
+		<div class="priv-hero-overlay"></div>
+		<div class="priv-hero-contenido">
+			<h1 class="priv-hero-titulo">Política de Privacidad</h1>
+			<p class="priv-hero-sub">Última actualización: Mayo 2026</p>
+		</div>
+	</div>
+
+	<main class="priv-main">
+
+		<div class="priv-intro">
+			<div class="priv-intro-texto">
+				<h3>Responsable del tratamiento</h3>
+				<p><strong>SanityPet Clínica Veterinaria</strong> — Av. Tetuán de las Victorias 8, 28100, Madrid.</p>
+				<p style="margin-top:0.75rem">Contacto: info@sanitypet.es · +34 954 123 456</p>
+				<p style="margin-top:0.75rem">El tratamiento de sus datos se basa en la ejecución del contrato de servicios veterinarios y el consentimiento expreso del usuario al registrarse en la plataforma.</p>
+			</div>
+			<div class="priv-intro-img">
+				<img src="/img/politicas/pr2.jpg" alt="SanityPet privacidad">
+			</div>
+		</div>
+
+		<div class="priv-divisor">
+			<div class="priv-divisor-linea"></div>
+			<span class="priv-divisor-texto">Condiciones de privacidad</span>
+			<div class="priv-divisor-linea"></div>
+		</div>
+
+		<div class="priv-grid">
+
+			<div class="priv-bloque">
+				<h2>Datos que recopilamos</h2>
+				<ul>
+					<li>Nombre completo, DNI, teléfono y correo electrónico del propietario.</li>
+					<li>Datos de la mascota (nombre, especie, raza, historial clínico).</li>
+					<li>Información de citas y compras realizadas en nuestra plataforma.</li>
+				</ul>
+			</div>
+
+			<div class="priv-bloque">
+				<h2>Finalidad del tratamiento</h2>
+				<ul>
+					<li>Gestión de citas y seguimiento clínico de mascotas.</li>
+					<li>Comunicaciones relacionadas con los servicios contratados.</li>
+					<li>Procesamiento de pedidos en la tienda virtual.</li>
+				</ul>
+			</div>
+
+			<div class="priv-bloque">
+				<h2>Conservación y seguridad</h2>
+				<p>Los datos se conservan mientras la relación esté activa y se eliminan transcurridos 5 años desde la última consulta. Aplicamos medidas técnicas y organizativas para proteger tu información.</p>
+			</div>
+
+			<div class="priv-bloque">
+				<h2>Cesión de datos a terceros</h2>
+				<p>SanityPet no cede ni vende tus datos personales a terceros. Únicamente podrán acceder a ellos proveedores de servicios tecnológicos bajo contrato de confidencialidad y con las mismas garantías de protección.</p>
+			</div>
+
+			<div class="priv-bloque">
+				<h2>Transferencias internacionales</h2>
+				<p>No realizamos transferencias de datos fuera del Espacio Económico Europeo. En caso de ser necesario, se aplicarán las garantías exigidas por el RGPD para asegurar un nivel de protección equivalente.</p>
+			</div>
+
+			<div class="priv-bloque">
+				<h2>Tus derechos</h2>
+				<ul>
+					<li><strong>Acceso:</strong> consultar qué datos tenemos sobre ti.</li>
+					<li><strong>Rectificación:</strong> corregir datos inexactos o incompletos.</li>
+					<li><strong>Supresión:</strong> solicitar la eliminación de tus datos.</li>
+					<li><strong>Oposición y limitación:</strong> restringir el uso en determinados casos.</li>
+					<li><strong>Portabilidad:</strong> recibir tus datos en formato electrónico.</li>
+				</ul>
+			</div>
+
+			<div class="priv-bloque">
+				<h2>Ejercicio de derechos</h2>
+				<p>Puedes ejercer tus derechos escribiendo a <strong>info@sanitypet.es</strong>. También puedes reclamar ante la Agencia Española de Protección de Datos (aepd.es).</p>
+			</div>
+
+			<div class="priv-bloque">
+				<h2>Menores de edad</h2>
+				<p>Nuestros servicios están dirigidos a mayores de 18 años. Si eres menor, necesitas el consentimiento de tu tutor legal para registrarte en la plataforma.</p>
+			</div>
+
+		</div>
+
 	</main>
 
 	<footer th:replace="~{common/navfooter :: pie}"></footer>
 
 </body>
-
 </html>

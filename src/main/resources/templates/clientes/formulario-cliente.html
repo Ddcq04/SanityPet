@@ -3,12 +3,10 @@
 
 <head>
 	<meta charset="UTF-8">
-	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-512x512.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="/img/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Añadir nuevo cliente</title>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
-		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 	<link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
 	<link rel="stylesheet" th:href="@{/css/clientes/formulariocliente.css}">
@@ -16,116 +14,115 @@
 
 <body>
 
-	<header th:replace="~{common/navfooter :: navbar}">
-		<!-- navbar -->
-	</header>
+	<header th:replace="~{common/navfooter :: navbar}"></header>
 
-	<main class="contenido-principal">
+	<main class="cl-principal">
 
-		<div class="cabecera-pagina">
-			<h1 class="titulo-pagina" th:text="${cliente.id == null} ? 'Nuevo Cliente' : 'Editar Cliente'">Nuevo Cliente
-			</h1>
-			<p class="subtitulo-pagina">Rellena todos los campos</p>
+		<!-- Fondo fijo -->
+		<div class="cl-fondo">
+			<div class="cl-slide activa"><img src="/img/portada/cliente/cl1.jpg" alt=""></div>
+			<div class="cl-overlay"></div>
 		</div>
 
-		<div class="tarjeta-formulario">
+		<!-- Formulario centrado -->
+		<div class="cl-pagina">
+			<div class="cl-card">
 
-			<form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post">
+				<div class="cl-card-header">
+					<h1 class="cl-titulo">Nuevo cliente</h1>
+					<p class="cl-sub">Completa los datos del nuevo propietario</p>
+				</div>
 
-				<input type="hidden" th:field="*{id}">
-				<input type="hidden" th:field="*{usuario.id}">
+				<form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post">
 
-				<!-- Datos personales -->
-				<div class="seccion">
-					<p class="seccion-titulo">Datos personales</p>
+					<input type="hidden" th:field="*{id}">
+					<input type="hidden" th:field="*{usuario.id}">
 
-					<div class="fila-dos">
-						<div class="campo-grupo">
-							<label class="campo-etiqueta" for="dni">DNI / Documento</label>
-							<input class="campo-input" type="text" th:field="*{dni}"
+					<!-- Datos personales -->
+					<p class="cl-seccion-titulo">Datos personales</p>
+
+					<div class="cl-fila-dos">
+						<div class="cl-campo">
+							<label class="cl-label">DNI / Documento</label>
+							<input class="cl-input" type="text" th:field="*{dni}"
 								th:classappend="${#fields.hasErrors('dni')} ? 'is-invalid' : ''"
-								placeholder="Ej: ********A" required>
-							<small class="texto-error" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></small>
+								placeholder="Ej: 12345678A" required>
+							<small class="cl-error" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></small>
 						</div>
-						<div class="campo-grupo">
-							<label class="campo-etiqueta" for="telefono">
-								Teléfono
-								<span class="etiqueta-opcional">Opcional</span>
-							</label>
-							<input class="campo-input" type="text" th:field="*{telefono}" placeholder="Ej: 600 000 000">
+						<div class="cl-campo">
+							<label class="cl-label">Teléfono <span class="cl-opcional">Opcional</span></label>
+							<input class="cl-input" type="text" th:field="*{telefono}" placeholder="Ej: 600 000 000">
 						</div>
 					</div>
 
-					<div class="campo-grupo">
-						<label class="campo-etiqueta" for="nombre">Nombre completo</label>
-						<input class="campo-input" type="text" th:field="*{usuario.nombreCompleto}"
+					<div class="cl-campo">
+						<label class="cl-label">Nombre completo</label>
+						<input class="cl-input" type="text" th:field="*{usuario.nombreCompleto}"
 							th:classappend="${#fields.hasErrors('usuario.nombreCompleto')} ? 'is-invalid' : ''"
-							placeholder="Ej: María..." required>
-						<small class="texto-error" th:if="${#fields.hasErrors('usuario.nombreCompleto')}"
+							placeholder="Ej: María García López" required>
+						<small class="cl-error" th:if="${#fields.hasErrors('usuario.nombreCompleto')}"
 							th:errors="*{usuario.nombreCompleto}"></small>
 					</div>
 
-					<div class="campo-grupo">
-						<label class="campo-etiqueta" for="email">
-							Email
-							<span class="etiqueta-opcional">Opcional</span>
-						</label>
-						<input class="campo-input" type="email" th:field="*{email}"
+					<div class="cl-campo">
+						<label class="cl-label">Email <span class="cl-opcional">Opcional</span></label>
+						<input class="cl-input" type="email" th:field="*{email}"
 							th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
 							placeholder="Ej: maria@gmail.com">
-						<small class="texto-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+						<small class="cl-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
 					</div>
-				</div>
 
-				<!-- Credenciales -->
-				<div class="seccion">
-					<p class="seccion-titulo">Credenciales</p>
+					<!-- Credenciales -->
+					<p class="cl-seccion-titulo" style="margin-top: 1.5rem;">Credenciales</p>
 
-					<div class="fila-dos">
-						<div class="campo-grupo">
-							<label class="campo-etiqueta" for="usuario.passwordPlana">Contraseña</label>
-							<input class="campo-input" type="password" th:field="*{usuario.passwordPlana}"
+					<div class="cl-fila-dos">
+						<div class="cl-campo">
+							<label class="cl-label">Contraseña</label>
+							<input class="cl-input" type="password" th:field="*{usuario.passwordPlana}"
 								th:classappend="${#fields.hasErrors('usuario.passwordPlana')} ? 'is-invalid' : ''"
-								th:required="${cliente.id == null}">
-							<small class="texto-error" th:if="${#fields.hasErrors('usuario.passwordPlana')}"
+								th:required="${cliente.id == null}" placeholder="••••••••">
+							<small class="cl-error" th:if="${#fields.hasErrors('usuario.passwordPlana')}"
 								th:errors="*{usuario.passwordPlana}"></small>
 						</div>
-						<div class="campo-grupo">
-							<label class="campo-etiqueta" for="usuario.passwordRepeat">Repetir contraseña</label>
-							<input class="campo-input" type="password" th:field="*{usuario.passwordRepeat}"
+						<div class="cl-campo">
+							<label class="cl-label">Repetir contraseña</label>
+							<input class="cl-input" type="password" th:field="*{usuario.passwordRepeat}"
 								th:classappend="${#fields.hasErrors('usuario.passwordRepeat')} ? 'is-invalid' : ''"
-								th:required="${cliente.id == null}">
-							<small class="texto-error" th:if="${#fields.hasErrors('usuario.passwordRepeat')}"
+								th:required="${cliente.id == null}" placeholder="••••••••">
+							<small class="cl-error" th:if="${#fields.hasErrors('usuario.passwordRepeat')}"
 								th:errors="*{usuario.passwordRepeat}"></small>
 						</div>
 					</div>
-				</div>
 
-				<!-- Botones -->
-				<div class="botones-fila">
-					<a th:href="@{/clientes}" href="#" class="boton-cancelar">Cancelar</a>
-					<button type="submit" class="boton-guardar">Guardar Cliente</button>
-				</div>
+					<!-- Botones -->
+					<div class="cl-acciones">
+						<a th:href="@{/clientes}" class="cl-link-volver">
+							<i class="fa-solid fa-arrow-left"></i> Cancelar
+						</a>
+						<button type="submit" class="cl-btn">
+							<i class="fa-solid fa-circle-check"></i>
+							<span>Guardar cliente</span>
+						</button>
+					</div>
 
-			</form>
+				</form>
 
+			</div>
 		</div>
 
 	</main>
-	<!-- FOOTER -->
+
 	<footer th:replace="~{common/navfooter :: pie}"></footer>
 
 	<script>
+		// Validar contraseñas
 		const pass1 = document.getElementById('usuario.passwordPlana');
 		const pass2 = document.getElementById('usuario.passwordRepeat');
-
-		pass2.addEventListener('input', () => {
-			if (pass1.value !== pass2.value) {
-				pass2.setCustomValidity('Las contraseñas no coinciden');
-			} else {
-				pass2.setCustomValidity('');
-			}
-		});
+		if (pass1 && pass2) {
+			pass2.addEventListener('input', () => {
+				pass2.setCustomValidity(pass1.value !== pass2.value ? 'Las contraseñas no coinciden' : '');
+			});
+		}
 	</script>
 
 </body>

@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-512x512.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="/img/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Listado de Mascotas</title>
 	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -36,17 +36,15 @@
 			</div>
 		</div>
 
-		<div class="tarjeta-tabla">
-
-			<!-- Barra superior: filtros + contador -->
-			<div class="barra-superior">
-				<form th:action="@{/mascotas/buscar}" method="get" class="formulario-filtros">
+		<!-- Barra de filtros separada -->
+		<div class="barra-superior">
+			<form th:action="@{/mascotas/buscar}" method="get" class="formulario-filtros">
 					<div class="input-busqueda">
 						<i class="fa-solid fa-magnifying-glass"></i>
-						<input type="text" name="nombre" th:value="${nombreSeleccionado}" placeholder="Nombre mascota...">
+						<input type="text" name="nombre" th:value="${nombreSeleccionado}" placeholder="Nombre...">
 					</div>
 					<select class="filtro-select" name="especie">
-						<option value="">Especies</option>
+						<option value="">Especie</option>
 						<option value="Perro" th:selected="${especieSeleccionada == 'Perro'}">Perro</option>
 						<option value="Gato" th:selected="${especieSeleccionada == 'Gato'}">Gato</option>
 						<option value="Ave" th:selected="${especieSeleccionada == 'Ave'}">Ave</option>
@@ -56,23 +54,21 @@
 						<input type="text" name="raza" th:value="${razaSeleccionada}" placeholder="Raza...">
 					</div>
 					<div class="input-busqueda">
-						<input type="text" name="dueno" th:value="${duenoSeleccionado}" placeholder="Due&#241;o (Nombre)...">
+						<input type="text" name="dueno" th:value="${duenoSeleccionado}" placeholder="Due&#241;o...">
 					</div>
 					<button type="submit" class="boton-filtrar">Buscar</button>
+					<a th:href="@{/mascotas}" class="boton-limpiar">Limpiar</a>
 				</form>
-				<div class="barra-derecha">
-					<a th:href="@{/mascotas}" class="boton-limpiar">
-						Limpiar
-					</a>
-				</div>
-			</div>
+		</div>
 
+		<div class="tarjeta-tabla">
 			<div class="contenedor-tabla">
 				<table class="tabla-mascotas">
 					<thead>
 						<tr>
 							<th>Nombre</th>
-							<th>Especie / Raza</th>
+							<th>Especie</th>
+							<th>Raza</th>
 							<th>Fecha Nac.</th>
 							<th>Due&#241;o</th>
 							<th>Citas</th>
@@ -81,15 +77,13 @@
 					</thead>
 					<tbody>
 						<tr th:each="m : ${mascotas}">
-							<td class="col-nombre" th:text="${m.nombre}"></td>
-							<td>
-								<span class="etiqueta-especie" th:text="${m.especie}"></span>
-								<span class="col-raza" th:text="${m.raza}"></span>
-							</td>
-							<td th:text="${#temporals.format(m.fechaNacimiento, 'dd/MM/yyyy')} ?: 'No registrada'"></td>
-							<td th:text="${m.cliente?.usuario?.nombreCompleto} ?: 'Sin asignar'"></td>
-							<td><span class="badge-citas" th:text="${m.cantidadCitas}">0</span></td>
-							<td class="col-acciones">
+							<td data-label="Nombre" class="col-nombre" th:text="${m.nombre}"></td>
+							<td data-label="Especie"><span class="etiqueta-especie" th:text="${m.especie}"></span></td>
+							<td data-label="Raza" class="col-raza" th:text="${m.raza}"></td>
+							<td data-label="Fecha Nac." th:text="${#temporals.format(m.fechaNacimiento, 'dd/MM/yyyy')} ?: 'No registrada'"></td>
+							<td data-label="Dueño" th:text="${m.cliente?.usuario?.nombreCompleto} ?: 'Sin asignar'"></td>
+							<td data-label="Citas"><span class="badge-citas" th:text="${m.cantidadCitas}">0</span></td>
+							<td data-label="Acciones" class="col-acciones">
 								<a th:href="@{/mascotas/editar/{id}(id=${m.id})}" class="boton-editar" title="Editar">
 									<i class="fa-solid fa-pen"></i>
 								</a>

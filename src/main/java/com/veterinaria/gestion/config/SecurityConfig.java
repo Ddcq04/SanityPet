@@ -15,7 +15,7 @@ public class SecurityConfig {
 		http
 	         .csrf(csrf -> csrf.disable())
 	         .authorizeHttpRequests(auth -> auth
-	             .requestMatchers("/", "/home", "/css/**", "/js/**", "/especialistas/**","/logo/**","/portada/**", "/favicons/**", "/registrarse", "/registrar-socio", "/politicas/**").permitAll() // Permite cargar estilos sin login
+	             .requestMatchers("/", "/home", "/css/**", "/js/**", "/especialistas/**","/logo/**","/portada/**","/img/**", "/favicons/**", "/registrarse", "/registrar-socio", "/politicas/**").permitAll() // Permite cargar estilos sin login
 	          // 2. GESTIÓN DE CLIENTES: Solo el administrador puede crear, buscar o listar dueños
 	             .requestMatchers("/clientes/**").hasRole("admin")
 	          // 3. MASCOTAS: 

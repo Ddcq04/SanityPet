@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-512x512.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="/img/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Agenda</title>
 	<link
@@ -40,24 +40,24 @@
 			</div>
 		</div>
 
-		<div class="citas-tarjeta">
-
-			<div class="agenda-filtros-container">
-				<div class="filtros-grupo">
-					<a th:href="@{/citas}"
-					   class="btn-filtro-item" th:classappend="${filtroActivo == null} ? ' activo' : ''">
-						Todo
-					</a>
-					<a th:href="@{/citas(filtro='hoy')}"
-					   class="btn-filtro-item" th:classappend="${filtroActivo == 'hoy'} ? ' activo' : ''">
-						Hoy
-					</a>
-					<a th:href="@{/citas(filtro='semana')}"
-					   class="btn-filtro-item" th:classappend="${filtroActivo == 'semana'} ? ' activo' : ''">
-						Esta Semana
-					</a>
-				</div>
+		<div class="agenda-filtros-container">
+			<div class="filtros-grupo">
+				<a th:href="@{/citas}"
+				   class="btn-filtro-item" th:classappend="${filtroActivo == null} ? ' activo' : ''">
+					Todo
+				</a>
+				<a th:href="@{/citas(filtro='hoy')}"
+				   class="btn-filtro-item" th:classappend="${filtroActivo == 'hoy'} ? ' activo' : ''">
+					Hoy
+				</a>
+				<a th:href="@{/citas(filtro='semana')}"
+				   class="btn-filtro-item" th:classappend="${filtroActivo == 'semana'} ? ' activo' : ''">
+					Esta Semana
+				</a>
 			</div>
+		</div>
+
+		<div class="citas-tarjeta">
 
 				<div class="tabla-contenedor">
 					<table class="tabla-citas">
@@ -73,16 +73,16 @@
 						<tbody>
 							<tr th:each="c : ${citas}">
 
-								<td th:text="${#temporals.format(c.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+								<td data-label="Fecha y Hora" th:text="${#temporals.format(c.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
 
-								<td><span class="badge-mascota" th:text="${c.mascota?.nombre}"></span></td>
+								<td data-label="Mascota"><span class="badge-mascota" th:text="${c.mascota?.nombre}"></span></td>
 
-								<td class="col-propietario" th:text="${c.mascota?.cliente?.usuario?.nombreCompleto}">
+								<td data-label="Propietario" class="col-propietario" th:text="${c.mascota?.cliente?.usuario?.nombreCompleto}">
 								</td>
 
-								<td th:text="${c.motivo}"></td>
+								<td data-label="Motivo" th:text="${c.motivo}"></td>
 
-								<td class="col-acciones">
+								<td data-label="Acciones" class="col-acciones">
 									<a th:href="@{/citas/editar/{id}(id=${c.id})}" class="btn-editar" title="Editar">
 								        <i class="fa-solid fa-pen"></i>
 								    </a>
@@ -96,9 +96,6 @@
 					</table>
 				</div>
 
-				<div class="tabla-pie">
-					Mostrando <span th:text="${#lists.size(citas)}">0</span> citas programadas.
-				</div>
 
 		</div>
 

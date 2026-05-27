@@ -18,11 +18,11 @@
 	<header th:fragment="navbar">
 		<div class="nav-contenedor">
 			<a th:href="@{/home}" class="nav-logo">
-				<img src="/logo/SANYTYPETlogo.png" alt="SanityPet" class="nav-logo-img">
+				<img src="/img/logo/SANYTYPETlogo.png" alt="SanityPet" class="nav-logo-img">
 			</a>
 			<nav class="nav-enlaces">
 				<ul class="nav-lista">
-					<li><a th:href="@{/home}" class="nav-enlace">Inicio</a></li>
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/home}" class="nav-enlace">Inicio</a></li>
 					<li sec:authorize="hasRole('admin')"><a th:href="@{/clientes}" class="nav-enlace">Clientes</a></li>
 					<li sec:authorize="hasRole('admin')"><a th:href="@{/citas}" class="nav-enlace">Agenda</a></li>
 					<li sec:authorize="hasRole('user')"><a th:href="@{/citas}" class="nav-enlace">Mis citas</a></li>
@@ -30,11 +30,7 @@
 					<li sec:authorize="hasRole('user')"><a th:href="@{/mascotas/mis-mascotas}" class="nav-enlace">Mis mascotas</a></li>
 					<li sec:authorize="hasAnyRole('user', 'admin')"><a th:href="@{/tienda}" class="nav-enlace">Tienda virtual</a></li>
 					<li sec:authorize="hasRole('user')"><a th:href="@{/tienda/mis-compras}" class="nav-enlace">Mis compras</a></li>
-<<<<<<< HEAD
 					<li class="nav-cart-container" sec:authorize="hasRole('user')">
-=======
-					<li class="nav-cart-container" sec:authorize="isAuthenticated()">
->>>>>>> fa99d8f311058621a599646c4fefe763a220dfab
 						<a th:href="@{/tienda/carrito}" class="nav-cart-link" title="Ver carrito">
 							<i class="fa-solid fa-cart-shopping"></i>
 							<span id="cart-badge" class="cart-badge" th:text="${cartCount != null ? cartCount : 0}">0</span>
@@ -70,7 +66,7 @@
 		<!-- Menú móvil desplegable -->
 		<div class="nav-movil" id="navMovil">
 			<ul class="nav-movil-lista">
-				<li><a th:href="@{/home}" class="nav-movil-enlace">Inicio</a></li>
+				<li sec:authorize="isAuthenticated()"><a th:href="@{/home}" class="nav-movil-enlace">Inicio</a></li>
 				<li sec:authorize="hasRole('admin')"><a th:href="@{/clientes}" class="nav-movil-enlace">Clientes</a></li>
 				<li sec:authorize="hasRole('admin')"><a th:href="@{/citas}" class="nav-movil-enlace">Agenda</a></li>
 				<li sec:authorize="hasRole('user')"><a th:href="@{/citas}" class="nav-movil-enlace">Mis citas</a></li>
@@ -80,7 +76,7 @@
 				<li sec:authorize="hasRole('user')"><a th:href="@{/tienda/mis-compras}" class="nav-movil-enlace">Mis compras</a></li>
 				<li sec:authorize="hasRole('user')"><a th:href="@{/tienda/carrito}" class="nav-movil-enlace"><i class="fa-solid fa-cart-shopping"></i> Carrito</a></li>
 				<li class="nav-movil-separador"></li>
-				<li>
+				<li sec:authorize="isAnonymous()">
 					<a th:href="@{/login}" class="nav-movil-enlace nav-movil-login">
 						<i class="fa-solid fa-right-to-bracket"></i> Iniciar sesión
 					</a>
@@ -102,7 +98,7 @@
 		<div class="footer-cuerpo">
 
 			<div class="footer-izq">
-				<img src="/logo/SANYTYPETlogo.png" alt="SanityPet" class="footer-logo">
+				<img src="/img/logo/SANYTYPETlogo.png" alt="SanityPet" class="footer-logo">
 				<p class="footer-desc">Clínica veterinaria comprometida con el bienestar y la salud de tu mascota desde
 					2014.</p>
 			</div>
@@ -112,7 +108,7 @@
 				<ul class="footer-lista">
 					<li>
 						<i class="fa-solid fa-location-dot"></i>
-						<span>Avenida de la Constitución 8, Madrid</span>
+						<span>Av. Tetuán de las Victorias 8, 28100, Madrid</span>
 					</li>
 					<li>
 						<i class="fa-solid fa-envelope"></i>

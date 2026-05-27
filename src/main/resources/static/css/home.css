@@ -67,7 +67,7 @@ body {
 
 .etiqueta-seccion {
 	display: inline-block;
-	background: var(--menta-claro);
+	background: transparent;
 	color: var(--menta-oscuro);
 	font-size: 0.82rem;
 	font-weight: 700;
@@ -75,6 +75,7 @@ body {
 	letter-spacing: 0.07em;
 	padding: 0.3rem 0.9rem;
 	border-radius: 1.25rem;
+	border: 1.5px solid var(--menta);
 	margin-bottom: 0.85rem;
 }
 
@@ -418,50 +419,35 @@ body {
 }
 
 .pasos-lista {
-	display: flex;
-	align-items: flex-start;
-	gap: 0;
-	margin-top: 1rem;
+	margin-top: 3rem;
+	max-width: 900px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .paso {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
+	display: grid;
+	grid-template-columns: 3.5rem 1fr 2fr;
 	align-items: center;
-	text-align: center;
-	gap: 1rem;
-	padding: 0 1.5rem;
+	gap: 0 2.5rem;
+	padding: 1.8rem 0;
+	border-bottom: 1px solid var(--borde);
 }
 
-.paso-numero {
+.paso:first-child {
+	border-top: 1px solid var(--borde);
+}
+
+.paso-num {
 	font-family: var(--fuente-marca);
-	font-size: 0.7rem;
+	font-size: 1rem;
 	font-weight: 700;
 	color: var(--menta);
-	letter-spacing: 0.12em;
-	background: var(--menta-claro);
-	padding: 0.2rem 0.65rem;
-	border-radius: 20px;
-}
-
-.paso-icono {
-	width: 4.5rem;
-	height: 4.5rem;
-	border-radius: 1.25rem;
-	background: var(--blanco);
-	border: 1px solid var(--borde);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 1.5rem;
-	color: var(--menta-oscuro);
-	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
 }
 
 .paso-titulo {
 	font-family: var(--fuente-marca);
-	font-size: 1rem;
+	font-size: 1.05rem;
 	font-weight: 700;
 	color: var(--texto);
 }
@@ -470,28 +456,6 @@ body {
 	font-size: 0.88rem;
 	color: var(--texto-suave);
 	line-height: 1.7;
-	max-width: 14rem;
-}
-
-.paso-conector {
-	flex-shrink: 0;
-	width: 60px;
-	height: 2px;
-	background: var(--borde);
-	margin-top: 54px;
-	position: relative;
-}
-
-.paso-conector::after {
-	content: '';
-	position: absolute;
-	right: -5px;
-	top: -4px;
-	width: 10px;
-	height: 10px;
-	border-top: 2px solid var(--borde);
-	border-right: 2px solid var(--borde);
-	transform: rotate(45deg);
 }
 
 /*
@@ -1023,12 +987,15 @@ body {
 
 	/* Cómo funciona */
 	.pasos-lista {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 2.5rem;
-		justify-items: center;
+		max-width: 100%;
 	}
-	.paso-conector { display: none; }
+	.paso {
+		grid-template-columns: 2.5rem 1fr;
+		grid-template-rows: auto auto;
+	}
+	.paso-num { grid-row: 1 / 3; }
+	.paso-titulo { grid-column: 2; }
+	.paso-descripcion { grid-column: 2; }
 
 	/* Contacto — 2 columnas */
 	.contacto-grid {
@@ -1154,11 +1121,15 @@ body {
 
 	/* Cómo funciona */
 	.seccion-como-funciona { padding: 3rem 0; }
-	.pasos-lista { display: flex; flex-direction: column; gap: 1.75rem; }
-	.paso { padding: 1.25rem; background: var(--blanco); border: 1px solid var(--borde); border-radius: 0.875rem; }
-	.paso-icono { width: 3.25rem; height: 3.25rem; font-size: 1.25rem; }
-	.paso-titulo { font-size: 1rem; }
-	.paso-descripcion { font-size: 0.88rem; max-width: 100%; }
+	.paso {
+		grid-template-columns: 2.5rem 1fr;
+		grid-template-rows: auto auto;
+		gap: 0 1rem;
+		padding: 1.2rem 0;
+	}
+	.paso-num { grid-row: 1 / 3; align-self: center; }
+	.paso-titulo { grid-column: 2; font-size: 0.95rem; }
+	.paso-descripcion { grid-column: 2; font-size: 0.85rem; }
 
 	/* Contacto */
 	.contacto { padding: 3rem 0; }

@@ -3,12 +3,10 @@
 
 <head>
 	<meta charset="UTF-8">
-	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-512x512.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="/img/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Aviso Legal</title>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
-		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 	<link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
 	<link rel="stylesheet" th:href="@{/css/politicas/aviso.css}">
@@ -18,12 +16,77 @@
 
 	<header th:replace="~{common/navfooter :: navbar}"></header>
 
-	<main>
-		<!-- Contenido aviso legal -->
+	<!-- Hero con pr3.jpg, título alineado a la izquierda -->
+	<div class="aviso-hero">
+		<div class="aviso-hero-overlay"></div>
+		<div class="aviso-hero-contenido">
+			<h1 class="aviso-hero-titulo">Aviso Legal</h1>
+			<p class="aviso-hero-sub">Última actualización: Mayo 2026</p>
+		</div>
+	</div>
+
+	<main class="aviso-main">
+
+		<!-- Intro con imagen pr4.jpg a la derecha -->
+		<div class="aviso-intro">
+			<div class="aviso-intro-texto">
+				<h3>Información sobre el titular del sitio</h3>
+				<p>El presente aviso legal regula el uso del sitio web <strong>sanitypet.es</strong>, titularidad de SanityPet Clínica Veterinaria. El acceso y uso de la web implica la aceptación de las presentes condiciones legales.</p>
+				<p style="margin-top:0.75rem"><strong>SanityPet Clínica Veterinaria</strong> · CIF: B-00000000 · Av. Tetuán de las Victorias 8, 28100, Madrid · info@sanitypet.es · +34 954 123 456</p>
+			</div>
+			<div class="aviso-intro-img">
+				<img src="/img/politicas/pr4.jpg" alt="SanityPet aviso legal">
+			</div>
+		</div>
+
+		<div class="aviso-divisor">
+			<div class="aviso-divisor-linea"></div>
+			<span class="aviso-divisor-texto">Condiciones legales</span>
+			<div class="aviso-divisor-linea"></div>
+		</div>
+
+		<div class="aviso-grid">
+
+			<div class="aviso-bloque">
+				<h2>Objeto y ámbito de aplicación</h2>
+				<p>El presente aviso legal regula el uso del sitio web <strong>sanitypet.es</strong>. El acceso y uso de la web implica la aceptación de las presentes condiciones.</p>
+			</div>
+
+			<div class="aviso-bloque">
+				<h2>Propiedad intelectual</h2>
+				<p>Todos los contenidos de este sitio (textos, imágenes, logotipos, diseño) son propiedad de SanityPet o de sus proveedores y están protegidos por la legislación vigente. Queda prohibida su reproducción sin autorización expresa.</p>
+			</div>
+
+			<div class="aviso-bloque">
+				<h2>Responsabilidad</h2>
+				<p>SanityPet no se responsabiliza de los daños derivados del uso incorrecto de la plataforma, interrupciones del servicio o contenidos de terceros enlazados desde la web.</p>
+			</div>
+
+			<div class="aviso-bloque">
+				<h2>Condiciones de uso</h2>
+				<p>El usuario se compromete a hacer un uso adecuado de los contenidos y servicios, respetando la legislación vigente y los derechos de terceros. Queda prohibido el uso de la plataforma con fines ilícitos o que puedan causar daños a SanityPet o a otros usuarios.</p>
+			</div>
+
+			<div class="aviso-bloque">
+				<h2>Enlaces externos</h2>
+				<p>Nuestra web puede contener enlaces a sitios de terceros. SanityPet no se hace responsable del contenido, políticas de privacidad ni prácticas de dichos sitios externos. Te recomendamos revisar sus condiciones antes de usarlos.</p>
+			</div>
+
+			<div class="aviso-bloque">
+				<h2>Modificaciones del aviso legal</h2>
+				<p>SanityPet se reserva el derecho de modificar el presente aviso legal para adaptarlo a cambios legislativos o de negocio. Cualquier cambio relevante será notificado a los usuarios registrados.</p>
+			</div>
+
+			<div class="aviso-bloque">
+				<h2>Legislación aplicable</h2>
+				<p>Este aviso legal se rige por la legislación española. Para cualquier controversia, las partes se someten a los juzgados y tribunales de Madrid, renunciando expresamente a cualquier otro fuero que pudiera corresponderles.</p>
+			</div>
+
+		</div>
+
 	</main>
 
 	<footer th:replace="~{common/navfooter :: pie}"></footer>
 
 </body>
-
 </html>

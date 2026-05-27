@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-512x512.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="/img/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Clientes</title>
 	<link
@@ -39,22 +39,21 @@
 			</div>
 		</div>
 
+		<!-- Barra de búsqueda separada -->
+		<div class="barra-busqueda">
+			<form th:action="@{/clientes/buscar}" method="get" class="formulario-busqueda">
+				<div class="input-busqueda">
+					<i class="fa-solid fa-magnifying-glass"></i>
+					<input type="text" name="busqueda" placeholder="Buscar por nombre...">
+				</div>
+				<button type="submit" class="boton-buscar">Buscar</button>
+			</form>
+			<a th:href="@{/clientes}" class="boton-limpiar">
+				Limpiar
+			</a>
+		</div>
+
 		<div class="tarjeta-tabla">
-
-			<!-- Barra de búsqueda -->
-			<div class="barra-busqueda">
-				<form th:action="@{/clientes/buscar}" method="get" class="formulario-busqueda">
-					<div class="input-busqueda">
-						<i class="fa-solid fa-magnifying-glass"></i>
-						<input type="text" name="busqueda" placeholder="Buscar por nombre...">
-					</div>
-					<button type="submit" class="boton-buscar">Buscar</button>
-				</form>
-				<a th:href="@{/clientes}" class="boton-limpiar">
-					Limpiar
-				</a>
-			</div>
-
 			<!-- Tabla -->
 			<div class="contenedor-tabla">
 				<table class="tabla-clientes">
@@ -71,21 +70,21 @@
 					</thead>
 					<tbody>
 						<tr th:each="cl : ${clientes}">
-							<td class="col-dni" th:text="${cl.dni}"></td>
-							<td th:text="${cl.usuario?.nombreCompleto} ?: 'Sin nombre'"></td>
-							<td th:text="${cl.telefono} ?: 'Sin teléfono'"></td>
-							<td th:text="${cl.email} ?: 'Sin email'"></td>
-							<td>
+							<td data-label="DNI" class="col-dni" th:text="${cl.dni}"></td>
+							<td data-label="Nombre" th:text="${cl.usuario?.nombreCompleto} ?: 'Sin nombre'"></td>
+							<td data-label="Teléfono" th:text="${cl.telefono} ?: 'Sin teléfono'"></td>
+							<td data-label="Email" th:text="${cl.email} ?: 'Sin email'"></td>
+							<td data-label="Mascotas">
 								<span class="etiqueta-mascotas"
 									th:text="${cl.mascotas != null ? #lists.size(cl.mascotas) : 0} + ' masc.'"></span>
 							</td>
-							<td class="col-acciones">
+							<td data-label="Acciones" class="col-acciones">
 								<a th:href="@{/clientes/editar/{id}(id=${cl.id})}" class="boton-editar"><i
 										class="fa-solid fa-pen"></i></a>
 								<a th:href="@{/clientes/eliminar/{id}(id=${cl.id})}" class="boton-eliminar"
 									onclick="return confirm('¿Eliminar cliente?')"><i class="fa-solid fa-trash"></i></a>
 							</td>
-							<td class="col-rango" th:if="${#authorization.expression('hasRole(''admin'')')}">
+							<td data-label="Rango" class="col-rango" th:if="${#authorization.expression('hasRole(''admin'')')}">
 								<div th:if="${cl.usuario?.rol != 'admin'}">
 									<a th:href="@{/clientes/hacer-admin/{id}(id=${cl.id})}" class="boton-promover"
 										onclick="return confirm('¿Promover a Admin?')">

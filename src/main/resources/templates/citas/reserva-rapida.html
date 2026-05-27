@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-512x512.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="/img/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Nueva Cita</title>
 	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -19,9 +19,9 @@
 
 		<!-- Fondo slider -->
 		<div class="rc-fondo">
-			<div class="rc-slide activa"><img src="/portada/citas/perritogolde.jpg" alt=""></div>
-			<div class="rc-slide"><img src="/portada/citas/citaaa.jpg" alt=""></div>
-			<div class="rc-slide"><img src="/portada/citas/doctorexa.jpg" alt=""></div>
+			<div class="rc-slide activa"><img src="/img/portada/citas/perritogolde.jpg" alt=""></div>
+			<div class="rc-slide"><img src="/img/portada/citas/citaaa.jpg" alt=""></div>
+			<div class="rc-slide"><img src="/img/portada/citas/doctorexa.jpg" alt=""></div>
 			<div class="rc-overlay"></div>
 		</div>
 
@@ -42,27 +42,35 @@
 					<div class="rc-fila-dos">
 						<div class="rc-campo">
 							<label class="rc-label">Mascota</label>
-							<select class="rc-select" th:field="*{mascota}"
-								th:classappend="${#fields.hasErrors('mascota')} ? 'is-invalid' : ''" required>
-								<option value="">— Selecciona —</option>
-								<option th:each="m : ${listaMascotas}" th:value="${m.id}"
-									th:text="${m.nombre} + ' (' + ${m.cliente?.usuario?.nombreCompleto} + ')'">
-								</option>
-							</select>
+							<div class="rc-custom-select">
+								<select class="rc-select" th:field="*{mascota}"
+									th:classappend="${#fields.hasErrors('mascota')} ? 'is-invalid' : ''" required>
+									<option value="">— Selecciona —</option>
+									<option th:each="m : ${listaMascotas}" th:value="${m.id}"
+										th:text="${m.nombre} + ' (' + ${m.cliente?.usuario?.nombreCompleto} + ')'">
+									</option>
+								</select>
+								<div class="rc-select-trigger"><span>— Selecciona —</span><i class="fa-solid fa-chevron-down"></i></div>
+								<div class="rc-select-lista"></div>
+							</div>
 							<small class="rc-error" th:if="${#fields.hasErrors('mascota')}" th:errors="*{mascota}"></small>
 						</div>
 
 						<div class="rc-campo">
 							<label class="rc-label">Servicio</label>
-							<select class="rc-select" th:field="*{motivo}"
-								th:classappend="${#fields.hasErrors('motivo')} ? 'is-invalid' : ''" required>
-								<option value="">— Selecciona —</option>
-								<option value="Consulta General - 30€">Consulta General (30€)</option>
-								<option value="Vacunación - 45€">Vacunación (45€)</option>
-								<option value="Diagnóstico (Eco/Rx) - 60€">Diagnóstico Eco/Rx (60€)</option>
-								<option value="Peluquería - 25€">Peluquería (25€)</option>
-								<option value="Cirugía - Desde 120€">Cirugía (Consultar)</option>
-							</select>
+							<div class="rc-custom-select">
+								<select class="rc-select" th:field="*{motivo}"
+									th:classappend="${#fields.hasErrors('motivo')} ? 'is-invalid' : ''" required>
+									<option value="">— Selecciona —</option>
+									<option value="Consulta General - 30€">Consulta General (30€)</option>
+									<option value="Vacunación - 45€">Vacunación (45€)</option>
+									<option value="Diagnóstico (Eco/Rx) - 60€">Diagnóstico Eco/Rx (60€)</option>
+									<option value="Peluquería - 25€">Peluquería (25€)</option>
+									<option value="Cirugía - Desde 120€">Cirugía (Consultar)</option>
+								</select>
+								<div class="rc-select-trigger"><span>— Selecciona —</span><i class="fa-solid fa-chevron-down"></i></div>
+								<div class="rc-select-lista"></div>
+							</div>
 							<small class="rc-error" th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}"></small>
 						</div>
 					</div>
@@ -78,9 +86,13 @@
 
 						<div class="rc-campo">
 							<label class="rc-label">Hora</label>
-							<select class="rc-select" id="horaSelect" th:field="*{fechaHora}" required>
-								<option value="">— Elige día primero —</option>
-							</select>
+							<div class="rc-custom-select" id="horaWrapper">
+								<select class="rc-select" id="horaSelect" th:field="*{fechaHora}" required>
+									<option value="">— Elige día primero —</option>
+								</select>
+								<div class="rc-select-trigger"><span>— Elige día primero —</span><i class="fa-solid fa-chevron-down"></i></div>
+								<div class="rc-select-lista"></div>
+							</div>
 						</div>
 					</div>
 
@@ -115,16 +127,60 @@
 			}, 8000);
 		})();
 
+		// Custom selects
+		function construirOpciones(wrapper) {
+			const realSelect = wrapper.querySelector('select');
+			const trigger = wrapper.querySelector('.rc-select-trigger');
+			const triggerText = trigger.querySelector('span');
+			const lista = wrapper.querySelector('.rc-select-lista');
+			lista.innerHTML = '';
+			Array.from(realSelect.options).forEach(function (opt) {
+				const div = document.createElement('div');
+				div.className = 'rc-option' + (opt.selected ? ' seleccionado' : '');
+				div.textContent = opt.text;
+				div.dataset.value = opt.value;
+				div.addEventListener('click', function () {
+					realSelect.value = opt.value;
+					triggerText.textContent = opt.text;
+					lista.querySelectorAll('.rc-option').forEach(o => o.classList.remove('seleccionado'));
+					div.classList.add('seleccionado');
+					trigger.classList.remove('abierto');
+					lista.classList.remove('abierto');
+				});
+				lista.appendChild(div);
+			});
+			const sel = realSelect.options[realSelect.selectedIndex];
+			if (sel) triggerText.textContent = sel.text;
+		}
+
+		document.querySelectorAll('.rc-custom-select').forEach(function (wrapper) {
+			const trigger = wrapper.querySelector('.rc-select-trigger');
+			const lista = wrapper.querySelector('.rc-select-lista');
+			construirOpciones(wrapper);
+			trigger.addEventListener('click', function (e) {
+				e.stopPropagation();
+				trigger.classList.toggle('abierto');
+				lista.classList.toggle('abierto');
+			});
+			document.addEventListener('click', function () {
+				trigger.classList.remove('abierto');
+				lista.classList.remove('abierto');
+			});
+		});
+
 		// Horas disponibles
 		document.getElementById('fechaInput').addEventListener('change', function () {
 			const fecha = this.value;
 			const select = document.getElementById('horaSelect');
+			const horaWrapper = document.getElementById('horaWrapper');
 			select.innerHTML = '<option value="">Cargando...</option>';
+			construirOpciones(horaWrapper);
 			fetch('/citas/horas-disponibles?fecha=' + fecha)
 				.then(res => res.json())
 				.then(horas => {
 					select.innerHTML = '<option value="">— Selecciona hora —</option>';
 					horas.forEach(h => select.add(new Option(h, fecha + 'T' + h + ':00')));
+					construirOpciones(horaWrapper);
 				});
 		});
 
