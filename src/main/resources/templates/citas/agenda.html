@@ -40,6 +40,7 @@
 			</div>
 		</div>
 
+<<<<<<< HEAD
 		<div class="agenda-filtros-container">
 			<div class="filtros-grupo">
 				<a th:href="@{/citas}"
@@ -54,6 +55,48 @@
 				   class="btn-filtro-item" th:classappend="${filtroActivo == 'semana'} ? ' activo' : ''">
 					Esta Semana
 				</a>
+=======
+		<div class="citas-tarjeta">
+
+			<div class="agenda-filtros-container" style="display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap;">
+				
+				<div class="filtros-grupo">
+					<a th:href="@{/citas}"
+					   class="btn-filtro-item" th:classappend="${filtroActivo == null && mascotaSeleccionada == null} ? ' activo' : ''">
+						Todo
+					</a>
+					<a th:href="@{/citas(filtro='hoy')}"
+					   class="btn-filtro-item" th:classappend="${filtroActivo == 'hoy'} ? ' activo' : ''">
+						Hoy
+					</a>
+					<a th:href="@{/citas(filtro='semana')}"
+					   class="btn-filtro-item" th:classappend="${filtroActivo == 'semana'} ? ' activo' : ''">
+						Esta Semana
+					</a>
+				</div>
+
+				<form th:action="@{/citas}" method="get" class="formulario-filtros" style="display: flex; align-items: center; gap: 10px; margin: 0;">
+					<div class="input-busqueda" style="display: flex; align-items: center; background: #1e1e1e; padding: 4px 10px; border-radius: 6px; border: 1px solid #333;">
+						<i class="fa-solid fa-magnifying-glass" style="color: #888; margin-right: 8px;"></i>
+						<select name="mascotaId" onchange="this.form.submit()" 
+								style="background: transparent; color: #fff; border: none; outline: none; font-family: 'Golos Text', sans-serif; cursor: pointer; padding-right: 20px;">
+							<option value="" style="background: #1e1e1e; color: #fff;">Filtrar por paciente...</option>
+							<option th:each="m : ${todasLasMascotas}" 
+									th:value="${m.id}" 
+									th:text="${m.nombre} + ' (' + (${m.cliente?.usuario?.nombreCompleto} ?: 'Sin dueño') + ')'"
+									th:selected="${m.id == mascotaSeleccionada}"
+									style="background: #1e1e1e; color: #fff;">Toby</option>
+						</select>
+					</div>
+					<a th:if="${mascotaSeleccionada != null}" th:href="@{/citas}" class="btn-filtro-item" style="background: #902e39; border-color: #902e39; color: #fff;">
+						<i class="fa-solid fa-xmark"></i>
+					</a>
+				</form>
+			</div>
+
+			<div th:if="${tituloFiltro != null}" class="filtro-info-alerta" style="margin: 15px 20px 0 20px; padding: 8px 15px; background: rgba(0, 180, 216, 0.1); border-left: 4px solid #00b4d8; border-radius: 4px; font-family: 'Quicksand', sans-serif; font-size: 14px; color: #00b4d8;">
+				<i class="fa-solid fa-info-circle"></i> Vista actual: <span th:text="${tituloFiltro}" style="font-weight: 600;">Agenda Completa</span>
+>>>>>>> 2a6a67170a6c685873015148af728ce05d9bf4ae
 			</div>
 		</div>
 
@@ -67,6 +110,7 @@
 								<th>Mascota</th>
 								<th>Propietario</th>
 								<th>Motivo</th>
+								<th>Descripción</th>
 								<th>Acciones</th>
 							</tr>
 						</thead>
@@ -80,14 +124,20 @@
 								<td data-label="Propietario" class="col-propietario" th:text="${c.mascota?.cliente?.usuario?.nombreCompleto}">
 								</td>
 
+<<<<<<< HEAD
 								<td data-label="Motivo" th:text="${c.motivo}"></td>
 
 								<td data-label="Acciones" class="col-acciones">
+=======
+								<td th:text="${c.motivo}"></td>
+								<td th:text="${c.descripcion}"></td>
+								<td class="col-acciones">
+>>>>>>> 2a6a67170a6c685873015148af728ce05d9bf4ae
 									<a th:href="@{/citas/editar/{id}(id=${c.id})}" class="btn-editar" title="Editar">
 								        <i class="fa-solid fa-pen"></i>
 								    </a>
 									<a class="btn-eliminar" th:href="@{/citas/cancelar/{id}(id=${c.id})}"
-										onclick="return confirm('⚠️ ¿Estás seguro de que deseas eliminar esta cita de forma permanente?')" title="Eliminar">
+										onclick="return confirm('¿Estás seguro de que deseas eliminar esta cita de forma permanente?')" title="Eliminar">
 										<i class="fa-solid fa-trash"></i>
 									</a>
 								</td>

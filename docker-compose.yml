@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # 1. Base de Datos integrada (MySQL)
+  sanitypet-db:
+    image: mysql:8.0
+    container_name: sanitypet-db
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: sanitypet # CORREGIDO: Mismo nombre que tiene tu base de datos real
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # TRUCO MÁGICO: Vincula tu carpeta local con el inicializador de Docker para inyectar tus 151 filas
+      - ./docker-db:/docker-entrypoint-initdb.d
+    networks:
+      - sanitypet-network
+
+  # 2. Gestor Web (Interfaz visual para controlar la base de datos)
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: sanitypet-phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: sanitypet-db
+      PMA_USER: root
+      PMA_PASSWORD: ""
+    ports:
+      - "8080:80" # Podrás entrar en http://localhost:8080
+    networks:
+      - sanitypet-network
+    depends_on:
+      - sanitypet-db
+
+  # 3. Tu aplicación de Spring Boot
+  sanitypet-app:
+    build: .
+    container_name: sanitypet-app
+    restart: always
+    ports:
+      - "8090:8090" # Podrás entrar en http://localhost:8090/login
+    networks:
+      - sanitypet-network
+    depends_on:
+      - sanitypet-db
+
+volumes:
+  mysql_data: # Mantiene tus datos persistentes a salvo en tu disco duro
+
+networks:
+  sanitypet-network: # Une los 3 contenedores en la misma red privada

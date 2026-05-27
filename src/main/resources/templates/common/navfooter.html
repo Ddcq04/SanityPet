@@ -30,7 +30,11 @@
 					<li sec:authorize="hasRole('user')"><a th:href="@{/mascotas/mis-mascotas}" class="nav-enlace">Mis mascotas</a></li>
 					<li sec:authorize="hasAnyRole('user', 'admin')"><a th:href="@{/tienda}" class="nav-enlace">Tienda virtual</a></li>
 					<li sec:authorize="hasRole('user')"><a th:href="@{/tienda/mis-compras}" class="nav-enlace">Mis compras</a></li>
+<<<<<<< HEAD
 					<li class="nav-cart-container" sec:authorize="hasRole('user')">
+=======
+					<li class="nav-cart-container" sec:authorize="isAuthenticated()">
+>>>>>>> 2a6a67170a6c685873015148af728ce05d9bf4ae
 						<a th:href="@{/tienda/carrito}" class="nav-cart-link" title="Ver carrito">
 							<i class="fa-solid fa-cart-shopping"></i>
 							<span id="cart-badge" class="cart-badge" th:text="${cartCount != null ? cartCount : 0}">0</span>

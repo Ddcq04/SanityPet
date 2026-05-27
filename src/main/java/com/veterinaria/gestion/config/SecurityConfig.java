@@ -34,10 +34,11 @@ public class SecurityConfig {
 	             .anyRequest().authenticated() // Todo lo demás requiere login
 	         )
 	         .formLogin(form -> form
-	              .loginPage("/login") // Define tu propia ruta de login
-	              .defaultSuccessUrl("/home", true) // A donde va tras loguearse con éxito
-	              .permitAll()
-	            )
+	                 .loginPage("/login") // Define tu propia ruta de login
+	                 .loginProcessingUrl("/login") // Asegura el endpoint de procesamiento de Spring Security
+	                 .defaultSuccessUrl("/home", true) // A donde va tras loguearse con éxito
+	                 .permitAll() // ¡CLAVE! Permite que pasen parámetros como ?error o ?registrado
+	             )
 	            .logout(logout -> logout.permitAll())
 	            .rememberMe(remember -> remember
 	                    .key("uniqueAndSecretKey") // Una clave para cifrar la cookie

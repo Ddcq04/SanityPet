@@ -77,6 +77,7 @@
 					</thead>
 					<tbody>
 						<tr th:each="m : ${mascotas}">
+<<<<<<< HEAD
 							<td data-label="Nombre" class="col-nombre" th:text="${m.nombre}"></td>
 							<td data-label="Especie"><span class="etiqueta-especie" th:text="${m.especie}"></span></td>
 							<td data-label="Raza" class="col-raza" th:text="${m.raza}"></td>
@@ -84,6 +85,21 @@
 							<td data-label="Dueño" th:text="${m.cliente?.usuario?.nombreCompleto} ?: 'Sin asignar'"></td>
 							<td data-label="Citas"><span class="badge-citas" th:text="${m.cantidadCitas}">0</span></td>
 							<td data-label="Acciones" class="col-acciones">
+=======
+							<td class="col-nombre" th:text="${m.nombre}"></td>
+							<td>
+								<span class="etiqueta-especie" th:text="${m.especie}"></span>
+								<span class="col-raza" th:text="${m.raza}"></span>
+							</td>
+							<td th:text="${#temporals.format(m.fechaNacimiento, 'dd/MM/yyyy')} ?: 'No registrada'"></td>
+							<td th:text="${m.cliente?.usuario?.nombreCompleto} ?: 'Sin asignar'"></td>
+							<td>
+						    <a th:href="@{/citas(mascotaId=${m.id})}" class="enlace-historial" title="Ver historial clínico">
+						        <span class="badge-citas" th:text="${m.cantidadCitas}">0</span>
+						    </a>
+						</td>
+							<td class="col-acciones">
+>>>>>>> 2a6a67170a6c685873015148af728ce05d9bf4ae
 								<a th:href="@{/mascotas/editar/{id}(id=${m.id})}" class="boton-editar" title="Editar">
 									<i class="fa-solid fa-pen"></i>
 								</a>

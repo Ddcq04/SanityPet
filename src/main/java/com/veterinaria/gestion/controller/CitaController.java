@@ -1,5 +1,6 @@
 package com.veterinaria.gestion.controller;
 
+import com.veterinaria.gestion.model.Mascota;
 import com.veterinaria.gestion.model.Cita;
 import com.veterinaria.gestion.service.CitaService;
 import com.veterinaria.gestion.service.MascotaService;
@@ -17,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jakarta.validation.Valid;
 import org.springframework.validation.BindingResult;
 
 @Controller
@@ -33,7 +33,8 @@ public class CitaController {
     // 1. Mostrar una vista u otra segun el rol de quien accede
     @GetMapping
     public String verAgenda(@RequestParam(value = "filtro", required = false) String filtro, 
-                           Model model, Principal principal) {
+            @RequestParam(value = "mascotaId", required = false) Long mascotaId, // <-- MODIFICADO: Recibe el ID de la mascota a filtrar
+            Model model, Principal principal) {
         
         Authentication auth = (Authentication) principal;
         boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_admin"));
@@ -44,7 +45,12 @@ public class CitaController {
             List<Cita> listaCitas;
             String titulo;
 
-            if ("hoy".equals(filtro)) {
+         // === MODIFICADO: Bloque condicional para capturar el nuevo filtro de Mascota ===
+            if (mascotaId != null) {
+                listaCitas = citaService.obtenerHistorialMascota(mascotaId); 
+                Mascota m = mascotaService.buscarPorId(mascotaId);
+                titulo = "Historial de citas: " + m.getNombre();
+            } else if ("hoy".equals(filtro)) {
                 listaCitas = citaService.obtenerCitasHoy();
                 titulo = "Citas para Hoy";
             } else if ("semana".equals(filtro)) {
@@ -55,9 +61,12 @@ public class CitaController {
                 titulo = "Agenda Completa";
             }
 
+            // === MODIFICADO: Añadimos los atributos extra que requiere la plantilla agenda.html ===
             model.addAttribute("citas", listaCitas);
             model.addAttribute("tituloFiltro", titulo);
-            model.addAttribute("filtroActivo", filtro); // Para resaltar el botón en el HTML
+            model.addAttribute("filtroActivo", filtro); 
+            model.addAttribute("todasLasMascotas", mascotaService.listarTodas()); // Para rellenar el select
+            model.addAttribute("mascotaSeleccionada", mascotaId); // Para dejar marcada la opción seleccionada
             
             return "citas/agenda"; 
         } else {
@@ -84,6 +93,7 @@ public class CitaController {
                 .anyMatch(a -> a.getAuthority().equals("ROLE_admin"));
         
         model.addAttribute("cita", new Cita());
+        model.addAttribute("esEdicion", false);
 
         if (isAdmin) {
             // Si es Admin, cargamos TODAS las mascotas de la clínica
@@ -97,19 +107,28 @@ public class CitaController {
         return "citas/reserva-rapida";
     }
     //4. Guardar cita
+  //4. Guardar cita
+  //4. Guardar cita
     @PostMapping("/reservar/guardar")
     @ResponseBody
-    public ResponseEntity<?> guardarReserva(@Valid @ModelAttribute("cita") Cita cita, BindingResult result) {
+    public ResponseEntity<?> guardarReserva(@ModelAttribute("cita") Cita cita, BindingResult result) {
         
-        // 1. Si hay errores de validación (campos vacíos)
+        // Evaluamos errores de validación (ignorando la fecha si es una edición pasada donde el front la mandó nula)
         if (result.hasErrors()) {
-            String mensajeError = result.getFieldError().getDefaultMessage();
-            return ResponseEntity.badRequest().body("{\"error\": \"" + mensajeError + "\"}");
+            boolean soloErrorFecha = result.getFieldErrors().stream()
+                    .allMatch(error -> error.getField().equals("fechaHora"));
+
+            // Si hay otros errores diferentes a la fecha, o si es cita nueva y falta la fecha:
+            if (!soloErrorFecha || (cita.getId() == null && cita.getFechaHora() == null)) {
+                String mensajeError = result.getFieldError().getDefaultMessage();
+                return ResponseEntity.badRequest().body("{\"error\": \"" + mensajeError + "\"}");
+            }
         }
 
         try {
-            citaService.reservarCita(cita);
-            return ResponseEntity.ok().body("{\"mensaje\": \"¡Cita reservada con éxito!\"}");
+            // Pasamos el objeto directamente al servicio; él se encargará de fusionarlo de forma segura
+            citaService.reservarCita(cita); 
+            return ResponseEntity.ok().body("{\"mensaje\": \"¡Cita guardada con éxito!\"}");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body("{\"error\": \"" + e.getMessage() + "\"}");
         }

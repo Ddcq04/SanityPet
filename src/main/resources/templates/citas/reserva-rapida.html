@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<meta charset="UTF-8">
 	<link rel="icon" type="image/png" sizes="192x192" href="/img/favicons/android-chrome-512x512.png">
@@ -17,7 +17,6 @@
 
 	<main class="contenido-principal">
 
-		<!-- Fondo slider -->
 		<div class="rc-fondo">
 			<div class="rc-slide activa"><img src="/img/portada/citas/perritogolde.jpg" alt=""></div>
 			<div class="rc-slide"><img src="/img/portada/citas/citaaa.jpg" alt=""></div>
@@ -25,7 +24,6 @@
 			<div class="rc-overlay"></div>
 		</div>
 
-		<!-- Formulario centrado -->
 		<div class="rc-pagina">
 			<div class="rc-card">
 
@@ -74,18 +72,21 @@
 							<small class="rc-error" th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}"></small>
 						</div>
 					</div>
-
+					
 					<div class="rc-fila-dos">
 						<div class="rc-campo">
 							<label class="rc-label">Día</label>
 							<input class="rc-input" type="date" id="fechaInput"
+								th:value="${cita.fechaHora != null} ? ${#temporals.format(cita.fechaHora, 'yyyy-MM-dd')} : ''"
 								th:classappend="${#fields.hasErrors('fechaHora')} ? 'is-invalid' : ''"
-								th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}" required>
+								th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}"
+								th:disabled="${esEdicion and cita.fechaHora != null and cita.fechaHora.isBefore(#temporals.createNow())}" required>
 							<small class="rc-error" th:if="${#fields.hasErrors('fechaHora')}" th:errors="*{fechaHora}"></small>
 						</div>
 
 						<div class="rc-campo">
 							<label class="rc-label">Hora</label>
+<<<<<<< HEAD
 							<div class="rc-custom-select" id="horaWrapper">
 								<select class="rc-select" id="horaSelect" th:field="*{fechaHora}" required>
 									<option value="">— Elige día primero —</option>
@@ -93,13 +94,33 @@
 								<div class="rc-select-trigger"><span>— Elige día primero —</span><i class="fa-solid fa-chevron-down"></i></div>
 								<div class="rc-select-lista"></div>
 							</div>
+=======
+							<select class="rc-select" id="horaSelect" th:field="*{fechaHora}"
+								th:disabled="${esEdicion and cita.fechaHora != null and cita.fechaHora.isBefore(#temporals.createNow())}" required>
+								<option th:if="${!esEdicion}" value="">— Elige día primero —</option>
+								
+								<option th:if="${esEdicion}" 
+										th:value="${#temporals.format(cita.fechaHora, 'yyyy-MM-dd''T''HH:mm:ss')}" 
+										th:text="${#temporals.format(cita.fechaHora, 'HH:mm')}" 
+										selected>
+								</option>
+							</select>
+>>>>>>> 2a6a67170a6c685873015148af728ce05d9bf4ae
 						</div>
 					</div>
 
+					<div class="rc-campo" sec:authorize="hasRole('admin')" style="margin-top: 15px; margin-bottom: 20px;">
+						<label class="rc-label">Descripción / Notas Clínicas</label>
+						<textarea class="rc-input" th:field="*{descripcion}" rows="4" 
+								  placeholder="Escribe aquí las observaciones clínicas o detalles de la cita..."
+								  style="resize: vertical; font-family: inherit; padding: 10px; height: auto;"></textarea>
+						<small class="rc-error" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></small>
+					</div>
+
 					<div class="rc-acciones">
-						<a th:href="@{/home}" href="#" class="rc-link-volver">
-							<i class="fa-solid fa-arrow-left"></i> Volver
-						</a>
+						<a th:href="@{/citas}" class="rc-link-volver">
+					        <i class="fa-solid fa-arrow-left"></i> Volver
+					    </a>
 						<button type="submit" class="rc-btn">
 							<i class="fa-solid fa-circle-check"></i>
 							<span th:text="${esEdicion} ? 'Guardar cambios' : 'Confirmar reserva'">Confirmar reserva</span>
@@ -116,7 +137,21 @@
 	<footer th:replace="~{common/navfooter :: pie}"></footer>
 
 	<script>
-		// Slider
+		// Inicialización automática al cargar la página en caso de EDICIÓN
+		window.addEventListener('DOMContentLoaded', () => {
+			const idCitaInput = document.querySelector('input[name="id"]');
+			
+			if (idCitaInput && idCitaInput.value) {
+				const fechaInput = document.getElementById('fechaInput');
+				
+				// Ejecutamos el cambio dinámico de horas si la cita futura NO está bloqueada/deshabilitada
+				if(fechaInput.value && !fechaInput.disabled) {
+					fechaInput.dispatchEvent(new Event('change'));
+				}
+			}
+		});
+
+		// Slider de imágenes de fondo
 		(function () {
 			const slides = document.querySelectorAll('.rc-slide');
 			let actual = 0;
@@ -126,6 +161,7 @@
 				slides[actual].classList.add('activa');
 			}, 8000);
 		})();
+<<<<<<< HEAD
 
 		// Custom selects
 		function construirOpciones(wrapper) {
@@ -173,25 +209,75 @@
 			const fecha = this.value;
 			const select = document.getElementById('horaSelect');
 			const horaWrapper = document.getElementById('horaWrapper');
+=======
+	
+		// Horas disponibles + Validación Fin de Semana
+		document.getElementById('fechaInput').addEventListener('change', function () {
+			const fecha = this.value;
+			const select = document.getElementById('horaSelect');
+			
+			if (!fecha) return;
+
+			// 1. Validar si es Sábado (6) o Domingo (0)
+			const fechaSeleccionada = new Date(fecha);
+			const diaSemana = fechaSeleccionada.getUTCDay(); 
+
+			if (diaSemana === 0 || diaSemana === 6) {
+				alert("La clínica solo atiende de lunes a viernes. Por favor, selecciona otro día.");
+				this.value = ""; 
+				select.innerHTML = '<option value="">— Elige día primero —</option>';
+				return; 
+			}
+
+			// Guardamos el valor actual por si necesitamos conservarlo
+			const horaPreseleccionada = select.value;
+
+			// 2. Buscar horas libres en el servidor
+>>>>>>> 2a6a67170a6c685873015148af728ce05d9bf4ae
 			select.innerHTML = '<option value="">Cargando...</option>';
 			construirOpciones(horaWrapper);
 			fetch('/citas/horas-disponibles?fecha=' + fecha)
 				.then(res => res.json())
 				.then(horas => {
 					select.innerHTML = '<option value="">— Selecciona hora —</option>';
+<<<<<<< HEAD
 					horas.forEach(h => select.add(new Option(h, fecha + 'T' + h + ':00')));
 					construirOpciones(horaWrapper);
+=======
+					
+					horas.forEach(h => {
+						const valorOption = fecha + 'T' + h + ':00';
+						select.add(new Option(h, valorOption));
+					});
+
+					// Si la hora preseleccionada pertenece a este día, la re-inyectamos y seleccionamos
+					if (horaPreseleccionada && horaPreseleccionada.startsWith(fecha)) {
+						const existe = Array.from(select.options).some(opt => opt.value === horaPreseleccionada);
+						if (!existe) {
+							const textoHora = horaPreseleccionada.split('T')[1].substring(0, 5);
+							select.add(new Option(textoHora, horaPreseleccionada));
+						}
+						select.value = horaPreseleccionada;
+					}
+				})
+				.catch(() => {
+					select.innerHTML = '<option value="">— Error al cargar horas —</option>';
+>>>>>>> 2a6a67170a6c685873015148af728ce05d9bf4ae
 				});
 		});
 
-		// Envío
+		// Evento de Envío por FETCH (¡Restaurado por completo!)
 		document.getElementById('citaForm').addEventListener('submit', function (e) {
 			e.preventDefault();
 			fetch(this.action, { method: 'POST', body: new FormData(this) })
 				.then(async res => {
 					const data = await res.json();
-					if (res.ok) { alert(data.mensaje); window.location.href = '/citas'; }
-					else { alert('⚠️ Error: ' + data.error); }
+					if (res.ok) { 
+						alert(data.mensaje); 
+						window.location.href = '/citas'; 
+					} else { 
+						alert('⚠️ Error: ' + data.error); 
+					}
 				})
 				.catch(() => alert('❌ Error de conexión'));
 		});

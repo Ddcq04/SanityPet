@@ -28,7 +28,7 @@ public class ClienteController {
     @GetMapping
     public String listarClientes(Model model) {
         model.addAttribute("clientes", clienteService.listarTodos());
-        return "clientes/lista-cliente"; // templates/clientes/lista.html
+        return "clientes/lista-cliente"; 
     }
     
     @GetMapping("/buscar")
@@ -38,17 +38,18 @@ public class ClienteController {
         return "clientes/lista-cliente";
     }
 
+    // Formulario de creación desde la vista del Administrador
     @GetMapping("/nuevo")
     public String formularioNuevo(Model model) {
         Cliente cliente = new Cliente();
-        cliente.setUsuario(new Usuario()); // IMPORTANTE: Inicializa el usuario para que el HTML no de error
+        cliente.setUsuario(new Usuario()); 
         model.addAttribute("cliente", cliente);
         return "clientes/formulario-cliente";
     }
     
+    // Formulario de edición desde la vista del Administrador
     @GetMapping("/editar/{id}")
     public String mostrarFormularioEditar(@PathVariable("id") Long id, Model model) {
-        // Asumiendo que tienes un método buscarPorId en tu Service
         Cliente cliente = clienteService.buscarPorId(id); 
         if (cliente == null) {
             return "redirect:/clientes";
@@ -63,74 +64,80 @@ public class ClienteController {
         return "redirect:/clientes";
     }
 
+    // Procesar el formulario de guardado del Administrador
     @PostMapping("/guardar")
     public String guardar(@Valid @ModelAttribute("cliente") Cliente cliente, BindingResult result, Model model) {
         
         Usuario usuario = cliente.getUsuario();
 
-        // 1. Validar si las contraseñas coinciden
-        if (cliente.getId() == null && (usuario.getPasswordPlana() == null || usuario.getPasswordPlana().isEmpty())) {
-            result.rejectValue("usuario.passwordPlana", "error.usuario", "La contraseña es obligatoria para nuevos clientes");
-        }
-        
-        if (usuario.getPasswordPlana() != null && !usuario.getPasswordPlana().isEmpty()) {
-	        if (!usuario.getPasswordPlana().equals(usuario.getPasswordRepeat())) {
-	        	result.rejectValue("usuario.passwordRepeat", "error.usuario", "Las contraseñas no coinciden");
-	        }
+        // 1. Si es una creación interna del Admin, las contraseñas son obligatorias
+        if (cliente.getId() == null) {
+            if (usuario.getPasswordPlana() == null || usuario.getPasswordPlana().isEmpty()) {
+                result.rejectValue("usuario.passwordPlana", "error.usuario", "La contraseña es obligatoria para nuevos clientes");
+            }
+            if (usuario.getPasswordPlana() != null && !usuario.getPasswordPlana().equals(usuario.getPasswordRepeat())) {
+                result.rejectValue("usuario.passwordRepeat", "error.usuario", "Las contraseñas no coinciden");
+            }
+            
+            // 🌟 NUEVO: Comprobar DNI duplicado SOLO al crear (si el DNI ya existe en otro cliente)
+            if (cliente.getDni() != null && !cliente.getDni().trim().isEmpty()) {
+                Cliente clienteExistente = clienteService.buscarPorDni(cliente.getDni());
+                if (clienteExistente != null) {
+                    result.rejectValue("dni", "error.cliente", "El DNI introducido ya pertenece a otro cliente.");
+                }
+            }
+        } else {
+            // 🌟 NUEVO: Comprobar DNI duplicado al EDITAR (asegurarnos de que el nuevo DNI no es de otro cliente distinto)
+            if (cliente.getDni() != null && !cliente.getDni().trim().isEmpty()) {
+                Cliente clienteExistente = clienteService.buscarPorDni(cliente.getDni());
+                // Si encontramos un cliente con ese DNI, pero NO es el cliente que estamos editando, es un error
+                if (clienteExistente != null && !clienteExistente.getId().equals(cliente.getId())) {
+                    result.rejectValue("dni", "error.cliente", "Este DNI ya está asignado a otro cliente en el sistema.");
+                }
+            }
         }
 
-        // 2. Si hay errores, volver al formulario
+        // 2. Comprobamos errores de validación
         if (result.hasErrors()) {
+            model.addAttribute("fromAdmin", true);
             return "clientes/formulario-cliente";
         }
 
-        // 3. Lógica de guardado
+        // 3. Lógica de persistencia
         if (cliente.getId() == null) {
-            // NUEVO CLIENTE
             usuario.setRol("user");
             usuario.setUsername(cliente.getDni());
             usuario.setPassword(passwordEncoder.encode(usuario.getPasswordPlana()));
         } else {
-            // EDICIÓN DE CLIENTE
-            Cliente clienteExistente = clienteService.buscarPorId(cliente.getId());
-            
-            if (clienteExistente != null) {
-                // ¡ESTO ES LO IMPORTANTE! Forzamos el ID del usuario existente
-                if (clienteExistente.getUsuario() != null) {
-                    usuario.setId(clienteExistente.getUsuario().getId());
-                    
-                    // Mantenemos la contraseña si no se ha escrito una nueva
-                    if (usuario.getPasswordPlana() == null || usuario.getPasswordPlana().isEmpty()) {
-                        usuario.setPassword(clienteExistente.getUsuario().getPassword());
-                    } else {
-                        usuario.setPassword(passwordEncoder.encode(usuario.getPasswordPlana()));
-                    }
-                    
-                    // Mantenemos el rol original
-                    usuario.setRol(clienteExistente.getUsuario().getRol());
-                }
-                // Actualizamos el username por si cambió el DNI
-                usuario.setUsername(cliente.getDni());
+            Cliente clienteExistenteBD = clienteService.buscarPorId(cliente.getId());
+            if (clienteExistenteBD != null && clienteExistenteBD.getUsuario() != null) {
+                usuario.setId(clienteExistenteBD.getUsuario().getId());
+                usuario.setPassword(clienteExistenteBD.getUsuario().getPassword());
+                usuario.setRol(clienteExistenteBD.getUsuario().getRol());
             }
+            usuario.setUsername(cliente.getDni());
         }
 
-        // 4. Guardar
-        clienteService.guardar(cliente);
-        return "redirect:/clientes";
+        // 4. Guardado seguro
+        try {
+            clienteService.guardar(cliente);
+        } catch (Exception e) {
+            // Si algo falla al final (por concurrencia, etc), devolvemos al formulario amigablemente
+            result.rejectValue("dni", "error.cliente", "Error interno al guardar. DNI posiblemente duplicado.");
+            model.addAttribute("fromAdmin", true);
+            return "clientes/formulario-cliente";
+        }
+        
+        return "redirect:/clientes?creado=true";
     }
     
     @GetMapping("/hacer-admin/{id}")
     public String promoverAAdmin(@PathVariable("id") Long id) {
         Cliente cliente = clienteService.buscarPorId(id);
-        
         if (cliente != null && cliente.getUsuario() != null) {
-            // Cambiamos el rol a "admin" (asegúrate de que coincida con tu SecurityConfig)
             cliente.getUsuario().setRol("admin");
-            
-            // Guardamos solo el cambio de rol
             clienteService.guardar(cliente);
         }
-        
         return "redirect:/clientes";
     }
 }
