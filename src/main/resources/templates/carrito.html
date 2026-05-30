@@ -35,8 +35,10 @@
 			padding: 2rem;
 			margin-top: 2rem;
 			box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+			overflow-x: hidden;
 		}
 
+		.total-movil { display: none; }
 		.carrito-table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; }
 
 		.carrito-table th {
@@ -87,105 +89,153 @@
 
 		.btn-qty:hover { border-color: var(--menta); color: var(--menta); }
 
-		.carrito-footer {
+		.fila-total td {
+			padding-top: 1.25rem;
+			border-top: 1px solid rgba(255,255,255,0.1);
+			border-bottom: none;
+		}
+
+		.total-wrapper {
 			display: flex;
-			justify-content: space-between;
+			flex-direction: row;
 			align-items: center;
-			padding-top: 1.5rem;
-			border-top: 1px solid rgba(255,255,255,0.15);
+			justify-content: flex-end;
+			gap: 1.5rem;
+		}
+
+		.billetera-card {
+			background: rgba(14, 60, 55, 0.55);
+			backdrop-filter: blur(6px);
+			-webkit-backdrop-filter: blur(6px);
+			border: 1px solid rgba(46, 196, 182, 0.2);
+			border-radius: 20px;
+			padding: 1rem 2rem;
+			margin-top: 2rem;
+			box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 		}
 
 		.billetera-box {
-			background: rgba(0, 0, 0, 0.45);
-			padding: 1rem 1.25rem;
-			border-radius: 12px;
-			border: 1px solid rgba(255,255,255,0.18);
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 1.5rem;
+		}
+
+		.billetera-izq {
+			display: flex;
+			flex-direction: column;
+			gap: 0.2rem;
 		}
 
 		.billetera-titulo {
-			font-family: var(--fuente-marca);
-			font-size: 0.92rem;
+			font-size: 0.7rem;
 			font-weight: 700;
-			color: #ffffff;
-			margin: 0 0 0.4rem;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			color: var(--menta);
+			display: flex;
+			align-items: center;
+			gap: 0.4rem;
 		}
 
 		.billetera-saldo {
 			font-size: 0.88rem;
-			color: rgba(255,255,255,0.9);
-			margin: 0 0 0.85rem;
+			color: rgba(255,255,255,0.6);
 		}
 
-		.billetera-saldo strong { color: var(--menta); font-size: 1.15rem; }
+		.billetera-saldo strong {
+			color: #ffffff;
+			font-size: 1.1rem;
+			font-family: var(--fuente-marca);
+			font-weight: 700;
+		}
 
-		.billetera-form { display: flex; gap: 0.5rem; align-items: center; }
+		.billetera-form {
+			display: flex;
+			gap: 0.5rem;
+			align-items: center;
+		}
 
 		.billetera-input {
-			padding: 0.5rem 0.75rem;
-			border: 1px solid rgba(255,255,255,0.2);
-			border-radius: 6px;
-			width: 110px;
+			padding: 0.55rem 0.85rem;
+			border: 1px solid rgba(255,255,255,0.15);
+			border-radius: 8px;
+			width: 130px;
 			font-family: var(--fuente-base);
 			font-size: 0.88rem;
-			background: rgba(255,255,255,0.1);
+			background: rgba(255,255,255,0.07);
 			color: #ffffff;
+			caret-color: var(--menta);
+			outline: none;
+			transition: border-color 0.2s;
+			-moz-appearance: textfield;
 		}
 
-		.billetera-input::placeholder { color: rgba(255,255,255,0.4); }
+		.billetera-input::-webkit-outer-spin-button,
+		.billetera-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+		.billetera-input:focus { border-color: var(--menta); }
+		.billetera-input::placeholder { color: #ffffff; }
 
 		.billetera-btn {
-			background: var(--menta);
-			color: #fff;
-			padding: 0.5rem 1rem;
-			border: none;
-			border-radius: 6px;
+			background: transparent;
+			color: var(--menta);
+			padding: 0.55rem 1rem;
+			border: 1px solid rgba(46,196,182,0.5);
+			border-radius: 8px;
 			cursor: pointer;
 			font-weight: 700;
-			font-size: 0.85rem;
-			transition: background 0.2s;
+			font-size: 0.82rem;
+			font-family: var(--fuente-marca);
+			transition: background 0.2s, color 0.2s, border-color 0.2s;
+			white-space: nowrap;
+			display: flex;
+			align-items: center;
+			gap: 0.4rem;
 		}
 
-		.billetera-btn:hover { background: var(--menta-oscuro); }
+		.billetera-btn:hover {
+			background: var(--menta);
+			color: #ffffff;
+			border-color: var(--menta);
+		}
 
-		.total-container { text-align: right; }
 
 		.total-label {
-			color: rgba(255,255,255,0.75);
-			font-size: 0.9rem;
-			font-weight: 500;
+			color: rgba(255,255,255,0.85);
+			font-size: 1.5rem;
+			font-weight: 600;
 			font-family: var(--fuente-base);
-			display: block;
 		}
 
 		.total-monto {
-			font-size: 1.8rem;
+			font-size: 1.5rem;
 			font-weight: 700;
 			color: #ffffff;
-			display: block;
-			margin-top: 0.2rem;
+			font-family: var(--fuente-base);
 		}
 
 		.btn-comprar {
 			background: var(--menta-oscuro);
 			color: white;
-			padding: 1rem 2.5rem;
-			border-radius: 10px;
+			padding: 0.7rem 1.75rem;
+			border-radius: 8px;
 			font-weight: 700;
+			font-size: 0.9rem;
 			border: none;
 			cursor: pointer;
 			transition: background 0.2s;
 			font-family: var(--fuente-base);
 			display: inline-flex;
 			align-items: center;
-			gap: 0.8rem;
-			margin-top: 1.5rem;
+			gap: 0.6rem;
 		}
 
 		.btn-comprar:hover { background: #1a7a70; }
 		.btn-comprar:disabled { background: rgba(255,255,255,0.15); cursor: not-allowed; }
 
 		.btn-back {
-			color: rgba(255,255,255,0.75);
+			color: var(--menta-oscuro);
 			text-decoration: none;
 			display: inline-flex;
 			align-items: center;
@@ -259,6 +309,104 @@
 		}
 
 		.carrito-vacio-btn:hover { background: var(--menta-oscuro); }
+
+		/* ── Tablet (≤ 60rem) ── */
+		@media (max-width: 60rem) {
+			.carrito-card { padding: 1.5rem; }
+			.billetera-box { width: 100%; }
+		}
+
+		/* ── Móvil (≤ 53.75rem) ── */
+		@media (max-width: 53.75rem) {
+			body { background-attachment: scroll; }
+			.tienda-container { padding-top: calc(var(--nav-alto) + 1.75rem); padding-bottom: 3rem; }
+			.tienda-header { margin-bottom: 1rem; padding: 1rem 1.25rem; border-radius: 0.75rem; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+			.tienda-subtitulo { font-size: 0.83rem; }
+			.carrito-card { padding: 1rem; border-radius: 12px; margin-top: 1rem; }
+			.tienda-titulo { font-size: 1.4rem; }
+			.tienda-subtitulo { font-size: 0.85rem; }
+
+			/* Tabla → flex cards */
+			.carrito-table { display: block; }
+			.carrito-table thead { display: none; }
+			.carrito-table tbody { display: flex; flex-direction: column; gap: 0.5rem; }
+			.carrito-table tfoot tr { display: block; }
+			.carrito-table tfoot td { display: block; border-bottom: none; padding: 0; }
+
+			/* Cada producto = mini tarjeta */
+			.carrito-table tbody tr {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: 0.5rem;
+				padding: 0.85rem;
+				background: rgba(255,255,255,0.05);
+				border-radius: 10px;
+				border-bottom: none;
+			}
+
+			/* Ocultar labels */
+			.carrito-table td { border-bottom: none; color: #ffffff; padding: 0; }
+			.carrito-table td::before { display: none; }
+
+			/* Producto: fila completa */
+			.carrito-table td[data-label="Producto"] {
+				flex: 0 0 100%;
+				display: flex;
+				align-items: center;
+				gap: 0.75rem;
+				padding-bottom: 0.5rem;
+				border-bottom: 1px solid rgba(255,255,255,0.08);
+			}
+
+			/* Precio, Cantidad, Subtotal, Acciones: fila inferior */
+			.carrito-table td[data-label="Precio"] { flex: 1; font-weight: 600; font-size: 0.92rem; }
+			.carrito-table td[data-label="Cantidad"] { flex: 2; display: flex; justify-content: center; }
+			.carrito-table td[data-label="Subtotal"] { flex: 1; font-weight: 700; text-align: right; justify-content: flex-end; }
+			.carrito-table td[data-label="Acciones"] { flex: 0 0 auto; }
+
+			.item-img { width: 44px; height: 44px; flex-shrink: 0; }
+			.item-nombre { font-size: 0.88rem; }
+
+			/* Billetera */
+			.billetera-box { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+			.billetera-izq { flex-direction: row; justify-content: space-between; align-items: center; }
+			.billetera-form { flex-direction: row; width: 100%; }
+			.billetera-input { flex: 1; min-width: 0; }
+			.billetera-btn { flex-shrink: 0; }
+
+			/* Total desktop oculto en móvil */
+			.total-desktop { display: none; }
+
+			/* Total móvil */
+			.total-movil {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+				padding-top: 1rem;
+				border-top: 1px solid rgba(255,255,255,0.1);
+				margin-top: 0.5rem;
+			}
+			.total-movil-info {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			.total-movil .btn-comprar {
+				padding: 0.65rem 1.5rem;
+				font-size: 0.88rem;
+				width: auto;
+			}
+		}
+
+		/* ── Móvil pequeño (≤ 30rem) ── */
+		@media (max-width: 30rem) {
+			.carrito-card { padding: 0.875rem; border-radius: 10px; }
+			.billetera-card { padding: 0.75rem 0.875rem; border-radius: 12px; }
+			.tienda-titulo { font-size: 1.2rem; }
+			.carrito-vacio-hero { padding: 2.5rem 1rem; }
+			.carrito-vacio-titulo { font-size: 1.1rem; }
+		}
 	</style>
 </head>
 
@@ -290,6 +438,20 @@
 			<span th:text="${mensaje}">Operación exitosa.</span>
 		</div>
 
+		<!-- Billetera (sección separada) -->
+		<div class="billetera-card" th:if="${not #lists.isEmpty(items)}">
+			<div class="billetera-box">
+				<div class="billetera-izq">
+					<span class="billetera-titulo"><i class="fa-solid fa-wallet"></i> Mi Billetera</span>
+					<span class="billetera-saldo">Saldo disponible: <strong th:text="'€' + ${saldo}">€0.00</strong></span>
+				</div>
+				<form th:action="@{/tienda/carrito/agregar-saldo}" method="post" class="billetera-form">
+					<input class="billetera-input" type="number" name="cantidad" step="0.01" min="1" placeholder="Importe (€)" required>
+					<button type="submit" class="billetera-btn"><i class="fa-solid fa-plus"></i> Añadir saldo</button>
+				</form>
+			</div>
+		</div>
+
 		<div class="carrito-card">
 
 			<!-- Carrito vacío -->
@@ -302,6 +464,7 @@
 
 			<!-- Productos -->
 			<div th:if="${not #lists.isEmpty(items)}">
+
 				<table class="carrito-table">
 					<thead>
 						<tr>
@@ -314,7 +477,7 @@
 					</thead>
 					<tbody>
 						<tr th:each="item : ${items}">
-							<td>
+							<td data-label="Producto">
 								<div class="item-info">
 									<div class="item-img">
 										<img th:if="${not #strings.isEmpty(item.producto.imagenUrl)}"
@@ -331,8 +494,8 @@
 									</div>
 								</div>
 							</td>
-							<td style="font-weight: 700;" th:text="'€' + ${item.producto.precio}">€0.00</td>
-							<td>
+							<td data-label="Precio" style="font-weight: 700;" th:text="'€' + ${item.producto.precio}">€0.00</td>
+							<td data-label="Cantidad">
 								<div class="cantidad-controles">
 									<form th:action="@{/tienda/carrito/quitar/{id}(id=${item.producto.id})}" method="post" class="form-inline">
 										<button type="submit" class="btn-qty"><i class="fa-solid fa-minus"></i></button>
@@ -347,8 +510,8 @@
 								<small th:if="${item.cantidad >= item.producto.stock}"
 									   style="color: #fca5a5; font-size: 0.65rem;">Máximo stock alcanzado</small>
 							</td>
-							<td style="font-weight: 700;" th:text="'€' + ${item.subtotal}">€0.00</td>
-							<td>
+							<td data-label="Subtotal" style="font-weight: 700;" th:text="'€' + ${item.subtotal}">€0.00</td>
+							<td data-label="Acciones">
 								<form th:action="@{/tienda/carrito/eliminar/{id}(id=${item.producto.id})}" method="post">
 									<button type="submit" class="btn-icon delete"
 											style="background: rgba(225,29,72,0.2); border: 1px solid rgba(225,29,72,0.3); border-radius: 6px; cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; color: #fca5a5;">
@@ -358,26 +521,34 @@
 							</td>
 						</tr>
 					</tbody>
+					<tfoot class="total-desktop">
+						<tr class="fila-total">
+							<td colspan="5">
+								<div class="total-wrapper">
+									<span class="total-label">Total a pagar:</span>
+									<span class="total-monto" th:text="'€' + ${total}">€0.00</span>
+									<form th:action="@{/tienda/carrito/comprar}" method="post">
+										<button type="submit" class="btn-comprar">
+											Finalizar Compra <i class="fa-solid fa-bag-shopping"></i>
+										</button>
+									</form>
+								</div>
+							</td>
+						</tr>
+					</tfoot>
 				</table>
 
-				<div class="carrito-footer">
-					<div class="billetera-box">
-						<p class="billetera-titulo">Mi Billetera</p>
-						<p class="billetera-saldo">Saldo actual: <strong th:text="'€' + ${saldo}">€0.00</strong></p>
-						<form th:action="@{/tienda/carrito/agregar-saldo}" method="post" class="billetera-form">
-							<input class="billetera-input" type="number" name="cantidad" step="0.01" min="1" placeholder="Ej. 20.00" required>
-							<button type="submit" class="billetera-btn">Añadir Saldo</button>
-						</form>
-					</div>
-					<div class="total-container">
+				<!-- Total móvil (solo visible en móvil) -->
+				<div class="total-movil">
+					<div class="total-movil-info">
 						<span class="total-label">Total a pagar:</span>
 						<span class="total-monto" th:text="'€' + ${total}">€0.00</span>
-						<form th:action="@{/tienda/carrito/comprar}" method="post" style="margin-top: 1.25rem;">
-							<button type="submit" class="btn-comprar">
-								Finalizar Compra <i class="fa-solid fa-bag-shopping"></i>
-							</button>
-						</form>
 					</div>
+					<form th:action="@{/tienda/carrito/comprar}" method="post" style="text-align:right">
+						<button type="submit" class="btn-comprar">
+							Finalizar Compra <i class="fa-solid fa-bag-shopping"></i>
+						</button>
+					</form>
 				</div>
 			</div>
 
@@ -387,47 +558,7 @@
 
 	<footer th:replace="~{common/navfooter :: pie}"></footer>
 
-	<script>
-		const STOCK_KEY = 'tienda_stock_decrementos';
-
-		function getDecrementos() {
-			return JSON.parse(sessionStorage.getItem(STOCK_KEY) || '{}');
-		}
-		function guardarDecrementos(d) {
-			sessionStorage.setItem(STOCK_KEY, JSON.stringify(d));
-		}
-
-		// Quitar (-1 unidad → restaurar 1 al stock visual)
-		document.querySelectorAll('form[action*="/quitar/"]').forEach(form => {
-			form.addEventListener('submit', () => {
-				const id = form.action.split('/quitar/')[1].split('?')[0];
-				const d = getDecrementos();
-				if (d[id]) { d[id] -= 1; if (d[id] <= 0) delete d[id]; guardarDecrementos(d); }
-			});
-		});
-
-		// Eliminar (todas las unidades → restaurar cantidad al stock visual)
-		document.querySelectorAll('form[action*="/eliminar/"]').forEach(form => {
-			form.addEventListener('submit', () => {
-				const id = form.action.split('/eliminar/')[1].split('?')[0];
-				const row = form.closest('tr');
-				const cantidadSpan = row ? row.querySelector('.cantidad-controles span') : null;
-				const cantidad = cantidadSpan ? parseInt(cantidadSpan.innerText) : 1;
-				const d = getDecrementos();
-				if (d[id]) { d[id] -= cantidad; if (d[id] <= 0) delete d[id]; guardarDecrementos(d); }
-			});
-		});
-
-		// Agregar desde carrito (+1 → decrementar 1 más en stock visual)
-		document.querySelectorAll('form[action*="/agregar/"]').forEach(form => {
-			form.addEventListener('submit', () => {
-				const id = form.action.split('/agregar/')[1].split('?')[0];
-				const d = getDecrementos();
-				d[id] = (d[id] || 0) + 1;
-				guardarDecrementos(d);
-			});
-		});
-	</script>
+	<script src="/js/user/carrito.js"></script>
 
 </body>
 

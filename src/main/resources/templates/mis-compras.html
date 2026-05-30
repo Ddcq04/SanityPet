@@ -149,6 +149,54 @@
 		}
 
 		.vacio-btn:hover { background: var(--menta-oscuro); }
+
+		/* ── Tablet (≤ 60rem) ── */
+		@media (max-width: 60rem) {
+			.historial-card { padding: 1.5rem; }
+			.historial-table th,
+			.historial-table td { padding: 0.85rem 0.75rem; }
+		}
+
+		/* ── Móvil (≤ 53.75rem) ── */
+		@media (max-width: 53.75rem) {
+			body { background-attachment: scroll; }
+			.tienda-container { padding-top: calc(var(--nav-alto) + 1.75rem); padding-bottom: 3rem; }
+			.tienda-header { margin-bottom: 1rem; padding: 1rem 1.25rem; border-radius: 0.75rem; }
+			.tienda-titulo { font-size: 1.3rem; }
+			.tienda-subtitulo { font-size: 0.83rem; }
+			.historial-card { padding: 1rem; border-radius: 12px; margin-top: 0; }
+
+			/* Tabla → tarjetas */
+			.historial-table { display: block; }
+			.historial-table thead { display: none; }
+			.historial-table tbody { display: flex; flex-direction: column; gap: 0.5rem; }
+			.historial-table tbody tr {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: 0.4rem;
+				padding: 0.75rem;
+				background: rgba(255,255,255,0.05);
+				border-radius: 10px;
+				border-bottom: none;
+			}
+			.historial-table td { border-bottom: none; padding: 0; color: #ffffff; font-size: 0.85rem; }
+			.historial-table td::before { display: none; }
+			.historial-table td[data-label="Fecha"] { flex: 0 0 100%; font-size: 0.75rem; color: rgba(255,255,255,0.6); }
+			.historial-table td[data-label="Producto"] { flex: 1; }
+			.historial-table td[data-label="Precio"] { flex: 0 0 auto; font-weight: 700; }
+			.item-img { width: 36px; height: 36px; flex-shrink: 0; }
+			.item-nombre { font-size: 0.85rem; }
+			.vacio-banner { padding: 2.5rem 1rem; }
+			.vacio-titulo { font-size: 1.1rem; }
+		}
+
+		/* ── Móvil pequeño (≤ 30rem) ── */
+		@media (max-width: 30rem) {
+			.historial-card { padding: 0.875rem; border-radius: 10px; }
+			.tienda-titulo { font-size: 1.2rem; }
+			.tienda-header { padding: 0.5rem 0; }
+		}
 	</style>
 </head>
 
@@ -196,8 +244,8 @@
 					</thead>
 					<tbody>
 						<tr th:each="compra : ${compras}">
-							<td th:text="${#temporals.format(compra.fechaCompra, 'dd/MM/yyyy HH:mm')}">01/01/2026</td>
-							<td>
+							<td data-label="Fecha" th:text="${#temporals.format(compra.fechaCompra, 'dd/MM/yyyy HH:mm')}">01/01/2026</td>
+							<td data-label="Producto">
 								<div class="item-info">
 									<div class="item-img">
 										<img th:if="${not #strings.isEmpty(compra.producto.imagenUrl)}"
@@ -208,7 +256,7 @@
 									<span class="item-nombre" th:text="${compra.producto.nombre}">Nombre</span>
 								</div>
 							</td>
-							<td style="font-weight: 700; color: #ffffff;" th:text="'€' + ${compra.precioPagado}">€0.00</td>
+							<td data-label="Precio" style="font-weight: 700; color: #ffffff;" th:text="'€' + ${compra.precioPagado}">€0.00</td>
 						</tr>
 					</tbody>
 				</table>
@@ -220,10 +268,7 @@
 
 	<footer th:replace="~{common/navfooter :: pie}"></footer>
 
-	<script>
-		// Limpiar decrementos de stock al completar la compra
-		sessionStorage.removeItem('tienda_stock_decrementos');
-	</script>
+	<script src="/js/user/mis-compras.js"></script>
 
 </body>
 
