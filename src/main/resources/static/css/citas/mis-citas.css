@@ -8,7 +8,7 @@
 	--fondo: #f8fafc;
 	--blanco: #ffffff;
 	--borde: #e2e8f0;
-	--nav-alto: 68px;
+	--nav-alto: 4rem;
 	--fuente-marca: 'Quicksand', sans-serif;
 	--fuente-base: 'Golos Text', sans-serif;
 }
@@ -17,7 +17,7 @@
 .contenido-principal {
 	padding-top: calc(var(--nav-alto) + 2.5rem);
 	padding-bottom: 4rem;
-	max-width: 1180px;
+	max-width: 73.75rem;
 	margin: 0 auto;
 	padding-left: 2rem;
 	padding-right: 2rem;
@@ -44,8 +44,8 @@
 /* Sección vacía */
 .seccion-vacia {
 	background: var(--blanco);
-	border: 1px solid var(--borde);
-	border-radius: 16px;
+	border: 0.0625rem solid var(--borde);
+	border-radius: 1rem;
 	padding: 4rem 2rem;
 	text-align: center;
 	display: flex;
@@ -55,8 +55,8 @@
 }
 
 .icono-vacio {
-	width: 72px;
-	height: 72px;
+	width: 4.5rem;
+	height: 4.5rem;
 	border-radius: 50%;
 	background: var(--menta-claro);
 	display: flex;
@@ -82,7 +82,7 @@
 .texto-vacio {
 	font-size: 0.9rem;
 	color: var(--texto-suave);
-	max-width: 380px;
+	max-width: 23.75rem;
 	line-height: 1.6;
 }
 
@@ -93,7 +93,7 @@
 	padding: 0.65rem 1.4rem;
 	background: var(--menta);
 	color: var(--blanco);
-	border-radius: 10px;
+	border-radius: 0.625rem;
 	text-decoration: none;
 	font-size: 0.88rem;
 	font-weight: 700;
@@ -109,8 +109,8 @@
 /* Tarjeta con tabla */
 .tarjeta-tabla {
 	background: var(--blanco);
-	border: 1px solid var(--borde);
-	border-radius: 16px;
+	border: 0.0625rem solid var(--borde);
+	border-radius: 1rem;
 	overflow: hidden;
 }
 
@@ -128,7 +128,7 @@
 
 .tabla-citas thead tr {
 	background: var(--fondo);
-	border-bottom: 1px solid var(--borde);
+	border-bottom: 0.0625rem solid var(--borde);
 }
 
 .tabla-citas thead th {
@@ -147,7 +147,7 @@
 }
 
 .tabla-citas tbody tr {
-	border-bottom: 1px solid var(--borde);
+	border-bottom: 0.0625rem solid var(--borde);
 	transition: background 0.15s;
 }
 
@@ -171,7 +171,7 @@
 	padding: 0.25rem 0.75rem;
 	background: var(--menta-claro);
 	color: var(--menta-oscuro);
-	border-radius: 20px;
+	border-radius: 1.25rem;
 	font-size: 0.82rem;
 	font-weight: 600;
 }
@@ -184,15 +184,15 @@
 	padding: 0.25rem 0.75rem;
 	background: #f0fdf4;
 	color: #16a34a;
-	border-radius: 20px;
+	border-radius: 1.25rem;
 	font-size: 0.82rem;
 	font-weight: 600;
 }
 
 .etiqueta-estado::before {
 	content: '';
-	width: 7px;
-	height: 7px;
+	width: 0.4375rem;
+	height: 0.4375rem;
 	border-radius: 50%;
 	background: #16a34a;
 }
@@ -215,13 +215,13 @@
 	align-items: center;
 	gap: 0.4rem;
 	padding: 0.4rem 0.9rem;
-	border-radius: 8px;
+	border-radius: 0.5rem;
 	font-size: 0.82rem;
 	font-weight: 600;
 	text-decoration: none;
 	color: #ef4444;
 	background: #fef2f2;
-	border: 1px solid #fecaca;
+	border: 0.0625rem solid #fecaca;
 	transition: background 0.2s, border-color 0.2s;
 }
 
@@ -233,7 +233,7 @@
 /* Pie de la tarjeta */
 .pie-tabla {
 	padding: 1.25rem 1.5rem;
-	border-top: 1px solid var(--borde);
+	border-top: 0.0625rem solid var(--borde);
 	display: flex;
 	justify-content: flex-end;
 }
@@ -269,7 +269,7 @@
 	padding: 0.6rem 1.3rem;
 	background: var(--menta);
 	color: var(--blanco);
-	border-radius: 10px;
+	border-radius: 0.625rem;
 	text-decoration: none;
 	font-size: 0.88rem;
 	font-weight: 700;
@@ -282,13 +282,13 @@
 }
 
 /* Tablet */
-@media (max-width: 900px) {
+@media (max-width: 56.25rem) {
 	.contenido-principal { padding-left: 1.5rem; padding-right: 1.5rem; }
 	.cabecera-pagina { flex-direction: column; align-items: flex-start; gap: 1rem; }
 }
 
 /* Tablet intermedia — reducir tabla para evitar scroll horizontal */
-@media (max-width: 780px) {
+@media (max-width: 48.75rem) {
 	.tabla-citas {
 		font-size: 0.78rem;
 	}
@@ -302,7 +302,7 @@
 }
 
 /* Móvil — tabla convertida en tarjetas */
-@media (max-width: 600px) {
+@media (max-width: 37.5rem) {
 	.contenido-principal {
 		padding-left: 1rem;
 		padding-right: 1rem;
@@ -326,11 +326,11 @@
 	.tabla-citas tbody tr {
 		display: block;
 		background: var(--blanco);
-		border: 1px solid var(--borde);
-		border-radius: 14px;
+		border: 0.0625rem solid var(--borde);
+		border-radius: 0.875rem;
 		margin-bottom: 0.85rem;
 		overflow: hidden;
-		box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+		box-shadow: 0 0.125rem 0.5rem rgba(0,0,0,0.04);
 	}
 
 	/* Cada celda → fila label + valor */
@@ -340,7 +340,7 @@
 		justify-content: space-between;
 		gap: 0.75rem;
 		padding: 0.7rem 1rem;
-		border-bottom: 1px solid var(--borde);
+		border-bottom: 0.0625rem solid var(--borde);
 		font-size: 0.875rem;
 		color: var(--texto);
 	}
@@ -384,7 +384,7 @@
 /* Hero slider */
 .citas-hero {
 	position: relative;
-	height: 468px;
+	height: 29.25rem;
 	margin-top: 0;
 	overflow: hidden;
 	background: #0d1f1e;
@@ -451,13 +451,13 @@
 	gap: 0.45rem;
 	padding: 0.4rem 1.1rem;
 	background: rgba(46, 196, 182, 0.2);
-	border: 1px solid rgba(46, 196, 182, 0.5);
-	border-radius: 20px;
+	border: 0.0625rem solid rgba(46, 196, 182, 0.5);
+	border-radius: 1.25rem;
 	font-size: 0.8rem;
 	font-weight: 600;
 	color: var(--menta-claro);
 	letter-spacing: 0.04em;
-	backdrop-filter: blur(6px);
+	backdrop-filter: blur(0.375rem);
 	width: fit-content;
 	align-self: flex-start;
 }
@@ -468,13 +468,13 @@
 	font-weight: 700;
 	color: #ffffff;
 	line-height: 1.1;
-	text-shadow: 0 2px 16px rgba(0,0,0,0.4);
+	text-shadow: 0 0.125rem 1rem rgba(0,0,0,0.4);
 }
 
 .hero-subtitulo {
 	font-size: 1rem;
 	color: rgba(255, 255, 255, 0.75);
-	max-width: 460px;
+	max-width: 28.75rem;
 }
 
 /* Dots navegación */
@@ -493,8 +493,8 @@
 }
 
 .hero-dot {
-	width: 8px;
-	height: 8px;
+	width: 0.5rem;
+	height: 0.5rem;
 	border-radius: 50%;
 	background: rgba(255, 255, 255, 0.4);
 	cursor: pointer;
@@ -511,22 +511,22 @@
 	padding-top: 2.5rem;
 }
 
-/* ── Tablet grande (1024px) ── */
-@media (max-width: 1024px) {
+/* ── Tablet grande (64rem) ── */
+@media (max-width: 64rem) {
 	.hero-contenido { padding: 2rem 3.5rem; }
 	.hero-titulo { font-size: 2.6rem; }
 }
 
-/* ── Tablet (768px) ── */
-@media (max-width: 768px) {
-	.citas-hero { height: 320px; }
+/* ── Tablet (48rem) ── */
+@media (max-width: 48rem) {
+	.citas-hero { height: 20rem; }
 	.hero-contenido { padding: 1.75rem 2.5rem; }
 	.hero-titulo { font-size: 2.2rem; }
 	.hero-subtitulo { font-size: 0.9rem; }
 }
 
-/* ── Tablet (768px) — fila en columna si hay poco espacio ── */
-@media (max-width: 768px) {
+/* ── Tablet (48rem) — fila en columna si hay poco espacio ── */
+@media (max-width: 48rem) {
 	.hero-fila-bottom {
 		flex-direction: column;
 		align-items: flex-start;
@@ -534,9 +534,9 @@
 	}
 }
 
-/* ── Móvil (480px) ── */
-@media (max-width: 480px) {
-	.citas-hero { height: 260px; }
+/* ── Móvil (30rem) ── */
+@media (max-width: 30rem) {
+	.citas-hero { height: 16.25rem; }
 	.hero-contenido { padding: 1.5rem 1.5rem; }
 	.hero-titulo { font-size: 1.7rem; }
 	.hero-subtitulo { font-size: 0.82rem; }
@@ -544,9 +544,9 @@
 	.hero-fila-bottom { gap: 0.4rem; }
 }
 
-/* ── Móvil pequeño (360px) ── */
-@media (max-width: 360px) {
-	.citas-hero { height: 220px; }
+/* ── Móvil pequeño (22.5rem) ── */
+@media (max-width: 22.5rem) {
+	.citas-hero { height: 13.75rem; }
 	.hero-titulo { font-size: 1.45rem; }
 	.hero-subtitulo { display: none; }
 }

@@ -94,13 +94,16 @@
 		.btn-back:hover { color: var(--menta); }
 
 		.alerta-ok {
-			background: rgba(4,120,87,0.2);
-			color: #6ee7b7;
-			padding: 1rem;
+			background: rgba(4,120,87,0.55);
+			color: #ffffff;
+			padding: 1rem 1.25rem;
 			border-radius: 10px;
 			border-left: 5px solid #10b981;
 			margin-bottom: 1.5rem;
 			display: flex; align-items: center; gap: 0.8rem;
+			font-weight: 600;
+			font-size: 0.95rem;
+			box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 		}
 
 		.vacio-banner {
@@ -216,6 +219,11 @@
 	</main>
 
 	<footer th:replace="~{common/navfooter :: pie}"></footer>
+
+	<script>
+		// Limpiar decrementos de stock al completar la compra
+		sessionStorage.removeItem('tienda_stock_decrementos');
+	</script>
 
 </body>
 

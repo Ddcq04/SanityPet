@@ -18,14 +18,12 @@
 		<div class="card-cabecera">
 			<img src="/img/logo/SANYTYPETlogo.png" alt="SanityPet" class="panel-logo">
 			<div class="cabecera-info">
-				<h2 class="panel-titulo">Bienvenido a SanityPet</h2>
+				<h2 class="panel-titulo">Crear cuenta</h2>
+				<p class="panel-desc">Regístrate para acceder a todos nuestros servicios</p>
 			</div>
 		</div>
 
 		<div class="card-cuerpo">
-
-			<h1 class="form-titulo">Crear cuenta</h1>
-			<p class="form-subtitulo">Regístrate como socio para acceder a todos los servicios</p>
 
 			<div th:if="${error}" style="color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 12px; border-radius: 5px; margin-bottom: 20px; font-family: 'Golos Text', sans-serif;">
 				<i class="fa-solid fa-circle-xmark"></i> <span th:text="${error}"></span>

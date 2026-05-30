@@ -109,16 +109,23 @@
 
 					<!-- Botón Añadir al Carrito (solo usuarios) -->
 					<div class="producto-cart-action" th:if="${producto.stock > 0 and !isAdmin}">
-						<button type="button" class="btn-add-cart" th:onclick="'agregarItem(' + ${producto.id} + ')'">
+						<button type="button" class="btn-add-cart" th:onclick="'agregarItem(' + ${producto.id} + ', this)'">
 							<i class="fa-solid fa-cart-plus"></i> Añadir al carrito
 						</button>
 					</div>
 				</div>
 			</div>
 
-			<!-- Mensaje si no hay productos -->
+			<!-- Mensaje si no hay productos (carga inicial) -->
 			<div th:if="${#lists.isEmpty(productos)}" class="sin-productos">
-				<p>No hay productos disponibles en la tienda por el momento.</p>
+				<p class="sp-titulo">No hay productos disponibles</p>
+				<p class="sp-desc">Aún no hay productos en la tienda. Vuelve a consultarlo más tarde.</p>
+			</div>
+
+			<!-- Mensaje si no hay resultados al filtrar (JavaScript) -->
+			<div id="sin-resultados" class="sin-productos" style="display: none; grid-column: 1 / -1;">
+				<p class="sp-titulo">Sin resultados</p>
+				<p class="sp-desc">No encontramos productos que coincidan con tu búsqueda o filtro.</p>
 			</div>
 		</div>
 
@@ -135,11 +142,16 @@
 
 		function filtrar() {
 			const texto = buscador.value.toLowerCase().trim();
+			let visibles = 0;
 			tarjetas.forEach(card => {
 				const coincideCategoria = categoriaActiva === 'todos' || card.dataset.categoria === categoriaActiva;
 				const coincideTexto = card.dataset.nombre.includes(texto);
-				card.style.display = (coincideCategoria && coincideTexto) ? '' : 'none';
+				const mostrar = coincideCategoria && coincideTexto;
+				card.style.display = mostrar ? '' : 'none';
+				if (mostrar) visibles++;
 			});
+			const sinResultados = document.getElementById('sin-resultados');
+			if (sinResultados) sinResultados.style.display = visibles === 0 ? 'flex' : 'none';
 		}
 
 		botones.forEach(btn => {
@@ -181,13 +193,85 @@
 			}, 3000);
 		}
 
-		function agregarItem(id) {
+		// --- STOCK EN SESSIONSSTORAGE ---
+		const STOCK_KEY = 'tienda_stock_decrementos';
+
+		function getDecrementos() {
+			return JSON.parse(sessionStorage.getItem(STOCK_KEY) || '{}');
+		}
+
+		function guardarDecremento(id, cantidad) {
+			const d = getDecrementos();
+			d[id] = (d[id] || 0) + cantidad;
+			sessionStorage.setItem(STOCK_KEY, JSON.stringify(d));
+		}
+
+		function aplicarDecrementos() {
+			const d = getDecrementos();
+			document.querySelectorAll('.producto-card').forEach(card => {
+				const btn = card.querySelector('.btn-add-cart');
+				if (!btn) return;
+				const idMatch = btn.getAttribute('onclick').match(/\d+/);
+				if (!idMatch) return;
+				const id = idMatch[0];
+				if (!d[id]) return;
+
+				const stockBadge = card.querySelector('.producto-stock');
+				const stockSpan = card.querySelector('.producto-stock span');
+				const stockIcon = card.querySelector('.producto-stock i');
+				if (!stockSpan || !stockBadge.classList.contains('stock-ok')) return;
+
+				const match = stockSpan.innerText.match(/\d+/);
+				if (!match) return;
+				const nuevoStock = parseInt(match[0]) - d[id];
+				if (nuevoStock <= 0) {
+					stockBadge.classList.remove('stock-ok');
+					stockBadge.classList.add('stock-out');
+					stockIcon.className = 'fa-solid fa-times-circle';
+					stockSpan.innerText = 'Agotado';
+					card.querySelector('.producto-cart-action').style.display = 'none';
+				} else {
+					stockSpan.innerText = 'Stock: ' + nuevoStock;
+				}
+			});
+		}
+
+		// Aplicar al cargar la página
+		aplicarDecrementos();
+
+		function agregarItem(id, btn) {
 			fetch('/tienda/api/carrito/agregar/' + id, {method: 'POST'})
 				.then(response => response.json())
 				.then(data => {
 					if (data.success) {
 						document.getElementById('cart-badge').innerText = data.totalItems;
 						mostrarMensaje(data.message, false);
+
+						// Guardar decremento en sessionStorage
+						guardarDecremento(id, 1);
+
+						// Actualizar stock visualmente
+						if (btn) {
+							const card = btn.closest('.producto-card');
+							const stockBadge = card.querySelector('.producto-stock');
+							const stockSpan = card.querySelector('.producto-stock span');
+							const stockIcon = card.querySelector('.producto-stock i');
+							if (stockSpan && stockBadge.classList.contains('stock-ok')) {
+								const match = stockSpan.innerText.match(/\d+/);
+								if (match) {
+									const nuevoStock = parseInt(match[0]) - 1;
+									if (nuevoStock <= 0) {
+										stockBadge.classList.remove('stock-ok');
+										stockBadge.classList.add('stock-out');
+										stockIcon.className = 'fa-solid fa-times-circle';
+										stockSpan.innerText = 'Agotado';
+										btn.closest('.producto-cart-action').style.display = 'none';
+									} else {
+										stockSpan.innerText = 'Stock: ' + nuevoStock;
+									}
+								}
+							}
+						}
 					} else {
 						mostrarMensaje(data.message, true);
 					}

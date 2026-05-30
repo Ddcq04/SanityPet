@@ -8,7 +8,7 @@
 	--fondo: #f8fafc;
 	--blanco: #ffffff;
 	--borde: #e2e8f0;
-	--nav-alto: 68px;
+	--nav-alto: 4rem;
 	--fuente-marca: 'Quicksand', sans-serif;
 	--fuente-base: 'Golos Text', sans-serif;
 }
@@ -16,46 +16,53 @@
 /* Banner portada */
 .mascotas-banner {
 	position: relative;
+	height: 29.25rem;
 	margin-top: 0;
-	height: calc(380px + var(--nav-alto));
-	padding-top: var(--nav-alto);
-	background-image: url('/img/portada/mascotas/mas9.jpg');
-	background-size: cover;
-	background-position: center 60%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	overflow: hidden;
+	background: #0d1f1e;
+}
+
+.mascotas-banner img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center 60%;
+	display: block;
+	filter: brightness(0.5);
 }
 
 .mascotas-banner-overlay {
 	position: absolute;
 	inset: 0;
-	background: rgba(10, 20, 35, 0.48);
+	background: linear-gradient(to bottom, rgba(32,150,139,0.4) 0%, rgba(10,17,32,0.78) 100%);
+	z-index: 1;
 }
 
 .mascotas-banner-contenido {
-	position: relative;
-	z-index: 1;
-	text-align: center;
-	max-width: 600px;
-	padding: 0 2rem;
-	background: transparent;
+	position: absolute;
+	bottom: 0; left: 0; right: 0;
+	z-index: 2;
+	padding: 2.5rem 5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
 }
 
 .mascotas-banner-titulo {
 	font-family: var(--fuente-marca);
-	font-size: 2.8rem;
+	font-size: 3rem;
 	font-weight: 700;
 	color: #ffffff;
-	margin-bottom: 0.6rem;
+	line-height: 1.1;
+	text-shadow: 0 0.125rem 1rem rgba(0,0,0,0.4);
 	letter-spacing: -0.02em;
 	line-height: 1.15;
 }
 
 .mascotas-banner-subtitulo {
 	font-size: 1rem;
-	color: var(--menta);
-	font-weight: 600;
+	color: rgba(255,255,255,0.75);
+	font-weight: 500;
 	letter-spacing: 0.01em;
 }
 
@@ -63,7 +70,7 @@
 .contenido-principal {
 	padding-top: 2.5rem;
 	padding-bottom: 4rem;
-	max-width: 1180px;
+	max-width: 73.75rem;
 	margin: 0 auto;
 	padding-left: 2rem;
 	padding-right: 2rem;
@@ -99,7 +106,7 @@
 	padding: 0.6rem 1.3rem;
 	background: var(--menta);
 	color: var(--blanco);
-	border-radius: 10px;
+	border-radius: 0.625rem;
 	text-decoration: none;
 	font-size: 0.88rem;
 	font-weight: 700;
@@ -115,8 +122,8 @@
 /* Tarjeta contenedora */
 .tarjeta-tabla {
 	background: var(--blanco);
-	border: 1.5px solid var(--menta);
-	border-radius: 16px;
+	border: 0.0938rem solid var(--menta);
+	border-radius: 1rem;
 	overflow: hidden;
 	box-shadow: none;
 }
@@ -127,7 +134,7 @@
 	align-items: center;
 	justify-content: space-between;
 	padding: 1.25rem 1.5rem;
-	border-bottom: 1px solid var(--borde);
+	border-bottom: 0.0625rem solid var(--borde);
 	gap: 1rem;
 	flex-wrap: wrap;
 }
@@ -145,16 +152,16 @@
 	align-items: center;
 	gap: 0.55rem;
 	padding: 0.65rem 1.1rem;
-	border: 1.5px solid #d1d9e0;
-	border-radius: 10px;
+	border: 0.0938rem solid #d1d9e0;
+	border-radius: 0.625rem;
 	background: var(--blanco);
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+	box-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.06);
 	transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .input-busqueda:focus-within {
 	border-color: var(--menta);
-	box-shadow: 0 0 0 3px rgba(46, 196, 182, 0.12);
+	box-shadow: 0 0 0 0.1875rem rgba(46, 196, 182, 0.12);
 }
 
 .input-busqueda i {
@@ -170,7 +177,7 @@
 	font-size: 0.86rem;
 	font-family: var(--fuente-base);
 	color: var(--texto);
-	width: 120px;
+	width: 7.5rem;
 }
 
 .input-busqueda input::placeholder {
@@ -180,13 +187,13 @@
 /* Select filtro */
 .filtro-select {
 	padding: 0.65rem 2.4rem 0.65rem 1.1rem;
-	border: 1.5px solid #d1d9e0;
-	border-radius: 10px;
+	border: 0.0938rem solid #d1d9e0;
+	border-radius: 0.625rem;
 	font-size: 0.86rem;
 	font-family: var(--fuente-base);
 	color: var(--texto);
 	background: var(--blanco);
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+	box-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.06);
 	outline: none;
 	cursor: pointer;
 	transition: border-color 0.2s, box-shadow 0.2s;
@@ -198,7 +205,7 @@
 
 .filtro-select:focus {
 	border-color: var(--menta);
-	box-shadow: 0 0 0 3px rgba(46, 196, 182, 0.12);
+	box-shadow: 0 0 0 0.1875rem rgba(46, 196, 182, 0.12);
 }
 
 /* Botón filtrar */
@@ -207,7 +214,7 @@
 	background: var(--menta);
 	color: var(--blanco);
 	border: none;
-	border-radius: 10px;
+	border-radius: 0.625rem;
 	font-size: 0.86rem;
 	font-weight: 600;
 	font-family: var(--fuente-marca);
@@ -227,8 +234,8 @@
 	padding: 0.55rem 1.2rem;
 	background: var(--blanco);
 	color: var(--menta-oscuro);
-	border: 1.5px solid var(--menta);
-	border-radius: 10px;
+	border: 0.0938rem solid var(--menta);
+	border-radius: 0.625rem;
 	font-size: 0.86rem;
 	font-weight: 600;
 	font-family: var(--fuente-marca);
@@ -267,11 +274,11 @@
 	text-transform: uppercase;
 	letter-spacing: 0.06em;
 	white-space: nowrap;
-	border-bottom: 1px solid #dde3ea;
+	border-bottom: 0.0625rem solid #dde3ea;
 }
 
 .tabla-mascotas tbody tr {
-	border-bottom: 1px solid #eef1f5;
+	border-bottom: 0.0625rem solid #eef1f5;
 	transition: background 0.15s;
 }
 
@@ -301,7 +308,7 @@
 	padding: 0.2rem 0.65rem;
 	background: var(--menta-claro);
 	color: var(--menta-oscuro);
-	border-radius: 20px;
+	border-radius: 1.25rem;
 	font-size: 0.78rem;
 	font-weight: 600;
 	margin-right: 0.4rem;
@@ -319,8 +326,8 @@
 	padding: 0.2rem 0.65rem;
 	background: var(--fondo);
 	color: var(--texto-suave);
-	border: 1px solid var(--borde);
-	border-radius: 20px;
+	border: 0.0625rem solid var(--borde);
+	border-radius: 1.25rem;
 	font-size: 0.8rem;
 	font-weight: 600;
 }
@@ -334,9 +341,9 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 32px;
-	height: 32px;
-	border-radius: 8px;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 0.5rem;
 	background: var(--menta-claro);
 	color: var(--menta-oscuro);
 	text-decoration: none;
@@ -354,9 +361,9 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 32px;
-	height: 32px;
-	border-radius: 8px;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 0.5rem;
 	background: #fef2f2;
 	color: #ef4444;
 	text-decoration: none;
@@ -428,18 +435,18 @@
 	font-weight: 700;
 }
 
-/* Compacto (1024px) */
-@media (max-width: 1024px) {
+/* Compacto (64rem) */
+@media (max-width: 64rem) {
 	.contenido-principal { padding-left: 1.25rem; padding-right: 1.25rem; }
 	.tabla-mascotas { font-size: 0.83rem; }
 	.tabla-mascotas thead th { padding: 0.75rem 0.9rem; font-size: 0.74rem; }
 	.tabla-mascotas tbody td { padding: 0.8rem 0.9rem; }
-	.input-busqueda input { width: 100px; }
+	.input-busqueda input { width: 6.25rem; }
 }
 
-/* Tablet (900px) — tabla compacta */
-@media (max-width: 900px) {
-	.mascotas-banner { height: 220px; }
+/* Tablet (56.25rem) — tabla compacta */
+@media (max-width: 56.25rem) {
+	.mascotas-banner { height: 13.75rem; }
 	.contenido-principal { padding-left: 1.25rem; padding-right: 1.25rem; }
 	.boton-nuevo { width: fit-content; }
 	.formulario-filtros { flex-wrap: wrap; }
@@ -447,14 +454,14 @@
 	.tabla-mascotas tbody td { padding: 0.7rem 0.8rem; font-size: 0.83rem; }
 }
 
-/* Tarjetas (860px) */
-@media (max-width: 860px) {
-	.mascotas-banner { height: 180px; }
+/* Tarjetas (53.75rem) */
+@media (max-width: 53.75rem) {
+	.mascotas-banner { height: 11.25rem; }
 	.mascotas-banner-titulo { font-size: 1.5rem; }
 	.contenido-principal { padding-left: 1rem; padding-right: 1rem; padding-top: 1.5rem; }
 	.tabla-mascotas { font-size: 0.83rem; }
 	.titulo-pagina { font-size: 1.35rem; }
-	.input-busqueda input { width: 110px; }
+	.input-busqueda input { width: 6.875rem; }
 	.barra-superior { justify-content: center; }
 	.formulario-filtros { justify-content: center; }
 
@@ -466,9 +473,9 @@
 	.tabla-mascotas thead { display: none; }
 	.tabla-mascotas tbody tr {
 		display: block;
-		border-radius: 12px;
+		border-radius: 0.75rem;
 		border: none;
-		outline: 1.5px solid var(--menta);
+		outline: 0.0938rem solid var(--menta);
 		margin-bottom: 0.75rem;
 		padding: 0.5rem 0.75rem;
 	}
@@ -478,7 +485,7 @@
 		justify-content: space-between;
 		align-items: center;
 		padding: 0.45rem 0;
-		border-bottom: 1px solid #f1f5f9;
+		border-bottom: 0.0625rem solid #f1f5f9;
 		font-size: 0.86rem;
 		gap: 0.5rem;
 		color: var(--texto);
@@ -493,13 +500,13 @@
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
 		flex-shrink: 0;
-		min-width: 85px;
+		min-width: 5.3125rem;
 	}
 }
 
-/* Móvil pequeño (480px) */
-@media (max-width: 480px) {
-	.mascotas-banner { height: 150px; }
+/* Móvil pequeño (30rem) */
+@media (max-width: 30rem) {
+	.mascotas-banner { height: 9.375rem; }
 	.mascotas-banner-titulo { font-size: 1.25rem; }
 	.titulo-pagina { font-size: 1.2rem; }
 	.boton-nuevo { font-size: 0.82rem; }

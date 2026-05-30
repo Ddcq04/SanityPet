@@ -8,7 +8,7 @@
 	--fondo: #f8fafc;
 	--blanco: #ffffff;
 	--borde: #e2e8f0;
-	--nav-alto: 68px;
+	--nav-alto: 4rem;
 	--fuente-marca: 'Quicksand', sans-serif;
 	--fuente-base: 'Golos Text', sans-serif;
 }
@@ -24,7 +24,7 @@ body {
 /* ── Hero foto izquierda ── */
 .priv-hero {
 	position: relative;
-	height: calc(320px + var(--nav-alto));
+	height: calc(20rem + var(--nav-alto));
 	padding-top: var(--nav-alto);
 	background-image: url('/img/politicas/pr1.jpg');
 	background-size: cover;
@@ -43,7 +43,7 @@ body {
 	position: relative;
 	z-index: 1;
 	padding: 0 3.5rem 3rem;
-	max-width: 560px;
+	max-width: 35rem;
 }
 
 .priv-hero-tag {
@@ -52,8 +52,8 @@ body {
 	gap: 0.4rem;
 	padding: 0.3rem 0.9rem;
 	background: rgba(46,196,182,0.2);
-	border: 1px solid rgba(46,196,182,0.5);
-	border-radius: 20px;
+	border: 0.0625rem solid rgba(46,196,182,0.5);
+	border-radius: 1.25rem;
 	font-size: 0.75rem;
 	font-weight: 600;
 	color: var(--menta-claro);
@@ -79,7 +79,7 @@ body {
 
 /* ── Contenido principal ── */
 .priv-main {
-	max-width: 1060px;
+	max-width: 66.25rem;
 	margin: 0 auto;
 	padding: 4rem 2rem 5rem;
 }
@@ -87,14 +87,14 @@ body {
 /* ── Intro con imagen lateral ── */
 .priv-intro {
 	display: grid;
-	grid-template-columns: 1fr 360px;
+	grid-template-columns: 1fr 22.5rem;
 	gap: 2.5rem;
 	align-items: center;
 	margin-bottom: 3.5rem;
 	background: var(--fondo);
-	border-radius: 18px;
+	border-radius: 1.125rem;
 	padding: 2rem 2.5rem;
-	border: 1px solid var(--borde);
+	border: 0.0625rem solid var(--borde);
 }
 
 .priv-intro-texto h3 {
@@ -112,10 +112,10 @@ body {
 }
 
 .priv-intro-img {
-	border-radius: 14px;
+	border-radius: 0.875rem;
 	overflow: hidden;
-	height: 220px;
-	box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+	height: 13.75rem;
+	box-shadow: 0 0.375rem 1.5rem rgba(0,0,0,0.10);
 }
 
 .priv-intro-img img {
@@ -136,7 +136,7 @@ body {
 
 .priv-divisor-linea {
 	flex: 1;
-	height: 1px;
+	height: 0.0625rem;
 	background: var(--borde);
 }
 
@@ -159,8 +159,8 @@ body {
 
 .priv-bloque {
 	background: var(--fondo);
-	border: 1px solid var(--borde);
-	border-radius: 14px;
+	border: 0.0625rem solid var(--borde);
+	border-radius: 0.875rem;
 	padding: 1.5rem;
 	transition: border-color 0.2s;
 }
@@ -182,8 +182,8 @@ body {
 
 .priv-bloque h2::before {
 	content: '';
-	width: 8px;
-	height: 8px;
+	width: 0.5rem;
+	height: 0.5rem;
 	border-radius: 50%;
 	background: var(--menta);
 	flex-shrink: 0;
@@ -208,14 +208,14 @@ body {
 }
 
 /* ── Responsive ── */
-@media (max-width: 860px) {
+@media (max-width: 53.75rem) {
 	.priv-grid { grid-template-columns: 1fr; }
 	.priv-intro { grid-template-columns: 1fr; }
-	.priv-intro-img { height: 200px; }
+	.priv-intro-img { height: 12.5rem; }
 }
 
-@media (max-width: 640px) {
-	.priv-hero { height: calc(240px + var(--nav-alto)); }
+@media (max-width: 40rem) {
+	.priv-hero { height: calc(15rem + var(--nav-alto)); }
 	.priv-hero-titulo { font-size: 1.8rem; }
 	.priv-hero-contenido { padding: 0 1.5rem 2rem; }
 	.priv-main { padding: 2.5rem 1rem 4rem; }

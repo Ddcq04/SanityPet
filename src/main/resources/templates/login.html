@@ -16,8 +16,8 @@
 	<div class="containermain">
 		<div class="seccionizq">
 			<div class="titulo">
-				<h2>Bienvenido a</h2>
 				<img th:src="@{/img/logo/SANYTYPETlogo.png}" alt="SanityPet" class="logo-acceso">
+				<h2>Bienvenido de nuevo</h2>
 				<p>Comprometidos con el cuidado y bienestar de tu mascota</p>
 			</div>
 		</div>
@@ -49,7 +49,14 @@
 					<input type="password" name="password" placeholder="Contraseña" required>
 				</div>
 
-<button type="submit" class="buton">Acceder</button>
+<div class="form-footer">
+					<label style="display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+						<input type="checkbox" name="remember-me"> Recuérdame
+					</label>
+					<a href="#">¿Olvidaste tu contraseña?</a>
+				</div>
+
+				<button type="submit" class="buton">Acceder</button>
 			</form>
 
 			<div class="create-account">
