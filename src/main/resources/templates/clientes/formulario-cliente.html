@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<link rel="icon" type="image/png" sizes="192x192" href="/img/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Añadir nuevo cliente</title>
+	<title th:text="${cliente.id == null} ? 'Añadir nuevo cliente' : 'Editar cliente'"></title>
 	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 	<link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
@@ -16,19 +16,17 @@
 
 	<main class="cl-principal">
 
-		<!-- Fondo fijo -->
 		<div class="cl-fondo">
 			<div class="cl-slide activa"><img src="/img/portada/cliente/cl1.jpg" alt=""></div>
 			<div class="cl-overlay"></div>
 		</div>
 
-		<!-- Formulario centrado -->
 		<div class="cl-pagina">
 			<div class="cl-card">
 
 				<div class="cl-card-header">
-					<h1 class="cl-titulo">Nuevo cliente</h1>
-					<p class="cl-sub">Completa los datos del nuevo propietario</p>
+					<h1 class="cl-titulo" th:text="${cliente.id == null} ? 'Nuevo cliente' : 'Editar cliente'"></h1>
+					<p class="cl-sub" th:text="${cliente.id == null} ? 'Completa los datos del nuevo propietario' : 'Modifica los datos del propietario'"></p>
 				</div>
 
 				<form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post">
@@ -36,7 +34,6 @@
 					<input type="hidden" th:field="*{id}">
 					<input type="hidden" th:field="*{usuario.id}">
 
-					<!-- Datos personales -->
 					<p class="cl-seccion-titulo">Datos personales</p>
 
 					<div class="cl-fila-dos">
@@ -70,36 +67,36 @@
 						<small class="cl-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
 					</div>
 
-					<!-- Credenciales -->
-					<p class="cl-seccion-titulo" style="margin-top: 1.5rem;">Credenciales</p>
+					<div th:if="${cliente.id == null}">
+						<p class="cl-seccion-titulo" style="margin-top: 1.5rem;">Credenciales</p>
 
-					<div class="cl-fila-dos">
-						<div class="cl-campo">
-							<label class="cl-label">Contraseña</label>
-							<input class="cl-input" type="password" th:field="*{usuario.passwordPlana}"
-								th:classappend="${#fields.hasErrors('usuario.passwordPlana')} ? 'is-invalid' : ''"
-								th:required="${cliente.id == null}" placeholder="••••••••">
-							<small class="cl-error" th:if="${#fields.hasErrors('usuario.passwordPlana')}"
-								th:errors="*{usuario.passwordPlana}"></small>
-						</div>
-						<div class="cl-campo">
-							<label class="cl-label">Repetir contraseña</label>
-							<input class="cl-input" type="password" th:field="*{usuario.passwordRepeat}"
-								th:classappend="${#fields.hasErrors('usuario.passwordRepeat')} ? 'is-invalid' : ''"
-								th:required="${cliente.id == null}" placeholder="••••••••">
-							<small class="cl-error" th:if="${#fields.hasErrors('usuario.passwordRepeat')}"
-								th:errors="*{usuario.passwordRepeat}"></small>
+						<div class="cl-fila-dos">
+							<div class="cl-campo">
+								<label class="cl-label">Contraseña</label>
+								<input class="cl-input" type="password" th:field="*{usuario.passwordPlana}"
+									th:classappend="${#fields.hasErrors('usuario.passwordPlana')} ? 'is-invalid' : ''"
+									th:required="${cliente.id == null}" placeholder="••••••••">
+								<small class="cl-error" th:if="${#fields.hasErrors('usuario.passwordPlana')}"
+									th:errors="*{usuario.passwordPlana}"></small>
+							</div>
+							<div class="cl-campo">
+								<label class="cl-label">Repetir contraseña</label>
+								<input class="cl-input" type="password" th:field="*{usuario.passwordRepeat}"
+									th:classappend="${#fields.hasErrors('usuario.passwordRepeat')} ? 'is-invalid' : ''"
+									th:required="${cliente.id == null}" placeholder="••••••••">
+								<small class="cl-error" th:if="${#fields.hasErrors('usuario.passwordRepeat')}"
+									th:errors="*{usuario.passwordRepeat}"></small>
+							</div>
 						</div>
 					</div>
 
-					<!-- Botones -->
 					<div class="cl-acciones">
 						<a th:href="@{/clientes}" class="cl-link-volver">
 							<i class="fa-solid fa-arrow-left"></i> Cancelar
 						</a>
 						<button type="submit" class="cl-btn">
 							<i class="fa-solid fa-circle-check"></i>
-							<span>Guardar cliente</span>
+							<span th:text="${cliente.id == null} ? 'Guardar cliente' : 'Actualizar cliente'"></span>
 						</button>
 					</div>
 
@@ -111,9 +108,6 @@
 	</main>
 
 	<footer th:replace="~{common/navfooter :: pie}"></footer>
-
 	<script src="/js/admin/formulario-cliente.js"></script>
-
 </body>
-
 </html>

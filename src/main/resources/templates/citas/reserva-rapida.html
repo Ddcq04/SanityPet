@@ -38,68 +38,79 @@
 					<input type="hidden" th:field="*{id}" />
 
 					<div class="rc-fila-dos">
-						<div class="rc-campo">
-							<label class="rc-label">Mascota</label>
-							<div class="rc-custom-select">
-								<select class="rc-select" th:field="*{mascota}"
-									th:classappend="${#fields.hasErrors('mascota')} ? 'is-invalid' : ''" required>
-									<option value="">— Selecciona —</option>
-									<option th:each="m : ${listaMascotas}" th:value="${m.id}"
-										th:text="${m.nombre} + ' (' + ${m.cliente?.usuario?.nombreCompleto} + ')'">
-									</option>
-								</select>
-								<div class="rc-select-trigger"><span>— Selecciona —</span><i class="fa-solid fa-chevron-down"></i></div>
-								<div class="rc-select-lista"></div>
-							</div>
-							<small class="rc-error" th:if="${#fields.hasErrors('mascota')}" th:errors="*{mascota}"></small>
-						</div>
-
-						<div class="rc-campo">
-							<label class="rc-label">Servicio</label>
-							<div class="rc-custom-select">
-								<select class="rc-select" th:field="*{motivo}"
-									th:classappend="${#fields.hasErrors('motivo')} ? 'is-invalid' : ''" required>
-									<option value="">— Selecciona —</option>
-									<option value="Consulta General - 30€">Consulta General (30€)</option>
-									<option value="Vacunación - 45€">Vacunación (45€)</option>
-									<option value="Diagnóstico (Eco/Rx) - 60€">Diagnóstico Eco/Rx (60€)</option>
-									<option value="Peluquería - 25€">Peluquería (25€)</option>
-									<option value="Cirugía - Desde 120€">Cirugía (Consultar)</option>
-								</select>
-								<div class="rc-select-trigger"><span>— Selecciona —</span><i class="fa-solid fa-chevron-down"></i></div>
-								<div class="rc-select-lista"></div>
-							</div>
-							<small class="rc-error" th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}"></small>
-						</div>
+					    <div class="rc-campo">
+					        <label class="rc-label">Mascota</label>
+					        
+					        <input class="rc-input" 
+					               type="text" 
+					               id="mascotaBuscador" 
+					               list="datalistMascotas" 
+					               placeholder="— Escribe para buscar mascota —"
+					               th:value="${cita.mascota != null} ? ${cita.mascota.nombre} + ' (' + ${cita.mascota.cliente?.usuario?.nombreCompleto} + ')' : ''"
+					               th:classappend="${#fields.hasErrors('mascota')} ? 'is-invalid' : ''" 
+					               th:disabled="${esEdicion and cita.fechaHora != null and cita.fechaHora.isBefore(#temporals.createNow())}"
+					               autocomplete="off" required>
+					        
+					        <datalist id="datalistMascotas">
+					            <option th:each="m : ${listaMascotas}" 
+					                    th:value="${m.nombre} + ' (' + ${m.cliente?.usuario?.nombreCompleto} + ')'"
+					                    th:attr="data-id=${m.id}">
+					            </option>
+					        </datalist>
+					        
+					        <input type="hidden" id="mascotaIdHidden" th:field="*{mascota}" />
+					        
+					        <small class="rc-error" th:if="${#fields.hasErrors('mascota')}" th:errors="*{mascota}"></small>
+					    </div>
+					
+					    <div class="rc-campo">
+					        <label class="rc-label">Servicio</label>
+					        <div class="rc-custom-select" 
+					             th:classappend="${esEdicion and cita.fechaHora != null and cita.fechaHora.isBefore(#temporals.createNow())} ? 'disabled-wrapper' : ''">
+					            <select class="rc-select" th:field="*{motivo}"
+					                th:classappend="${#fields.hasErrors('motivo')} ? 'is-invalid' : ''" 
+					                th:disabled="${esEdicion and cita.fechaHora != null and cita.fechaHora.isBefore(#temporals.createNow())}" required>
+					                <option value="">— Selecciona —</option>
+					                <option value="Consulta General - 30€">Consulta General (30€)</option>
+					                <option value="Vacunación - 45€">Vacunación (45€)</option>
+					                <option value="Diagnóstico (Eco/Rx) - 60€">Diagnóstico Eco/Rx (60€)</option>
+					                <option value="Peluquería - 25€">Peluquería (25€)</option>
+					                <option value="Cirugía - Desde 120€">Cirugía (Consultar)</option>
+					            </select>
+					            <div class="rc-select-trigger"><span>— Selecciona —</span><i class="fa-solid fa-chevron-down"></i></div>
+					            <div class="rc-select-lista"></div>
+					        </div>
+					        <small class="rc-error" th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}"></small>
+					    </div>
 					</div>
-
+					
 					<div class="rc-fila-dos">
-						<div class="rc-campo">
-							<label class="rc-label">Día</label>
-							<input class="rc-input" type="date" id="fechaInput"
-								th:value="${cita.fechaHora != null} ? ${#temporals.format(cita.fechaHora, 'yyyy-MM-dd')} : ''"
-								th:classappend="${#fields.hasErrors('fechaHora')} ? 'is-invalid' : ''"
-								th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}"
-								th:disabled="${esEdicion and cita.fechaHora != null and cita.fechaHora.isBefore(#temporals.createNow())}" required>
-							<small class="rc-error" th:if="${#fields.hasErrors('fechaHora')}" th:errors="*{fechaHora}"></small>
-						</div>
-
-						<div class="rc-campo">
-							<label class="rc-label">Hora</label>
-							<div class="rc-custom-select" id="horaWrapper">
-								<select class="rc-select" id="horaSelect" th:field="*{fechaHora}"
-									th:disabled="${esEdicion and cita.fechaHora != null and cita.fechaHora.isBefore(#temporals.createNow())}" required>
-									<option th:if="${!esEdicion}" value="">— Elige día primero —</option>
-									<option th:if="${esEdicion}"
-											th:value="${#temporals.format(cita.fechaHora, 'yyyy-MM-dd''T''HH:mm:ss')}"
-											th:text="${#temporals.format(cita.fechaHora, 'HH:mm')}"
-											selected>
-									</option>
-								</select>
-								<div class="rc-select-trigger"><span>— Elige día primero —</span><i class="fa-solid fa-chevron-down"></i></div>
-								<div class="rc-select-lista"></div>
-							</div>
-						</div>
+					    <div class="rc-campo">
+					        <label class="rc-label">Día</label>
+					        <input class="rc-input" type="date" id="fechaInput"
+					            th:value="${cita.fechaHora != null} ? ${#temporals.format(cita.fechaHora, 'yyyy-MM-dd')} : ''"
+					            th:classappend="${#fields.hasErrors('fechaHora')} ? 'is-invalid' : ''"
+					            th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}"
+					            th:disabled="${esEdicion and cita.fechaHora != null and cita.fechaHora.isBefore(#temporals.createNow())}" required>
+					        <small class="rc-error" th:if="${#fields.hasErrors('fechaHora')}" th:errors="*{fechaHora}"></small>
+					    </div>
+					
+					    <div class="rc-campo">
+					        <label class="rc-label">Hora</label>
+					        <div class="rc-custom-select" id="horaWrapper">
+					            <select class="rc-select" id="horaSelect" th:field="*{fechaHora}"
+					                th:disabled="${esEdicion and cita.fechaHora != null and cita.fechaHora.isBefore(#temporals.createNow())}" required>
+					                <option th:if="${!esEdicion}" value="">— Elige día primero —</option>
+					                <option th:if="${esEdicion}"
+					                        th:value="${#temporals.format(cita.fechaHora, 'yyyy-MM-dd''T''HH:mm:ss')}"
+					                        th:text="${#temporals.format(cita.fechaHora, 'HH:mm')}"
+					                        selected>
+					                </option>
+					            </select>
+					            <div class="rc-select-trigger"><span>— Elige día primero —</span><i class="fa-solid fa-chevron-down"></i></div>
+					            <div class="rc-select-lista"></div>
+					        </div>
+					    </div>
 					</div>
 
 					<div class="rc-campo" sec:authorize="hasRole('admin')" style="margin-top: 15px; margin-bottom: 20px;">

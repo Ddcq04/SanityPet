@@ -29,6 +29,23 @@
 	</div>
 
 	<main class="contenido-principal">
+		<div th:if="${param.guardado}" 
+		     style="color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-family: 'Golos Text', sans-serif; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+			<i class="fa-solid fa-circle-check" style="color: #28a745; font-size: 1.1rem;"></i>
+			<span>Cliente creado y guardado correctamente.</span>
+		</div>
+
+		<div th:if="${param.editado}" 
+		     style="color: #0c5460; background-color: #d1ecf1; border: 1px solid #bee5eb; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-family: 'Golos Text', sans-serif; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+			<i class="fa-solid fa-circle-info" style="color: #17a2b8; font-size: 1.1rem;"></i>
+			<span>Cliente modificado y actualizado correctamente.</span>
+		</div>
+
+		<div th:if="${param.eliminado}" 
+		     style="color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-family: 'Golos Text', sans-serif; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+			<i class="fa-solid fa-trash-can" style="color: #dc3545; font-size: 1.1rem;"></i>
+			<span>Cliente eliminado correctamente</span>
+		</div>
 
 		<div class="cabecera-pagina">
 			<a th:href="@{/clientes/nuevo}" class="boton-nuevo">

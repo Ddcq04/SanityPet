@@ -38,7 +38,7 @@
 				</div>
 
 				<form th:action="@{/mascotas/guardar}" th:object="${mascota}" method="post">
-
+					<input type="hidden" th:field="*{id}" />
 					<!-- Nombre | Especie -->
 					<div class="fm-fila-dos">
 						<div class="fm-campo">
@@ -77,32 +77,40 @@
 
 					<!-- Propietario (solo admin) -->
 					<div class="fm-campo fm-campo-full" sec:authorize="hasRole('admin')">
-						<label class="fm-label">Asignar a cliente</label>
-						<div class="fm-custom-select">
-							<select class="fm-select" th:field="*{cliente}">
-								<option value="">— Seleccionar cliente —</option>
-								<option th:each="c : ${todosClientes}" th:value="${c.id}"
-									th:text="${c.dni} + ' - ' + ${c.usuario.nombreCompleto}">
-								</option>
-							</select>
-							<div class="fm-select-trigger">
-								<span>— Seleccionar cliente —</span>
-								<i class="fa-solid fa-chevron-down"></i>
-							</div>
-							<div class="fm-select-lista"></div>
-						</div>
+					    <label class="fm-label">Asignar a cliente</label>
+					    
+					    <input class="fm-input" 
+					           type="text" 
+					           id="clienteBuscador" 
+					           list="datalistClientes" 
+					           placeholder="— Escribe DNI o Nombre para buscar cliente —"
+					           th:value="${mascota.cliente != null} ? ${mascota.cliente.dni} + ' - ' + ${mascota.cliente.usuario?.nombreCompleto} : ''"
+					           autocomplete="off" required>
+					    
+					    <datalist id="datalistClientes">
+					        <option th:each="c : ${todosClientes}" 
+					                th:value="${c.dni} + ' - ' + ${c.usuario?.nombreCompleto}"
+					                th:attr="data-id=${c.id}">
+					        </option>
+					    </datalist>
+					    
+					    <input type="hidden" id="clienteIdHidden" th:field="*{cliente}" />
 					</div>
 
 					<div class="fm-acciones">
-						<a th:href="@{/mascotas/mis-mascotas}" class="fm-link-volver">
-							<i class="fa-solid fa-arrow-left"></i> Cancelar
-						</a>
-						<button type="submit" class="fm-btn">
-							<i class="fa-solid fa-circle-check"></i>
-							<span>Guardar mascota</span>
-						</button>
+					    <a sec:authorize="hasRole('admin')" th:href="@{/mascotas}" class="fm-link-volver">
+					        <i class="fa-solid fa-arrow-left"></i> Cancelar
+					    </a>
+					    
+					    <a sec:authorize="hasAnyRole('cliente', 'USER')" th:href="@{/mascotas/mis-mascotas}" class="fm-link-volver">
+					        <i class="fa-solid fa-arrow-left"></i> Cancelar
+					    </a>
+					
+					    <button type="submit" class="fm-btn">
+					        <i class="fa-solid fa-circle-check"></i>
+					        <span>Guardar mascota</span>
+					    </button>
 					</div>
-
 				</form>
 
 			</div>
