@@ -108,11 +108,28 @@
 							<td data-label="Mascota"><span class="etiqueta-mascota" th:text="${c.mascota.nombre}"></span></td>
 							<td data-label="Día y Hora" th:text="${#temporals.format(c.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
 							<td data-label="Motivo" th:text="${c.motivo}"></td>
-							<td data-label="Estado"><span class="etiqueta-estado">Confirmada</span></td>
+							
+							<td data-label="Estado">
+								<span th:class="${c.fechaHora.isBefore(#temporals.createNow())} ? 'etiqueta-estado pasado' : 'etiqueta-estado'"
+								      th:text="${c.fechaHora.isBefore(#temporals.createNow())} ? 'Realizada' : 'Confirmada'">
+									Confirmada
+								</span>
+							</td>
+							
 							<td data-label="Acciones" class="columna-acciones">
 								<div class="acciones-grupo">
-									<a th:href="@{/citas/editar/{id}(id=${c.id})}" class="boton-editar"><i class="fa-solid fa-pen"></i></a>
-									<a th:href="@{/citas/cancelar/{id}(id=${c.id})}" class="boton-eliminar" onclick="return confirm('¿Cancelar esta cita?')"><i class="fa-solid fa-trash"></i></a>
+									<th:block th:if="${c.fechaHora.isAfter(#temporals.createNow())}">
+										<a th:href="@{/citas/editar/{id}(id=${c.id})}" class="boton-editar">
+											<i class="fa-solid fa-pen"></i>
+										</a>
+										<a th:href="@{/citas/cancelar/{id}(id=${c.id})}" class="boton-eliminar" onclick="return confirm('¿Cancelar esta cita?')">
+											<i class="fa-solid fa-trash"></i>
+										</a>
+									</th:block>
+									
+									<span th:if="${c.fechaHora.isBefore(#temporals.createNow())}" style="color: #95a5a6; font-size: 0.85rem; font-style: italic;">
+										Sin acciones
+									</span>
 								</div>
 							</td>
 						</tr>

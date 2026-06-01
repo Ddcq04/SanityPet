@@ -96,12 +96,11 @@ document.addEventListener('click', function () {
         });
 
         // Limpiar el campo al hacer clic para facilitar que vuelvan a escribir
-        buscador.addEventListener('focus', function(e) {
-            if (!e.target.disabled) {
-                e.target.value = '';
-                hiddenId.value = ''; 
-            }
-        });
+		buscador.addEventListener('focus', function(e) {
+		    if (!e.target.disabled) {
+		        e.target.select(); 
+		    }
+		});
     }
 
     if (document.readyState === 'loading') {

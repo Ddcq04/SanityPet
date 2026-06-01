@@ -20,14 +20,14 @@ public class MascotaController {
     @Autowired
     private ClienteService clienteService;
 
-    // 1. Listado general (Solo Admin/Vet)
+    // 1. Listado de mascotas
     @GetMapping
     public String listarTodas(Model model) {
         model.addAttribute("mascotas", mascotaService.listarTodas());
         return "mascotas/lista-mascota";
     }
 
-    // 2. El cliente ve sus propias mascotas (BLINDADO PARA ADMINS)
+    // 2. El cliente ve sus propias mascotas 
     @GetMapping("/mis-mascotas")
     public String verMisMascotas(Model model, Principal principal, Authentication auth) {
         boolean isAdmin = auth.getAuthorities().stream()
@@ -43,16 +43,15 @@ public class MascotaController {
         return "mascotas/mis-mascotas";
     }
 
-    // 🌟 3. ABRIR FORMULARIO NUEVA MASCOTA (Faltaba este método)
+    // 3. Registrar nueva mascota
     @GetMapping("/nueva")
     public String formularioNueva(Model model) {
         model.addAttribute("mascota", new Mascota());
-        // Enviamos la lista de clientes para el buscador inteligente del ADMIN
         model.addAttribute("todosClientes", clienteService.listarTodos());
         return "mascotas/formulario-mascota";
     }
 
-    // 🌟 4. ABRIR FORMULARIO EDITAR MASCOTA (Faltaba este método)
+    // 4. Editar mascota
     @GetMapping("/editar/{id}")
     public String mostrarFormularioEditar(@PathVariable("id") Long id, Model model, Principal principal, Authentication auth) {
         String username = principal.getName();
@@ -71,7 +70,7 @@ public class MascotaController {
         }
     }
 
-    // 5. Guardar Mascota (Mapeo Seguro y Redirección Absoluta)
+    // 5. Guardar Mascota
     @PostMapping("/guardar")
     public String guardarMascota(@ModelAttribute("mascota") Mascota mascota, 
                                  Principal principal, 
@@ -80,6 +79,13 @@ public class MascotaController {
         
         boolean isAdmin = auth.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_admin"));
+        
+        if (mascota.getFechaNacimiento() != null && 
+                mascota.getFechaNacimiento().isAfter(java.time.LocalDate.now())) {
+                
+                flash.addFlashAttribute("mensajeError", "Error: La fecha de nacimiento no puede ser una fecha futura.");
+                return isAdmin ? "redirect:/mascotas" : "redirect:/mascotas/mis-mascotas";
+        }
 
         // Detectar si estamos insertando una nueva o actualizando una existente
         boolean esEdicion = mascota.getId() != null;
@@ -91,8 +97,7 @@ public class MascotaController {
         }
         
         mascotaService.guardar(mascota);
-
-        // Añadir los mensajes flash que leerán los nuevos DIVS HTML
+        
         if (esEdicion) {
             flash.addFlashAttribute("mensajeExito", "¡Mascota modificada correctamente!");
         } else {
@@ -102,7 +107,7 @@ public class MascotaController {
         return isAdmin ? "redirect:/mascotas" : "redirect:/mascotas/mis-mascotas";
     }
     
-    // 6. Eliminar Mascota con Alerta
+    // 6. Eliminar mascota 
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable("id") Long id, 
                            Authentication auth, 

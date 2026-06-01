@@ -8,6 +8,6 @@ import java.util.List;
 @Repository
 public interface CompraRepository extends JpaRepository<Compra, Long> {
 	
-    // OPCIONAL: Historial de compras de un cliente concreto
+	// Obtiene el historial de compras de un cliente ordenado desde la más reciente
     List<Compra> findByClienteIdOrderByFechaCompraDesc(Long clienteId);
 }

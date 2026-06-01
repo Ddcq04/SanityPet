@@ -22,26 +22,31 @@ public class LoginController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    //Direccionar al login
     @GetMapping("/login")
     public String login() {
         return "login"; 
     }
     
+    //Redireccionar al home si quiere ir al directorio raiz
     @GetMapping("/")
     public String index() {
         return "redirect:/home"; 
     }
     
+    //Direccionar al home
     @GetMapping("/home")
     public String home() {
         return "home";
     }
-
+    
+  //Direccionar a politicas de privacidad
     @GetMapping("/politicas/privacidad")
     public String politicaPrivacidad() {
         return "politicas/politica";
     }
 
+  //Direccionar a cookies
     @GetMapping("/politicas/cookies")
     public String politicaCookies() {
         return "politicas/cookies";
@@ -52,8 +57,7 @@ public class LoginController {
         return "politicas/aviso";
     }
 
-    // --- FLUJO DE REGISTRO PÚBLICO (VISITANTE) ---
-
+    //Registrarse siendo invitado
     @GetMapping("/registrarse")
     public String mostrarFormularioRegistro(Model model) {
         Cliente cliente = new Cliente();
@@ -61,10 +65,11 @@ public class LoginController {
         cliente.setUsuario(usuario);
         
         model.addAttribute("cliente", cliente);
-        model.addAttribute("fromAdmin", false); // 🌟 Obligamos a false porque entra un visitante libre
+        model.addAttribute("fromAdmin", false); 
         return "registrarse";
     }
 
+    //Registrar a un invitado siendo admin
     @PostMapping("/registrar-socio")
     public String registrarSocio(@Valid @ModelAttribute("cliente") Cliente cliente, 
                                  BindingResult result, 

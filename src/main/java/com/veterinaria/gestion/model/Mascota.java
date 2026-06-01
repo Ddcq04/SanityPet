@@ -27,15 +27,14 @@ public class Mascota {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
-    @ToString.Exclude // <--- ESTO EVITA EL BUCLE INFINITO
+    @ToString.Exclude
     private Cliente cliente;
     
- // --- NUEVO: Relación para el contador ---
     @OneToMany(mappedBy = "mascota")
     @ToString.Exclude
     private List<Cita> citas;
     
-    // Método para la lógica de negocio (usar en la tabla HTML)
+    // Método para obtner cantidad total de citas
     public int getCantidadCitas() {
         return (citas != null) ? citas.size() : 0;
     }

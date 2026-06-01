@@ -7,9 +7,8 @@ import java.util.List;
 
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
-    // OBLIGATORIA: Mostrar solo lo que hay en stock
     List<Producto> findByStockGreaterThan(Integer cantidad);
 
-    // OPCIONAL: Filtro por categorías (Pienso, Juguetes...)
+    //Filtro por categorías (Pienso, Juguetes...)
     List<Producto> findByCategoria(String categoria);
 }

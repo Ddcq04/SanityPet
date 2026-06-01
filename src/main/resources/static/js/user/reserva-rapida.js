@@ -226,11 +226,12 @@ document.getElementById('citaForm').addEventListener('submit', function (e) {
             }
         });
 
-        buscador.addEventListener('focus', function(e) {
-            if (!e.target.disabled) {
-                e.target.value = '';
-            }
-        });
+		// Seleccionar el texto al hacer foco en lugar de destruirlo al instante
+		buscador.addEventListener('focus', function(e) {
+		    if (!e.target.disabled) {
+		        e.target.select(); 
+		    }
+		});
     }
 
     if (document.readyState === 'loading') {

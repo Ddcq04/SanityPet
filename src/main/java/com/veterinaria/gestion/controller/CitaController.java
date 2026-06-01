@@ -101,7 +101,6 @@ public class CitaController {
         return "citas/reserva-rapida";
     }
 
-    // 4. Guardar o modificar cita (BLINDADO FRENTE A CAMPOS DISABLED)
  // 4. Guardar o modificar cita
     @PostMapping("/reservar/guardar")
     @ResponseBody
@@ -118,7 +117,7 @@ public class CitaController {
         }
 
         try {
-            // Si es una edición...
+            // Si es una edición
             if (cita.getId() != null) {
                 Cita citaExistente = citaService.buscarPorId(cita.getId());
                 if (citaExistente != null) {
@@ -126,12 +125,12 @@ public class CitaController {
                     // Comprobamos si la cita original pertenece al pasado
                     java.time.LocalDateTime ahora = java.time.LocalDateTime.now();
                     if (citaExistente.getFechaHora().isBefore(ahora)) {
-                        // SI YA PASÓ: Blindamos los campos inmutables para que no cambien
+                        // Si ya paso blindamos los campos inmutables para que no cambien
                         cita.setMascota(citaExistente.getMascota());
                         cita.setMotivo(citaExistente.getMotivo());
                         cita.setFechaHora(citaExistente.getFechaHora()); // Mantiene su fecha histórica
                     }
-                    // SI ES FUTURA: No hacemos nada aquí, dejamos que los nuevos valores del formulario entren directamente.
+                    // Si es futura no hacemos nada aquí, dejamos que los nuevos valores del formulario entren directamente.
                 }
             }
 
@@ -144,7 +143,7 @@ public class CitaController {
     
     // 5. Mostrar formulario para Editar una Cita Existente
     @GetMapping("/editar/{id}")
-    public String mostrarFormularioEditar(@PathVariable("id") Long id, Model model, Principal principal) {
+    public String mostrarFormularioEditar(@PathVariable("id") Long id, Model model, Principal principal, RedirectAttributes flash) {
         Cita cita = citaService.buscarPorId(id);
         Authentication auth = (Authentication) principal;
         String username = principal.getName();
@@ -156,6 +155,11 @@ public class CitaController {
         if (!isAdmin && !cita.getMascota().getCliente().getUsuario().getUsername().equals(username)) {
             return "redirect:/citas?error=access-denied";
         }
+        
+        if (!isAdmin && cita.getFechaHora().isBefore(java.time.LocalDateTime.now())) {
+            flash.addFlashAttribute("mensajeError", "No puedes modificar una cita que ya ha pasado.");
+            return "redirect:/citas";
+        }
 
         if (isAdmin) {
             model.addAttribute("listaMascotas", mascotaService.listarTodas());
@@ -164,7 +168,7 @@ public class CitaController {
         }
 
         model.addAttribute("cita", cita);
-        model.addAttribute("esEdicion", true); // Esto activará los bloques "th:disabled" en el HTML
+        model.addAttribute("esEdicion", true); 
         return "citas/reserva-rapida";
     }
 

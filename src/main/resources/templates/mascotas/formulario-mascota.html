@@ -29,11 +29,10 @@
 		<!-- Formulario centrado -->
 		<div class="fm-pagina">
 			<div class="fm-card">
-
 				<div class="fm-card-header">
 					<div>
-						<h1 class="fm-titulo">Nueva mascota</h1>
-						<p class="fm-sub">Completa la información del nuevo paciente</p>
+						<h1 class="fm-titulo" th:text="${mascota.id != null} ? 'Editar mascota' : 'Nueva mascota'">Nueva mascota</h1>
+						<p class="fm-sub" th:text="${mascota.id != null} ? 'Modifica los datos del paciente seleccionado' : 'Completa la información del nuevo paciente'">Completa la información del nuevo paciente</p>
 					</div>
 				</div>
 
@@ -70,8 +69,14 @@
 							<input class="fm-input" type="text" th:field="*{raza}" placeholder="Ej: Labrador">
 						</div>
 						<div class="fm-campo">
-							<label class="fm-label">Fecha de nacimiento</label>
-							<input class="fm-input" type="date" th:field="*{fechaNacimiento}">
+						    <label class="fm-label">Fecha de nacimiento</label>
+						    <input class="fm-input" 
+						           type="date" 
+						           th:id="fechaNacimiento"
+						           th:name="fechaNacimiento"
+						           th:value="${mascota.fechaNacimiento != null} ? ${#temporals.format(mascota.fechaNacimiento, 'yyyy-MM-dd')} : ''"
+						           th:max="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}"
+						           required>
 						</div>
 					</div>
 

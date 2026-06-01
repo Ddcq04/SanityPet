@@ -18,7 +18,7 @@ public class UsuarioService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // 1. Usamos tu consulta para buscar al usuario
+        // 1. Usamos la consulta para buscar al usuario
         Usuario usuario = usuarioRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("No existe el usuario: " + username));
 
@@ -26,7 +26,7 @@ public class UsuarioService implements UserDetailsService {
         return User.builder()
                 .username(usuario.getUsername())
                 .password(usuario.getPassword()) // La contraseña que está en la DB
-                .roles(usuario.getRol())        // El rol (ADMIN, VET, etc.)
+                .roles(usuario.getRol())        // El rol (Admin,user)
                 .build();
     }
 }

@@ -24,13 +24,15 @@ public class ClienteController {
     
     @Autowired
     private PasswordEncoder passwordEncoder;
-
+    
+    //1.Listar lista de clientes completa
     @GetMapping
     public String listarClientes(Model model) {
         model.addAttribute("clientes", clienteService.listarTodos());
         return "clientes/lista-cliente"; 
     }
     
+    //2.Busqueda de cliente por nombre
     @GetMapping("/buscar")
     public String buscar(@RequestParam("busqueda") String termino, Model model) {
         List<Cliente> resultados = clienteService.buscarPorNombre(termino);
@@ -38,7 +40,7 @@ public class ClienteController {
         return "clientes/lista-cliente";
     }
 
-    // Formulario de creación desde la vista del Administrador
+    //3.Formulario de creación 
     @GetMapping("/nuevo")
     public String formularioNuevo(Model model) {
         Cliente cliente = new Cliente();
@@ -47,7 +49,7 @@ public class ClienteController {
         return "clientes/formulario-cliente";
     }
     
-    // Formulario de edición desde la vista del Administrador
+    //4.Formulario de edición 
     @GetMapping("/editar/{id}")
     public String mostrarFormularioEditar(@PathVariable("id") Long id, Model model) {
         Cliente cliente = clienteService.buscarPorId(id); 
@@ -58,13 +60,14 @@ public class ClienteController {
         return "clientes/formulario-cliente";
     }
 
+    //5.Eliminar cliente
     @GetMapping("/eliminar/{id}")
     public String eliminarCliente(@PathVariable("id") Long id) {
         clienteService.eliminar(id);
         return "redirect:/clientes?eliminado=true";
     }
 
-    // Procesar el formulario de guardado del Administrador
+    //6.Procesar el formulario de guardado 
     @PostMapping("/guardar")
     public String guardar(@Valid @ModelAttribute("cliente") Cliente cliente, BindingResult result, Model model) {
         
@@ -129,7 +132,6 @@ public class ClienteController {
             return "clientes/formulario-cliente";
         }
         
-        // 🌟 Redirecciones dinámicas según si se creó o se editó
         if (esEdicion) {
             return "redirect:/clientes?editado=true";
         } else {
@@ -137,6 +139,7 @@ public class ClienteController {
         }
     }
     
+    //7.Hacer admin a un usuario
     @GetMapping("/hacer-admin/{id}")
     public String promoverAAdmin(@PathVariable("id") Long id) {
         Cliente cliente = clienteService.buscarPorId(id);
