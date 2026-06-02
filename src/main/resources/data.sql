@@ -1,7 +1,7 @@
 CREATE DATABASE sanitypet;
 USE sanitypet;
 
--- 1. TABLA DE ACCESO (SEGURIDAD)
+-- 1. TABLA DE ACCESO
 -- Aquí el 'username' será el DNI para el login.
 CREATE TABLE usuarios (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -11,7 +11,7 @@ CREATE TABLE usuarios (
     nombre_completo VARCHAR(100)
 );
 
--- 2. TABLA DE NEGOCIO (CLIENTES)
+-- 2. TABLA DE CLIENTES
 -- Vinculamos cada cliente a un único usuario mediante UNIQUE en usuario_id.
 CREATE TABLE clientes (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -43,7 +43,7 @@ CREATE TABLE productos (
     precio DECIMAL(10, 2) NOT NULL,
     stock INT DEFAULT 0,
     categoria VARCHAR(50),
-    imagen_url VARCHAR(255)
+    imagen_url text
 );
 
 -- 5. TABLA DE CITAS MÉDICAS

@@ -25,10 +25,10 @@ public class Usuario {
     @Column(nullable = false)
     private String password;
     
-    @Transient // No se guarda en la DB
+    @Transient 
     private String passwordRepeat;
 
-    @Transient // Opcional: para manejar la password en texto plano antes de cifrar
+    @Transient 
     private String passwordPlana;
 
     @NotBlank

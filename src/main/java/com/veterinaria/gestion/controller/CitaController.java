@@ -30,10 +30,10 @@ public class CitaController {
     @Autowired
     private MascotaService mascotaService;
 
-    // 1. Mostrar una vista u otra segun el rol de quien accede
+    // 1. Mostrar la agenda según el rol de quien accede (Admin o Cliente)
     @GetMapping
     public String verAgenda(@RequestParam(value = "filtro", required = false) String filtro, 
-            @RequestParam(value = "mascotaId", required = false) Long mascotaId, // <-- MODIFICADO: Recibe el ID de la mascota a filtrar
+            @RequestParam(value = "mascotaId", required = false) Long mascotaId, 
             Model model, Principal principal) {
         
         Authentication auth = (Authentication) principal;
@@ -41,11 +41,9 @@ public class CitaController {
         String username = principal.getName();
         
         if (isAdmin) {
-            // LÓGICA PARA ADMIN (VETERINARIO) CON FILTROS
             List<Cita> listaCitas;
             String titulo;
 
-         // === MODIFICADO: Bloque condicional para capturar el nuevo filtro de Mascota ===
             if (mascotaId != null) {
                 listaCitas = citaService.obtenerHistorialMascota(mascotaId); 
                 Mascota m = mascotaService.buscarPorId(mascotaId);
@@ -61,23 +59,21 @@ public class CitaController {
                 titulo = "Agenda Completa";
             }
 
-            // === MODIFICADO: Añadimos los atributos extra que requiere la plantilla agenda.html ===
             model.addAttribute("citas", listaCitas);
             model.addAttribute("tituloFiltro", titulo);
             model.addAttribute("filtroActivo", filtro); 
-            model.addAttribute("todasLasMascotas", mascotaService.listarTodas()); // Para rellenar el select
-            model.addAttribute("mascotaSeleccionada", mascotaId); // Para dejar marcada la opción seleccionada
+            model.addAttribute("todasLasMascotas", mascotaService.listarTodas());
+            model.addAttribute("mascotaSeleccionada", mascotaId);
             
             return "citas/agenda"; 
         } else {
-            // LÓGICA PARA CLIENTE (Sin cambios)
             model.addAttribute("citas", citaService.obtenerMisCitas(username));
             model.addAttribute("mascotas", mascotaService.buscarMisMascotas(username));
             return "citas/mis-citas";
         }
     }
     
-    // Muestra de horas disponibles para el front
+    // 2. Endpoint REST para devolver las horas disponibles asíncronamente (JS Fetch)
     @GetMapping("/horas-disponibles")
     @ResponseBody
     public List<String> getHoras(@RequestParam("fecha") String fechaStr) {
@@ -85,7 +81,7 @@ public class CitaController {
         return citaService.obtenerHorasLibres(fecha);
     }
     
-    // 3. Reservar cita
+    // 3. Mostrar formulario de Nueva Cita
     @GetMapping("/reservar")
     public String formularioReservaRapida(Model model, Principal principal) {
         Authentication auth = (Authentication) principal;
@@ -96,29 +92,24 @@ public class CitaController {
         model.addAttribute("esEdicion", false);
 
         if (isAdmin) {
-            // Si es Admin, cargamos TODAS las mascotas de la clínica
             model.addAttribute("listaMascotas", mascotaService.listarTodas());
         } else {
-            // Si es Cliente, solo las suyas
-            String dni = principal.getName();
-            model.addAttribute("listaMascotas", mascotaService.buscarMisMascotas(dni));
+            String Dni = principal.getName();
+            model.addAttribute("listaMascotas", mascotaService.buscarMisMascotas(Dni));
         }
         
         return "citas/reserva-rapida";
     }
-    //4. Guardar cita
-  //4. Guardar cita
-  //4. Guardar cita
+
+ // 4. Guardar o modificar cita
     @PostMapping("/reservar/guardar")
     @ResponseBody
     public ResponseEntity<?> guardarReserva(@ModelAttribute("cita") Cita cita, BindingResult result) {
         
-        // Evaluamos errores de validación (ignorando la fecha si es una edición pasada donde el front la mandó nula)
         if (result.hasErrors()) {
             boolean soloErrorFecha = result.getFieldErrors().stream()
                     .allMatch(error -> error.getField().equals("fechaHora"));
 
-            // Si hay otros errores diferentes a la fecha, o si es cita nueva y falta la fecha:
             if (!soloErrorFecha || (cita.getId() == null && cita.getFechaHora() == null)) {
                 String mensajeError = result.getFieldError().getDefaultMessage();
                 return ResponseEntity.badRequest().body("{\"error\": \"" + mensajeError + "\"}");
@@ -126,7 +117,23 @@ public class CitaController {
         }
 
         try {
-            // Pasamos el objeto directamente al servicio; él se encargará de fusionarlo de forma segura
+            // Si es una edición
+            if (cita.getId() != null) {
+                Cita citaExistente = citaService.buscarPorId(cita.getId());
+                if (citaExistente != null) {
+                    
+                    // Comprobamos si la cita original pertenece al pasado
+                    java.time.LocalDateTime ahora = java.time.LocalDateTime.now();
+                    if (citaExistente.getFechaHora().isBefore(ahora)) {
+                        // Si ya paso blindamos los campos inmutables para que no cambien
+                        cita.setMascota(citaExistente.getMascota());
+                        cita.setMotivo(citaExistente.getMotivo());
+                        cita.setFechaHora(citaExistente.getFechaHora()); // Mantiene su fecha histórica
+                    }
+                    // Si es futura no hacemos nada aquí, dejamos que los nuevos valores del formulario entren directamente.
+                }
+            }
+
             citaService.reservarCita(cita); 
             return ResponseEntity.ok().body("{\"mensaje\": \"¡Cita guardada con éxito!\"}");
         } catch (RuntimeException e) {
@@ -134,8 +141,9 @@ public class CitaController {
         }
     }
     
+    // 5. Mostrar formulario para Editar una Cita Existente
     @GetMapping("/editar/{id}")
-    public String mostrarFormularioEditar(@PathVariable("id") Long id, Model model, Principal principal) {
+    public String mostrarFormularioEditar(@PathVariable("id") Long id, Model model, Principal principal, RedirectAttributes flash) {
         Cita cita = citaService.buscarPorId(id);
         Authentication auth = (Authentication) principal;
         String username = principal.getName();
@@ -143,9 +151,14 @@ public class CitaController {
         boolean isAdmin = auth.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_admin"));
 
-        // SEGURIDAD: Si no es admin, verificar que la cita es suya
+        // SEGURIDAD: Si no es administrador, verificar estrictamente que la cita le pertenezca
         if (!isAdmin && !cita.getMascota().getCliente().getUsuario().getUsername().equals(username)) {
             return "redirect:/citas?error=access-denied";
+        }
+        
+        if (!isAdmin && cita.getFechaHora().isBefore(java.time.LocalDateTime.now())) {
+            flash.addFlashAttribute("mensajeError", "No puedes modificar una cita que ya ha pasado.");
+            return "redirect:/citas";
         }
 
         if (isAdmin) {
@@ -159,7 +172,7 @@ public class CitaController {
         return "citas/reserva-rapida";
     }
 
-    // 5. Cancelar cita
+    // 6. Cancelar una cita
     @GetMapping("/cancelar/{id}")
     public String cancelar(@PathVariable("id") Long id, Principal principal, RedirectAttributes flash) {
         try {

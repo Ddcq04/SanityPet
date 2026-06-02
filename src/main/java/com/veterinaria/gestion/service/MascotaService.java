@@ -25,7 +25,7 @@ public class MascotaService {
         return mascotaRepository.findByClienteId(clienteId);
     }
 
-    // --- NUEVO: Para que el Cliente vea las suyas usando su DNI (login) ---
+    //Para que el Cliente vea las suyas usando su DNI
     public List<Mascota> buscarMisMascotas(String dni) {
         Cliente cliente = clienteRepository.findByDni(dni)
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado con DNI: " + dni));
@@ -57,7 +57,6 @@ public class MascotaService {
         String e = (especie == null || especie.isBlank()) ? null : especie;
         String r = (raza == null || raza.isBlank()) ? null : raza;
         String d = (dueno == null || dueno.isBlank()) ? null : dueno;
-
         // Ejecuta la búsqueda combinada
         return mascotaRepository.buscarConFiltros(n, e, r, d);
     }

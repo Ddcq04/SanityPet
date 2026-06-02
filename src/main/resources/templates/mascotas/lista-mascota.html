@@ -26,7 +26,15 @@
 	</div>
 
 	<main class="contenido-principal">
-
+		<div th:if="${mensajeExito}" class="alerta-notificacion exito">
+		    <i class="fa-solid fa-circle-check"></i>
+		    <span th:text="${mensajeExito}">¡Operación realizada con éxito!</span>
+		</div>
+		
+		<div th:if="${mensajeError}" class="alerta-notificacion error">
+		    <i class="fa-solid fa-circle-exclamation"></i>
+		    <span th:text="${mensajeError}">Ha ocurrido un error.</span>
+		</div>
 		<div class="cabecera-acciones">
 			<a th:href="@{/mascotas/nueva}" class="boton-nuevo">
 				<i class="fa-solid fa-plus"></i> Nueva Mascota

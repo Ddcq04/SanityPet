@@ -10,10 +10,10 @@ import java.util.List;
 @Repository
 public interface MascotaRepository extends JpaRepository<Mascota, Long> {
 	
-    // OBLIGATORIA: Para que el cliente vea solo sus mascotas
+    // Obtiene todas las mascotas asociadas al ID de un cliente
     List<Mascota> findByClienteId(Long clienteId);
     
- // EL BUSCADOR TOTAL: Filtra por todo a la vez si el campo no es nulo o vacío
+    // Buscador avanzado con filtros dinámicos que ignora mayúsculas, minúsculas y valores nulos
     @Query("SELECT m FROM Mascota m WHERE " +
            "(:nombre IS NULL OR LOWER(m.nombre) LIKE LOWER(CONCAT('%', :nombre, '%'))) AND " +
            "(:especie IS NULL OR LOWER(m.especie) LIKE LOWER(CONCAT('%', :especie, '%'))) AND " +

@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.security.Principal; // Importante para la sesión
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/mascotas")
@@ -16,35 +16,42 @@ public class MascotaController {
 
     @Autowired
     private MascotaService mascotaService;
+    
     @Autowired
     private ClienteService clienteService;
 
-    // 1. Listado general (Solo Admin/Vet)
+    // 1. Listado de mascotas
     @GetMapping
     public String listarTodas(Model model) {
         model.addAttribute("mascotas", mascotaService.listarTodas());
         return "mascotas/lista-mascota";
     }
 
-    // 2. NUEVO: El cliente ve sus propias mascotas
-    // La URL será /mascotas/mis-mascotas
+    // 2. El cliente ve sus propias mascotas 
     @GetMapping("/mis-mascotas")
-    public String verMisMascotas(Model model, Principal principal) {
-        String dniLogueado = principal.getName(); // Obtiene el DNI del login
+    public String verMisMascotas(Model model, Principal principal, Authentication auth) {
+        boolean isAdmin = auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_admin"));
+        
+        // Si es admin, lo redirigimos a la lista global para evitar el crash del DNI "admin"
+        if (isAdmin) {
+            return "redirect:/mascotas";
+        }
+
+        String dniLogueado = principal.getName();
         model.addAttribute("mascotas", mascotaService.buscarMisMascotas(dniLogueado));
-        return "mascotas/mis-mascotas"; // Thymeleaf: templates/mascotas/mis-mascotas.html
+        return "mascotas/mis-mascotas";
     }
 
- // 3. Formulario Nueva Mascota
+    // 3. Registrar nueva mascota
     @GetMapping("/nueva")
     public String formularioNueva(Model model) {
         model.addAttribute("mascota", new Mascota());
-        // IMPORTANTE: Enviamos la lista de clientes por si el ADMIN es quien crea la mascota
         model.addAttribute("todosClientes", clienteService.listarTodos());
         return "mascotas/formulario-mascota";
     }
 
-    // 4. Editar Mascota    
+    // 4. Editar mascota
     @GetMapping("/editar/{id}")
     public String mostrarFormularioEditar(@PathVariable("id") Long id, Model model, Principal principal, Authentication auth) {
         String username = principal.getName();
@@ -59,30 +66,58 @@ public class MascotaController {
             model.addAttribute("todosClientes", clienteService.listarTodos());
             return "mascotas/formulario-mascota";
         } catch (RuntimeException e) {
-            return "redirect:/mascotas/mis-mascotas";
+            return isAdmin ? "redirect:/mascotas" : "redirect:/mascotas/mis-mascotas";
         }
     }
-    
+
+    // 5. Guardar Mascota
     @PostMapping("/guardar")
-    public String guardarMascota(@ModelAttribute("mascota") Mascota mascota, Principal principal, Authentication auth) {
-        // Si la mascota viene sin cliente (porque la crea el propio usuario desde su perfil)
-        if (mascota.getCliente() == null) {
+    public String guardarMascota(@ModelAttribute("mascota") Mascota mascota, 
+                                 Principal principal, 
+                                 Authentication auth, 
+                                 org.springframework.web.servlet.mvc.support.RedirectAttributes flash) {
+        
+        boolean isAdmin = auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_admin"));
+        
+        if (mascota.getFechaNacimiento() != null && 
+                mascota.getFechaNacimiento().isAfter(java.time.LocalDate.now())) {
+                
+                flash.addFlashAttribute("mensajeError", "Error: La fecha de nacimiento no puede ser una fecha futura.");
+                return isAdmin ? "redirect:/mascotas" : "redirect:/mascotas/mis-mascotas";
+        }
+
+        // Detectar si estamos insertando una nueva o actualizando una existente
+        boolean esEdicion = mascota.getId() != null;
+
+        // Validar y asignar el propietario según el buscador o la sesión del cliente
+        if (!isAdmin || mascota.getCliente() == null || mascota.getCliente().getId() == null) {
             String dni = principal.getName();
             mascota.setCliente(clienteService.buscarPorDni(dni));
         }
         
         mascotaService.guardar(mascota);
-
-        boolean isAdmin = auth.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_admin"));
+        
+        if (esEdicion) {
+            flash.addFlashAttribute("mensajeExito", "¡Mascota modificada correctamente!");
+        } else {
+            flash.addFlashAttribute("mensajeExito", "¡Mascota agregada correctamente!");
+        }
 
         return isAdmin ? "redirect:/mascotas" : "redirect:/mascotas/mis-mascotas";
     }
     
- // 6. Eliminar
+    // 6. Eliminar mascota 
     @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable("id") Long id, Authentication auth) {
-        mascotaService.eliminar(id);
+    public String eliminar(@PathVariable("id") Long id, 
+                           Authentication auth, 
+                           org.springframework.web.servlet.mvc.support.RedirectAttributes flash) {
+        try {
+            mascotaService.eliminar(id);
+            flash.addFlashAttribute("mensajeExito", "¡Mascota eliminada correctamente!");
+        } catch (RuntimeException e) {
+            flash.addFlashAttribute("mensajeError", "No se pudo eliminar la mascota.");
+        }
         
         boolean isAdmin = auth.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_admin"));
@@ -90,6 +125,7 @@ public class MascotaController {
         return isAdmin ? "redirect:/mascotas" : "redirect:/mascotas/mis-mascotas";
     }
     
+    // 7. Filtro de búsqueda
     @GetMapping("/buscar")
     public String buscarMascotas(
             @RequestParam(value = "nombre", required = false) String nombre,
@@ -100,7 +136,6 @@ public class MascotaController {
         
         model.addAttribute("mascotas", mascotaService.buscarFiltrado(nombre, especie, raza, dueno));
         
-        // Muy importante: devolvemos los valores al modelo para que el input no se vacíe al pulsar "Filtrar"
         model.addAttribute("nombreSeleccionado", nombre);
         model.addAttribute("especieSeleccionada", especie);
         model.addAttribute("razaSeleccionada", raza);

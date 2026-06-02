@@ -74,8 +74,7 @@ public class CitaService {
         Cita citaFinal;
 
         if (cita.getId() != null) {
-            // === MODO EDICIÓN SEGURO ===
-            // Recuperamos la entidad directamente dentro de esta transacción (Estado Managed)
+            // Recuperamos la entidad directamente dentro de esta transacción 
             Cita citaOriginal = citaRepository.findById(cita.getId())
                     .orElseThrow(() -> new RuntimeException("La cita no existe."));
 
@@ -99,7 +98,7 @@ public class CitaService {
             citaFinal = citaOriginal;
 
         } else {
-            // === MODO NUEVA CITA ===
+           //Modo nueva cita
             if (cita.getFechaHora() == null) {
                 throw new RuntimeException("La fecha y hora son obligatorias.");
             }
@@ -132,7 +131,7 @@ public class CitaService {
         boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_admin"));
         String usernameLogueado = principal.getName();
 
-        // Lógica: Si NO es admin Y el dueño no es el logueado -> ERROR
+        //Si no es admin Y el dueño no es el logueado dara error
         String dniDueno = cita.getMascota().getCliente().getUsuario().getUsername();
         
         if (!isAdmin && !dniDueno.equals(usernameLogueado)) {
@@ -143,7 +142,7 @@ public class CitaService {
     }
 
     public List<String> obtenerHorasLibres(LocalDate fecha) {
-        // --- NUEVA VALIDACIÓN: Si es fin de semana, devolvemos una lista vacía de inmediato ---
+        // Si es fin de semana, devolvemos una lista vacía de inmediato 
         DayOfWeek dia = fecha.getDayOfWeek();
         if (dia == DayOfWeek.SATURDAY || dia == DayOfWeek.SUNDAY) {
             return Collections.emptyList(); // No devuelve horas disponibles

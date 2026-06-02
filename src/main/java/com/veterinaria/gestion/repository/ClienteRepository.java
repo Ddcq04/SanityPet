@@ -9,7 +9,13 @@ import java.util.Optional;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
-	Optional<Cliente> findByDni(String dni);
-	List<Cliente> findByUsuarioNombreCompletoContainingIgnoreCase(String nombre);
-	Optional<Cliente> findByUsuarioUsername(String username);
+
+    // Busca un cliente por su DNI
+    Optional<Cliente> findByDni(String dni);
+
+    // Filtra clientes por coincidencia parcial en el nombre completo (ignora mayúsculas/minúsculas)
+    List<Cliente> findByUsuarioNombreCompletoContainingIgnoreCase(String nombre);
+
+    // Busca un cliente por el nombre de usuario de su cuenta asociada
+    Optional<Cliente> findByUsuarioUsername(String username);
 }
