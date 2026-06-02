@@ -207,15 +207,37 @@ body {
 }
 
 /* ── Responsive ── */
+@media (max-width: 64rem) {
+	.aviso-hero { height: calc(18rem + var(--nav-alto)); }
+	.aviso-hero-titulo { font-size: 2.2rem; }
+	.aviso-hero-contenido { padding: 0 3rem 2.5rem; }
+	.aviso-main { max-width: 50rem; }
+}
+
 @media (max-width: 53.75rem) {
 	.aviso-grid { grid-template-columns: 1fr; }
 	.aviso-intro { grid-template-columns: 1fr; }
 	.aviso-intro-img { height: 12.5rem; }
+	.aviso-main { padding: 2.5rem 1.5rem 4rem; }
+}
+
+@media (max-width: 48rem) {
+	.aviso-hero { height: calc(16rem + var(--nav-alto)); }
+	.aviso-hero-titulo { font-size: 2rem; }
+	.aviso-hero-contenido { padding: 0 2rem 2rem; }
 }
 
 @media (max-width: 40rem) {
-	.aviso-hero { height: calc(15rem + var(--nav-alto)); }
-	.aviso-hero-titulo { font-size: 1.8rem; }
-	.aviso-hero-contenido { padding: 0 1.5rem 2rem; }
-	.aviso-main { padding: 2.5rem 1rem 4rem; }
+	.aviso-hero { height: calc(14rem + var(--nav-alto)); background-attachment: scroll; }
+	.aviso-hero-titulo { font-size: 1.7rem; }
+	.aviso-hero-sub { font-size: 0.82rem; }
+	.aviso-hero-contenido { padding: 0 1.25rem 1.75rem; }
+	.aviso-main { padding: 2rem 1.5rem 3.5rem; }
+}
+
+@media (max-width: 30rem) {
+	.aviso-hero { height: calc(12rem + var(--nav-alto)); }
+	.aviso-hero-titulo { font-size: 1.45rem; }
+	.aviso-hero-sub { display: none; }
+	.aviso-main { padding: 1.5rem 1.25rem 3rem; }
 }

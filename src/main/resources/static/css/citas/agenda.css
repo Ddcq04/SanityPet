@@ -344,7 +344,8 @@ body {
 
 /* Tablet (56.25rem) — tabla compacta */
 @media (max-width: 56.25rem) {
-	.citas-banner { height: 13.75rem; }
+	.citas-banner { height: 16rem; }
+	.citas-banner-contenido { padding: 2.5rem 2rem; }
 	.citas-main { padding-left: 1.25rem; padding-right: 1.25rem; }
 	.btn-nueva-cita { width: fit-content; }
 	.filtros-grupo { flex-wrap: wrap; }
@@ -354,7 +355,7 @@ body {
 
 /* Tarjetas (53.75rem) */
 @media (max-width: 53.75rem) {
-	.citas-banner { height: 11.25rem; }
+	.citas-banner { height: 14rem; }
 	.citas-banner-titulo { font-size: 1.5rem; }
 	.citas-main { padding-left: 1rem; padding-right: 1rem; padding-top: 1.5rem; }
 	.tabla-citas { font-size: 0.83rem; }
@@ -416,7 +417,8 @@ body {
 
 /* Móvil pequeño (30rem) */
 @media (max-width: 30rem) {
-	.citas-banner { height: 9.375rem; }
+	.citas-banner { height: 12rem; }
+	.citas-banner-contenido { padding: 1.5rem 1.25rem; }
 	.citas-banner-titulo { font-size: 1.25rem; }
 	.citas-titulo { font-size: 1.2rem; }
 	.btn-nueva-cita { font-size: 0.82rem; }

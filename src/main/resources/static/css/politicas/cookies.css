@@ -148,9 +148,42 @@ body {
 	margin-bottom: 0.3rem;
 }
 
+/* ── Laptop (≤ 64rem) ── */
+@media (max-width: 64rem) {
+	.ck-hero { height: calc(18rem + var(--nav-alto)); }
+	.ck-hero-titulo { font-size: 2.2rem; }
+	.ck-hero-contenido { padding: 0 3rem 2.5rem; }
+	.ck-main { max-width: 44rem; }
+}
+
+/* ── Tablet (≤ 48rem) ── */
+@media (max-width: 48rem) {
+	.ck-hero { height: calc(16rem + var(--nav-alto)); }
+	.ck-hero-titulo { font-size: 2rem; }
+	.ck-hero-contenido { padding: 0 2rem 2rem; }
+	.ck-main { padding: 2.5rem 1.5rem 4rem; max-width: 100%; }
+	.ck-bloque { padding: 1.5rem 0; }
+	.ck-bloque h2 { font-size: 0.98rem; }
+}
+
+/* ── Móvil (≤ 40rem) ── */
 @media (max-width: 40rem) {
-	.ck-hero { height: calc(15rem + var(--nav-alto)); }
-	.ck-hero-titulo { font-size: 1.8rem; }
-	.ck-hero-contenido { padding: 0 1.5rem 2rem; }
-	.ck-main { padding: 2.5rem 1rem 4rem; }
+	.ck-hero { height: calc(14rem + var(--nav-alto)); background-attachment: scroll; }
+	.ck-hero-titulo { font-size: 1.7rem; }
+	.ck-hero-sub { font-size: 0.82rem; }
+	.ck-hero-contenido { padding: 0 1.25rem 1.75rem; }
+	.ck-main { padding: 2rem 1.5rem 3.5rem; }
+	.ck-bloque { padding: 1.25rem 0; }
+	.ck-bloque h2 { font-size: 0.92rem; }
+	.ck-bloque p, .ck-bloque ul li { font-size: 0.88rem; }
+	.ck-divisor-texto { font-size: 0.72rem; }
+}
+
+/* ── Móvil pequeño (≤ 30rem) ── */
+@media (max-width: 30rem) {
+	.ck-hero { height: calc(12rem + var(--nav-alto)); }
+	.ck-hero-titulo { font-size: 1.45rem; }
+	.ck-hero-sub { display: none; }
+	.ck-main { padding: 1.5rem 1.25rem 3rem; }
+	.ck-bloque h2 { font-size: 0.88rem; }
 }

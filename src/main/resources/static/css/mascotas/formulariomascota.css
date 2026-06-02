@@ -307,6 +307,55 @@ body {
 }
 
 /* ══════════════════════════════════════
+   BUSCADOR DE CLIENTES
+══════════════════════════════════════ */
+.fm-buscador-cliente {
+	position: relative;
+}
+
+.fm-buscador-lista {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
+	background: rgba(12, 28, 48, 0.96);
+	backdrop-filter: blur(1rem);
+	-webkit-backdrop-filter: blur(1rem);
+	border: 0.0938rem solid var(--menta);
+	border-top: none;
+	border-radius: 0 0 0.6875rem 0.6875rem;
+	z-index: 200;
+	max-height: 12rem;
+	overflow-y: auto;
+}
+
+.fm-buscador-lista.abierto {
+	display: block;
+}
+
+.fm-buscador-lista::-webkit-scrollbar {
+	width: 0.25rem;
+}
+
+.fm-buscador-lista::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.fm-buscador-lista::-webkit-scrollbar-thumb {
+	background: var(--menta);
+	border-radius: 0.625rem;
+}
+
+/* Cuando la lista está abierta, el input pierde el borde inferior redondeado */
+.fm-buscador-cliente:has(.fm-buscador-lista.abierto) .fm-input {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	border-color: var(--menta);
+	box-shadow: 0 0 0 0.25rem rgba(46, 196, 182, 0.20);
+}
+
+/* ══════════════════════════════════════
    ACCIONES (botones)
 ══════════════════════════════════════ */
 .fm-acciones {

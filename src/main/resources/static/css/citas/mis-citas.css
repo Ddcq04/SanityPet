@@ -43,8 +43,7 @@
 
 /* Sección vacía */
 .seccion-vacia {
-	background: var(--blanco);
-	border: 0.0625rem solid var(--borde);
+	background: linear-gradient(135deg, #1a6b64 0%, #1e293b 100%);
 	border-radius: 1rem;
 	padding: 4rem 2rem;
 	text-align: center;
@@ -54,34 +53,38 @@
 	gap: 1rem;
 }
 
+.titulo-vacio { color: #ffffff; }
+.texto-vacio { color: rgba(255,255,255,0.7); }
+
 .icono-vacio {
 	width: 4.5rem;
 	height: 4.5rem;
 	border-radius: 50%;
-	background: var(--menta-claro);
+	background: rgba(46, 196, 182, 0.2);
+	border: 2px solid rgba(46, 196, 182, 0.4);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	font-size: 1.8rem;
-	color: var(--menta-oscuro);
+	color: var(--menta);
 	margin-bottom: 0.5rem;
 }
 
 .icono-vacio--calendario {
-	background: #eff6ff;
-	color: #3b82f6;
+	background: rgba(46, 196, 182, 0.2);
+	color: var(--menta);
 }
 
 .titulo-vacio {
 	font-family: var(--fuente-marca);
 	font-size: 1.2rem;
 	font-weight: 700;
-	color: var(--texto);
+	color: #ffffff;
 }
 
 .texto-vacio {
 	font-size: 0.9rem;
-	color: var(--texto-suave);
+	color: rgba(255,255,255,0.7);
 	max-width: 23.75rem;
 	line-height: 1.6;
 }

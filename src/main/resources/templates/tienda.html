@@ -21,6 +21,34 @@
 
 	<header th:replace="~{common/navfooter :: navbar}"></header>
 
+	<!-- TOAST FLOTANTE — aparece en la esquina inferior derecha -->
+	<!-- Empieza oculto, el JavaScript lo muestra cuando se añade un producto -->
+	<div id="toast" style="
+		position: fixed;
+		bottom: 2rem;
+		right: 2rem;
+		background: #ffffff;
+		border-left: 5px solid #2ec4b6;
+		border-radius: 12px;
+		padding: 1rem 1.5rem;
+		box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		font-family: 'Golos Text', sans-serif;
+		font-size: 0.9rem;
+		color: #1e293b;
+		z-index: 9999;
+		max-width: 22rem;
+		opacity: 0;
+		transform: translateY(1rem);
+		transition: opacity 0.3s ease, transform 0.3s ease;
+		pointer-events: none;
+	">
+		<i class="fa-solid fa-circle-check" style="color: #2ec4b6; font-size: 1.2rem; flex-shrink: 0;"></i>
+		<span id="toast-mensaje">Producto añadido al carrito</span>
+	</div>
+
 	<main class="tienda-container">
 
 		<div class="tienda-header">
@@ -168,28 +196,30 @@
 		// --- LÓGICA DE CARRITO (Versión Estudiante) ---
 
 		function mostrarMensaje(texto, esError) {
-			const alerta = document.getElementById('dynamic-alert');
-			const mensaje = document.getElementById('alert-message');
-			const icono = document.getElementById('alert-icon');
+			// Agarramos el toast y el span donde va el texto
+			var toast = document.getElementById('toast');
+			var toastMensaje = document.getElementById('toast-mensaje');
 
-			mensaje.innerText = texto;
-			alerta.style.display = 'flex';
+			// Ponemos el texto del mensaje
+			toastMensaje.innerText = texto;
 
+			// Cambiamos el color del borde según si es error o éxito
 			if (esError) {
-				alerta.style.background = '#fff1f2';
-				alerta.style.color = '#be123c';
-				alerta.style.borderLeftColor = '#e11d48';
-				icono.className = 'fa-solid fa-circle-exclamation';
+				toast.style.borderLeftColor = '#e11d48';
 			} else {
-				alerta.style.background = '#dcfce7';
-				alerta.style.color = '#16a34a';
-				alerta.style.borderLeftColor = '#22c55e';
-				icono.className = 'fa-solid fa-circle-check';
+				toast.style.borderLeftColor = '#2ec4b6';
 			}
 
-			// Ocultar automáticamente después de 3 segundos
-			setTimeout(() => {
-				alerta.style.display = 'none';
+			// Hacemos visible el toast con animación (opacity y translateY)
+			toast.style.opacity = '1';
+			toast.style.transform = 'translateY(0)';
+			toast.style.pointerEvents = 'auto';
+
+			// Después de 3 segundos lo volvemos a ocultar
+			setTimeout(function() {
+				toast.style.opacity = '0';
+				toast.style.transform = 'translateY(1rem)';
+				toast.style.pointerEvents = 'none';
 			}, 3000);
 		}
 

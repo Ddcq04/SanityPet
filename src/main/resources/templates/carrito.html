@@ -456,10 +456,9 @@
 
 			<!-- Carrito vacío -->
 			<div th:if="${#lists.isEmpty(items)}" class="carrito-vacio-hero">
-				<div class="vacio-icono"><i class="fa-solid fa-cart-shopping"></i></div>
-				<h2 class="carrito-vacio-titulo">Tu carrito está vacío</h2>
+					<h2 class="carrito-vacio-titulo">Tu carrito está vacío</h2>
 				<p class="carrito-vacio-texto">Añade productos desde la tienda para empezar.</p>
-				<a th:href="@{/tienda}" class="carrito-vacio-btn"><i class="fa-solid fa-store"></i> Ir a la tienda</a>
+				<a th:href="@{/tienda}" class="carrito-vacio-btn">Ir a la tienda</a>
 			</div>
 
 			<!-- Productos -->

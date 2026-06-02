@@ -1,3 +1,92 @@
+// ─────────────────────────────────────────────────────────
+//  BUSCADOR DE MASCOTAS (autocomplete)
+// ─────────────────────────────────────────────────────────
+
+// 1) Agarramos los tres elementos que ya existen en el HTML
+var selectMascota    = document.querySelector('[name="mascota"]');   // el <select> oculto del backend
+var inputBuscarMasc  = document.getElementById('buscadorMascota');   // el input donde se escribe
+var listasugerMasc   = document.getElementById('buscadorListaMascota'); // el div donde aparecen las sugerencias
+
+// Solo ejecutamos si los tres elementos existen en la página
+if (selectMascota && inputBuscarMasc && listasugerMasc) {
+
+    // 2) Sacamos todas las opciones del <select> en un array
+    //    Quitamos la opción vacía "— Selecciona —"
+    var todasLasMascotas = Array.from(selectMascota.options).filter(function(opcion) {
+        return opcion.value !== '';
+    });
+
+    // 3) Función que filtra y muestra las sugerencias
+    function mostrarSugerenciasMascota(textoBuscado) {
+
+        // Limpiamos la lista antes de volver a pintar
+        listasugerMasc.innerHTML = '';
+
+        // Si el input está vacío, cerramos la lista
+        if (textoBuscado.trim() === '') {
+            listasugerMasc.classList.remove('abierto');
+            return;
+        }
+
+        // El texto de cada opción tiene el formato: "Toby (Carlos Mendoza)"
+        // Buscamos por el nombre de la mascota que es la parte antes del paréntesis
+        var busqueda = textoBuscado.toLowerCase();
+
+        var coincidencias = todasLasMascotas.filter(function(opcion) {
+            var nombreMascota = opcion.text.split(' (')[0]; // "Toby"
+            // Comprobamos si el nombre EMPIEZA por lo que escribió el usuario
+            return nombreMascota.toLowerCase().startsWith(busqueda);
+        });
+
+        // Si no hay coincidencias mostramos un mensaje
+        if (coincidencias.length === 0) {
+            var sinResultado = document.createElement('div');
+            sinResultado.className = 'rc-option';
+            sinResultado.textContent = 'No se encontró ninguna mascota';
+            sinResultado.style.opacity = '0.5';
+            sinResultado.style.cursor = 'default';
+            listasugerMasc.appendChild(sinResultado);
+            listasugerMasc.classList.add('abierto');
+            return;
+        }
+
+        // Por cada coincidencia creamos un div clicable
+        coincidencias.forEach(function(opcion) {
+            var item = document.createElement('div');
+            item.className = 'rc-option';
+            item.textContent = opcion.text;
+
+            // Al hacer clic seleccionamos esa mascota
+            item.addEventListener('click', function() {
+                selectMascota.value = opcion.value;   // guardamos el id en el select oculto
+                inputBuscarMasc.value = opcion.text;  // mostramos el nombre en el input
+                listasugerMasc.innerHTML = '';
+                listasugerMasc.classList.remove('abierto');
+            });
+
+            listasugerMasc.appendChild(item);
+        });
+
+        listasugerMasc.classList.add('abierto');
+    }
+
+    // 4) Cada vez que el usuario escribe, filtramos
+    inputBuscarMasc.addEventListener('input', function() {
+        mostrarSugerenciasMascota(inputBuscarMasc.value);
+    });
+
+    // 5) Al hacer clic fuera, cerramos la lista
+    document.addEventListener('click', function(evento) {
+        var clickFuera = !inputBuscarMasc.contains(evento.target) && !listasugerMasc.contains(evento.target);
+        if (clickFuera) {
+            listasugerMasc.innerHTML = '';
+            listasugerMasc.classList.remove('abierto');
+        }
+    });
+}
+
+// ─────────────────────────────────────────────────────────
+
 // Inicialización automática al cargar la página en caso de EDICIÓN
 window.addEventListener('DOMContentLoaded', () => {
 	const idCitaInput = document.querySelector('input[name="id"]');

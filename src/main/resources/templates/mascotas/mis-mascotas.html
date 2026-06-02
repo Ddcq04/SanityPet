@@ -5,10 +5,8 @@
 	<meta charset="UTF-8">
 	<link rel="icon" type="image/png" sizes="192x192" href="/img/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Mis Mascotas </title>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
-		rel="stylesheet">
+	<title>Mis Mascotas</title>
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 	<link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
 	<link rel="stylesheet" th:href="@{/css/mascotas/mis-mascotas.css}">
@@ -16,9 +14,7 @@
 
 <body>
 
-	<header th:replace="~{common/navfooter :: navbar}">
-		<!-- navegacion -->
-	</header>
+	<header th:replace="~{common/navfooter :: navbar}"></header>
 
 	<!-- HERO SLIDER -->
 	<div class="mascotas-hero">
@@ -43,27 +39,18 @@
 
 		<div class="cabecera-pagina">
 			<h1 class="titulo-pagina">Mis Mascotas</h1>
-			<a th:href="@{/mascotas/nueva}" href="#" class="boton-nuevo">
+			<a th:href="@{/mascotas/nueva}" class="boton-nuevo">
 				<i class="fa-solid fa-plus"></i> Nueva mascota
 			</a>
 		</div>
 
 		<!-- Estado vacío -->
 		<div class="seccion-vacia" th:if="${#lists.isEmpty(mascotas)}">
-			<div class="vacio-deco">
-				<span class="deco-animal"><i class="fa-solid fa-dog"></i></span>
-				<span class="deco-animal"><i class="fa-solid fa-cat"></i></span>
-				<span class="deco-animal"><i class="fa-solid fa-dove"></i></span>
-				<span class="deco-animal"><i class="fa-solid fa-fish"></i></span>
-				<span class="deco-animal"><i class="fa-solid fa-horse"></i></span>
-			</div>
 			<div class="vacio-centro">
-				<div class="icono-vacio">
-					<i class="fa-solid fa-paw"></i>
-				</div>
+				<div class="icono-vacio"><i class="fa-solid fa-paw"></i></div>
 				<h2 class="titulo-vacio">¡Aún no tienes mascotas!</h2>
 				<p class="texto-vacio">Tu lista está vacía por ahora. Registra a tu primer compañero y empieza a gestionar sus citas y salud desde aquí.</p>
-				<a th:href="@{/mascotas/nueva}" href="#" class="boton-accion">
+				<a th:href="@{/mascotas/nueva}" class="boton-accion">
 					<i class="fa-solid fa-plus"></i> Registrar mi primera mascota
 				</a>
 			</div>
@@ -71,7 +58,6 @@
 
 		<!-- Grid de tarjetas -->
 		<div class="mascotas-grid" th:if="${!#lists.isEmpty(mascotas)}">
-
 			<div class="mascota-tarjeta"
 				th:classappend="${m.especie == 'Perro'} ? 'tarjeta-perro' : (${m.especie == 'Gato'} ? 'tarjeta-gato' : 'tarjeta-otro')"
 				th:each="m : ${mascotas}">
@@ -95,11 +81,10 @@
 				</div>
 
 			</div>
-
 		</div>
 
 	</main>
-	<!-- FOOTER -->
+
 	<footer th:replace="~{common/navfooter :: pie}"></footer>
 
 	<script src="/js/user/mis-mascotas.js"></script>

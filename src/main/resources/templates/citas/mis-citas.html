@@ -6,18 +6,14 @@
 	<link rel="icon" type="image/png" sizes="192x192" href="/img/favicons/android-chrome-512x512.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Mis Citas</title>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
-		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 	<link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
 	<link rel="stylesheet" th:href="@{/css/citas/mis-citas.css}">
 </head>
 
 <body>
-	<!-- navbar -->
-	<header th:replace="~{common/navfooter :: navbar}">
-	</header>
+	<header th:replace="~{common/navfooter :: navbar}"></header>
 
 	<!-- SLIDER HERO -->
 	<div class="citas-hero">
@@ -50,29 +46,23 @@
 
 	<main class="contenido-principal">
 
-		<!-- Estados vacíos: solo se muestran si no hay citas -->
+		<!-- Estados vacíos -->
 		<div th:if="${#lists.isEmpty(citas)}">
 
-			<!-- Sin mascotas registradas -->
 			<div class="seccion-vacia" th:if="${#lists.isEmpty(mascotas)}">
-				<div class="icono-vacio">
-					<i class="fa-solid fa-paw"></i>
-				</div>
+				<div class="icono-vacio"><i class="fa-solid fa-paw"></i></div>
 				<h2 class="titulo-vacio">¡Aún no tienes mascotas registradas!</h2>
 				<p class="texto-vacio">Para pedir una cita, primero necesitamos conocer a tu compañero.</p>
-				<a th:href="@{/mascotas/nueva}" href="#" class="boton-accion">
+				<a th:href="@{/mascotas/nueva}" class="boton-accion">
 					<i class="fa-solid fa-plus"></i> Registrar mi primera mascota
 				</a>
 			</div>
 
-			<!-- Tiene mascotas pero no tiene citas -->
 			<div class="seccion-vacia" th:unless="${#lists.isEmpty(mascotas)}">
-				<div class="icono-vacio icono-vacio--calendario">
-					<i class="fa-regular fa-calendar-xmark"></i>
-				</div>
+				<div class="icono-vacio icono-vacio--calendario"><i class="fa-regular fa-calendar-xmark"></i></div>
 				<h2 class="titulo-vacio">No tienes citas programadas</h2>
 				<p class="texto-vacio">Reserva una cita para que nuestros veterinarios cuiden de tu mascota.</p>
-				<a th:href="@{/citas/reservar}" href="#" class="boton-accion">
+				<a th:href="@{/citas/reservar}" class="boton-accion">
 					<i class="fa-solid fa-calendar-plus"></i> Reservar mi primera cita
 				</a>
 			</div>
@@ -84,14 +74,13 @@
 			<div class="cabecera-tabla-texto">
 				<h2 class="cabecera-tabla-titulo">Citas programadas</h2>
 			</div>
-			<a th:href="@{/citas/reservar}" href="#" class="boton-nueva-cita">
+			<a th:href="@{/citas/reservar}" class="boton-nueva-cita">
 				<i class="fa-solid fa-calendar-plus"></i> Nueva cita
 			</a>
 		</div>
 
-		<!-- Tabla de citas: solo se muestra si hay citas -->
+		<!-- Tabla -->
 		<div class="tarjeta-tabla" th:unless="${#lists.isEmpty(citas)}">
-
 			<div class="contenedor-tabla">
 				<table class="tabla-citas">
 					<thead>
@@ -119,15 +108,13 @@
 					</tbody>
 				</table>
 			</div>
-
 		</div>
 
 	</main>
-	<!-- FOOTER -->
+
 	<footer th:replace="~{common/navfooter :: pie}"></footer>
 
 	<script src="/js/user/mis-citas.js"></script>
-
 
 </body>
 

@@ -446,7 +446,8 @@
 
 /* Tablet (56.25rem) — tabla compacta */
 @media (max-width: 56.25rem) {
-	.mascotas-banner { height: 13.75rem; }
+	.mascotas-banner { height: 16rem; }
+	.mascotas-banner-contenido { padding: 2.5rem 2rem; }
 	.contenido-principal { padding-left: 1.25rem; padding-right: 1.25rem; }
 	.boton-nuevo { width: fit-content; }
 	.formulario-filtros { flex-wrap: wrap; }
@@ -456,7 +457,7 @@
 
 /* Tarjetas (53.75rem) */
 @media (max-width: 53.75rem) {
-	.mascotas-banner { height: 11.25rem; }
+	.mascotas-banner { height: 14rem; }
 	.mascotas-banner-titulo { font-size: 1.5rem; }
 	.contenido-principal { padding-left: 1rem; padding-right: 1rem; padding-top: 1.5rem; }
 	.tabla-mascotas { font-size: 0.83rem; }
@@ -506,7 +507,8 @@
 
 /* Móvil pequeño (30rem) */
 @media (max-width: 30rem) {
-	.mascotas-banner { height: 9.375rem; }
+	.mascotas-banner { height: 12rem; }
+	.mascotas-banner-contenido { padding: 1.5rem 1.25rem; }
 	.mascotas-banner-titulo { font-size: 1.25rem; }
 	.titulo-pagina { font-size: 1.2rem; }
 	.boton-nuevo { font-size: 0.82rem; }

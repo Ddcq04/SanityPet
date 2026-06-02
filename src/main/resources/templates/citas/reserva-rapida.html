@@ -40,17 +40,23 @@
 					<div class="rc-fila-dos">
 						<div class="rc-campo">
 							<label class="rc-label">Mascota</label>
-							<div class="rc-custom-select">
-								<select class="rc-select" th:field="*{mascota}"
-									th:classappend="${#fields.hasErrors('mascota')} ? 'is-invalid' : ''" required>
-									<option value="">— Selecciona —</option>
-									<option th:each="m : ${listaMascotas}" th:value="${m.id}"
-										th:text="${m.nombre} + ' (' + ${m.cliente?.usuario?.nombreCompleto} + ')'">
-									</option>
-								</select>
-								<div class="rc-select-trigger"><span>— Selecciona —</span><i class="fa-solid fa-chevron-down"></i></div>
-								<div class="rc-select-lista"></div>
+
+							<!-- Select real oculto — lo usa el formulario al enviarse -->
+							<select class="rc-select" th:field="*{mascota}" style="display:none" required>
+								<option value="">— Selecciona —</option>
+								<option th:each="m : ${listaMascotas}" th:value="${m.id}"
+									th:text="${m.nombre} + ' (' + ${m.cliente?.usuario?.nombreCompleto} + ')'">
+								</option>
+							</select>
+
+							<!-- Buscador visible -->
+							<div class="rc-buscador-mascota">
+								<input type="text" class="rc-input" id="buscadorMascota"
+									placeholder="Escribe el nombre de la mascota..."
+									autocomplete="off">
+								<div class="rc-buscador-lista" id="buscadorListaMascota"></div>
 							</div>
+
 							<small class="rc-error" th:if="${#fields.hasErrors('mascota')}" th:errors="*{mascota}"></small>
 						</div>
 

@@ -400,7 +400,8 @@
 
 /* Tablet (56.25rem) — tabla compacta */
 @media (max-width: 56.25rem) {
-	.clientes-banner { height: 13.75rem; }
+	.clientes-banner { height: 16rem; }
+	.clientes-banner-contenido { padding: 2.5rem 2rem; }
 	.contenido-principal { padding-left: 1.25rem; padding-right: 1.25rem; }
 	.boton-nuevo { width: fit-content; }
 	.tabla-clientes thead th { padding: 0.65rem 0.8rem; font-size: 0.72rem; }
@@ -409,7 +410,7 @@
 
 /* Tarjetas (53.75rem) */
 @media (max-width: 53.75rem) {
-	.clientes-banner { height: 11.25rem; }
+	.clientes-banner { height: 14rem; }
 	.clientes-banner-titulo { font-size: 1.5rem; }
 	.contenido-principal { padding-left: 1rem; padding-right: 1rem; padding-top: 1.5rem; }
 	.titulo-pagina { font-size: 1.35rem; }
@@ -459,6 +460,26 @@
 
 /* Móvil pequeño (30rem) */
 @media (max-width: 30rem) {
+	.clientes-banner { height: 12rem; }
+	.clientes-banner-contenido { padding: 1.5rem 1.25rem; }
+	.clientes-banner-titulo { font-size: 1.3rem; }
+	.clientes-banner-subtitulo { font-size: 0.8rem; }
 	.titulo-pagina { font-size: 1.2rem; }
 	.boton-nuevo { font-size: 0.82rem; }
+
+	/* Buscador en columna, todo ordenado */
+	.barra-busqueda {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 0.6rem;
+	}
+	.formulario-busqueda {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 0.5rem;
+	}
+	.input-busqueda { width: 100%; }
+	.input-busqueda input { width: 100%; }
+	.boton-buscar { width: 100%; justify-content: center; }
+	.boton-limpiar { width: 100%; justify-content: center; text-align: center; }
 }

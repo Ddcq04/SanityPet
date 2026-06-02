@@ -78,18 +78,21 @@
 					<!-- Propietario (solo admin) -->
 					<div class="fm-campo fm-campo-full" sec:authorize="hasRole('admin')">
 						<label class="fm-label">Asignar a cliente</label>
-						<div class="fm-custom-select">
-							<select class="fm-select" th:field="*{cliente}">
-								<option value="">— Seleccionar cliente —</option>
-								<option th:each="c : ${todosClientes}" th:value="${c.id}"
-									th:text="${c.dni} + ' - ' + ${c.usuario.nombreCompleto}">
-								</option>
-							</select>
-							<div class="fm-select-trigger">
-								<span>— Seleccionar cliente —</span>
-								<i class="fa-solid fa-chevron-down"></i>
-							</div>
-							<div class="fm-select-lista"></div>
+
+						<!-- Select real oculto — lo usa el formulario al enviarse -->
+						<select class="fm-select" th:field="*{cliente}" style="display:none">
+							<option value="">— Seleccionar cliente —</option>
+							<option th:each="c : ${todosClientes}" th:value="${c.id}"
+								th:text="${c.dni} + ' - ' + ${c.usuario.nombreCompleto}">
+							</option>
+						</select>
+
+						<!-- Buscador visible -->
+						<div class="fm-buscador-cliente">
+							<input type="text" class="fm-input" id="buscadorCliente"
+								placeholder="Escribe el nombre o DNI del cliente..."
+								autocomplete="off">
+							<div class="fm-buscador-lista" id="buscadorLista"></div>
 						</div>
 					</div>
 
