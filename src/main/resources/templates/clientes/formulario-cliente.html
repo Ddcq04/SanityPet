@@ -46,11 +46,10 @@
 								placeholder="Ej: 12345678A" required>
 							<small class="error" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></small>
 						</div>
-						<div class="cl-campo">
-							<label class="cl-label">Teléfono <span class="cl-opcional">Opcional</span></label>
-							<input class="cl-input" type="text" th:field="*{telefono}" placeholder="Ej: 600 000 000">
+						<div class="campo">
+							<label class="etiqueta">Teléfono <span class="opcional">Opcional</span></label>
+							<input class="entrada" type="text" th:field="*{telefono}" placeholder="Ej: 600 000 000">
 							<small style="color: red;" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></small>
-
 						</div>
 					</div>
 

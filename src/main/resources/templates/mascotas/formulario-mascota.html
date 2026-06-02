@@ -81,9 +81,8 @@
 					</div>
 
 					<!-- Propietario (solo admin) -->
-					<div class="fm-campo fm-campo-full" sec:authorize="hasRole('admin')">
-						<label class="fm-label">Asignar a cliente</label>
-
+					<div class="campo campo-completo" sec:authorize="hasRole('admin')">
+						<label class="etiqueta">Asignar a cliente</label>
 
 						<!-- Select real oculto — lo usa el formulario al enviarse -->
 						<select class="selector" th:field="*{cliente}" style="display:none">
