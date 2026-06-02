@@ -1,24 +1,28 @@
 (function () {
-    const nav = document.querySelector('header');
-    let ultimoScroll = 0;
+    var nav = document.querySelector('header');
+    var ultimoScroll = 0;
 
-    /* Si la página pide nav siempre sólido (fondo blanco fijo) */
-    const navSolido = document.body.dataset.navSolid === 'true';
+    // Si la página pide nav siempre sólida
+    var navSolida = document.body.dataset.navSolid === 'true';
 
-    if (navSolido) {
-        nav.classList.add('nav-con-fondo');
+    if (navSolida) {
+        nav.classList.add('nav-solida');
     } else {
+        // Actualiza la nav según el scroll
         function actualizar() {
-            const scrollActual = window.scrollY;
+            var scrollActual = window.scrollY;
 
             if (scrollActual <= 10) {
-                nav.classList.remove('nav-oculto');
-                nav.classList.remove('nav-con-fondo');
+                // Arriba del todo: nav transparente
+                nav.classList.remove('nav-oculta');
+                nav.classList.remove('nav-solida');
             } else if (scrollActual > ultimoScroll) {
-                nav.classList.add('nav-oculto');
+                // Bajando: ocultar nav
+                nav.classList.add('nav-oculta');
             } else {
-                nav.classList.remove('nav-oculto');
-                nav.classList.add('nav-con-fondo');
+                // Subiendo: mostrar nav con fondo
+                nav.classList.remove('nav-oculta');
+                nav.classList.add('nav-solida');
             }
 
             ultimoScroll = scrollActual;
@@ -28,68 +32,71 @@
         actualizar();
     }
 
-    /* Enlace activo según la URL actual — gana el match más largo */
+    // Marca el enlace activo según la URL
     (function marcarActivo() {
-        const ruta = window.location.pathname;
+        var ruta = window.location.pathname;
 
-        /* Si estamos en el carrito, solo pintar el icono del carrito */
+        // Si estamos en el carrito, marcamos el icono del carrito
         if (ruta === '/tienda/carrito') {
-            const cartLink = document.querySelector('.nav-cart-link');
-            if (cartLink) cartLink.classList.add('activo');
+            var enlaceCarrito = document.querySelector('.enlace-carrito');
+            if (enlaceCarrito) enlaceCarrito.classList.add('activo');
             return;
         }
 
         function activarEnlaces(selector) {
-            const enlaces = Array.from(document.querySelectorAll(selector));
-            let mejorPath = '';
+            var enlaces = Array.from(document.querySelectorAll(selector));
+            var mejorRuta = '';
 
             enlaces.forEach(function (a) {
                 try {
-                    const path = new URL(a.href, window.location.origin).pathname;
-                    const coincide = path === '/home'
+                    var path = new URL(a.href, window.location.origin).pathname;
+                    var coincide = path === '/home'
                         ? ruta === '/home'
                         : ruta === path || ruta.startsWith(path + '/');
-                    if (coincide && path.length > mejorPath.length) {
-                        mejorPath = path;
+                    if (coincide && path.length > mejorRuta.length) {
+                        mejorRuta = path;
                     }
                 } catch (e) {}
             });
 
-            if (mejorPath) {
+            if (mejorRuta) {
                 enlaces.forEach(function (a) {
                     try {
-                        const path = new URL(a.href, window.location.origin).pathname;
-                        if (path === mejorPath) a.classList.add('activo');
+                        var path = new URL(a.href, window.location.origin).pathname;
+                        if (path === mejorRuta) a.classList.add('activo');
                     } catch (e) {}
                 });
             }
         }
 
         activarEnlaces('.nav-enlace');
-        activarEnlaces('.nav-movil-enlace');
+        activarEnlaces('.enlace-menu');
     })();
 
-    /* Menú hamburguesa */
-    const hamburguesa = document.getElementById('navHamburguesa');
-    const menuMovil = document.getElementById('navMovil');
+    // Menú hamburguesa
+    var botonMenu = document.getElementById('navHamburguesa');
+    var menuMovil = document.getElementById('navMovil');
 
-    if (hamburguesa && menuMovil) {
-        hamburguesa.addEventListener('click', function () {
-            const abierto = menuMovil.classList.toggle('abierto');
-            hamburguesa.classList.toggle('abierto', abierto);
+    if (botonMenu && menuMovil) {
+        // Abrir o cerrar el menú al hacer clic
+        botonMenu.addEventListener('click', function () {
+            var abierto = menuMovil.classList.toggle('abierto');
+            botonMenu.classList.toggle('abierto', abierto);
         });
 
-        menuMovil.querySelectorAll('.nav-movil-enlace').forEach(function (enlace) {
+        // Cerrar el menú al hacer clic en un enlace
+        menuMovil.querySelectorAll('.enlace-menu').forEach(function (enlace) {
             enlace.addEventListener('click', function () {
                 menuMovil.classList.remove('abierto');
-                hamburguesa.classList.remove('abierto');
+                botonMenu.classList.remove('abierto');
             });
         });
 
+        // Cerrar el menú al hacer clic fuera
         document.addEventListener('click', function (e) {
             if (!nav.contains(e.target)) {
                 menuMovil.classList.remove('abierto');
-                hamburguesa.classList.remove('abierto');
+                botonMenu.classList.remove('abierto');
             }
         });
     }

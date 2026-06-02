@@ -17,32 +17,32 @@
 
 	<main class="contenido-principal">
 
-		<div class="rc-fondo">
-			<div class="rc-slide activa"><img src="/img/portada/citas/perritogolde.jpg" alt=""></div>
-			<div class="rc-slide"><img src="/img/portada/citas/citaaa.jpg" alt=""></div>
-			<div class="rc-slide"><img src="/img/portada/citas/doctorexa.jpg" alt=""></div>
-			<div class="rc-overlay"></div>
+		<div class="fondo">
+			<div class="fondo-imagen activa"><img src="/img/portada/citas/perritogolde.jpg" alt=""></div>
+			<div class="fondo-imagen"><img src="/img/portada/citas/citaaa.jpg" alt=""></div>
+			<div class="fondo-imagen"><img src="/img/portada/citas/doctorexa.jpg" alt=""></div>
+			<div class="fondo-capa"></div>
 		</div>
 
-		<div class="rc-pagina">
-			<div class="rc-card">
+		<div class="centrado">
+			<div class="tarjeta">
 
-				<div class="rc-card-header">
+				<div class="cabecera">
 					<div>
-						<h1 class="rc-titulo" th:text="${esEdicion} ? 'Modificar cita' : 'Nueva cita'">Nueva cita</h1>
-						<p class="rc-sub">Rellena el formulario para reservar</p>
+						<h1 class="titulo" th:text="${esEdicion} ? 'Modificar cita' : 'Nueva cita'">Nueva cita</h1>
+						<p class="subtitulo">Rellena el formulario para reservar</p>
 					</div>
 				</div>
 
 				<form id="citaForm" th:action="@{/citas/reservar/guardar}" th:object="${cita}" method="post">
 					<input type="hidden" th:field="*{id}" />
 
-					<div class="rc-fila-dos">
-						<div class="rc-campo">
-							<label class="rc-label">Mascota</label>
+					<div class="fila">
+						<div class="campo">
+							<label class="etiqueta">Mascota</label>
 
 							<!-- Select real oculto — lo usa el formulario al enviarse -->
-							<select class="rc-select" th:field="*{mascota}" style="display:none" required>
+							<select class="selector" th:field="*{mascota}" style="display:none" required>
 								<option value="">— Selecciona —</option>
 								<option th:each="m : ${listaMascotas}" th:value="${m.id}"
 									th:text="${m.nombre} + ' (' + ${m.cliente?.usuario?.nombreCompleto} + ')'">
@@ -50,20 +50,20 @@
 							</select>
 
 							<!-- Buscador visible -->
-							<div class="rc-buscador-mascota">
-								<input type="text" class="rc-input" id="buscadorMascota"
+							<div class="buscador-mascota">
+								<input type="text" class="entrada" id="buscadorMascota"
 									placeholder="Escribe el nombre de la mascota..."
 									autocomplete="off">
-								<div class="rc-buscador-lista" id="buscadorListaMascota"></div>
+								<div class="buscador-lista" id="buscadorListaMascota"></div>
 							</div>
 
-							<small class="rc-error" th:if="${#fields.hasErrors('mascota')}" th:errors="*{mascota}"></small>
+							<small class="error" th:if="${#fields.hasErrors('mascota')}" th:errors="*{mascota}"></small>
 						</div>
 
-						<div class="rc-campo">
-							<label class="rc-label">Servicio</label>
-							<div class="rc-custom-select">
-								<select class="rc-select" th:field="*{motivo}"
+						<div class="campo">
+							<label class="etiqueta">Servicio</label>
+							<div class="selector-custom">
+								<select class="selector" th:field="*{motivo}"
 									th:classappend="${#fields.hasErrors('motivo')} ? 'is-invalid' : ''" required>
 									<option value="">— Selecciona —</option>
 									<option value="Consulta General - 30€">Consulta General (30€)</option>
@@ -72,28 +72,28 @@
 									<option value="Peluquería - 25€">Peluquería (25€)</option>
 									<option value="Cirugía - Desde 120€">Cirugía (Consultar)</option>
 								</select>
-								<div class="rc-select-trigger"><span>— Selecciona —</span><i class="fa-solid fa-chevron-down"></i></div>
-								<div class="rc-select-lista"></div>
+								<div class="selector-boton"><span>— Selecciona —</span><i class="fa-solid fa-chevron-down"></i></div>
+								<div class="selector-lista"></div>
 							</div>
-							<small class="rc-error" th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}"></small>
+							<small class="error" th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}"></small>
 						</div>
 					</div>
 					
-					<div class="rc-fila-dos">
-					    <div class="rc-campo">
-					        <label class="rc-label">Día</label>
-					        <input class="rc-input" type="date" id="fechaInput"
+					<div class="fila">
+					    <div class="campo">
+					        <label class="etiqueta">Día</label>
+					        <input class="entrada" type="date" id="fechaInput"
 					            th:value="${cita.fechaHora != null} ? ${#temporals.format(cita.fechaHora, 'yyyy-MM-dd')} : ''"
 					            th:classappend="${#fields.hasErrors('fechaHora')} ? 'is-invalid' : ''"
 					            th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}"
 					            th:disabled="${esEdicion and cita.fechaHora != null and cita.fechaHora.isBefore(#temporals.createNow())}" required>
-					        <small class="rc-error" th:if="${#fields.hasErrors('fechaHora')}" th:errors="*{fechaHora}"></small>
+					        <small class="error" th:if="${#fields.hasErrors('fechaHora')}" th:errors="*{fechaHora}"></small>
 					    </div>
 					
-					    <div class="rc-campo">
-					        <label class="rc-label">Hora</label>
-					        <div class="rc-custom-select" id="horaWrapper">
-					            <select class="rc-select" id="horaSelect" th:field="*{fechaHora}"
+					    <div class="campo">
+					        <label class="etiqueta">Hora</label>
+					        <div class="selector-custom" id="horaWrapper">
+					            <select class="selector" id="horaSelect" th:field="*{fechaHora}"
 					                th:disabled="${esEdicion and cita.fechaHora != null and cita.fechaHora.isBefore(#temporals.createNow())}" required>
 					                <option th:if="${!esEdicion}" value="">— Elige día primero —</option>
 					                <option th:if="${esEdicion}"
@@ -102,25 +102,25 @@
 					                        selected>
 					                </option>
 					            </select>
-					            <div class="rc-select-trigger"><span>— Elige día primero —</span><i class="fa-solid fa-chevron-down"></i></div>
-					            <div class="rc-select-lista"></div>
+					            <div class="selector-boton"><span>— Elige día primero —</span><i class="fa-solid fa-chevron-down"></i></div>
+					            <div class="selector-lista"></div>
 					        </div>
 					    </div>
 					</div>
 
-					<div class="rc-campo" sec:authorize="hasRole('admin')" style="margin-top: 15px; margin-bottom: 20px;">
-						<label class="rc-label">Descripción / Notas Clínicas</label>
-						<textarea class="rc-input" th:field="*{descripcion}" rows="4"
+					<div class="campo" sec:authorize="hasRole('admin')" style="margin-top: 15px; margin-bottom: 20px;">
+						<label class="etiqueta">Descripción / Notas Clínicas</label>
+						<textarea class="entrada" th:field="*{descripcion}" rows="4"
 								  placeholder="Escribe aquí las observaciones clínicas o detalles de la cita..."
 								  style="resize: vertical; font-family: inherit; padding: 10px; height: auto;"></textarea>
-						<small class="rc-error" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></small>
+						<small class="error" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></small>
 					</div>
 
-					<div class="rc-acciones">
-						<a th:href="@{/citas}" class="rc-link-volver">
+					<div class="acciones">
+						<a th:href="@{/citas}" class="volver">
 					        <i class="fa-solid fa-arrow-left"></i> Volver
 					    </a>
-						<button type="submit" class="rc-btn">
+						<button type="submit" class="boton">
 							<i class="fa-solid fa-circle-check"></i>
 							<span th:text="${esEdicion} ? 'Guardar cambios' : 'Confirmar reserva'">Confirmar reserva</span>
 						</button>

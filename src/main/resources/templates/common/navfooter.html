@@ -5,16 +5,14 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>barra de navegacion</title>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap"
-		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 	<link rel="stylesheet" th:href="@{/css/common/navfooter.css}">
 </head>
 
 <body>
 
-	<!-- navegacion-->
+	<!-- Barra de navegación -->
 	<header th:fragment="navbar">
 		<div class="nav-contenedor">
 			<a th:href="@{/home}" class="nav-logo">
@@ -30,60 +28,60 @@
 					<li sec:authorize="hasRole('user')"><a th:href="@{/mascotas/mis-mascotas}" class="nav-enlace">Mis mascotas</a></li>
 					<li sec:authorize="hasAnyRole('user', 'admin')"><a th:href="@{/tienda}" class="nav-enlace">Tienda virtual</a></li>
 					<li sec:authorize="hasRole('user')"><a th:href="@{/tienda/mis-compras}" class="nav-enlace">Mis compras</a></li>
-					<li class="nav-cart-container" sec:authorize="hasRole('user')">
-						<a th:href="@{/tienda/carrito}" class="nav-cart-link" title="Ver carrito">
+					<li class="contenedor-carrito" sec:authorize="hasRole('user')">
+						<a th:href="@{/tienda/carrito}" class="enlace-carrito" title="Ver carrito">
 							<i class="fa-solid fa-cart-shopping"></i>
-							<span id="cart-badge" class="cart-badge" th:text="${cartCount != null ? cartCount : 0}">0</span>
+							<span id="cart-badge" class="contador-carrito" th:text="${cartCount != null ? cartCount : 0}">0</span>
 						</a>
 					</li>
 				</ul>
 			</nav>
 			<div class="nav-acciones">
-			    <div th:if="${#authorization.expression('isAuthenticated()')}" style="display: flex; align-items: center; gap: 1rem;">
-			        <div class="nav-usuario">
-			            <i class="fa-regular fa-user usuario-icono"></i>
-			            <span class="usuario-nombre" sec:authentication="name">Usuario</span>
-			        </div>
-			        <form th:action="@{/logout}" method="post" style="display:inline">
-			            <button type="submit" class="btn-salir">
-			                Cerrar sesión
-			            </button>
-			        </form>
-			    </div>
-			
-			    <div th:if="${#authorization.expression('isAnonymous()')}">
-			        <a th:href="@{/login}" class="btn-login">
-			            Iniciar sesión
-			        </a>
-			    </div>
-			
-			    <button class="nav-hamburguesa" id="navHamburguesa" aria-label="Abrir menú">
-			        <span></span><span></span><span></span>
-			    </button>
+				<div th:if="${#authorization.expression('isAuthenticated()')}" style="display: flex; align-items: center; gap: 1rem;">
+					<div class="nav-usuario">
+						<i class="fa-regular fa-user icono-usuario"></i>
+						<span class="nombre-usuario" sec:authentication="name">Usuario</span>
+					</div>
+					<form th:action="@{/logout}" method="post" style="display:inline">
+						<button type="submit" class="boton-salir">
+							Cerrar sesión
+						</button>
+					</form>
+				</div>
+
+				<div th:if="${#authorization.expression('isAnonymous()')}">
+					<a th:href="@{/login}" class="boton-acceder">
+						Iniciar sesión
+					</a>
+				</div>
+
+				<button class="boton-menu" id="navHamburguesa" aria-label="Abrir menú">
+					<span></span><span></span><span></span>
+				</button>
 			</div>
 		</div>
 
-		<!-- Menú móvil desplegable -->
-		<div class="nav-movil" id="navMovil">
-			<ul class="nav-movil-lista">
-				<li sec:authorize="isAuthenticated()"><a th:href="@{/home}" class="nav-movil-enlace">Inicio</a></li>
-				<li sec:authorize="hasRole('admin')"><a th:href="@{/clientes}" class="nav-movil-enlace">Clientes</a></li>
-				<li sec:authorize="hasRole('admin')"><a th:href="@{/citas}" class="nav-movil-enlace">Agenda</a></li>
-				<li sec:authorize="hasRole('user')"><a th:href="@{/citas}" class="nav-movil-enlace">Mis citas</a></li>
-				<li sec:authorize="hasRole('admin')"><a th:href="@{/mascotas}" class="nav-movil-enlace">Mascotas</a></li>
-				<li sec:authorize="hasRole('user')"><a th:href="@{/mascotas/mis-mascotas}" class="nav-movil-enlace">Mis mascotas</a></li>
-				<li sec:authorize="hasAnyRole('user','admin')"><a th:href="@{/tienda}" class="nav-movil-enlace">Tienda virtual</a></li>
-				<li sec:authorize="hasRole('user')"><a th:href="@{/tienda/mis-compras}" class="nav-movil-enlace">Mis compras</a></li>
-				<li sec:authorize="hasRole('user')"><a th:href="@{/tienda/carrito}" class="nav-movil-enlace"><i class="fa-solid fa-cart-shopping"></i> Carrito</a></li>
-				<li class="nav-movil-separador"></li>
+		<!-- Menú móvil -->
+		<div class="menu-movil" id="navMovil">
+			<ul class="menu-lista">
+				<li sec:authorize="isAuthenticated()"><a th:href="@{/home}" class="enlace-menu">Inicio</a></li>
+				<li sec:authorize="hasRole('admin')"><a th:href="@{/clientes}" class="enlace-menu">Clientes</a></li>
+				<li sec:authorize="hasRole('admin')"><a th:href="@{/citas}" class="enlace-menu">Agenda</a></li>
+				<li sec:authorize="hasRole('user')"><a th:href="@{/citas}" class="enlace-menu">Mis citas</a></li>
+				<li sec:authorize="hasRole('admin')"><a th:href="@{/mascotas}" class="enlace-menu">Mascotas</a></li>
+				<li sec:authorize="hasRole('user')"><a th:href="@{/mascotas/mis-mascotas}" class="enlace-menu">Mis mascotas</a></li>
+				<li sec:authorize="hasAnyRole('user','admin')"><a th:href="@{/tienda}" class="enlace-menu">Tienda virtual</a></li>
+				<li sec:authorize="hasRole('user')"><a th:href="@{/tienda/mis-compras}" class="enlace-menu">Mis compras</a></li>
+				<li sec:authorize="hasRole('user')"><a th:href="@{/tienda/carrito}" class="enlace-menu"><i class="fa-solid fa-cart-shopping"></i> Carrito</a></li>
+				<li class="menu-separador"></li>
 				<li sec:authorize="isAnonymous()">
-					<a th:href="@{/login}" class="nav-movil-enlace nav-movil-login">
+					<a th:href="@{/login}" class="enlace-menu enlace-acceder">
 						<i class="fa-solid fa-right-to-bracket"></i> Iniciar sesión
 					</a>
 				</li>
 				<li>
 					<form th:action="@{/logout}" method="post" style="margin:0">
-						<button type="submit" class="nav-movil-enlace nav-movil-salir">
+						<button type="submit" class="enlace-menu boton-cerrar-sesion">
 							<i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
 						</button>
 					</form>
@@ -92,15 +90,14 @@
 		</div>
 	</header>
 
-	<!--footer -->
+	<!-- Footer -->
 	<footer th:fragment="pie">
 
 		<div class="footer-cuerpo">
 
 			<div class="footer-izq">
 				<img src="/img/logo/SANYTYPETlogo.png" alt="SanityPet" class="footer-logo">
-				<p class="footer-desc">Clínica veterinaria comprometida con el bienestar y la salud de tu mascota desde
-					2014.</p>
+				<p class="footer-desc">Clínica veterinaria comprometida con el bienestar y la salud de tu mascota desde 2014.</p>
 			</div>
 
 			<div class="footer-contacto">
@@ -125,7 +122,7 @@
 				<p class="footer-tit">Síguenos</p>
 				<div class="footer-iconos">
 					<a href="https://www.instagram.com/?hl=es" target="_blank" class="footer-red"><i class="fa-brands fa-instagram"></i></a>
-					<a href="https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F%3Flocale%3Des_ES" target="_blank" class="footer-red"><i class="fa-brands fa-facebook"></i></a>
+					<a href="https://www.facebook.com/" target="_blank" class="footer-red"><i class="fa-brands fa-facebook"></i></a>
 					<a href="https://es.linkedin.com/" target="_blank" class="footer-red"><i class="fa-brands fa-linkedin-in"></i></a>
 				</div>
 			</div>

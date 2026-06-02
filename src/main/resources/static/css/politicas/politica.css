@@ -1,4 +1,4 @@
-/* ── Política de Privacidad ── */
+/* Política de Privacidad */
 :root {
 	--menta: #2ec4b6;
 	--menta-oscuro: #20968b;
@@ -21,8 +21,8 @@ body {
 	background: var(--blanco);
 }
 
-/* ── Hero foto izquierda ── */
-.priv-hero {
+/* Hero */
+.hero {
 	position: relative;
 	height: calc(20rem + var(--nav-alto));
 	padding-top: var(--nav-alto);
@@ -33,36 +33,20 @@ body {
 	align-items: flex-end;
 }
 
-.priv-hero-overlay {
+.hero-capa {
 	position: absolute;
 	inset: 0;
 	background: linear-gradient(90deg, rgba(10,25,40,0.85) 0%, rgba(10,25,40,0.35) 60%, transparent 100%);
 }
 
-.priv-hero-contenido {
+.hero-contenido {
 	position: relative;
 	z-index: 1;
 	padding: 0 3.5rem 3rem;
 	max-width: 35rem;
 }
 
-.priv-hero-tag {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.4rem;
-	padding: 0.3rem 0.9rem;
-	background: rgba(46,196,182,0.2);
-	border: 0.0625rem solid rgba(46,196,182,0.5);
-	border-radius: 1.25rem;
-	font-size: 0.75rem;
-	font-weight: 600;
-	color: var(--menta-claro);
-	letter-spacing: 0.06em;
-	text-transform: uppercase;
-	margin-bottom: 0.75rem;
-}
-
-.priv-hero-titulo {
+.hero-titulo {
 	font-family: var(--fuente-marca);
 	font-size: 2.5rem;
 	font-weight: 700;
@@ -72,75 +56,28 @@ body {
 	margin-bottom: 0.6rem;
 }
 
-.priv-hero-sub {
-	font-size: 0.88rem;
-	color: rgba(255,255,255,0.6);
-}
-
-/* ── Contenido principal ── */
-.priv-main {
-	max-width: 66.25rem;
+/* Contenido principal */
+.contenido-legal {
+	max-width: 51.25rem;
 	margin: 0 auto;
 	padding: 4rem 2rem 5rem;
 }
 
-/* ── Intro con imagen lateral ── */
-.priv-intro {
-	display: grid;
-	grid-template-columns: 1fr 22.5rem;
-	gap: 2.5rem;
-	align-items: center;
-	margin-bottom: 3.5rem;
-	background: var(--fondo);
-	border-radius: 1.125rem;
-	padding: 2rem 2.5rem;
-	border: 0.0625rem solid var(--borde);
-}
-
-.priv-intro-texto h3 {
-	font-family: var(--fuente-marca);
-	font-size: 1.3rem;
-	font-weight: 700;
-	color: var(--texto);
-	margin-bottom: 0.75rem;
-}
-
-.priv-intro-texto p {
-	font-size: 0.91rem;
-	color: var(--texto-suave);
-	line-height: 1.8;
-}
-
-.priv-intro-img {
-	border-radius: 0.875rem;
-	overflow: hidden;
-	height: 13.75rem;
-	box-shadow: 0 0.375rem 1.5rem rgba(0,0,0,0.10);
-}
-
-.priv-intro-img img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	object-position: center;
-	display: block;
-}
-
-/* ── Divisor ── */
-.priv-divisor {
+/* Separador */
+.separador {
 	display: flex;
 	align-items: center;
 	gap: 1rem;
 	margin-bottom: 2.5rem;
 }
 
-.priv-divisor-linea {
+.sep-linea {
 	flex: 1;
 	height: 0.0625rem;
 	background: var(--borde);
 }
 
-.priv-divisor-texto {
+.sep-texto {
 	font-family: var(--fuente-marca);
 	font-size: 0.78rem;
 	font-weight: 700;
@@ -150,95 +87,72 @@ body {
 	white-space: nowrap;
 }
 
-/* ── Grid de secciones ── */
-.priv-grid {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 1.25rem;
+/* Bloque de contenido */
+.bloque {
+	padding: 1.75rem 0;
+	border-bottom: 0.0625rem solid var(--borde);
 }
 
-.priv-bloque {
-	background: var(--fondo);
-	border: 0.0625rem solid var(--borde);
-	border-radius: 0.875rem;
-	padding: 1.5rem;
-	transition: border-color 0.2s;
-}
+.bloque:last-child { border-bottom: none; }
 
-.priv-bloque:hover {
-	border-color: var(--menta);
-}
-
-.priv-bloque h2 {
+.bloque h2 {
 	font-family: var(--fuente-marca);
-	font-size: 1rem;
+	font-size: 1.05rem;
 	font-weight: 700;
-	color: var(--texto);
-	margin-bottom: 0.65rem;
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
+	color: var(--menta-oscuro);
+	margin-bottom: 0.75rem;
+	padding-bottom: 0.4rem;
+	border-bottom: 0.125rem solid var(--menta-claro);
+	display: inline-block;
 }
 
-.priv-bloque h2::before {
-	content: '';
-	width: 0.5rem;
-	height: 0.5rem;
-	border-radius: 50%;
-	background: var(--menta);
-	flex-shrink: 0;
-}
-
-.priv-bloque p {
-	font-size: 0.9rem;
+.bloque p {
+	font-size: 0.92rem;
 	color: var(--texto-suave);
-	line-height: 1.8;
+	line-height: 1.85;
 	margin-bottom: 0.5rem;
 }
 
-.priv-bloque ul {
-	padding-left: 1rem;
-	margin-top: 0.3rem;
-}
+.bloque ul { padding-left: 1.2rem; margin-top: 0.4rem; }
 
-.priv-bloque ul li {
-	font-size: 0.9rem;
+.bloque ul li {
+	font-size: 0.92rem;
 	color: var(--texto-suave);
-	line-height: 1.8;
+	line-height: 1.85;
+	margin-bottom: 0.3rem;
 }
 
-/* ── Responsive ── */
+/* Responsive */
 @media (max-width: 64rem) {
-	.priv-hero { height: calc(18rem + var(--nav-alto)); }
-	.priv-hero-titulo { font-size: 2.2rem; }
-	.priv-hero-contenido { padding: 0 3rem 2.5rem; }
-	.priv-main { max-width: 50rem; }
-}
-
-@media (max-width: 53.75rem) {
-	.priv-grid { grid-template-columns: 1fr; }
-	.priv-intro { grid-template-columns: 1fr; }
-	.priv-intro-img { height: 12.5rem; }
-	.priv-main { padding: 2.5rem 1.5rem 4rem; }
+	.hero { height: calc(18rem + var(--nav-alto)); }
+	.hero-titulo { font-size: 2.2rem; }
+	.hero-contenido { padding: 0 3rem 2.5rem; }
+	.contenido-legal { max-width: 44rem; }
 }
 
 @media (max-width: 48rem) {
-	.priv-hero { height: calc(16rem + var(--nav-alto)); }
-	.priv-hero-titulo { font-size: 2rem; }
-	.priv-hero-contenido { padding: 0 2rem 2rem; }
+	.hero { height: calc(16rem + var(--nav-alto)); }
+	.hero-titulo { font-size: 2rem; }
+	.hero-contenido { padding: 0 2rem 2rem; }
+	.contenido-legal { padding: 2.5rem 1.5rem 4rem; max-width: 100%; }
+	.bloque { padding: 1.5rem 0; }
+	.bloque h2 { font-size: 0.98rem; }
 }
 
 @media (max-width: 40rem) {
-	.priv-hero { height: calc(14rem + var(--nav-alto)); background-attachment: scroll; }
-	.priv-hero-titulo { font-size: 1.7rem; }
-	.priv-hero-sub { font-size: 0.82rem; }
-	.priv-hero-contenido { padding: 0 1.25rem 1.75rem; }
-	.priv-main { padding: 2rem 1.5rem 3.5rem; }
+	.hero { height: calc(14rem + var(--nav-alto)); background-attachment: scroll; }
+	.hero-titulo { font-size: 1.7rem; }
+	.hero-contenido { padding: 0 1.25rem 1.75rem; }
+	.contenido-legal { padding: 2rem 1.5rem 3.5rem; }
+	.bloque { padding: 1.25rem 0; }
+	.bloque h2 { font-size: 0.92rem; }
+	.bloque p, .bloque ul li { font-size: 0.88rem; }
+	.sep-texto { font-size: 0.72rem; }
 }
 
 @media (max-width: 30rem) {
-	.priv-hero { height: calc(12rem + var(--nav-alto)); }
-	.priv-hero-titulo { font-size: 1.45rem; }
-	.priv-hero-sub { display: none; }
-	.priv-main { padding: 1.5rem 1.25rem 3rem; }
+	.hero { height: calc(12rem + var(--nav-alto)); }
+	.hero-titulo { font-size: 1.45rem; }
+	.contenido-legal { padding: 1.5rem 1.25rem 3rem; }
+	.bloque h2 { font-size: 0.88rem; }
 }

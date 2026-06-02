@@ -19,21 +19,21 @@
 	<main class="contenido-principal">
 
 		<!-- Fondo slider -->
-		<div class="fp-fondo">
-			<div class="fp-slide activa"><img src="/img/portada/tienda/tienda3.jpg" alt=""></div>
-			<div class="fp-slide"><img src="/img/portada/productos/p2.jpg" alt=""></div>
-			<div class="fp-slide"><img src="/img/portada/tienda/tienda7.jpg" alt=""></div>
-			<div class="fp-overlay"></div>
+		<div class="fondo">
+			<div class="fondo-imagen activa"><img src="/img/portada/tienda/tienda3.jpg" alt=""></div>
+			<div class="fondo-imagen"><img src="/img/portada/productos/p2.jpg" alt=""></div>
+			<div class="fondo-imagen"><img src="/img/portada/tienda/tienda7.jpg" alt=""></div>
+			<div class="fondo-capa"></div>
 		</div>
 
 		<!-- Formulario centrado -->
-		<div class="fp-pagina">
-			<div class="fp-card">
+		<div class="pagina">
+			<div class="tarjeta">
 
-				<div class="fp-card-header">
+				<div class="cabecera">
 					<div>
-						<h1 class="fp-titulo" th:text="${producto.id == null ? 'Añadir Producto' : 'Editar Producto'}">Añadir Producto</h1>
-						<p class="fp-sub">Completa la información del producto</p>
+						<h1 class="titulo" th:text="${producto.id == null ? 'Añadir Producto' : 'Editar Producto'}">Añadir Producto</h1>
+						<p class="subtitulo">Completa la información del producto</p>
 					</div>
 				</div>
 
@@ -42,16 +42,16 @@
 					<input type="hidden" th:field="*{id}">
 
 					<!-- Nombre -->
-					<div class="fp-campo fp-campo-full">
-						<label class="fp-label">Nombre del Producto</label>
-						<input class="fp-input" type="text" th:field="*{nombre}" placeholder="Ej. Pienso Royal Canin" required>
+					<div class="campo campo-completo">
+						<label class="etiqueta">Nombre del Producto</label>
+						<input class="entrada" type="text" th:field="*{nombre}" placeholder="Ej. Pienso Royal Canin" required>
 					</div>
 
 					<!-- Categoría (custom select) -->
-					<div class="fp-campo fp-campo-full">
-						<label class="fp-label">Categoría</label>
-						<div class="fp-custom-select">
-							<select class="fp-select" th:field="*{categoria}" required>
+					<div class="campo campo-completo">
+						<label class="etiqueta">Categoría</label>
+						<div class="selector-custom">
+							<select class="selector" th:field="*{categoria}" required>
 								<option value="">— Selecciona categoría —</option>
 								<option value="Alimentación">Alimentación</option>
 								<option value="Accesorios">Accesorios</option>
@@ -59,44 +59,44 @@
 								<option value="Salud">Salud</option>
 								<option value="Juguetes">Juguetes</option>
 							</select>
-							<div class="fp-select-trigger">
+							<div class="selector-boton">
 								<span>— Selecciona categoría —</span>
 								<i class="fa-solid fa-chevron-down"></i>
 							</div>
-							<div class="fp-select-lista"></div>
+							<div class="selector-lista"></div>
 						</div>
 					</div>
 
 					<!-- Precio | Stock -->
-					<div class="fp-fila-dos">
-						<div class="fp-campo">
-							<label class="fp-label">Precio (€)</label>
-							<input class="fp-input" type="number" step="0.01" th:field="*{precio}" placeholder="0.00" required>
+					<div class="fila">
+						<div class="campo">
+							<label class="etiqueta">Precio (€)</label>
+							<input class="entrada" type="number" step="0.01" th:field="*{precio}" placeholder="0.00" required>
 						</div>
-						<div class="fp-campo">
-							<label class="fp-label">Stock (Unidades)</label>
-							<input class="fp-input" type="number" th:field="*{stock}" placeholder="0" required min="0">
+						<div class="campo">
+							<label class="etiqueta">Stock (Unidades)</label>
+							<input class="entrada" type="number" th:field="*{stock}" placeholder="0" required min="0">
 						</div>
 					</div>
 
 					<!-- Descripción -->
-					<div class="fp-campo fp-campo-full">
-						<label class="fp-label">Descripción</label>
-						<textarea class="fp-input fp-textarea" th:field="*{descripcion}" placeholder="Detalles del producto..." required></textarea>
+					<div class="campo campo-completo">
+						<label class="etiqueta">Descripción</label>
+						<textarea class="entrada area-texto" th:field="*{descripcion}" placeholder="Detalles del producto..." required></textarea>
 					</div>
 
 					<!-- URL Imagen -->
-					<div class="fp-campo fp-campo-full">
-						<label class="fp-label">URL de la Imagen (Opcional)</label>
-						<input class="fp-input" type="url" th:field="*{imagenUrl}" placeholder="https://...">
+					<div class="campo campo-completo">
+						<label class="etiqueta">URL de la Imagen (Opcional)</label>
+						<input class="entrada" type="url" th:field="*{imagenUrl}" placeholder="https://...">
 					</div>
 
 					<!-- Acciones -->
-					<div class="fp-acciones">
-						<a th:href="@{/tienda}" class="fp-link-volver">
+					<div class="acciones">
+						<a th:href="@{/tienda}" class="volver">
 							<i class="fa-solid fa-arrow-left"></i> Cancelar
 						</a>
-						<button type="submit" class="fp-btn">
+						<button type="submit" class="boton">
 							<i class="fa-solid fa-circle-check"></i>
 							<span th:text="${producto.id == null ? 'Guardar Producto' : 'Actualizar Producto'}">Guardar Producto</span>
 						</button>

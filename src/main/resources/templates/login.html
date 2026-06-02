@@ -13,55 +13,67 @@
 
 <body>
 
-	<div class="containermain">
-		<div class="seccionizq">
-			<div class="titulo">
-				<img th:src="@{/img/logo/SANYTYPETlogo.png}" alt="SanityPet" class="logo-acceso">
+	<!-- Contenedor principal -->
+	<div class="contenedor">
+
+		<!-- Panel izquierdo verde -->
+		<div class="panel-izq">
+			<div class="cabecera">
+				<img th:src="@{/img/logo/SANYTYPETlogo.png}" alt="SanityPet" class="logo">
 				<h2>Bienvenido de nuevo</h2>
 				<p>Comprometidos con el cuidado y bienestar de tu mascota</p>
 			</div>
 		</div>
 
-		<div class="seccionder">
+		<!-- Panel derecho con el formulario -->
+		<div class="panel-der">
 			<form th:action="@{/login}" method="post">
 				<h3>Iniciar Sesión</h3>
 				<p>Ingresa tus credenciales</p>
 
-				<div th:if="${param.registrado}" class="logout">
+				<!-- Mensaje de registro exitoso -->
+				<div th:if="${param.registrado}" class="mensaje-exito">
 					¡Registro completado! Ya puedes iniciar sesión con tu DNI.
 				</div>
 
-				<div th:if="${param.error}" class="error">
+				<!-- Mensaje de error -->
+				<div th:if="${param.error}" class="mensaje-error">
 					Usuario o contraseña incorrectos.
 				</div>
 
-				<div th:if="${param.logout}" class="logout">
+				<!-- Mensaje de cierre de sesión -->
+				<div th:if="${param.logout}" class="mensaje-exito">
 					Has cerrado sesión correctamente.
 				</div>
 
-				<div class="inputs">
+				<!-- Campo usuario -->
+				<div class="campo">
 					<label>Usuario</label>
 					<input type="text" name="username" placeholder="DNI" required autofocus>
 				</div>
 
-				<div class="inputs">
+				<!-- Campo contraseña -->
+				<div class="campo">
 					<label>Contraseña</label>
 					<input type="password" name="password" placeholder="Contraseña" required>
 				</div>
 
-				<div class="form-footer">
+				<!-- Recuérdame -->
+				<div class="pie-form">
 					<label style="display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
 						<input type="checkbox" name="remember-me"> Recuérdame
 					</label>
 				</div>
 
-				<button type="submit" class="buton">Acceder</button>
+				<button type="submit" class="boton">Acceder</button>
 			</form>
 
-			<div class="create-account">
+			<!-- Enlace a registro -->
+			<div class="crear-cuenta">
 				¿Nuevo en la clínica? <a th:href="@{/registrarse}">Crea una cuenta de socio</a>
 			</div>
 		</div>
+
 	</div>
 
 </body>

@@ -19,58 +19,58 @@
 	<main class="contenido-principal">
 
 		<!-- Fondo slider -->
-		<div class="fm-fondo">
-			<div class="fm-slide activa"><img src="/img/portada/mascotas/mascotaha.jpg" alt=""></div>
-			<div class="fm-slide"><img src="/img/portada/mascotas/mas7.jpg" alt=""></div>
-			<div class="fm-slide"><img src="/img/portada/mascotas/mas6.jpg" alt=""></div>
-			<div class="fm-overlay"></div>
+		<div class="fondo">
+			<div class="fondo-imagen activa"><img src="/img/portada/mascotas/mascotaha.jpg" alt=""></div>
+			<div class="fondo-imagen"><img src="/img/portada/mascotas/mas7.jpg" alt=""></div>
+			<div class="fondo-imagen"><img src="/img/portada/mascotas/mas6.jpg" alt=""></div>
+			<div class="fondo-capa"></div>
 		</div>
 
 		<!-- Formulario centrado -->
-		<div class="fm-pagina">
-			<div class="fm-card">
-				<div class="fm-card-header">
+		<div class="centrado">
+			<div class="tarjeta">
+				<div class="cabecera">
 					<div>
-						<h1 class="fm-titulo" th:text="${mascota.id != null} ? 'Editar mascota' : 'Nueva mascota'">Nueva mascota</h1>
-						<p class="fm-sub" th:text="${mascota.id != null} ? 'Modifica los datos del paciente seleccionado' : 'Completa la información del nuevo paciente'">Completa la información del nuevo paciente</p>
+						<h1 class="titulo" th:text="${mascota.id != null} ? 'Editar mascota' : 'Nueva mascota'">Nueva mascota</h1>
+						<p class="subtitulo" th:text="${mascota.id != null} ? 'Modifica los datos del paciente seleccionado' : 'Completa la información del nuevo paciente'">Completa la información del nuevo paciente</p>
 					</div>
 				</div>
 
 				<form th:action="@{/mascotas/guardar}" th:object="${mascota}" method="post">
 					<input type="hidden" th:field="*{id}" />
 					<!-- Nombre | Especie -->
-					<div class="fm-fila-dos">
-						<div class="fm-campo">
-							<label class="fm-label">Nombre</label>
-							<input class="fm-input" type="text" th:field="*{nombre}" placeholder="Ej: Toby" required>
+					<div class="fila">
+						<div class="campo">
+							<label class="etiqueta">Nombre</label>
+							<input class="entrada" type="text" th:field="*{nombre}" placeholder="Ej: Toby" required>
 						</div>
-						<div class="fm-campo">
-							<label class="fm-label">Especie</label>
-							<div class="fm-custom-select">
-								<select class="fm-select" th:field="*{especie}" required>
+						<div class="campo">
+							<label class="etiqueta">Especie</label>
+							<div class="selector-custom">
+								<select class="selector" th:field="*{especie}" required>
 									<option value="Perro">Perro</option>
 									<option value="Gato">Gato</option>
 									<option value="Ave">Ave</option>
 									<option value="Otro">Otro</option>
 								</select>
-								<div class="fm-select-trigger">
+								<div class="selector-boton">
 									<span>Perro</span>
 									<i class="fa-solid fa-chevron-down"></i>
 								</div>
-								<div class="fm-select-lista"></div>
+								<div class="selector-lista"></div>
 							</div>
 						</div>
 					</div>
 
 					<!-- Raza | Fecha de nacimiento -->
-					<div class="fm-fila-dos">
-						<div class="fm-campo">
-							<label class="fm-label">Raza</label>
-							<input class="fm-input" type="text" th:field="*{raza}" placeholder="Ej: Labrador">
+					<div class="fila">
+						<div class="campo">
+							<label class="etiqueta">Raza</label>
+							<input class="entrada" type="text" th:field="*{raza}" placeholder="Ej: Labrador">
 						</div>
-						<div class="fm-campo">
-						    <label class="fm-label">Fecha de nacimiento</label>
-						    <input class="fm-input" 
+						<div class="campo">
+						    <label class="etiqueta">Fecha de nacimiento</label>
+						    <input class="entrada" 
 						           type="date" 
 						           th:id="fechaNacimiento"
 						           th:name="fechaNacimiento"
@@ -81,12 +81,11 @@
 					</div>
 
 					<!-- Propietario (solo admin) -->
-					<div class="fm-campo fm-campo-full" sec:authorize="hasRole('admin')">
-<<<<<<< HEAD
-						<label class="fm-label">Asignar a cliente</label>
+					<div class="campo campo-completo" sec:authorize="hasRole('admin')">
+					<label class="etiqueta">Asignar a cliente</label>
 
 						<!-- Select real oculto — lo usa el formulario al enviarse -->
-						<select class="fm-select" th:field="*{cliente}" style="display:none">
+						<select class="selector" th:field="*{cliente}" style="display:none">
 							<option value="">— Seleccionar cliente —</option>
 							<option th:each="c : ${todosClientes}" th:value="${c.id}"
 								th:text="${c.dni} + ' - ' + ${c.usuario.nombreCompleto}">
@@ -94,44 +93,24 @@
 						</select>
 
 						<!-- Buscador visible -->
-						<div class="fm-buscador-cliente">
-							<input type="text" class="fm-input" id="buscadorCliente"
+						<div class="buscador-cliente">
+							<input type="text" class="entrada" id="buscadorCliente"
 								placeholder="Escribe el nombre o DNI del cliente..."
 								autocomplete="off">
-							<div class="fm-buscador-lista" id="buscadorLista"></div>
+							<div class="buscador-lista" id="buscadorLista"></div>
 						</div>
-=======
-					    <label class="fm-label">Asignar a cliente</label>
-					    
-					    <input class="fm-input" 
-					           type="text" 
-					           id="clienteBuscador" 
-					           list="datalistClientes" 
-					           placeholder="— Escribe DNI o Nombre para buscar cliente —"
-					           th:value="${mascota.cliente != null} ? ${mascota.cliente.dni} + ' - ' + ${mascota.cliente.usuario?.nombreCompleto} : ''"
-					           autocomplete="off" required>
-					    
-					    <datalist id="datalistClientes">
-					        <option th:each="c : ${todosClientes}" 
-					                th:value="${c.dni} + ' - ' + ${c.usuario?.nombreCompleto}"
-					                th:attr="data-id=${c.id}">
-					        </option>
-					    </datalist>
-					    
-					    <input type="hidden" id="clienteIdHidden" th:field="*{cliente}" />
->>>>>>> f4a4c02f30a8803904ffae99de0245739b6fc566
 					</div>
 
-					<div class="fm-acciones">
-					    <a sec:authorize="hasRole('admin')" th:href="@{/mascotas}" class="fm-link-volver">
+					<div class="acciones">
+					    <a sec:authorize="hasRole('admin')" th:href="@{/mascotas}" class="volver">
 					        <i class="fa-solid fa-arrow-left"></i> Cancelar
 					    </a>
 					    
-					    <a sec:authorize="hasAnyRole('cliente', 'USER')" th:href="@{/mascotas/mis-mascotas}" class="fm-link-volver">
+					    <a sec:authorize="hasAnyRole('cliente', 'USER')" th:href="@{/mascotas/mis-mascotas}" class="volver">
 					        <i class="fa-solid fa-arrow-left"></i> Cancelar
 					    </a>
 					
-					    <button type="submit" class="fm-btn">
+					    <button type="submit" class="boton">
 					        <i class="fa-solid fa-circle-check"></i>
 					        <span>Guardar mascota</span>
 					    </button>
