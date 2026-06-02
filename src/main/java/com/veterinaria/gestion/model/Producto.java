@@ -21,6 +21,6 @@ public class Producto {
     private Integer stock;
     private String categoria;
     
-    @Column(name = "imagen_url")
+    @Column(name = "imagen_url", length = 2048)
     private String imagenUrl;
 }
