@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-06-2026 a las 22:06:51
+-- Tiempo de generación: 02-06-2026 a las 22:00:24
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -32,7 +32,7 @@ CREATE TABLE `citas` (
   `fecha_hora` datetime NOT NULL,
   `motivo` varchar(255) DEFAULT NULL,
   `mascota_id` bigint(20) DEFAULT NULL,
-  `descripcion` text DEFAULT NULL
+  `descripcion` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -40,9 +40,6 @@ CREATE TABLE `citas` (
 --
 
 INSERT INTO `citas` (`id`, `fecha_hora`, `motivo`, `mascota_id`, `descripcion`) VALUES
-(1, '2026-06-01 09:00:00', 'Consulta General - 30€', 1, 'Revisión semestral del estado de salud general y peso.'),
-(2, '2026-06-02 10:30:00', 'Vacunación - 45€', 2, 'Inoculación de la vacuna polivalente anual de refuerzo.'),
-(3, '2026-06-03 11:15:00', 'Peluquería - 25€', 3, 'Lavado cosmético completo, cepillado y corte higiénico.'),
 (4, '2026-06-04 12:00:00', 'Diagnóstico (Eco/Rx) - 60€', 4, 'Ecografía abdominal programada para seguimiento de control.'),
 (5, '2026-06-05 16:30:00', 'Cirugía - Desde 120€', 5, 'Intervención de esterilización programada y analítica previa.'),
 (6, '2026-06-08 09:45:00', 'Consulta General - 30€', 6, 'Control evolutivo de la otitis detectada la semana pasada.'),
@@ -59,7 +56,8 @@ INSERT INTO `citas` (`id`, `fecha_hora`, `motivo`, `mascota_id`, `descripcion`) 
 (17, '2026-06-23 11:45:00', 'Vacunación - 45€', 17, 'Vacuna trivalente felina reglamentaria de mantenimiento.'),
 (18, '2026-06-24 13:00:00', 'Diagnóstico (Eco/Rx) - 60€', 18, 'Estudio radiológico torácico preventivo para monitorizar tos.'),
 (19, '2026-06-25 15:30:00', 'Peluquería - 25€', 19, 'Arreglo estético, baño hidratante y limado de uñas.'),
-(20, '2026-06-26 17:00:00', 'Cirugía - Desde 120€', 20, 'Extirpación de nódulo subcutáneo benigno enviado a biopsia.');
+(20, '2026-06-26 17:00:00', 'Cirugía - Desde 120€', 20, 'Extirpación de nódulo subcutáneo benigno enviado a biopsia.'),
+(21, '2026-06-03 07:30:00', 'Consulta General - 30€', 22, '');
 
 -- --------------------------------------------------------
 
@@ -69,9 +67,9 @@ INSERT INTO `citas` (`id`, `fecha_hora`, `motivo`, `mascota_id`, `descripcion`) 
 
 CREATE TABLE `clientes` (
   `id` bigint(20) NOT NULL,
-  `dni` varchar(9) NOT NULL,
-  `telefono` varchar(15) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
+  `dni` varchar(255) NOT NULL,
+  `telefono` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `saldo` decimal(10,2) DEFAULT 0.00,
   `usuario_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -81,7 +79,7 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id`, `dni`, `telefono`, `email`, `saldo`, `usuario_id`) VALUES
-(2, '22222222B', '333445', 'ana.silva@email.com', 50.05, 3),
+(2, '22222222B', '333445555', 'ana.silva@email.com', 0.00, 3),
 (4, '44444444D', '600444555', 'laura.beltran@email.com', 0.00, 5),
 (5, '55555555E', '600555666', 'miguel.benitez@email.com', 120.00, 6),
 (6, '66666666F', '600666777', 'elena.rostova@email.com', 0.00, 7),
@@ -109,9 +107,8 @@ INSERT INTO `clientes` (`id`, `dni`, `telefono`, `email`, `saldo`, `usuario_id`)
 (28, '99001122S', '699999000', 'camilo.sesto@email.com', 0.00, 29),
 (30, '50607080U', '600654321', 'julio.iglesias@email.com', 0.00, 31),
 (31, '33378333C', '', '', 0.00, 32),
-(40, '77889900X', '', '', 0.00, 51),
-(46, '12345678R', '6000', 'a@a.com', 0.00, 63),
-(47, '12345678Q', '54353543435', 'correo@gmail.com', 0.00, 64);
+(49, '11111111A', '', '', 0.00, 66),
+(54, '12345678B', '', '', 25.51, 72);
 
 -- --------------------------------------------------------
 
@@ -124,7 +121,7 @@ CREATE TABLE `compras` (
   `cliente_id` bigint(20) DEFAULT NULL,
   `producto_id` bigint(20) DEFAULT NULL,
   `fecha_compra` datetime DEFAULT current_timestamp(),
-  `precio_pagado` decimal(10,2) DEFAULT NULL
+  `precio_pagado` decimal(38,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -132,16 +129,7 @@ CREATE TABLE `compras` (
 --
 
 INSERT INTO `compras` (`id`, `cliente_id`, `producto_id`, `fecha_compra`, `precio_pagado`) VALUES
-(1, 2, 1, '2026-05-30 14:44:21', 45.99),
-(2, 2, 1, '2026-05-30 14:44:21', 45.99),
-(3, 2, 1, '2026-05-30 14:44:21', 45.99),
-(4, 2, 2, '2026-05-30 14:44:21', 24.49),
-(5, 2, 2, '2026-05-30 14:44:21', 24.49),
-(6, 2, 6, '2026-05-30 14:44:21', 1.95),
-(7, 2, 3, '2026-05-31 09:39:38', 11.20),
-(8, 2, 3, '2026-05-31 09:39:38', 11.20),
-(9, 2, 3, '2026-05-31 09:39:38', 11.20),
-(10, 2, 15, '2026-06-01 18:15:37', 29.95);
+(1, 54, 2, '2026-06-02 19:58:56', 24.49);
 
 -- --------------------------------------------------------
 
@@ -151,9 +139,9 @@ INSERT INTO `compras` (`id`, `cliente_id`, `producto_id`, `fecha_compra`, `preci
 
 CREATE TABLE `mascotas` (
   `id` bigint(20) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
-  `especie` varchar(50) DEFAULT NULL,
-  `raza` varchar(50) DEFAULT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  `especie` varchar(255) DEFAULT NULL,
+  `raza` varchar(255) DEFAULT NULL,
   `fecha_nacimiento` date DEFAULT NULL,
   `cliente_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -196,7 +184,8 @@ INSERT INTO `mascotas` (`id`, `nombre`, `especie`, `raza`, `fecha_nacimiento`, `
 (36, 'Luna', 'Gato', 'Siamés', '2022-12-28', 2),
 (40, 'Tob', 'Perro', '', NULL, 10),
 (41, 'Marlon', 'Perro', '', NULL, 2),
-(43, 'Alejandro', 'Perro', 'a', NULL, 2);
+(44, 'Tob', 'Perro', '', '2026-06-02', 11),
+(45, 'a', 'Perro', 'a', '2026-06-01', 2);
 
 -- --------------------------------------------------------
 
@@ -206,12 +195,12 @@ INSERT INTO `mascotas` (`id`, `nombre`, `especie`, `raza`, `fecha_nacimiento`, `
 
 CREATE TABLE `productos` (
   `id` bigint(20) NOT NULL,
-  `nombre` varchar(100) NOT NULL,
-  `descripcion` text DEFAULT NULL,
-  `precio` decimal(10,2) NOT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `precio` decimal(38,2) DEFAULT NULL,
   `stock` int(11) DEFAULT 0,
-  `categoria` varchar(50) DEFAULT NULL,
-  `imagen_url` text DEFAULT NULL
+  `categoria` varchar(255) DEFAULT NULL,
+  `imagen_url` varchar(2048) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -220,34 +209,27 @@ CREATE TABLE `productos` (
 
 INSERT INTO `productos` (`id`, `nombre`, `descripcion`, `precio`, `stock`, `categoria`, `imagen_url`) VALUES
 (1, 'Pienso Premium Perro 10kg', 'Alimento balanceado para perros adultos de raza mediana.', 45.99, 17, 'Alimentación', 'https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=500&auto=format&fit=crop&q=60'),
-(2, 'Pienso Esterilizado Gato 3kg', 'Control de peso estricto para felinos domésticos de interior.', 24.49, 13, 'Higiene', 'https://www.kiwoko.com/dw/image/v2/BDLQ_PRD/on/demandware.static/-/Sites-kiwoko-master-catalog/default/dw96adc365/images/pienso_gatos_start_adult_pollo_cereales_KWK40948.jpg?sw=780&sh=780&sm=fit&q=85'),
-(3, 'Comida Húmeda Buey Perro (X6)', 'Pack de 6 latas de sabroso buey en salsa gelatinosa.', 11.20, 27, 'Alimentación', 'https://www.google.com/aclk?sa=L&ai=DChsSEwigmOrozOaUAxVPOwYAHYBLH4YYACICCAEQARoCd3M&co=1&ase=2&gclid=Cj0KCQjw2_TQBhCnARIsAF3-XhzA1OnHFbtFkoHx0cxGaaar4AmGObX0jsGCyUA-435TtynbS7VzYXQaAqx4EALw_wcB&cce=2&category=acrcp_v1_32&sig=AOD64_0pq1xlSjQSXt_BSgcXRHkkhBpzzg&ctype=5&q=&nis=4&ved=2ahUKEwiL3OXozOaUAxUZT6QEHdLMKJcQ5bgDKAB6BAgKEAs&adurl='),
-(4, 'Snacks Dentales para Perros', 'Barritas masticables que previenen el sarro y mal aliento.', 5.95, 50, 'Alimentación', 'https://images.unsplash.com/photo-1548767797-d8c844163c4c?w=500&auto=format&fit=crop&q=60'),
-(5, 'Pienso Cachorros Puppy 5kg', 'Fórmula con extra de calcio para el crecimiento de cachorros.', 29.99, 12, 'Alimentación', 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500&auto=format&fit=crop&q=60'),
-(6, 'Lata Salmón Gato Gourmet', 'Delicioso paté de salmón salvaje para los gatos más exigentes.', 1.95, 99, 'Alimentación', 'https://images.unsplash.com/photo-1535930891776-0c2dfb7fda1a?w=500&auto=format&fit=crop&q=60'),
-(7, 'Mezcla Semillas Canarios 1kg', 'Alimento completo enriquecido con vitaminas para aves.', 4.50, 25, 'Alimentación', 'https://images.unsplash.com/photo-1607990283143-e81e7a2c93ab?w=500&auto=format&fit=crop&q=60'),
+(2, 'Pienso Esterilizado Gato 14kg', 'Control de peso estricto para felinos domésticos de interior.', 24.49, 12, 'Alimentación', 'https://www.kiwoko.com/dw/image/v2/BDLQ_PRD/on/demandware.static/-/Sites-kiwoko-master-catalog/default/dw96adc365/images/pienso_gatos_start_adult_pollo_cereales_KWK40948.jpg?sw=780&sh=780&sm=fit&q=85'),
+(3, 'Comida Húmeda Buey Perro (X6)', 'Pack de 6 latas de sabroso buey en salsa gelatinosa.', 11.20, 27, 'Alimentación', 'https://piensoymascotas.com/34831-home_default/lata-comida-humeda-de-pavo-para-perros.webp'),
+(4, 'Snacks Dentales para Perros', 'Barritas masticables que previenen el sarro y mal aliento.', 5.95, 50, 'Alimentación', 'https://piensoymascotas.com/19002-home_default/purina-dentalife-perros-medianos.webp'),
+(5, 'Pienso Cachorros Puppy 5kg', 'Fórmula con extra de calcio para el crecimiento de cachorros.', 29.99, 12, 'Alimentación', 'https://piensoymascotas.com/28512-home_default/royal-canin-maxi-puppy.webp'),
+(7, 'Mezcla Semillas Canarios 1kg', 'Alimento completo enriquecido con vitaminas para aves.', 4.50, 25, 'Alimentación', 'https://piensoymascotas.com/32764-home_default/psittacus-formula-mantenimiento-alta-proteina.webp'),
 (8, 'Heno Premium Alfalfa 1kg', 'Heno fresco ideal para conejos, cobayas y pequeños roedores.', 6.20, 18, 'Alimentación', 'https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=500&auto=format&fit=crop&q=60'),
-(9, 'Champú Antiparasitario', 'Elimina pulgas, garrapatas y piojos protegiendo la barrera cutánea.', 12.80, 40, 'Higiene', 'https://images.unsplash.com/photo-1608248597481-496100c8c836?w=500&auto=format&fit=crop&q=60'),
+(9, 'Champú Antiparasitario', 'Elimina pulgas, garrapatas y piojos protegiendo la barrera cutánea.', 12.80, 40, 'Higiene', 'https://piensoymascotas.com/36322-home_default/diptron-champu-antiparasitario.webp'),
 (10, 'Arena de Gato Aglomerante 10L', 'Excelente control de olores y fácil de limpiar diariamente.', 14.90, 22, 'Higiene', 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500&auto=format&fit=crop&q=60'),
 (11, 'Limpiador de Oídos Otológico', 'Solución líquida para disolver el exceso de cera y suciedad.', 9.15, 30, 'Higiene', 'https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=500&auto=format&fit=crop&q=60'),
-(12, 'Toallitas Higiénicas Pack 80', 'Toallitas húmedas sin alcohol para limpiar patas y ojos.', 4.25, 60, 'Higiene', 'https://images.unsplash.com/photo-1585624484084-74e2e283c79c?w=500&auto=format&fit=crop&q=60'),
-(13, 'Cortauñas Ergonómico Perro', 'De acero inoxidable con tope de seguridad para evitar cortes.', 8.50, 15, 'Higiene', 'https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=500&auto=format&fit=crop&q=60'),
+(12, 'Toallitas Higiénicas Pack 80', 'Toallitas húmedas sin alcohol para limpiar patas y ojos.', 4.25, 60, 'Higiene', 'https://piensoymascotas.com/37207-home_default/toallitas-higienicas-sano-bello.webp'),
 (14, 'Spray Desenredante Pelaje', 'Suaviza el pelo largo facilitando el cepillado sin tirones.', 11.40, 25, 'Higiene', 'https://images.unsplash.com/photo-1527362950785-f487a7c1fe48?w=500&auto=format&fit=crop&q=60'),
-(15, 'Pipetas Antiparasitarias (X4)', 'Protección total de 4 meses frente a mosquitos, pulgas y garrapatas.', 29.95, 49, 'Farmacia', 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&auto=format&fit=crop&q=60'),
 (16, 'Collar Scalibor Grande', 'Collar repelente altamente eficaz contra el flebótomo de la Leishmania.', 32.10, 35, 'Farmacia', 'https://images.unsplash.com/photo-1544568100-847a948585b9?w=500&auto=format&fit=crop&q=60'),
 (17, 'Suplemento Articular Condro', '60 comprimidos para reforzar las articulaciones de perros mayores.', 38.00, 14, 'Farmacia', 'https://images.unsplash.com/photo-1550572017-edd951b55104?w=500&auto=format&fit=crop&q=60'),
-(18, 'Malta para Gatos Tubo 100g', 'Previene de forma eficaz la formación de bolas de pelo.', 7.50, 45, 'Farmacia', 'https://images.unsplash.com/photo-1597626122131-0ee21aacdee4?w=500&auto=format&fit=crop&q=60'),
+(18, 'Malta para Gatos Tubo 100g', 'Previene de forma eficaz la formación de bolas de pelo.', 7.50, 45, 'Higiene', 'https://piensoymascotas.com/24344-home_default/malta-para-gatos-en-pasta.webp'),
 (19, 'Crema Protectora Almohadillas', 'Hidrata y repara las almohadillas agrietadas por el frío o calor.', 13.25, 20, 'Farmacia', 'https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=500&auto=format&fit=crop&q=60'),
-(20, 'Antiséptico de Heridas Spray', 'Desinfectante de acción rápida que no escuece al animal.', 6.80, 40, 'Farmacia', 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=500&auto=format&fit=crop&q=60'),
 (21, 'Rascador Gato Árbol', 'Estructura estable de tres niveles revestida con cuerda de sisal natural.', 55.00, 8, 'Juguetes', 'https://images.unsplash.com/photo-1545249390-6bdfa286032f?w=500&auto=format&fit=crop&q=60'),
 (22, 'Pelota de Goma Irrompible', 'Goma maciza ultra resistente ideal para morder y lanzar.', 6.50, 40, 'Juguetes', 'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=500&auto=format&fit=crop&q=60'),
 (23, 'Mordedor de Cuerda Nudos', 'Hilos de algodón que ayudan a limpiar los dientes jugando.', 4.99, 35, 'Juguetes', 'https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?w=500&auto=format&fit=crop&q=60'),
-(24, 'Ratón de Juguete con Catnip', 'Pack de 3 ratoncitos rellenos de hierba gatera estimulante.', 3.50, 60, 'Juguetes', 'https://images.unsplash.com/photo-1513360309081-36f5e878f2d0?w=500&auto=format&fit=crop&q=60'),
+(24, 'Ratón de Juguete con Catnip', 'Pack de 3 ratoncitos rellenos de hierba gatera estimulante.', 3.50, 60, 'Juguetes', 'https://piensoymascotas.com/24749-home_default/raton-de-juego-con-catnip-peluche-7-cm.webp'),
 (26, 'Cama Acolchada Confort L', 'Cama desenfundable y lavable para perros grandes o medianos.', 42.50, 10, 'Accesorios', 'https://images.unsplash.com/photo-1591946614720-90a587da4a36?w=500&auto=format&fit=crop&q=60'),
-(27, 'Correa Extensible 5 metros', 'Cinta resistente con sistema de frenado cómodo con una mano.', 18.90, 25, 'Accesorios', 'https://images.unsplash.com/photo-1601758124540-52f84a22f300?w=500&auto=format&fit=crop&q=60'),
-(28, 'Arnés Antitirones Ergonómico', 'Distribuye la presión de forma uniforme evitando ahogamientos.', 22.00, 15, 'Accesorios', 'https://images.unsplash.com/photo-1625316708582-7c38734be31d?w=500&auto=format&fit=crop&q=60'),
-(29, 'Comedero Acero Inoxidable', 'Base de goma antideslizante y apto para lavavajillas.', 7.80, 30, 'Accesorios', 'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=500&auto=format&fit=crop&q=60'),
-(30, 'Transportín de Viaje Homologado', 'Rejillas de ventilación óptima y puerta de seguridad metálica.', 34.99, 12, 'Accesorios', 'https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=500&auto=format&fit=crop&q=60');
+(28, 'Arnés Antitirones Ergonómico', 'Distribuye la presión de forma uniforme evitando ahogamientos.', 22.00, 15, 'Accesorios', 'https://images.unsplash.com/photo-1625316708582-7c38734be31d?w=500&auto=format&fit=crop&q=60');
 
 -- --------------------------------------------------------
 
@@ -257,10 +239,10 @@ INSERT INTO `productos` (`id`, `nombre`, `descripcion`, `precio`, `stock`, `cate
 
 CREATE TABLE `usuarios` (
   `id` bigint(20) NOT NULL,
-  `username` varchar(20) NOT NULL,
+  `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `rol` varchar(20) NOT NULL,
-  `nombre_completo` varchar(100) DEFAULT NULL
+  `rol` varchar(255) NOT NULL,
+  `nombre_completo` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -268,8 +250,6 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `username`, `password`, `rol`, `nombre_completo`) VALUES
-(1, 'admin', 'admin', 'admin', 'admin'),
-(2, '111111111A', 'a', 'user', 'Carlos Mendoza Roldán'),
 (3, '22222222B', '$2a$10$r.7gU6W9WbkW...', 'user', 'Ana María Silva Ortizz'),
 (5, '44444444D', '$2a$10$r.7gU6W9WbkW...', 'admin', 'Laura Beltrán Torres'),
 (6, '55555555E', '$2a$10$r.7gU6W9WbkW...', 'user', 'Miguel Ángel Benítez'),
@@ -298,9 +278,8 @@ INSERT INTO `usuarios` (`id`, `username`, `password`, `rol`, `nombre_completo`) 
 (29, '99001122S', '$2a$10$r.7gU6W9WbkW...', 'user', 'Camilo Sesto Blanes'),
 (31, '50607080U', '$2a$10$r.7gU6W9WbkW...', 'user', 'Julio Iglesias de la Cueva'),
 (32, '33378333C', '$2a$10$T4LKvNOZVoGyVUM.J3s4oOggw8eJqDSictfEH8HU1NVp/a.tVLQIC', 'admin', 'admin'),
-(51, '77889900X', 'a', 'user', 'alba'),
-(63, '12345678R', 'a', 'user', 'Erick'),
-(64, '12345678Q', 'a', 'user', 'Erick');
+(66, '11111111A', '$2a$10$5rNpiI1Bp4zxIpV4rY/rUuDok1cVrGiVpSxHTQyuO0jsu9XLarcae', 'admin', 'admin'),
+(72, '12345678B', '$2a$10$CwNBXZf0tZNvDCaRRpsYMe2SlPhdEmQZiXOwq0nL4W4lwfT4jrXI.', 'user', 'a');
 
 --
 -- Índices para tablas volcadas
@@ -357,37 +336,37 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `citas`
 --
 ALTER TABLE `citas`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT de la tabla `compras`
 --
 ALTER TABLE `compras`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `mascotas`
 --
 ALTER TABLE `mascotas`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- Restricciones para tablas volcadas

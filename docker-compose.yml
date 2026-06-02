@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # 1. Base de Datos integrada (MySQL)
   sanitypet-db:
@@ -8,17 +6,22 @@ services:
     restart: always
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: sanitypet # CORREGIDO: Mismo nombre que tiene tu base de datos real
+      MYSQL_DATABASE: sanitypet
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      # TRUCO MÁGICO: Vincula tu carpeta local con el inicializador de Docker para inyectar tus 151 filas
       - ./docker-db:/docker-entrypoint-initdb.d
     networks:
       - sanitypet-network
+    # 🌟 AQUÍ ESTÁ EL TRUCO: Ahora Docker sí sabrá cuándo está lista la BD
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
-  # 2. Gestor Web (Interfaz visual para controlar la base de datos)
+  # 2. Gestor Web (Interfaz visual)
   phpmyadmin:
     image: phpmyadmin:latest
     container_name: sanitypet-phpmyadmin
@@ -28,9 +31,9 @@ services:
       PMA_USER: root
       PMA_PASSWORD: ""
     ports:
-      - "8080:80" # Podrás entrar en http://localhost:8080
+      - "8080:80"
     networks:
-      - sanitypet-network
+      - "sanitypet-network"
     depends_on:
       - sanitypet-db
 
@@ -40,14 +43,15 @@ services:
     container_name: sanitypet-app
     restart: always
     ports:
-      - "8090:8090" # Podrás entrar en http://localhost:8090/login
+      - "8090:8090"
     networks:
       - sanitypet-network
     depends_on:
-      - sanitypet-db
+      sanitypet-db:
+        condition: service_healthy
 
 volumes:
-  mysql_data: # Mantiene tus datos persistentes a salvo en tu disco duro
+  mysql_data:
 
 networks:
-  sanitypet-network: # Une los 3 contenedores en la misma red privada
+  sanitypet-network:
