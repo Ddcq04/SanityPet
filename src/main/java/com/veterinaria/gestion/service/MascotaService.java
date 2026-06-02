@@ -6,6 +6,8 @@ import com.veterinaria.gestion.repository.MascotaRepository;
 import com.veterinaria.gestion.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -48,8 +50,12 @@ public class MascotaService {
         mascotaRepository.save(mascota);
     }
     
+    @Transactional
     public void eliminar(Long id) {
-        mascotaRepository.deleteById(id);
+        Mascota mascota = mascotaRepository.findById(id)
+                .orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(
+                        org.springframework.http.HttpStatus.NOT_FOUND, "Mascota no encontrada con ID: " + id));
+        mascotaRepository.delete(mascota);
     }
     
     public List<Mascota> buscarFiltrado(String nombre, String especie, String raza, String dueno) {

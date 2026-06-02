@@ -78,9 +78,9 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         // NOTA: Implementación provisional para pruebas en entorno local con datos de testeo.
-        return org.springframework.security.crypto.password.NoOpPasswordEncoder.getInstance();
+        //return org.springframework.security.crypto.password.NoOpPasswordEncoder.getInstance();
         
         // Entorno de producción (descomentar al desplegar):
-        // return new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
+        return new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
     }
 }

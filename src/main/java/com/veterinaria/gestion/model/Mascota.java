@@ -30,7 +30,7 @@ public class Mascota {
     @ToString.Exclude
     private Cliente cliente;
     
-    @OneToMany(mappedBy = "mascota")
+    @OneToMany(mappedBy = "mascota", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<Cita> citas;
     

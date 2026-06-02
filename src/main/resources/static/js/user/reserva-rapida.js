@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────
-//  BUSCADOR DE MASCOTAS (autocomplete)
+//  BUSCADOR DE MASCOTAS
 // ─────────────────────────────────────────────────────────
 
 // 1) Agarramos los tres elementos que ya existen en el HTML
@@ -88,14 +88,19 @@ if (selectMascota && inputBuscarMasc && listasugerMasc) {
 // ─────────────────────────────────────────────────────────
 
 // Inicialización automática al cargar la página en caso de EDICIÓN
-// ============================================================
-// 🌟 INITIALIZATION & COMPONENT BUILDING FOR EDITION/CREATION
-// ============================================================
 
 window.addEventListener('DOMContentLoaded', () => {
     const idCitaInput = document.querySelector('input[name="id"]');
     const fechaInput = document.getElementById('fechaInput');
     
+	var selectMascota = document.querySelector('[name="mascota"]');
+	var inputBuscarMasc = document.getElementById('buscadorMascota');
+	    if (selectMascota && inputBuscarMasc && selectMascota.selectedIndex !== -1) {
+	        var opcionSeleccionada = selectMascota.options[selectMascota.selectedIndex];
+	        if (opcionSeleccionada && opcionSeleccionada.value !== "") {
+	            inputBuscarMasc.value = opcionSeleccionada.text; // Rellena el input visual con "Toby (Carlos Mendoza)"
+	        }
+	    }
     // Si estamos en edición y el campo de fecha no está deshabilitado (cita futura), cargamos horas
     if (idCitaInput && idCitaInput.value && fechaInput && fechaInput.value) {
         if (!fechaInput.disabled) {

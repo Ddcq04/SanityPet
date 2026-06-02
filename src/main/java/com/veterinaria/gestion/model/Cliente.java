@@ -24,10 +24,18 @@ public class Cliente {
     @Pattern(regexp = "^[0-9]{8}[A-Z]$", message = "Formato de DNI inválido")
     @Column(unique = true, nullable = false)
     private String dni;
-
+    
+    @Pattern(
+            regexp = "^\\s*$|^(?:[+\\-() .]*\\d){9,}[+\\-() .]*$", 
+            message = "El teléfono debe tener un formato válido"
+        )
     private String telefono; 
     
-    @Email(message = "Debe ser un correo válido") 
+    @Email(message = "Por favor, introduce una dirección de correo válida")
+    @Pattern(
+            regexp = "^$|^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$", 
+            message = "El formato del correo debe ser completo (ejemplo: usuario@dominio.com)"
+     )
     private String email;
 
     @Column(columnDefinition = "DECIMAL(10,2) DEFAULT 0.00")

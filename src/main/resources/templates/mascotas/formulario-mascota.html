@@ -82,7 +82,6 @@
 
 					<!-- Propietario (solo admin) -->
 					<div class="fm-campo fm-campo-full" sec:authorize="hasRole('admin')">
-<<<<<<< HEAD
 						<label class="fm-label">Asignar a cliente</label>
 
 						<!-- Select real oculto — lo usa el formulario al enviarse -->
@@ -100,26 +99,6 @@
 								autocomplete="off">
 							<div class="fm-buscador-lista" id="buscadorLista"></div>
 						</div>
-=======
-					    <label class="fm-label">Asignar a cliente</label>
-					    
-					    <input class="fm-input" 
-					           type="text" 
-					           id="clienteBuscador" 
-					           list="datalistClientes" 
-					           placeholder="— Escribe DNI o Nombre para buscar cliente —"
-					           th:value="${mascota.cliente != null} ? ${mascota.cliente.dni} + ' - ' + ${mascota.cliente.usuario?.nombreCompleto} : ''"
-					           autocomplete="off" required>
-					    
-					    <datalist id="datalistClientes">
-					        <option th:each="c : ${todosClientes}" 
-					                th:value="${c.dni} + ' - ' + ${c.usuario?.nombreCompleto}"
-					                th:attr="data-id=${c.id}">
-					        </option>
-					    </datalist>
-					    
-					    <input type="hidden" id="clienteIdHidden" th:field="*{cliente}" />
->>>>>>> f4a4c02f30a8803904ffae99de0245739b6fc566
 					</div>
 
 					<div class="fm-acciones">

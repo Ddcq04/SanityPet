@@ -47,6 +47,7 @@
 						<div class="cl-campo">
 							<label class="cl-label">Teléfono <span class="cl-opcional">Opcional</span></label>
 							<input class="cl-input" type="text" th:field="*{telefono}" placeholder="Ej: 600 000 000">
+							<small style="color: red;" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></small>
 						</div>
 					</div>
 

@@ -161,53 +161,27 @@ document.addEventListener('click', function () {
 });
 
 // ============================================================
-// 🌟 NUEVO: SINCRONIZACIÓN DEL BUSCADOR DE CLIENTES (ADMIN)
+// SINCRONIZACIÓN DEL BUSCADOR DE CLIENTES 
 // ============================================================
-(function() {
-    function conectarBuscadorCliente() {
-        const buscador = document.getElementById('clienteBuscador');
-        const datalist = document.getElementById('datalistClientes');
-        const hiddenId = document.getElementById('clienteIdHidden');
+document.addEventListener('DOMContentLoaded', function() {
+    var selectReal  = document.querySelector('[name="cliente"]');   // el select oculto
+    var inputBuscar = document.getElementById('buscadorCliente');   // el input visual
 
-        if (!buscador || !datalist || !hiddenId) return;
-
-        // Si ya viene cargado con un cliente (Modo Edición), sincronizamos el ID oculto
-        if (buscador.value !== "") {
-            const opciones = datalist.options;
-            for (let i = 0; i < opciones.length; i++) {
-                if (opciones[i].value === buscador.value) {
-                    hiddenId.value = opciones[i].getAttribute('data-id');
-                    break;
-                }
-            }
+    // Si ambos existen y el select real tiene un cliente ya preseleccionado por el backend
+    if (selectReal && inputBuscar && selectReal.selectedIndex !== -1) {
+        var opcionSeleccionada = selectReal.options[selectReal.selectedIndex];
+        
+        // Verificamos que no sea la opción vacía por defecto
+        if (opcionSeleccionada && opcionSeleccionada.value !== "") {
+            // Rellenamos el input visual con el formato: "12345678A - Nombre Dueño"
+            inputBuscar.value = opcionSeleccionada.text;
         }
+    }
 
-        // Detectar selección o escritura en el buscador inteligente
-        buscador.addEventListener('input', function(e) {
-            const valorActual = e.target.value;
-            const opciones = datalist.options;
-            
-            hiddenId.value = ""; // Reseteamos por seguridad
-
-            for (let i = 0; i < opciones.length; i++) {
-                if (opciones[i].value === valorActual) {
-                    hiddenId.value = opciones[i].getAttribute('data-id');
-                    break;
-                }
-            }
+    // Seleccionar todo el texto al hacer clic en el buscador para facilitar la edición
+    if (inputBuscar) {
+        inputBuscar.addEventListener('focus', function(e) {
+            e.target.select();
         });
-
-        // Limpiar el campo al hacer clic para facilitar que vuelvan a escribir
-		buscador.addEventListener('focus', function(e) {
-		    if (!e.target.disabled) {
-		        e.target.select(); 
-		    }
-		});
     }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', conectarBuscadorCliente);
-    } else {
-        conectarBuscadorCliente();
-    }
-})();
+});
