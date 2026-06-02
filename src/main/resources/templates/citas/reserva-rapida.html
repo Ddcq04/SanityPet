@@ -38,7 +38,6 @@
 					<input type="hidden" th:field="*{id}" />
 
 					<div class="rc-fila-dos">
-<<<<<<< HEAD
 						<div class="rc-campo">
 							<label class="rc-label">Mascota</label>
 
@@ -78,52 +77,6 @@
 							</div>
 							<small class="rc-error" th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}"></small>
 						</div>
-=======
-					    <div class="rc-campo">
-					        <label class="rc-label">Mascota</label>
-					        
-					        <input class="rc-input" 
-					               type="text" 
-					               id="mascotaBuscador" 
-					               list="datalistMascotas" 
-					               placeholder="— Escribe para buscar mascota —"
-					               th:value="${cita.mascota != null} ? ${cita.mascota.nombre} + ' (' + ${cita.mascota.cliente?.usuario?.nombreCompleto} + ')' : ''"
-					               th:classappend="${#fields.hasErrors('mascota')} ? 'is-invalid' : ''" 
-					               th:disabled="${esEdicion and cita.fechaHora != null and cita.fechaHora.isBefore(#temporals.createNow())}"
-					               autocomplete="off" required>
-					        
-					        <datalist id="datalistMascotas">
-					            <option th:each="m : ${listaMascotas}" 
-					                    th:value="${m.nombre} + ' (' + ${m.cliente?.usuario?.nombreCompleto} + ')'"
-					                    th:attr="data-id=${m.id}">
-					            </option>
-					        </datalist>
-					        
-					        <input type="hidden" id="mascotaIdHidden" th:field="*{mascota}" />
-					        
-					        <small class="rc-error" th:if="${#fields.hasErrors('mascota')}" th:errors="*{mascota}"></small>
-					    </div>
-					
-					    <div class="rc-campo">
-					        <label class="rc-label">Servicio</label>
-					        <div class="rc-custom-select" 
-					             th:classappend="${esEdicion and cita.fechaHora != null and cita.fechaHora.isBefore(#temporals.createNow())} ? 'disabled-wrapper' : ''">
-					            <select class="rc-select" th:field="*{motivo}"
-					                th:classappend="${#fields.hasErrors('motivo')} ? 'is-invalid' : ''" 
-					                th:disabled="${esEdicion and cita.fechaHora != null and cita.fechaHora.isBefore(#temporals.createNow())}" required>
-					                <option value="">— Selecciona —</option>
-					                <option value="Consulta General - 30€">Consulta General (30€)</option>
-					                <option value="Vacunación - 45€">Vacunación (45€)</option>
-					                <option value="Diagnóstico (Eco/Rx) - 60€">Diagnóstico Eco/Rx (60€)</option>
-					                <option value="Peluquería - 25€">Peluquería (25€)</option>
-					                <option value="Cirugía - Desde 120€">Cirugía (Consultar)</option>
-					            </select>
-					            <div class="rc-select-trigger"><span>— Selecciona —</span><i class="fa-solid fa-chevron-down"></i></div>
-					            <div class="rc-select-lista"></div>
-					        </div>
-					        <small class="rc-error" th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}"></small>
-					    </div>
->>>>>>> f4a4c02f30a8803904ffae99de0245739b6fc566
 					</div>
 					
 					<div class="rc-fila-dos">
