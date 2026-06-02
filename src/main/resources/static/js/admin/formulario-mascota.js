@@ -1,6 +1,4 @@
-// ─────────────────────────────────────────────────────────
-//  BUSCADOR DE CLIENTES (autocomplete)
-// ─────────────────────────────────────────────────────────
+// Buscador de clientes (autocomplete)
 
 // 1) Agarramos los elementos que ya existen en el HTML
 var selectReal    = document.querySelector('[name="cliente"]');   // el <select> oculto del backend
@@ -48,7 +46,7 @@ if (selectReal && inputBuscar && listaSugeren) {
         // Si no hay ninguna coincidencia, mostramos un mensaje
         if (coincidencias.length === 0) {
             var sinResultado = document.createElement('div');
-            sinResultado.className = 'fm-option';
+            sinResultado.className = 'opcion';
             sinResultado.textContent = 'No se encontró ningún cliente';
             sinResultado.style.opacity = '0.5';
             sinResultado.style.cursor = 'default';
@@ -60,7 +58,7 @@ if (selectReal && inputBuscar && listaSugeren) {
         // Por cada coincidencia creamos un elemento div clicable
         coincidencias.forEach(function(opcion) {
             var item = document.createElement('div');
-            item.className = 'fm-option';
+            item.className = 'opcion';
             item.textContent = opcion.text;
 
             // Cuando el admin hace clic en una sugerencia:
@@ -98,11 +96,9 @@ if (selectReal && inputBuscar && listaSugeren) {
     });
 }
 
-// ─────────────────────────────────────────────────────────
-
 // Slider
 (function () {
-	const slides = document.querySelectorAll('.fm-slide');
+	const slides = document.querySelectorAll('.fondo-imagen');
 	if (slides.length) {
 		let actual = 0;
 		setInterval(function () {
@@ -114,24 +110,24 @@ if (selectReal && inputBuscar && listaSugeren) {
 })();
 
 // Custom selects (Especie, etc.)
-document.querySelectorAll('.fm-custom-select').forEach(function (wrapper) {
+document.querySelectorAll('.selector-custom').forEach(function (wrapper) {
 	const realSelect = wrapper.querySelector('select');
-	const trigger = wrapper.querySelector('.fm-select-trigger');
+	const trigger = wrapper.querySelector('.selector-boton');
 	const triggerText = trigger ? trigger.querySelector('span') : null;
-	const lista = wrapper.querySelector('.fm-select-lista');
+	const lista = wrapper.querySelector('.selector-lista');
 
 	if (!realSelect || !trigger || !lista) return;
 
 	// Construir opciones
 	Array.from(realSelect.options).forEach(function (opt) {
 		const div = document.createElement('div');
-		div.className = 'fm-option' + (opt.selected ? ' seleccionado' : '');
+		div.className = 'opcion' + (opt.selected ? ' seleccionado' : '');
 		div.textContent = opt.text;
 		div.dataset.value = opt.value;
 		div.addEventListener('click', function () {
 			realSelect.value = opt.value;
 			if (triggerText) triggerText.textContent = opt.text;
-			lista.querySelectorAll('.fm-option').forEach(o => o.classList.remove('seleccionado'));
+			lista.querySelectorAll('.opcion').forEach(o => o.classList.remove('seleccionado'));
 			div.classList.add('seleccionado');
 			trigger.classList.remove('abierto');
 			lista.classList.remove('abierto');
@@ -155,7 +151,7 @@ document.querySelectorAll('.fm-custom-select').forEach(function (wrapper) {
 
 // Cerrar al hacer clic fuera de los custom selects
 document.addEventListener('click', function () {
-	document.querySelectorAll('.fm-select-trigger, .fm-select-lista').forEach(el => {
+	document.querySelectorAll('.selector-boton, .selector-lista').forEach(el => {
 		el.classList.remove('abierto');
 	});
 });

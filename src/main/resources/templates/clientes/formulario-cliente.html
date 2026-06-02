@@ -14,19 +14,21 @@
 
 	<header th:replace="~{common/navfooter :: navbar}"></header>
 
-	<main class="cl-principal">
+	<main class="pagina">
 
-		<div class="cl-fondo">
-			<div class="cl-slide activa"><img src="/img/portada/cliente/cl1.jpg" alt=""></div>
-			<div class="cl-overlay"></div>
+		<!-- Fondo de imagen -->
+		<div class="fondo">
+			<div class="fondo-imagen activa"><img src="/img/portada/cliente/cl1.jpg" alt=""></div>
+			<div class="fondo-capa"></div>
 		</div>
 
-		<div class="cl-pagina">
-			<div class="cl-card">
+		<!-- Tarjeta centrada -->
+		<div class="centrado">
+			<div class="tarjeta">
 
-				<div class="cl-card-header">
-					<h1 class="cl-titulo" th:text="${cliente.id == null} ? 'Nuevo cliente' : 'Editar cliente'"></h1>
-					<p class="cl-sub" th:text="${cliente.id == null} ? 'Completa los datos del nuevo propietario' : 'Modifica los datos del propietario'"></p>
+				<div class="cabecera">
+					<h1 class="titulo" th:text="${cliente.id == null} ? 'Nuevo cliente' : 'Editar cliente'"></h1>
+					<p class="subtitulo" th:text="${cliente.id == null} ? 'Completa los datos del nuevo propietario' : 'Modifica los datos del propietario'"></p>
 				</div>
 
 				<form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post">
@@ -34,68 +36,70 @@
 					<input type="hidden" th:field="*{id}">
 					<input type="hidden" th:field="*{usuario.id}">
 
-					<p class="cl-seccion-titulo">Datos personales</p>
+					<p class="seccion-titulo">Datos personales</p>
 
-					<div class="cl-fila-dos">
-						<div class="cl-campo">
-							<label class="cl-label">DNI / Documento</label>
-							<input class="cl-input" type="text" th:field="*{dni}"
-								th:classappend="${#fields.hasErrors('dni')} ? 'is-invalid' : ''"
+					<div class="fila">
+						<div class="campo">
+							<label class="etiqueta">DNI / Documento</label>
+							<input class="entrada" type="text" th:field="*{dni}"
+								th:classappend="${#fields.hasErrors('dni')} ? 'invalido' : ''"
 								placeholder="Ej: 12345678A" required>
-							<small class="cl-error" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></small>
+							<small class="error" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></small>
 						</div>
 						<div class="cl-campo">
 							<label class="cl-label">Teléfono <span class="cl-opcional">Opcional</span></label>
 							<input class="cl-input" type="text" th:field="*{telefono}" placeholder="Ej: 600 000 000">
 							<small style="color: red;" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></small>
+
 						</div>
 					</div>
 
-					<div class="cl-campo">
-						<label class="cl-label">Nombre completo</label>
-						<input class="cl-input" type="text" th:field="*{usuario.nombreCompleto}"
-							th:classappend="${#fields.hasErrors('usuario.nombreCompleto')} ? 'is-invalid' : ''"
+					<div class="campo">
+						<label class="etiqueta">Nombre completo</label>
+						<input class="entrada" type="text" th:field="*{usuario.nombreCompleto}"
+							th:classappend="${#fields.hasErrors('usuario.nombreCompleto')} ? 'invalido' : ''"
 							placeholder="Ej: María García López" required>
-						<small class="cl-error" th:if="${#fields.hasErrors('usuario.nombreCompleto')}"
+						<small class="error" th:if="${#fields.hasErrors('usuario.nombreCompleto')}"
 							th:errors="*{usuario.nombreCompleto}"></small>
 					</div>
 
-					<div class="cl-campo">
-						<label class="cl-label">Email <span class="cl-opcional">Opcional</span></label>
-						<input class="cl-input" type="email" th:field="*{email}"
-							th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+					<div class="campo">
+						<label class="etiqueta">Email <span class="opcional">Opcional</span></label>
+						<input class="entrada" type="email" th:field="*{email}"
+							th:classappend="${#fields.hasErrors('email')} ? 'invalido' : ''"
 							placeholder="Ej: maria@gmail.com">
-						<small class="cl-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+						<small class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
 					</div>
 
+					<!-- Contraseñas solo al crear -->
 					<div th:if="${cliente.id == null}">
-						<p class="cl-seccion-titulo" style="margin-top: 1.5rem;">Credenciales</p>
+						<p class="seccion-titulo" style="margin-top: 1.5rem;">Credenciales</p>
 
-						<div class="cl-fila-dos">
-							<div class="cl-campo">
-								<label class="cl-label">Contraseña</label>
-								<input class="cl-input" type="password" th:field="*{usuario.passwordPlana}"
-									th:classappend="${#fields.hasErrors('usuario.passwordPlana')} ? 'is-invalid' : ''"
+						<div class="fila">
+							<div class="campo">
+								<label class="etiqueta">Contraseña</label>
+								<input class="entrada" type="password" th:field="*{usuario.passwordPlana}"
+									th:classappend="${#fields.hasErrors('usuario.passwordPlana')} ? 'invalido' : ''"
 									th:required="${cliente.id == null}" placeholder="••••••••">
-								<small class="cl-error" th:if="${#fields.hasErrors('usuario.passwordPlana')}"
+								<small class="error" th:if="${#fields.hasErrors('usuario.passwordPlana')}"
 									th:errors="*{usuario.passwordPlana}"></small>
 							</div>
-							<div class="cl-campo">
-								<label class="cl-label">Repetir contraseña</label>
-								<input class="cl-input" type="password" th:field="*{usuario.passwordRepeat}"
-									th:classappend="${#fields.hasErrors('usuario.passwordRepeat')} ? 'is-invalid' : ''"
+							<div class="campo">
+								<label class="etiqueta">Repetir contraseña</label>
+								<input class="entrada" type="password" th:field="*{usuario.passwordRepeat}"
+									th:classappend="${#fields.hasErrors('usuario.passwordRepeat')} ? 'invalido' : ''"
 									th:required="${cliente.id == null}" placeholder="••••••••">
-								<small class="cl-error" th:if="${#fields.hasErrors('usuario.passwordRepeat')}"
+								<small class="error" th:if="${#fields.hasErrors('usuario.passwordRepeat')}"
 									th:errors="*{usuario.passwordRepeat}"></small>
 							</div>
 						</div>
 					</div>
 
-					<div class="cl-acciones">
-						<a th:href="@{/clientes}" class="cl-link-volver">
+					<div class="acciones">
+						<a th:href="@{/clientes}" class="volver">
 							<i class="fa-solid fa-arrow-left"></i> Cancelar
 						</a>
-						<button type="submit" class="cl-btn">
+						<button type="submit" class="boton">
 							<i class="fa-solid fa-circle-check"></i>
 							<span th:text="${cliente.id == null} ? 'Guardar cliente' : 'Actualizar cliente'"></span>
 						</button>

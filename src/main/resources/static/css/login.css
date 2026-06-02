@@ -1,9 +1,8 @@
 :root {
 	--menta: #2ec4b6;
-	--whitem: #f7f9fb;
-	--bordeM: 1.25rem;
-	--text-main: #2d3436;
-	--secondary-color: #2ec4b6;
+	--blanco-suave: #f7f9fb;
+	--radio: 1.25rem;
+	--texto: #2d3436;
 
 	font-family: 'Quicksand', sans-serif;
 }
@@ -12,7 +11,6 @@
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
-
 }
 
 body {
@@ -28,18 +26,19 @@ body {
 	background-attachment: fixed;
 }
 
-.containermain {
-	background: var(--whitem);
+/* Contenedor principal */
+.contenedor {
+	background: var(--blanco-suave);
 	display: flex;
 	width: min(56rem, 96vw);
-	border-radius: var(--bordeM);
+	border-radius: var(--radio);
 	min-height: 34rem;
 	box-shadow: 0 0 2.1875rem rgba(0, 0, 0, 0.12);
 	overflow: hidden;
 }
 
-/* izquierda ----------------------------------------*/
-.seccionizq {
+/* Panel izquierdo */
+.panel-izq {
 	flex: 1;
 	background: var(--menta);
 	display: flex;
@@ -49,7 +48,8 @@ body {
 	overflow: hidden;
 }
 
-.titulo {
+/* Cabecera del panel izquierdo */
+.cabecera {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -58,7 +58,7 @@ body {
 	gap: 0.5rem;
 }
 
-.titulo h2 {
+.cabecera h2 {
 	font-size: 1.6rem;
 	font-weight: 700;
 	line-height: 1.3;
@@ -68,7 +68,8 @@ body {
 	width: 80%;
 }
 
-.logo-acceso {
+/* Logo */
+.logo {
 	width: 90%;
 	max-width: 20rem;
 	object-fit: contain;
@@ -77,15 +78,15 @@ body {
 	margin-bottom: 0.25rem;
 }
 
-.titulo p {
+.cabecera p {
 	font-size: 1.1rem;
 	font-weight: 700;
 	color: #ffffff;
 	line-height: 1.6;
 }
 
-/* Área del formulario */
-.seccionder {
+/* Panel derecho */
+.panel-der {
 	flex: 1.2;
 	padding: 2rem 3rem;
 	display: flex;
@@ -96,7 +97,7 @@ body {
 
 h3 {
 	font-size: 1.8rem;
-	color: var(--text-main);
+	color: var(--texto);
 	margin-bottom: 0.25rem;
 }
 
@@ -106,19 +107,20 @@ form p {
 	margin-bottom: 1.2rem;
 }
 
-.inputs {
+/* Campos del formulario */
+.campo {
 	margin-bottom: 0.85rem;
 }
 
-.inputs label {
+.campo label {
 	display: block;
 	margin-bottom: 0.4rem;
 	font-weight: 600;
 	font-size: 0.9rem;
-	color: var(--text-main);
+	color: var(--texto);
 }
 
-.inputs input {
+.campo input {
 	width: 100%;
 	padding: 0.65rem 0.9rem;
 	border: 0.12rem solid #edf2f7;
@@ -127,25 +129,26 @@ form p {
 	transition: 0.3s;
 }
 
-.inputs input:focus {
+.campo input:focus {
 	border-color: var(--menta);
 }
 
-.form-footer {
+/* Pie del formulario */
+.pie-form {
 	display: flex;
 	justify-content: space-between;
 	font-size: 0.85rem;
 	margin-bottom: 1.2rem;
 }
 
-.form-footer a {
+.pie-form a {
 	text-decoration: none;
 	color: var(--menta);
 	font-weight: 600;
 }
 
-/* Botón ------------------------*/
-.buton {
+/* Botón */
+.boton {
 	width: 100%;
 	background-color: var(--menta);
 	color: white;
@@ -159,72 +162,67 @@ form p {
 	margin-bottom: 1rem;
 }
 
-.buton:hover {
+.boton:hover {
 	background-color: #25a195;
 	transform: translateY(-0.125rem);
 }
 
-.create-account {
+/* Enlace crear cuenta */
+.crear-cuenta {
 	margin-top: 1rem;
 	text-align: center;
 	font-size: 0.9rem;
 	color: #888;
 }
 
-.create-account a {
-	color: var(--secondary-color);
+.crear-cuenta a {
+	color: var(--menta);
 	text-decoration: none;
 	font-weight: 700;
 }
 
-.error {
+/* Mensajes */
+.mensaje-error {
 	color: #e53e3e;
 	font-size: 0.85rem;
 	font-weight: 600;
 	margin-bottom: 1.2rem;
 	text-align: center;
-	letter-spacing: 0.01em;
 }
 
-.logout {
+.mensaje-exito {
 	color: var(--menta);
 	font-size: 0.85rem;
 	font-weight: 600;
 	margin-bottom: 1.2rem;
 	text-align: center;
-	letter-spacing: 0.01em;
 }
 
-/* ── Tablet: ambos paneles visibles pero más compactos ── */
+/* Tablet */
 @media (max-width: 53.75rem) {
-	.seccionizq { display: flex !important; padding: 2rem 1.25rem; flex: 0.85; }
-	.titulo h2 { font-size: 1.65rem; }
-	.titulo p { font-size: 0.82rem; }
-	.logo-acceso { margin-bottom: 0.75rem; }
-	.seccionder { padding: 2rem 1.75rem; flex: 1; }
+	.panel-izq { display: flex !important; padding: 2rem 1.25rem; flex: 0.85; }
+	.cabecera h2 { font-size: 1.65rem; }
+	.cabecera p { font-size: 0.82rem; }
+	.logo { margin-bottom: 0.75rem; }
+	.panel-der { padding: 2rem 1.75rem; flex: 1; }
 	h3 { font-size: 1.5rem; }
 }
 
-/* ── Móvil: tarjeta flotante sobre la imagen ── */
+/* Móvil */
 @media (max-width: 31.25rem) {
 	body {
 		padding: 1.5rem 1rem;
 		background-attachment: scroll;
-		align-items: center;
-		justify-content: center;
 	}
 
-	.containermain {
+	.contenedor {
 		flex-direction: column;
 		width: 100%;
 		border-radius: 1.25rem;
 		min-height: unset;
-		background: var(--whitem);
-		box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.35);
 	}
 
-	/* Panel verde compacto */
-	.seccionizq {
+	.panel-izq {
 		flex: none;
 		width: 100%;
 		border-radius: 1.25rem 1.25rem 0 0;
@@ -235,52 +233,46 @@ form p {
 		flex-direction: column;
 	}
 
-	.titulo {
+	.cabecera {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		gap: 0.3rem;
 	}
 
-	.titulo h2 {
+	.cabecera h2 {
 		font-size: 1.2rem;
 		border-bottom: none;
 		padding-bottom: 0;
-		margin-bottom: 0;
 	}
 
-	.titulo p { display: none; }
+	.cabecera p { display: none; }
 
-	.logo-acceso {
+	.logo {
 		max-width: 9rem;
 		margin: 0 auto 0.4rem;
 	}
 
-	/* Formulario */
-	.seccionder {
+	.panel-der {
 		flex: none;
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
 		padding: 1.75rem 1.75rem 2rem;
-		background: var(--whitem);
 		border-radius: 0 0 1.25rem 1.25rem;
 	}
 
 	h3 { font-size: 1.35rem; }
 	form p { margin-bottom: 0.9rem; }
-	.inputs { margin-bottom: 0.75rem; }
-	.buton { margin-bottom: 0.75rem; }
-	.create-account { margin-top: 0.5rem; }
+	.campo { margin-bottom: 0.75rem; }
+	.boton { margin-bottom: 0.75rem; }
+	.crear-cuenta { margin-top: 0.5rem; }
 }
 
-/* ── Móvil muy pequeño (iPhone SE ≤ 375px) ── */
+/* Móvil pequeño */
 @media (max-width: 23.4375rem) {
 	body { padding: 1rem 0.75rem; }
-	.seccionizq { padding: 1.25rem 1.5rem 1rem; }
-	.logo-acceso { max-width: 7.5rem; }
-	.titulo h2 { font-size: 1.05rem; }
-	.seccionder { padding: 1.5rem 1.25rem 1.75rem; }
+	.panel-izq { padding: 1.25rem 1.5rem 1rem; }
+	.logo { max-width: 7.5rem; }
+	.cabecera h2 { font-size: 1.05rem; }
+	.panel-der { padding: 1.5rem 1.25rem 1.75rem; }
 	h3 { font-size: 1.2rem; }
-	.inputs { margin-bottom: 0.6rem; }
+	.campo { margin-bottom: 0.6rem; }
 }

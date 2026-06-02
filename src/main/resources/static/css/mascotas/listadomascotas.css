@@ -14,7 +14,7 @@
 }
 
 /* Banner portada */
-.mascotas-banner {
+.banner {
 	position: relative;
 	height: 29.25rem;
 	margin-top: 0;
@@ -22,7 +22,7 @@
 	background: #0d1f1e;
 }
 
-.mascotas-banner img {
+.banner img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
@@ -31,14 +31,14 @@
 	filter: brightness(0.5);
 }
 
-.mascotas-banner-overlay {
+.banner-capa {
 	position: absolute;
 	inset: 0;
 	background: linear-gradient(to bottom, rgba(32,150,139,0.4) 0%, rgba(10,17,32,0.78) 100%);
 	z-index: 1;
 }
 
-.mascotas-banner-contenido {
+.banner-contenido {
 	position: absolute;
 	bottom: 0; left: 0; right: 0;
 	z-index: 2;
@@ -48,7 +48,7 @@
 	gap: 0.5rem;
 }
 
-.mascotas-banner-titulo {
+.banner-titulo {
 	font-family: var(--fuente-marca);
 	font-size: 3rem;
 	font-weight: 700;
@@ -59,11 +59,35 @@
 	line-height: 1.15;
 }
 
-.mascotas-banner-subtitulo {
+.banner-subtitulo {
 	font-size: 1rem;
 	color: rgba(255,255,255,0.75);
 	font-weight: 500;
 	letter-spacing: 0.01em;
+}
+
+/* Alertas */
+.alerta-notificacion {
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+	padding: 1rem 1.25rem;
+	border-radius: 10px;
+	font-size: 0.92rem;
+	font-weight: 600;
+	margin-bottom: 1.25rem;
+}
+
+.alerta-notificacion.exito {
+	background: rgba(4, 120, 87, 0.15);
+	color: #065f46;
+	border-left: 5px solid #10b981;
+}
+
+.alerta-notificacion.error {
+	background: rgba(190, 18, 60, 0.1);
+	color: #be123c;
+	border-left: 5px solid #e11d48;
 }
 
 /* Área principal */
@@ -446,8 +470,8 @@
 
 /* Tablet (56.25rem) — tabla compacta */
 @media (max-width: 56.25rem) {
-	.mascotas-banner { height: 16rem; }
-	.mascotas-banner-contenido { padding: 2.5rem 2rem; }
+	.banner { height: 16rem; }
+	.banner-contenido { padding: 2.5rem 2rem; }
 	.contenido-principal { padding-left: 1.25rem; padding-right: 1.25rem; }
 	.boton-nuevo { width: fit-content; }
 	.formulario-filtros { flex-wrap: wrap; }
@@ -457,8 +481,8 @@
 
 /* Tarjetas (53.75rem) */
 @media (max-width: 53.75rem) {
-	.mascotas-banner { height: 14rem; }
-	.mascotas-banner-titulo { font-size: 1.5rem; }
+	.banner { height: 14rem; }
+	.banner-titulo { font-size: 1.5rem; }
 	.contenido-principal { padding-left: 1rem; padding-right: 1rem; padding-top: 1.5rem; }
 	.tabla-mascotas { font-size: 0.83rem; }
 	.titulo-pagina { font-size: 1.35rem; }
@@ -507,9 +531,9 @@
 
 /* Móvil pequeño (30rem) */
 @media (max-width: 30rem) {
-	.mascotas-banner { height: 12rem; }
-	.mascotas-banner-contenido { padding: 1.5rem 1.25rem; }
-	.mascotas-banner-titulo { font-size: 1.25rem; }
+	.banner { height: 12rem; }
+	.banner-contenido { padding: 1.5rem 1.25rem; }
+	.banner-titulo { font-size: 1.25rem; }
 	.titulo-pagina { font-size: 1.2rem; }
 	.boton-nuevo { font-size: 0.82rem; }
 }

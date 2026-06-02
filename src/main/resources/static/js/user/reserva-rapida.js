@@ -1,6 +1,5 @@
-// ─────────────────────────────────────────────────────────
-//  BUSCADOR DE MASCOTAS
-// ─────────────────────────────────────────────────────────
+
+// Buscador de mascotas (autocomplete)
 
 // 1) Agarramos los tres elementos que ya existen en el HTML
 var selectMascota    = document.querySelector('[name="mascota"]');   // el <select> oculto del backend
@@ -41,7 +40,7 @@ if (selectMascota && inputBuscarMasc && listasugerMasc) {
         // Si no hay coincidencias mostramos un mensaje
         if (coincidencias.length === 0) {
             var sinResultado = document.createElement('div');
-            sinResultado.className = 'rc-option';
+            sinResultado.className = 'opcion';
             sinResultado.textContent = 'No se encontró ninguna mascota';
             sinResultado.style.opacity = '0.5';
             sinResultado.style.cursor = 'default';
@@ -53,7 +52,7 @@ if (selectMascota && inputBuscarMasc && listasugerMasc) {
         // Por cada coincidencia creamos un div clicable
         coincidencias.forEach(function(opcion) {
             var item = document.createElement('div');
-            item.className = 'rc-option';
+            item.className = 'opcion';
             item.textContent = opcion.text;
 
             // Al hacer clic seleccionamos esa mascota
@@ -85,9 +84,8 @@ if (selectMascota && inputBuscarMasc && listasugerMasc) {
     });
 }
 
-// ─────────────────────────────────────────────────────────
 
-// Inicialización automática al cargar la página en caso de EDICIÓN
+// Inicialización al cargar la página
 
 window.addEventListener('DOMContentLoaded', () => {
     const idCitaInput = document.querySelector('input[name="id"]');
@@ -111,7 +109,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // Slider de imágenes de fondo
 (function () {
-    const slides = document.querySelectorAll('.rc-slide');
+    const slides = document.querySelectorAll('.fondo-imagen');
     if (!slides.length) return;
     let actual = 0;
     setInterval(function () {
@@ -124,9 +122,9 @@ window.addEventListener('DOMContentLoaded', () => {
 // Reconstrucción de opciones para Custom Selects (Servicio y Horas)
 function construirOpciones(wrapper) {
     const realSelect = wrapper.querySelector('select');
-    const trigger = wrapper.querySelector('.rc-select-trigger');
+    const trigger = wrapper.querySelector('.selector-boton');
     const triggerText = trigger ? trigger.querySelector('span') : null;
-    const lista = wrapper.querySelector('.rc-select-lista');
+    const lista = wrapper.querySelector('.selector-lista');
     
     if (!realSelect || !lista || !trigger) return; 
     
@@ -136,7 +134,7 @@ function construirOpciones(wrapper) {
     
     Array.from(realSelect.options).forEach(function (opt) {
         const div = document.createElement('div');
-        div.className = 'rc-option' + (opt.selected ? ' seleccionado' : '');
+        div.className = 'opcion' + (opt.selected ? ' seleccionado' : '');
         div.textContent = opt.text;
         div.dataset.value = opt.value;
         
@@ -148,7 +146,7 @@ function construirOpciones(wrapper) {
             realSelect.value = opt.value;
             if (triggerText) triggerText.textContent = opt.text;
             
-            lista.querySelectorAll('.rc-option').forEach(o => o.classList.remove('seleccionado'));
+            lista.querySelectorAll('.opcion').forEach(o => o.classList.remove('seleccionado'));
             div.classList.add('seleccionado');
             
             trigger.classList.remove('abierto');
@@ -165,12 +163,12 @@ function construirOpciones(wrapper) {
 }
 
 // Inicialización global de los selectores customizados
-document.querySelectorAll('.rc-custom-select').forEach(function (wrapper) {
+document.querySelectorAll('.selector-custom').forEach(function (wrapper) {
     if (wrapper.id === "mascotaWrapper") return; // El buscador de mascota va aparte
     
     const realSelect = wrapper.querySelector('select');
-    const trigger = wrapper.querySelector('.rc-select-trigger');
-    const lista = wrapper.querySelector('.rc-select-lista');
+    const trigger = wrapper.querySelector('.selector-boton');
+    const lista = wrapper.querySelector('.selector-lista');
     
     construirOpciones(wrapper);
     
@@ -181,7 +179,7 @@ document.querySelectorAll('.rc-custom-select').forEach(function (wrapper) {
             if (realSelect && realSelect.disabled) return;
             
             // Cerrar cualquier otro select abierto primero
-            document.querySelectorAll('.rc-select-trigger, .rc-select-lista').forEach(el => {
+            document.querySelectorAll('.selector-boton, .selector-lista').forEach(el => {
                 if (el !== trigger && el !== lista) el.classList.remove('abierto');
             });
             
@@ -193,15 +191,13 @@ document.querySelectorAll('.rc-custom-select').forEach(function (wrapper) {
 
 // Cerrar desplegables si se pincha fuera de ellos
 document.addEventListener('click', function () {
-    document.querySelectorAll('.rc-select-trigger, .rc-select-lista').forEach(el => {
+    document.querySelectorAll('.selector-boton, .selector-lista').forEach(el => {
         el.classList.remove('abierto');
     });
 });
 
 
-// ============================================================
-// 🌟 DINÁMICA ASÍNCRONA: HORAS DISPONIBLES
-// ============================================================
+// Horas disponibles
 
 document.getElementById('fechaInput').addEventListener('change', function () {
     const fecha = this.value;
@@ -258,9 +254,7 @@ document.getElementById('fechaInput').addEventListener('change', function () {
 });
 
 
-// ============================================================
-// 🌟 ENVÍO DEL FORMULARIO Y MENSAJES DINÁMICOS
-// ============================================================
+// Envío del formulario
 
 document.getElementById('citaForm').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -285,9 +279,7 @@ document.getElementById('citaForm').addEventListener('submit', function (e) {
 });
 
 
-// ============================================================
-// 🌟 SINCRONIZACIÓN NATIVA PARA EL DATALIST DE MASCOTAS
-// ============================================================
+// Sincronización buscador de mascotas
 (function() {
     function conectarBuscadorMascota() {
         const buscador = document.getElementById('mascotaBuscador');

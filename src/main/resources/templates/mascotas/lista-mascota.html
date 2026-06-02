@@ -16,12 +16,12 @@
 
 	<header th:replace="~{common/navfooter :: navbar}"></header>
 
-	<div class="mascotas-banner">
+	<div class="banner">
 		<img src="/img/portada/mascotas/mas9.jpg" alt="">
-		<div class="mascotas-banner-overlay"></div>
-		<div class="mascotas-banner-contenido">
-			<h1 class="mascotas-banner-titulo">Listado de Mascotas</h1>
-			<p class="mascotas-banner-subtitulo">Consulta todos los pacientes registrados en la clínica</p>
+		<div class="banner-capa"></div>
+		<div class="banner-contenido">
+			<h1 class="banner-titulo">Listado de Mascotas</h1>
+			<p class="banner-subtitulo">Consulta todos los pacientes registrados en la clínica</p>
 		</div>
 	</div>
 
@@ -35,7 +35,7 @@
 		    <i class="fa-solid fa-circle-exclamation"></i>
 		    <span th:text="${mensajeError}">Ha ocurrido un error.</span>
 		</div>
-		<div class="cabecera-acciones">
+		<div class="cabecera-pagina">
 			<a th:href="@{/mascotas/nueva}" class="boton-nuevo">
 				<i class="fa-solid fa-plus"></i> Nueva Mascota
 			</a>
