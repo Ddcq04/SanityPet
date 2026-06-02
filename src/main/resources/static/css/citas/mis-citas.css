@@ -212,6 +212,46 @@
 	gap: 0.75rem;
 }
 
+/* Botón editar — lápiz menta */
+.boton-editar {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 0.5rem;
+	background: var(--menta-claro);
+	border: 0.0625rem solid var(--menta);
+	color: var(--menta-oscuro);
+	text-decoration: none;
+	transition: background 0.2s, color 0.2s;
+}
+
+.boton-editar:hover {
+	background: var(--menta);
+	color: #ffffff;
+}
+
+/* Botón eliminar — basurero rojo */
+.boton-eliminar {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 0.5rem;
+	background: #fef2f2;
+	border: 0.0625rem solid #fecaca;
+	color: #ef4444;
+	text-decoration: none;
+	transition: background 0.2s, color 0.2s;
+}
+
+.boton-eliminar:hover {
+	background: #fee2e2;
+	border-color: #ef4444;
+}
+
 /* Botón cancelar */
 .boton-cancelar {
 	display: inline-flex;

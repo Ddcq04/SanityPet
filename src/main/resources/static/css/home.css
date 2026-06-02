@@ -22,8 +22,7 @@ html {
 	--max-ancho: 80rem;
 }
 
-/*
- BASE*/
+
 *,
 *::before,
 *::after {
@@ -97,7 +96,7 @@ body {
 }
 
 /* Primera sección / Portada */
-.principal {
+.portada {
 	min-height: 100vh;
 	padding-top: var(--nav-alto);
 	position: relative;
@@ -107,7 +106,7 @@ body {
 }
 
 /* Fondo deslizante — cubre todo incluyendo bajo el navbar */
-.principal-fondo {
+.portada-fondo {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -116,7 +115,7 @@ body {
 	z-index: 0;
 }
 
-.principal-fondo-img {
+.portada-fondo-img {
 	position: absolute;
 	inset: 0;
 	background-size: cover;
@@ -125,11 +124,11 @@ body {
 	transition: opacity 3.5s ease;
 }
 
-.principal-fondo-img.activa {
+.portada-fondo-img.activa {
 	opacity: 1;
 }
 
-.principal-overlay {
+.portada-overlay {
 	position: absolute;
 	inset: 0;
 	background:
@@ -140,7 +139,7 @@ body {
 }
 
 /* Contenido sobre el fondo */
-.principal>.principal-contenido {
+.portada>.portada-contenido {
 	position: relative;
 	z-index: 2;
 	max-width: 32.5rem;
@@ -148,18 +147,18 @@ body {
 	padding: 3rem 2rem;
 }
 
-.principal-texto {
+.portada-texto {
 	max-width: 33.75rem;
 }
 
-.principal-contenido {
+.portada-contenido {
 	flex: 1;
 	padding: 3rem 0;
 	position: relative;
 	z-index: 2;
 }
 
-.principal-badge {
+.portada-badge {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.5rem;
@@ -174,7 +173,7 @@ body {
 	backdrop-filter: blur(0.25rem);
 }
 
-.principal-titulo {
+.portada-titulo {
 	font-family: var(--fuente-marca);
 	font-size: 2.6rem;
 	font-weight: 700;
@@ -183,11 +182,11 @@ body {
 	margin-bottom: 1.25rem;
 }
 
-.principal-titulo-color {
+.portada-titulo-color {
 	color: var(--menta);
 }
 
-.principal-descripcion {
+.portada-descripcion {
 	font-size: 1rem;
 	color: rgba(255, 255, 255, 0.85);
 	line-height: 1.7;
@@ -195,14 +194,14 @@ body {
 	margin-bottom: 2rem;
 }
 
-.principal-botones {
+.portada-botones {
 	display: flex;
 	gap: 0.9rem;
 	margin-bottom: 2.5rem;
 	flex-wrap: wrap;
 }
 
-.boton-principal {
+.portada-boton {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.5rem;
@@ -218,12 +217,12 @@ body {
 	box-shadow: 0 0.25rem 1rem rgba(46, 196, 182, 0.3);
 }
 
-.boton-principal:hover {
+.portada-boton:hover {
 	background: var(--menta-oscuro);	transform: translateY(-0.0625rem);
 }
 
 /* Estadísticas: tarjeta translúcida horizontal abajo-derecha */
-.principal-estadisticas {
+.portada-estadisticas {
 	position: absolute;
 	bottom: 2.5rem;
 	right: 3rem;
@@ -787,6 +786,7 @@ body {
 	font-size: 0.92rem;
 	font-weight: 500;
 	color: var(--texto);
+	text-decoration: none;
 }
 
 /* Formulario */
@@ -972,8 +972,8 @@ body {
 
 /* Laptop / iPad Pro landscape — hasta 64rem */
 @media (max-width: 64rem) {
-	.principal-titulo { font-size: 2.3rem; }
-	.principal > .principal-contenido { margin: 0 0 0 3vw; }
+	.portada-titulo { font-size: 2.3rem; }
+	.portada > .portada-contenido { margin: 0 0 0 3vw; }
 	.pie-contenedor { grid-template-columns: 1.5fr 1fr 1fr; gap: 2rem; }
 	.contacto-grid { gap: 2.5rem; }
 }
@@ -982,9 +982,9 @@ body {
 @media (max-width: 60rem) {
 
 	/* Hero */
-	.principal-titulo { font-size: 2.4rem; }
-	.principal > .principal-contenido { margin: 0 0 0 4vw; }
-	.principal-estadisticas { right: 50%; transform: translateX(50%); bottom: 2rem; }
+	.portada-titulo { font-size: 2.4rem; }
+	.portada > .portada-contenido { margin: 0 0 0 4vw; }
+	.portada-estadisticas { right: 50%; transform: translateX(50%); bottom: 2rem; }
 
 	/* Nosotros — 2 columnas */
 	.nosotros { padding: 4rem 0; }
@@ -1079,9 +1079,9 @@ body {
 @media (max-width: 37.5rem) {
 
 	/* Hero */
-	.principal-overlay { background: rgba(10, 17, 32, 0.60); }
-	.principal { justify-content: center; }
-	.principal > .principal-contenido {
+	.portada-overlay { background: rgba(10, 17, 32, 0.60); }
+	.portada { justify-content: center; }
+	.portada > .portada-contenido {
 		margin: 0;
 		padding: 2rem 1.5rem;
 		max-width: 100%;
@@ -1091,11 +1091,11 @@ body {
 		flex-direction: column;
 		align-items: center;
 	}
-	.principal-titulo { font-size: 1.8rem; line-height: 1.2; }
-	.principal-descripcion { font-size: 0.88rem; max-width: 100%; text-align: center; }
-	.principal-botones { justify-content: center; }
-	.principal-badge { text-align: center; }
-	.principal-estadisticas { right: 50%; transform: translateX(50%); bottom: 1rem; white-space: nowrap; }
+	.portada-titulo { font-size: 1.8rem; line-height: 1.2; }
+	.portada-descripcion { font-size: 0.88rem; max-width: 100%; text-align: center; }
+	.portada-botones { justify-content: center; }
+	.portada-badge { text-align: center; }
+	.portada-estadisticas { right: 50%; transform: translateX(50%); bottom: 1rem; white-space: nowrap; }
 	.estadistica { padding: 0.65rem 0.9rem; }
 	.estadistica-numero { font-size: 1.1rem; }
 	.estadistica-texto { font-size: 0.56rem; }
@@ -1198,9 +1198,9 @@ body {
 /* Móvil muy pequeño (iPhone SE) — hasta 23.4375rem */
 @media (max-width: 23.4375rem) {
 	.seccion-contenedor { padding: 0 0.875rem; }
-	.principal-titulo { font-size: 1.55rem; }
-	.principal-descripcion { font-size: 0.83rem; }
-	.boton-principal { padding: 0.65rem 1.1rem; font-size: 0.85rem; }
+	.portada-titulo { font-size: 1.55rem; }
+	.portada-descripcion { font-size: 0.83rem; }
+	.portada-boton { padding: 0.65rem 1.1rem; font-size: 0.85rem; }
 	.estadistica { padding: 0.5rem 0.7rem; }
 	.estadistica-numero { font-size: 0.95rem; }
 	.estadistica-texto { font-size: 0.5rem; }

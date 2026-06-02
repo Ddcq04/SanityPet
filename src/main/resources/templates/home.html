@@ -17,41 +17,41 @@
 
 <body>
 
-	<!-- NAVEGACIÓN  -->
+	<!-- BARRRA DE NAVEGACIÓN  -->
 	<header th:replace="~{common/navfooter :: navbar}">
 	</header>
 
 	<!-- PRINCIPAL -->
-	<section class="principal" id="inicio">
+	<section class="portada" id="inicio">
 
 		<!-- Fondo con imágenes -->
-		<div class="principal-fondo">
-			<div class="principal-fondo-img activa" style="background-image: url('/img/portada/clinica/port2.jpg')"></div>
-			<div class="principal-fondo-img"
+		<div class="portada-fondo">
+			<div class="portada-fondo-img activa" style="background-image: url('/img/portada/clinica/port2.jpg')"></div>
+			<div class="portada-fondo-img"
 				style="background-image: url('/img/portada/mascotas/mas1.jpg'); background-position: center 35%;"></div>
-			<div class="principal-fondo-img" style="background-image: url('/img/portada/clinica/port4.jpg')"></div>
+			<div class="portada-fondo-img" style="background-image: url('/img/portada/clinica/port4.jpg')"></div>
 		</div>
-		<div class="principal-overlay"></div>
+		<div class="portada-overlay"></div>
 
-		<div class="principal-contenido">
-			<span class="principal-badge"> Cuidamos lo que más quieres</span>
-			<h1 class="principal-titulo">
+		<div class="portada-contenido">
+			<span class="portada-badge"> Cuidamos lo que más quieres</span>
+			<h1 class="portada-titulo">
 				Tu mascota merece<br>
-				<span class="principal-titulo-color">la mejor atención</span>
+				<span class="portada-titulo-color">la mejor atención</span>
 			</h1>
-			<p class="principal-descripcion">
+			<p class="portada-descripcion">
 				En SanityPet combinamos experiencia veterinaria, tecnología y un trato cercano
 				para garantizar el bienestar de tu compañero de vida.
 			</p>
-			<div class="principal-botones">
-				<a href="#servicios" class="boton-principal" id="btn-servicios">
+			<div class="portada-botones">
+				<a href="#servicios" class="portada-boton" id="btn-servicios">
 					Ver servicios <i class="fa-solid fa-arrow-down"></i>
 				</a>
 			</div>
 		</div>
 
 		<!-- Estadísticas: tarjeta translúcida a la derecha -->
-		<div class="principal-estadisticas">
+		<div class="portada-estadisticas">
 			<div class="estadistica">
 				<span class="estadistica-numero">+300</span>
 				<span class="estadistica-texto">Socios</span>
@@ -332,7 +332,7 @@
 							<div class="dato-icono"><i class="fa-solid fa-envelope"></i></div>
 							<div>
 								<p class="dato-etiqueta">Email</p>
-								<p class="dato-valor">tusanitypet@gmail.com</p>
+								<a href="mailto:tusanitypet@gmail.com" class="dato-valor">tusanitypet@gmail.com</a>
 							</div>
 						</div>
 						<div class="contacto-dato">
@@ -344,26 +344,26 @@
 						</div>
 					</div>
 				</div>
-				<form class="contacto-formulario">
+				<form class="contacto-formulario" id="formContacto">
 					<div class="form-fila">
 						<div class="form-campo">
 							<label>Nombre</label>
-							<input type="text" placeholder="Tu nombre">
+							<input type="text" id="contactoNombre" placeholder="Tu nombre" required>
 						</div>
 						<div class="form-campo">
 							<label>Email</label>
-							<input type="email" placeholder="correo@ejemplo.com">
+							<input type="email" id="contactoEmail" placeholder="correo@ejemplo.com" required>
 						</div>
 					</div>
 					<div class="form-campo">
 						<label>Asunto</label>
-						<input type="text" placeholder="¿En qué podemos ayudarte?">
+						<input type="text" id="contactoAsunto" placeholder="¿En qué podemos ayudarte?" required>
 					</div>
 					<div class="form-campo">
 						<label>Mensaje</label>
-						<textarea placeholder="Escribe tu mensaje aquí..." rows="4"></textarea>
+						<textarea id="contactoMensaje" placeholder="Escribe tu mensaje aquí..." rows="4" required></textarea>
 					</div>
-					<button type="submit" class="btn-enviar">
+					<button type="button" class="btn-enviar" id="btnEnviarContacto">
 						Enviar mensaje
 					</button>
 				</form>
@@ -373,6 +373,55 @@
 
 	<!-- FOOTER -->
 	<footer th:replace="~{common/navfooter :: pie}"></footer>
+
+	<!-- BOTÓN ENVIAR FORMULARIO DE CONTACTO -->
+	<script>
+
+		// ─────────────────────────────────────────
+		// FORMULARIO DE CONTACTO — modo estudiante
+		// ─────────────────────────────────────────
+
+		// Paso 1: Esperamos a que el usuario haga clic en el botón "Enviar mensaje"
+		document.getElementById('btnEnviarContacto').addEventListener('click', function() {
+
+			// Paso 2: Recogemos lo que escribió en cada campo del formulario
+			// .trim() elimina los espacios en blanco al principio y al final
+			var nombre  = document.getElementById('contactoNombre').value.trim();
+			var email   = document.getElementById('contactoEmail').value.trim();
+			var asunto  = document.getElementById('contactoAsunto').value.trim();
+			var mensaje = document.getElementById('contactoMensaje').value.trim();
+
+			// Paso 3: Comprobamos que ningún campo esté vacío
+			// Si alguno está vacío, mostramos un aviso y paramos con "return"
+			if (!nombre || !email || !asunto || !mensaje) {
+				alert('Por favor rellena todos los campos antes de enviar.');
+				return;
+			}
+
+			// Paso 4: Comprobamos que el email tenga un formato válido
+			// La expresión regular comprueba que tenga algo@algo.algo
+			var emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+			if (!emailValido) {
+				alert('Por favor introduce un email válido. Ejemplo: correo@gmail.com');
+				return;
+			}
+
+			// Paso 5: Juntamos los datos en un texto para el cuerpo del correo
+			// \n es un salto de línea (como pulsar Enter)
+			var cuerpo = 'Nombre: ' + nombre + '\nEmail: ' + email + '\n\n' + mensaje;
+
+			// Paso 6: Construimos la URL de Gmail con todos los datos ya rellenos
+			// encodeURIComponent convierte tildes y espacios para que funcionen en una URL
+			var urlGmail = 'https://mail.google.com/mail/?view=cm'
+				+ '&to=tusanitypet@gmail.com'
+				+ '&su=' + encodeURIComponent(asunto)
+				+ '&body=' + encodeURIComponent(cuerpo);
+
+			// Paso 7: Abrimos Gmail en una pestaña nueva con todo listo para enviar
+			window.open(urlGmail, '_blank');
+		});
+
+	</script>
 
 	<!-- SCROLL SUAVE -->
 	<script>
@@ -402,7 +451,7 @@
 
 	<!-- FONDO HERO -->
 	<script>
-		const fondoImgs = document.querySelectorAll('.principal-fondo-img');
+		const fondoImgs = document.querySelectorAll('.portada-fondo-img');
 		let fondoActual = 0;
 		setInterval(() => {
 			fondoImgs[fondoActual].classList.remove('activa');
