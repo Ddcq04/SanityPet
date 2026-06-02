@@ -115,7 +115,7 @@
 							<i class="fa-solid fa-pen"></i>
 						</a>
 						<a th:href="@{/tienda/eliminar/{id}(id=${producto.id})}" class="btn-icon delete"
-							title="Eliminar">
+							title="Eliminar" onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
 							<i class="fa-solid fa-trash"></i>
 						</a>
 					</div>
